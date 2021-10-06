@@ -33,6 +33,10 @@ public:
 	void VolumeDraw(void);																// 影描画処理
 	void CreateShadow(D3DXVECTOR3 rot, D3DXVECTOR3 ShipRot, D3DXMATRIX ModelMtxWorld);	// 影の生成
 	void CreateShadow(D3DXVECTOR3 rot, D3DXMATRIX ModelMtxWorld);						// 影の生成
+
+	static void SetShadowStateStencil(void);											// ステンシルの設定
+	static void SetShadowStencilTest(void);												// ステンシルテスト設定
+	static void ReSetShadowStateStencil(void);											// ステンシル情報リセット
 	static void PolygonUninit(void);													// 描画処理
 
 private:

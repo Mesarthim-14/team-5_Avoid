@@ -197,8 +197,8 @@ CCollision::RAY_INFO CCollision::RayCollision(D3DXVECTOR3 Pos, CModel *pModel, f
 			vecDirection = D3DXVECTOR3(ZERO_FLOAT, fAngle * nCount, ZERO_FLOAT);
 
 			// ÉåÉCÇ™ÉqÉbÉgÇµÇΩÇ©
-			D3DXIntersect(pModel->GetMesh(), &Pos, &D3DXVECTOR3(sinf(vecDirection.y), ZERO_FLOAT, cosf(vecDirection.y)),
-				&bHit, NULL, NULL, NULL, &fDistance, NULL, NULL);
+	//		D3DXIntersect(pModel->GetMesh(), &Pos, &D3DXVECTOR3(sinf(vecDirection.y), ZERO_FLOAT, cosf(vecDirection.y)),
+	//			&bHit, NULL, NULL, NULL, &fDistance, NULL, NULL);
 
 			// trueÇÃèÍçá
 			if (bHit == TRUE)

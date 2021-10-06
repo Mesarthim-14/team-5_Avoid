@@ -37,9 +37,6 @@
     <Filter Include="07_Model">
       <UniqueIdentifier>{0b7fa75f-6142-4860-9ba6-676d79aa1bdd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="08_Ui">
-      <UniqueIdentifier>{3680b137-e782-432a-9a65-4679115e88d2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00_Important\Camera">
       <UniqueIdentifier>{72e190c9-dba1-4c73-89c1-c95bfbda1fdc}</UniqueIdentifier>
     </Filter>
@@ -63,6 +60,12 @@
     </Filter>
     <Filter Include="06_Effect\Shadow">
       <UniqueIdentifier>{33760b98-4a89-4bdf-8c6a-9d9dc05f5a80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object">
+      <UniqueIdentifier>{6df30ef8-d25e-4574-b424-7ffb0cf8befc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="09_Ui">
+      <UniqueIdentifier>{3680b137-e782-432a-9a65-4679115e88d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +177,24 @@
     <ClCompile Include="motion.cpp">
       <Filter>07_Model</Filter>
     </ClCompile>
+    <ClCompile Include="texture_animation.cpp">
+      <Filter>05_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="test_2d.cpp">
+      <Filter>08_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="plane.cpp">
+      <Filter>05_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="model_info.cpp">
+      <Filter>07_Model</Filter>
+    </ClCompile>
+    <ClCompile Include="test_model.cpp">
+      <Filter>08_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="test_character.cpp">
+      <Filter>08_Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision.h">
@@ -283,6 +304,24 @@
     </ClInclude>
     <ClInclude Include="motion.h">
       <Filter>07_Model</Filter>
+    </ClInclude>
+    <ClInclude Include="texture_animation.h">
+      <Filter>05_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="test_2d.h">
+      <Filter>08_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="plane.h">
+      <Filter>05_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="model_info.h">
+      <Filter>07_Model</Filter>
+    </ClInclude>
+    <ClInclude Include="test_model.h">
+      <Filter>08_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="test_character.h">
+      <Filter>08_Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

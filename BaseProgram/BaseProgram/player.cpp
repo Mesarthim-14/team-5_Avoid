@@ -1,6 +1,6 @@
 ﻿//=============================================================================
-// プレイヤー [player.cpp]
-// Author : Sugawara Tsukasa
+// プレイヤークラス [player.cpp]
+// Author : Konishi Yuuto
 //=============================================================================
 
 //=============================================================================
@@ -12,16 +12,9 @@
 #include "renderer.h"
 #include "input.h"
 #include "joypad.h"
-#include "camera.h"
-#include "game.h"
-#include "sound.h"
-#include "time.h"
-#include "collision.h"
 #include "fade.h"
-#include "texture.h"
 #include "resource_manager.h"
 #include "motion.h"
-#include "game.h"
 
 //=============================================================================
 // マクロ定義
@@ -37,17 +30,21 @@
 //=============================================================================
 CPlayer * CPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
+	// メモリ確保
 	CPlayer *pPlayer = new CPlayer;
 
-	// !nullcheck
-	if (pPlayer != nullptr)
+	// nullcheck
+	if (pPlayer)
 	{
 		// 初期化処理
-		pPlayer->Init(pos, rot);
+		pPlayer->SetCharacterInfo(pos, rot);
+		pPlayer->Init();
+		return pPlayer;
+
 	}
 
 	// CPlayerを返す
-	return pPlayer;
+	return nullptr;
 }
 
 //=============================================================================
@@ -72,29 +69,27 @@ CPlayer::~CPlayer()
 // 初期化処理関数
 // Author : Konishi Yuuto
 //=============================================================================
-HRESULT CPlayer::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+HRESULT CPlayer::Init(void)
 {
 	// CXfile取得
 	CXfile *pXfile = CManager::GetResourceManager()->GetXfileClass();
 
-	// !nullcheck
-	if (pXfile != nullptr)
+	// nullcheck
+	if (pXfile)
 	{
-		// モデル生成
-		ModelCreate(CXfile::HIERARCHY_XFILE_NUM_PLAYER);
+		SetUseShadow();									// 影の使用
+		ModelCreate(CXfile::HIERARCHY_XFILE_NUM_TEST);	// モデルの生成
+		SetShadowRotCalculation();						// 影の向き
 	}
 
 	// 初期化処理
-	CCharacter::Init(pos, rot);
+	CCharacter::Init();
 
 	// 初期化
-	m_rotDest = rot;		// 向き
-	SetSize(SIZE);			// サイズ設定
-	SetSpeed(PLAYER_SPEED);	// スピード設定
-
-	// 影の設定
-	SetUseShadow();				// 影
-	SetShadowRotCalculation();	// 影の向き
+	m_rotDest = GetRot();			// 向き
+	SetSize(SIZE);					// サイズ設定
+	SetSpeed(PLAYER_SPEED);			// スピード設定
+	SetType(CHARACTER_TYPE_PLAYER);	// プレイヤー
 
 	return S_OK;
 }

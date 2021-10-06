@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// カメラの処理 [camera.cpp]
+// ゲームカメラの処理 [camera_game.cpp]
 // Author : Konishi Yuuto
 //
 //=============================================================================
@@ -21,17 +21,11 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define CAMERA_DEFAULT_Fθ			(D3DXToRadian(75.0f))			// カメラのθDefault値
-#define DISTANCE					(2200.0f)						// 視点～注視点の距離
-#define DISTANCE_FAR_UP				(35.0f)							// カメラを引く値
-#define FAR_DISTANCE				(3000.0f)						// 遠めのカメラ
-#define PLAYER_HEIGHT				(600.0f)						// 注視点の高さ
-#define CAMERA_MIN_Fφ				(D3DXToRadian(10.0f))			// カメラの最小角
-#define CAMERA_MAX_Fφ				(D3DXToRadian(170.0f))			// カメラの最大角
-#define CAMERA_MIN_HIGHT			(2.0f)							// カメラの最低高度
-#define STICK_SENSITIVITY			(100.0f)						// スティック感度
-#define STICK_INPUT_CONVERSION		(D3DXToRadian(2.0f))			// スティック入力変化量
-#define HEIGHT_DIVIDE				(1.5f)							// 高さ÷
+#define GAME_CAMERA_DEFAULT_Fθ		(D3DXToRadian(60.0f))	// カメラのθDefault値
+#define GAME_CAMERA_DEFAULT_Hθ		(D3DXToRadian(95.0f))	// カメラ角度横
+#define PLAYER_HEIGHT				(0.0f)					// 注視点の高さ
+#define GAME_CAMERA_DISTANCE		(2500.0f)				// 距離
+#define CAMERA_MIN_HIGHT			(2.0f)					// カメラの最低高度
 
 //=============================================================================
 // インスタンス生成
@@ -41,10 +35,14 @@ CCameraGame * CCameraGame::Create(void)
 	// メモリ確保
 	CCameraGame *pCamera = new CCameraGame;
 
-	// 初期化処理
-	pCamera->Init();
+	if (pCamera)
+	{
+		// 初期化処理
+		pCamera->Init();
+		return pCamera;
+	}
 
-	return pCamera;
+	return nullptr;
 }
 
 //=============================================================================
@@ -67,19 +65,28 @@ CCameraGame::~CCameraGame()
 //=============================================================================
 HRESULT CCameraGame::Init(void)
 {
+	D3DXVECTOR3 posR = D3DXVECTOR3(0.0f, PLAYER_HEIGHT, 0.0f);
+	D3DXVECTOR3 posV = ZeroVector3;
+	float fDistance = GAME_CAMERA_DISTANCE;
+	float fVartical = GAME_CAMERA_DEFAULT_Fθ;
+	float fHorizontal = GAME_CAMERA_DEFAULT_Hθ;
+
+	SetDistance(fDistance);
+	SetVartical(fVartical);
+	SetHorizontal(fHorizontal);					// 初期値敵のほう向ける
+	GetposR() = posR;
+	GetposU() = D3DXVECTOR3(0.0f, 1.0f, 0.0f);	// 上方向ベクトル
+
+	posV.x = posR.x + fDistance * sinf(fVartical) * sinf(fHorizontal);	// カメラ位置X
+	posV.y = posR.z + fDistance * cosf(fVartical);						// カメラ位置Y
+	posV.z = posR.y + fDistance * sinf(fVartical) * cosf(fHorizontal);	// カメラ位置Z
+
+	GetposV() = posV;
+
 	// 初期化処理
 	CCamera::Init();
 
 	return S_OK;
-}
-
-//=============================================================================
-// 更新処理
-//=============================================================================
-void CCameraGame::Update(void)
-{
-	// カメラの更新処理
-	CCamera::Update();
 }
 
 //=============================================================================

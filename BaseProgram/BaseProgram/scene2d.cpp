@@ -12,20 +12,13 @@
 #include "scene2d.h"
 #include "renderer.h"
 #include "manager.h"
+#include "texture_animation.h"
 
 //=======================================================================================
 // コンストラクタ
 //=======================================================================================
 CScene2D::CScene2D(PRIORITY Priority) : CSceneBase(Priority)
 {
-	m_nCountAnim = 0;								// アニメーションテクスチャ
-	m_nCountAnimPattern = 0;						// アニメーションのパターン
-	m_nCounterAnim = 0;								// アニメーションのカウンター
-	m_nPatternAnim = 0;								// アニメーションのパターン数
-	m_nSpeedTexture = 0;							// テクスチャの移動速度
-	m_nLoop = -1;									// ループするかどうか
-	m_fDivisionCounter = 0.0f;						// スクロールのカウンター
-	m_fDivisionBaseNum = 0.0f;						// スクロールの移動量
 	m_fRotasion = 0.0f;
 	m_fScaleNum = 0.0f;
 	m_fSubFlashNum = 0.0f;
@@ -52,14 +45,15 @@ CScene2D* CScene2D::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 size)
 	// オブジェクトを生成
 	CScene2D* pScene = new CScene2D();
 
-	// !nullcheck
-	if (pScene != nullptr)
+	// nullcheck
+	if (pScene)
 	{
 		// 初期化処理
-		pScene->Init(pos, size);
+		pScene->SetSceneInfo(pos, size);
+		pScene->Init();
+		return pScene;
 	}
-
-	return pScene;
+	return nullptr;
 }
 
 //=======================================================================================
@@ -71,31 +65,31 @@ CScene2D * CScene2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, float fFadeNum)
 	CScene2D* pScene = new CScene2D();
 
 	// !nullcheck
-	if (pScene != nullptr)
+	if (pScene)
 	{
 		pScene->m_fFadeSpeedNum = fFadeNum;
 		pScene->m_fSubFlashNum = 0.0f;
+		float fAlpha = 0.0f;
 		pScene->GetColor().a = 0.0f;
 		pScene->m_bFadeOut = true;
 
 		// 初期化処理
-		pScene->Init(pos, size);
+		pScene->SetSceneInfo(pos, size);
+		pScene->Init();
+
+		return pScene;
 	}
 
-	return pScene;
+	return nullptr;
 }
 
 //=======================================================================================
 // ポリゴンの初期化
 //=======================================================================================
-HRESULT CScene2D::Init(const D3DXVECTOR3 pos, const D3DXVECTOR3 size)
+HRESULT CScene2D::Init(void)
 {
-	// 引数代入
-	SetPos(pos);	// 座標
-	SetSize(size);	// サイズ
-
-					// 頂点の生成
-	CreateVertex(pos, size);
+	// 頂点の生成
+	CreateVertex();
 
 	return S_OK;
 }
@@ -105,8 +99,8 @@ HRESULT CScene2D::Init(const D3DXVECTOR3 pos, const D3DXVECTOR3 size)
 //=======================================================================================
 void CScene2D::Uninit(void)
 {
-	// 削除フラグを持たせる
-	Release();
+	// 終了処理
+	CSceneBase::Uninit();
 }
 
 //=======================================================================================
@@ -114,6 +108,9 @@ void CScene2D::Uninit(void)
 //=======================================================================================
 void CScene2D::Update(void)
 {
+	// 更新処理
+	CSceneBase::Update();
+
 	if (m_bFadeOut)
 	{
 		FadeOut(m_fFadeSpeedNum);
@@ -161,13 +158,13 @@ void CScene2D::Draw(void)
 //======================================================
 //色の取得
 //======================================================
-void CScene2D::SetCol(D3DXCOLOR col)
+void CScene2D::SetColor(const D3DXCOLOR &col)
 {
 	VERTEX_2D *pVtx = nullptr;	//頂点情報へのポインタ
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();		// バッファ
 
 	// 色の設定
-	SetColor(col);
+	CSceneBase::SetColor(col);
 
 	//頂点データ範囲をロックし、頂点バッファへのポインタを所得
 	pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
@@ -185,14 +182,14 @@ void CScene2D::SetCol(D3DXCOLOR col)
 //=============================================
 // 頂点の生成関数
 //=============================================
-void CScene2D::CreateVertex(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+void CScene2D::CreateVertex(void)
 {
 	// Rendererクラスからデバイスを取得
 	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetRenderer()->GetDevice();
 
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = nullptr;		// バッファ
 
-													// 頂点バッファの生成
+	// 頂点バッファの生成
 	pD3DDevice->CreateVertexBuffer(sizeof(VERTEX_2D)*NUM_VERTEX,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
@@ -201,54 +198,6 @@ void CScene2D::CreateVertex(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 		nullptr);
 
 	// 頂点情報を設定
-	VERTEX_2D *pVtx = nullptr;
-	D3DXCOLOR color = GetColor();
-
-	// 頂点データをロックする
-	pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-
-	// テクスチャ座標の設定
-	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
-
-	// 頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(pos.x - size.x / 2, pos.y - size.y / 2, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(pos.x + size.x / 2, pos.y - size.y / 2, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(pos.x - size.x / 2, pos.y + size.y / 2, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(pos.x + size.x / 2, pos.y + size.y / 2, 0.0f);
-
-	// rhwの設定
-	pVtx[0].rhw = 1.0f;
-	pVtx[1].rhw = 1.0f;
-	pVtx[2].rhw = 1.0f;
-	pVtx[3].rhw = 1.0f;
-
-	// 頂点カラーの設定
-	pVtx[0].col = color;
-	pVtx[1].col = color;
-	pVtx[2].col = color;
-	pVtx[3].col = color;
-
-	// 頂点データをアンロックする
-	pVtxBuff->Unlock();
-
-	// 頂点バッファの設定
-	BindVtxBuff(pVtxBuff);
-}
-
-//=============================================
-// 頂点の設定
-//=============================================
-void CScene2D::SetVertex(void)
-{
-	// Rendererクラスからデバイスを取得
-	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetRenderer()->GetDevice();
-
-	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();		// バッファ
-
-															// 頂点情報を設定
 	VERTEX_2D *pVtx = nullptr;
 	D3DXVECTOR3 pos = GetPos();
 	D3DXVECTOR3 size = GetSize();
@@ -289,26 +238,65 @@ void CScene2D::SetVertex(void)
 }
 
 //=============================================
+// 頂点の設定
+//=============================================
+void CScene2D::SetVertexPos(void)
+{
+	// Rendererクラスからデバイスを取得
+	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetRenderer()->GetDevice();
+
+	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();		// バッファ
+
+	// 頂点情報を設定
+	VERTEX_2D *pVtx = nullptr;
+	D3DXVECTOR3 pos = GetPos();
+	D3DXVECTOR3 size = GetSize();
+
+	// 頂点データをロックする
+	pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	// 頂点座標の設定
+	pVtx[0].pos = D3DXVECTOR3(pos.x - size.x / 2, pos.y - size.y / 2, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(pos.x + size.x / 2, pos.y - size.y / 2, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(pos.x - size.x / 2, pos.y + size.y / 2, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(pos.x + size.x / 2, pos.y + size.y / 2, 0.0f);
+
+	// 頂点データをアンロックする
+	pVtxBuff->Unlock();
+
+	// 頂点バッファの設定
+	BindVtxBuff(pVtxBuff);
+}
+
+//=============================================
 // アニメーション情報取得
 //=============================================
-void CScene2D::InitAnimation(int nCounterAnim, int nPatternAnim, int nLoop)
+void CScene2D::InitAnimation(int nPatternNum, int nSpeed, int nLoop)
 {
-	m_nCounterAnim = nCounterAnim;
-	m_nPatternAnim = nPatternAnim;
-	m_nLoop = nLoop;
-
 	// 頂点情報を設定
 	VERTEX_2D *pVtx = nullptr;
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();		// バッファ取得
 
-															// 頂点バッファをロックし、頂点情報へのポインタを取得
+	// 頂点バッファをロックし、頂点情報へのポインタを取得
 	pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//テクスチャ座標を更新
-	pVtx[0].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern, 0.0f);
-	pVtx[1].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern + (float)(1.0f / m_nPatternAnim), 0.0f);
-	pVtx[2].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern, 1.0f);
-	pVtx[3].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern + (float)(1.0f / m_nPatternAnim), 1.0f);
+	pVtx[0].tex = D3DXVECTOR2((float)(1.0f / nPatternNum)*(float)0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2((float)(1.0f / nPatternNum)*(float)0.0f + (float)(1.0f / nPatternNum), 0.0f);
+	pVtx[2].tex = D3DXVECTOR2((float)(1.0f / nPatternNum)*(float)0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2((float)(1.0f / nPatternNum)*(float)0.0f + (float)(1.0f / nPatternNum), 1.0f);
+
+	// テクスチャ座標を渡す
+	D3DXVECTOR2 tex[NUM_VERTEX] = {};
+	for (int nCount = 0; nCount < NUM_VERTEX; nCount++)
+	{
+		tex[nCount] = pVtx[nCount].tex;
+	}
+
+	// テクスチャアニメーション生成
+	CTextureAnimation *pTextureAnimation = CTextureAnimation::Create(tex);
+	pTextureAnimation->InitAnimationInfo(nPatternNum, nSpeed, nLoop);
+	SetTextureAnimationPtr(pTextureAnimation);
 
 	// 頂点バッファをアンロックする
 	pVtxBuff->Unlock();
@@ -319,46 +307,23 @@ void CScene2D::InitAnimation(int nCounterAnim, int nPatternAnim, int nLoop)
 //=============================================
 void CScene2D::UpdateAnimation(void)
 {
-	// 爆発のアニメーションカウントを進めて、パターンを切り替える
-	m_nCountAnim++;
+	// テクスチャポインタ取得
+	CTextureAnimation *pTextureAnimation = GetTextureAnimationPtr();
+	// 頂点情報を設定
+	VERTEX_2D *pVtx = nullptr;
+	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();		// バッファ取得
 
-	// 頂点情報(テクスチャ座標)の更新
-	if (m_nCountAnim >= m_nCounterAnim)	// 爆発の速さ
+	// 頂点バッファをロックし、頂点情報へのポインタを取得
+	pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	// テクスチャ座標の設定
+	for (int nCount = 0; nCount < NUM_VERTEX; nCount++)
 	{
-		m_nCountAnim = 0;		// アニメーションのカウントを0にする
-		m_nCountAnimPattern++;	// アニメーションのパターンをカウントさせる
+		pVtx[nCount].tex = pTextureAnimation->GetTex(nCount);
 	}
 
-	// アニメーションが終わったら
-	if (m_nCountAnimPattern >= m_nPatternAnim)
-	{
-		// 数値を戻しておく
-		m_nCountAnimPattern = 0;
-
-		if (m_nLoop == 0)
-		{
-			// 終了処理
-			Uninit();
-		}
-	}
-	else
-	{
-		// 頂点情報を設定
-		VERTEX_2D *pVtx = nullptr;
-		LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();		// バッファ取得
-
-																// 頂点バッファをロックし、頂点情報へのポインタを取得
-		pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-
-		//テクスチャ座標を更新
-		pVtx[0].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern, 0.0f);
-		pVtx[1].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern + (float)(1.0f / m_nPatternAnim), 0.0f);
-		pVtx[2].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern, 1.0f);
-		pVtx[3].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern + (float)(1.0f / m_nPatternAnim), 1.0f);
-
-		// 頂点バッファをアンロックする
-		pVtxBuff->Unlock();
-	}
+	// 頂点バッファをアンロックする
+	pVtxBuff->Unlock();
 }
 
 //=============================================
@@ -366,8 +331,27 @@ void CScene2D::UpdateAnimation(void)
 //=============================================
 void CScene2D::InitScroll(int nSpeed, float fDivision)
 {
-	m_nSpeedTexture = nSpeed;
-	m_fDivisionBaseNum = fDivision;
+	// 頂点情報を設定
+	VERTEX_2D *pVtx = nullptr;
+	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();		// バッファ取得
+
+	// 頂点バッファをロックし、頂点情報へのポインタを取得
+	pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	// テクスチャ座標を渡す
+	D3DXVECTOR2 tex[NUM_VERTEX] = {};
+	for (int nCount = 0; nCount < NUM_VERTEX; nCount++)
+	{
+		tex[nCount] = pVtx[nCount].tex;
+	}
+
+	// テクスチャアニメーション生成
+	CTextureAnimation *pTextureAnimation = CTextureAnimation::Create(tex);
+	pTextureAnimation->InitScroll(nSpeed, fDivision);
+	SetTextureAnimationPtr(pTextureAnimation);
+
+	// 頂点バッファをアンロックする
+	pVtxBuff->Unlock();
 }
 
 //=============================================
@@ -375,31 +359,29 @@ void CScene2D::InitScroll(int nSpeed, float fDivision)
 //=============================================
 void CScene2D::UpdateScroll(void)
 {
-	// 頂点情報を設定
-	VERTEX_2D *pVtx = nullptr;
-	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();		// バッファ取得
-
-	// カウンターを進める
-	m_nCounterAnim++;
-
-	// 頂点情報(テクスチャ座標)の更新
-	if (m_nCounterAnim >= m_nSpeedTexture)		// 爆発の速さ
+	// テクスチャポインタ取得
+	CTextureAnimation *pTextureAnimation = GetTextureAnimationPtr();
+	if (pTextureAnimation)
 	{
-		// 頂点バッファをロックし、頂点情報へのポインタを取得
-		pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+		// テクスチャが更新されていたら
+		if (pTextureAnimation->GetUpdate())
+		{
+			// 頂点情報を設定
+			VERTEX_2D *pVtx = nullptr;
+			LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();		// バッファ取得
 
-		//テクスチャ座標を更新
-		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f - m_fDivisionCounter);
-		pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f - m_fDivisionCounter);
-		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f - m_fDivisionCounter);
-		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f - m_fDivisionCounter);
+			// 頂点バッファをロックし、頂点情報へのポインタを取得
+			pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
-		// 頂点バッファをアンロックする
-		pVtxBuff->Unlock();
+			// テクスチャ座標の設定
+			for (int nCount = 0; nCount < NUM_VERTEX; nCount++)
+			{
+				pVtx[nCount].tex = pTextureAnimation->GetTex(nCount);
+			}
 
-		// アニメーションのパターンをカウントさせる
-		m_fDivisionCounter += m_fDivisionBaseNum;
-		m_nCounterAnim = 0;
+			// 頂点バッファをアンロックする
+			pVtxBuff->Unlock();
+		}
 	}
 }
 
@@ -409,8 +391,8 @@ void CScene2D::UpdateScroll(void)
 void CScene2D::ScaleUp(float fScaleUp)
 {
 	// 情報取得
-	D3DXVECTOR3 pos = GetPos();	// 座標
-	D3DXVECTOR3 size = GetSize();	// 座標
+	D3DXVECTOR3 pos = GetPos();		// 座標
+	D3DXVECTOR3 size = GetSize();	// サイズ
 	m_fScaleNum += fScaleUp;
 
 	VERTEX_2D*pVtx = nullptr;	//頂点情報へのポインタ
@@ -438,7 +420,7 @@ void CScene2D::SetRotation(float rotasion)
 	D3DXVECTOR3 pos = GetPos();	// 座標
 	D3DXVECTOR3 size = GetSize();	// 座標
 
-									// 回転の値を加算
+	// 回転の値を加算
 	rotasion += m_fRotasion;
 
 	float r = sqrtf(powf(size.x / 2, 2.0) + powf(size.x / 2, 2.0));	//半径

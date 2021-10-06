@@ -18,16 +18,13 @@
 class CCameraTitle : public CCamera
 {
 public:
-	CCameraTitle();					// コンストラクタ
-	~CCameraTitle();				// デストラクタ
+	CCameraTitle();			// コンストラクタ
+	~CCameraTitle();		// デストラクタ
 
-	HRESULT Init(void);			// 初期化処理
-	void Update(void);			// 更新処理
-	void NomalUpdate(D3DXVECTOR3 PlayerPos, D3DXVECTOR3 PlayerRot) override;
-
-	static CCameraTitle*Create(void);		// クリエイト
+	HRESULT Init(void);					// 初期化処理
+	static CCameraTitle*Create(void);	// クリエイト
 
 private:
-
+	void NomalUpdate(D3DXVECTOR3 PlayerPos, D3DXVECTOR3 PlayerRot) override;
 };
 #endif 

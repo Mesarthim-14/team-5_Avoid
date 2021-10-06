@@ -37,19 +37,21 @@ CMeshField * CMeshField::Create(void)
 	CMeshField *pMeshField = new CMeshField;
 
 	// nullchack
-	if (pMeshField != nullptr)
+	if (pMeshField)
 	{
 		// 初期化処理
-		pMeshField->Init(ZeroVector3, ZeroVector3);
-	}
+		pMeshField->SetSceneInfo(ZeroVector3, ZeroVector3);
+		pMeshField->Init();
 
-	return pMeshField;
+		return pMeshField;
+	}
+	return nullptr;
 }
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CMeshField::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+HRESULT CMeshField::Init(void)
 {
 	// テクスチャの設定
 	CTexture *pTexture = CManager::GetResourceManager()->GetTextureClass();
@@ -58,15 +60,6 @@ HRESULT CMeshField::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	// 頂点の設定
 	CreateVerterx();
 	return S_OK;
-}
-
-//=============================================================================
-// 終了処理
-//=============================================================================
-void CMeshField::Uninit(void)
-{
-	// 削除フラグ
-	Release();
 }
 
 //=============================================================================

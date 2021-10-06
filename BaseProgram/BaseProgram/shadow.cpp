@@ -108,7 +108,7 @@ void CShadow::VolumeDraw(void)
 	if (m_pShadowVolume)
 	{
 		// ステンシル設定
-		pRenderer->SetStateStencil();
+		SetShadowStateStencil();
 
 		// シャドウボリュームの描画
 		m_pShadowVolume->Draw();
@@ -149,6 +149,82 @@ void CShadow::CreateShadow(D3DXVECTOR3 rot, D3DXMATRIX ModelMtxWorld)
 
 	// ワールド座標を受け取る
 	m_ModelMtxWorld = ModelMtxWorld;
+}
+
+//=============================================================================
+// ステンシルの設定
+// Author : Konishi Yuuto
+//=============================================================================
+void CShadow::SetShadowStateStencil(void)
+{
+	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
+
+	//------------------------------------------------------------
+	// パス1:影ボリュームの描画
+	//------------------------------------------------------------
+	// 深度バッファに書き込みはしない
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
+	// レンダリングターゲットに書き込みはしない
+	pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, FALSE);
+
+	// 両面描く
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+	// 両面ステンシルを使用する
+	pDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_TWOSIDEDSTENCILMODE, TRUE);
+
+	// ステンシルテストは常に合格にする
+	pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
+
+	// 表面は深度テストに合格したらステンシルバッファの内容を+1する
+	pDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCR);
+
+	// 裏面は深度テストに合格したらステンシルバッファの内容を-1する
+	pDevice->SetRenderState(D3DRS_CCW_STENCILPASS, D3DSTENCILOP_DECR);
+}
+
+//=============================================================================
+// ステンシルテスト設定
+// Author : Konishi Yuuto
+//=============================================================================
+void CShadow::SetShadowStencilTest(void)
+{
+	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
+
+	// 状態を元に戻す
+	pDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
+
+	//--------------------------------------------------------------
+	// パス2:影の描画
+	//--------------------------------------------------------------
+	// アルファブレンディングは線型に掛ける
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	// ステンシルバッファの値が1以上の時に書き込む
+	pDevice->SetRenderState(D3DRS_STENCILREF, 0x01);
+	pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_LESSEQUAL);
+
+	// 透過あり
+	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+}
+
+//=============================================================================
+// ステンシル設定リセット
+// Author : Konishi Yuuto
+//=============================================================================
+void CShadow::ReSetShadowStateStencil(void)
+{
+	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
+
+	// 状態を元に戻す
+	pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
 }
 
 //=============================================================================

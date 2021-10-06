@@ -1,4 +1,4 @@
-//=============================================================================CShadowPolygon
+//=============================================================================
 //
 // シャドウポリゴンクラス [shadow_polygon.cpp]
 // Author : Konishi Yuuto
@@ -10,10 +10,14 @@
 //=============================================================================
 #include "manager.h"
 #include "renderer.h"
-#include "camera.h"
-#include "game.h"
-#include "light.h"
 #include "shadow_polygon.h"
+#include "shadow.h"
+
+//=============================================================================
+// マクロ定義
+//=============================================================================
+#define SHADOW_POS (D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f))
+#define SHADOW_SIZE (D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f))
 
 //=============================================================================
 // コンストラクタ
@@ -54,12 +58,14 @@ CShadowPolygon * CShadowPolygon::Create(void)
 //=============================================================================
 HRESULT CShadowPolygon::Init(void)
 {
+	// シーンの情報設定
+	SetSceneInfo(SHADOW_POS, SHADOW_SIZE);
+
 	// 初期化処理
-	CScene2D::Init(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f),
-		D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
+	CScene2D::Init();
 
 	// 色の設定
-	SetCol(D3DCOLOR_RGBA(0, 0, 0, 0x7f));
+	SetColor(D3DCOLOR_RGBA(0, 0, 0, 0x7f));
 
 	return S_OK;
 }
@@ -73,11 +79,11 @@ void CShadowPolygon::Draw(void)
 	CRenderer *pRenderer = CManager::GetRenderer();
 
 	// ステンシルテスト
-	pRenderer->SetStencilTest();
+	CShadow::SetShadowStencilTest();
 
 	// ポリゴンの描画
 	CScene2D::Draw();
 
 	// ステンシルリセット
-	pRenderer->ReSetStateStencil();
+	CShadow::ReSetShadowStateStencil();
 }

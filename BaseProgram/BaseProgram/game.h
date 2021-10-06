@@ -2,7 +2,7 @@
 #define _GAME_H_
 //=======================================================================================
 //
-// ゲームの処理 [game.h]
+// ゲームクラス [game.h]
 // Author : Konishi Yuuto
 //
 //=======================================================================================
@@ -13,20 +13,9 @@
 #include "mode_base.h"
 
 //=======================================================================================
-// マクロ定義
-//=======================================================================================
-
-//=======================================================================================
 // 前方宣言
 //=======================================================================================
-class CCamera;
-class CCameraGame;
-class CLight;
-class CMeshField;
-class CBg;
 class CPlayer;
-class CMap;
-class CBoss_Shark;
 
 //=======================================================================================
 // ゲームクラス
@@ -34,7 +23,6 @@ class CBoss_Shark;
 class CGame : public CModeBase
 {
 public:
-
 	CGame();		// コンストラクタ
 	~CGame();		// デストラクタ
 
@@ -42,17 +30,9 @@ public:
 	void Uninit(void);								// 終了処理
 	void Update(void);								// 更新処理
 	void Draw(void);								// 描画処理
-	void SetGame(void);								// ゲームの設定
-
-	// Get関数
-	CCamera *GetCamera(void)		{ return (CCamera*)m_pCamera; }	// カメラのポインタ情報
-	CLight *GetLight(void)			{ return m_pLight; }			// ライトのポインタ情報
-	CPlayer *GetPlayer(void)		{ return m_pPlayer; }			// プレイヤーのポインタ情報
 
 private:
 	// ポインタ
-	CCameraGame *m_pCamera;					// カメラのポインタ	
-	CLight *m_pLight;						// ライトのポインタ
 	CPlayer *m_pPlayer;						// プレイヤーのポインタ
 	bool m_bGameEnd;						// ゲームのエンドフラグ
 	LPD3DXFONT m_pFont;						// デバック用フォント

@@ -4,6 +4,10 @@
 // Author : konishi Yuuto
 //
 //=============================================================================
+
+//=============================================================================
+// インクルード
+//=============================================================================
 #include "fade.h"
 #include "manager.h"
 #include "renderer.h"
@@ -60,7 +64,7 @@ HRESULT CFade::Init(void)
 //=============================================================================
 void CFade::Uninit(void)
 {
-	if (m_pPolygon != nullptr)
+	if (m_pPolygon)
 	{
 		//ポリゴンクラスの終了処理呼び出し
 		m_pPolygon->Uninit();
@@ -78,7 +82,7 @@ void CFade::Uninit(void)
 //=============================================================================
 void CFade::Update(void)
 {
-	if (m_pPolygon != nullptr)
+	if (m_pPolygon)
 	{
 		if (m_FadeMode != FADE_MODE_NONE)
 		{
@@ -123,7 +127,7 @@ void CFade::Update(void)
 //=============================================================================
 void CFade::Draw(void)
 {
-	if (m_pPolygon != nullptr)
+	if (m_pPolygon)
 	{
 		if (m_FadeMode != FADE_MODE_NONE)
 		{

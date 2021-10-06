@@ -47,7 +47,8 @@ CTexture * CTexture::Create(void)
 		pTexture->SetTextureName();
 		return pTexture;
 	}
-	return pTexture;
+
+	return nullptr;
 }
 
 //=============================================================================
@@ -58,13 +59,13 @@ HRESULT CTexture::SetTextureName(void)
 	// 通常テクスチャ
 	m_aTexFileName[TEXTURE_TYPE_NUM_NORMAL] =
 	{
-//		{ "data/Texture/floor.jpg" },					// 床
+		{ "data/Texture/test.jpg" },				// テスト
 	};
 
 	// 分割テクスチャ
 	m_aTexFileName[TEXTURE_TYPE_NUM_SEPARATE] =
 	{
-//		{ "data/Texture/Move_Ui.png" },					// 移動のUi
+		{ "data/Texture/test_animation.png" },		// テストアニメーション
 	};
 
 	// ボリュームテクスチャ
@@ -94,10 +95,10 @@ void CTexture::LoadAll(void)
 	SeparateTexLoad();
 
 	// ボリュームテクスチャ
-	VolumeTexLoad();
+//	VolumeTexLoad();
 
 	// キューブテクスチャ
-	CubeTexLoad();
+//	CubeTexLoad();
 }
 
 //=============================================================================
@@ -112,10 +113,10 @@ void CTexture::UnLoadAll(void)
 	SeparateTexUnLoad();
 
 	// ボリュームテクスチャ
-	VolumeTexUnLoad();
+//	VolumeTexUnLoad();
 
 	// キューブテクスチャ
-	CubeTexUnLoad();
+//	CubeTexUnLoad();
 }
 
 //=============================================================================
@@ -126,9 +127,8 @@ HRESULT CTexture::NormalTexLoad(void)
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
 
-	size_t size = m_aTexFileName[TEXTURE_TYPE_NUM_NORMAL].size();
-
 	// テクスチャの読み込み
+	size_t size = m_aTexFileName[TEXTURE_TYPE_NUM_NORMAL].size();
 	for (size_t nCount = 0; nCount < size; nCount++)
 	{
 		D3DXCreateTextureFromFile(pDevice, m_aTexFileName[TEXTURE_TYPE_NUM_NORMAL][nCount].data(), &m_apTexture[nCount]);
@@ -144,9 +144,9 @@ void CTexture::NormalTexUnLoad(void)
 {
 	for (int nCount = 0; nCount < TEXTURE_NUM_MAX; nCount++)
 	{
-		if (m_apTexture[nCount] != nullptr)
+		if (m_apTexture[nCount])
 		{
-		//	m_apTexture[nCount]->Release();
+			m_apTexture[nCount]->Release();
 			m_apTexture[nCount] = nullptr;
 		}
 	}
@@ -160,9 +160,8 @@ HRESULT CTexture::SeparateTexLoad(void)
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
 
-	size_t size = m_aTexFileName[TEXTURE_TYPE_NUM_SEPARATE].size();
-
 	// 分割テクスチャの読み込み
+	size_t size = m_aTexFileName[TEXTURE_TYPE_NUM_SEPARATE].size();
 	for (size_t nCount = 0; nCount < size; nCount++)
 	{
 		D3DXCreateTextureFromFile(pDevice, m_aTexFileName[TEXTURE_TYPE_NUM_SEPARATE][nCount].data(), &m_apSeparateTexture[nCount].pSeparateTexture);
@@ -178,9 +177,9 @@ void CTexture::SeparateTexUnLoad(void)
 	// テクスチャの解放
 	for (int nCount = 0; nCount < SEPARATE_TEX_MAX; nCount++)
 	{
-		if (m_apSeparateTexture[nCount].pSeparateTexture != nullptr)
+		if (m_apSeparateTexture[nCount].pSeparateTexture)
 		{
-		//	m_apSeparateTexture[nCount].pSeparateTexture->Release();
+			m_apSeparateTexture[nCount].pSeparateTexture->Release();
 			m_apSeparateTexture[nCount].pSeparateTexture = nullptr;
 		}
 	}
@@ -193,7 +192,7 @@ LPDIRECT3DTEXTURE9 CTexture::GetTexture(TEXTURE_TYPE Tex_Num)
 {
 	if (Tex_Num < TEXTURE_NUM_MAX)
 	{
-		if (m_apTexture[Tex_Num] != nullptr)
+		if (m_apTexture[Tex_Num])
 		{
 			return m_apTexture[Tex_Num];
 		}
@@ -211,7 +210,7 @@ LPDIRECT3DTEXTURE9 CTexture::GetSeparateTexture(SEPARATE_TEX_TYPE SepaTex_Type)
 	if (SepaTex_Type < SEPARATE_TEX_MAX)
 	{
 		// NULLcheck
-		if (m_apSeparateTexture[SepaTex_Type].pSeparateTexture != nullptr)
+		if (m_apSeparateTexture[SepaTex_Type].pSeparateTexture)
 		{
 			// テクスチャ情報
 			return m_apSeparateTexture[SepaTex_Type].pSeparateTexture;
@@ -224,7 +223,7 @@ LPDIRECT3DTEXTURE9 CTexture::GetSeparateTexture(SEPARATE_TEX_TYPE SepaTex_Type)
 //=============================================================================
 // 分割テクスチャの情報
 //=============================================================================
-D3DXVECTOR2 CTexture::GetSparateTexInfo(SEPARATE_TEX_TYPE SepaTex_Type)
+INT_VERTEX_2D CTexture::GetSparateTexInfo(SEPARATE_TEX_TYPE SepaTex_Type)
 {
 	// 配列より小さかったら
 	if (SepaTex_Type < SEPARATE_TEX_MAX)
@@ -233,7 +232,7 @@ D3DXVECTOR2 CTexture::GetSparateTexInfo(SEPARATE_TEX_TYPE SepaTex_Type)
 		return m_apSeparateTexture[SepaTex_Type].m_TexInfo;
 	}
 
-	return D3DXVECTOR2(0.0f, 0.0f);
+	return { 0, 0 };
 }
 
 //=============================================================================
@@ -259,8 +258,8 @@ HRESULT CTexture::VolumeTexLoad(void)
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
 
-	size_t size = m_aTexFileName[TEXTURE_TYPE_NUM_VOLUME].size();
 	// テクスチャの読み込み
+	size_t size = m_aTexFileName[TEXTURE_TYPE_NUM_VOLUME].size();
 	for (size_t nCount = 0; nCount < size; nCount++)
 	{
 		D3DXCreateVolumeTextureFromFile(pDevice, m_aTexFileName[TEXTURE_TYPE_NUM_VOLUME][nCount].data(), &m_pVolumeTexture[nCount]);
@@ -276,9 +275,9 @@ void CTexture::VolumeTexUnLoad(void)
 {
 	for (int nCount = 0; nCount < VOLUME_TEX_MAX; nCount++)
 	{
-		if (m_pVolumeTexture[nCount] != nullptr)
+		if (m_pVolumeTexture[nCount])
 		{
-		//	m_pVolumeTexture[nCount]->Release();
+			m_pVolumeTexture[nCount]->Release();
 			m_pVolumeTexture[nCount] = nullptr;
 		}
 	}
@@ -291,7 +290,7 @@ LPDIRECT3DVOLUMETEXTURE9 CTexture::GetVolumeTexture(VOLUME_TEX_TYPE Tex_Type)
 {
 	if (Tex_Type < VOLUME_TEX_MAX)
 	{
-		if (m_pVolumeTexture[Tex_Type] != nullptr)
+		if (m_pVolumeTexture[Tex_Type])
 		{
 			return m_pVolumeTexture[Tex_Type];
 		}
@@ -308,8 +307,8 @@ HRESULT CTexture::CubeTexLoad(void)
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
 
-	size_t size = m_aTexFileName[TEXTURE_TYPE_NUM_CUBE].size();
 	// テクスチャの読み込み
+	size_t size = m_aTexFileName[TEXTURE_TYPE_NUM_CUBE].size();
 	for (size_t nCount = 0; nCount < size; nCount++)
 	{
 		D3DXCreateCubeTextureFromFile(pDevice, m_aTexFileName[TEXTURE_TYPE_NUM_CUBE][nCount].data(), &m_pCubeTexture[nCount]);
@@ -327,7 +326,7 @@ void CTexture::CubeTexUnLoad(void)
 	{
 		if (m_pCubeTexture[nCount] != nullptr)
 		{
-		//	m_pCubeTexture[nCount]->Release();
+			m_pCubeTexture[nCount]->Release();
 			m_pCubeTexture[nCount] = nullptr;
 		}
 	}

@@ -20,10 +20,6 @@
 // 前方宣言
 //=============================================================================
 class CScene2D;
-class CPlayer;
-class CCamera;
-class CCameraTitle;
-class CLight;
 
 //=============================================================================
 // クラス定義
@@ -39,15 +35,7 @@ public:
 	void Update(void);			// 更新処理
 	void Draw(void);			// 描画処理
 
-	// Get関数
-	CCamera* GetCamera(void) override	{ return (CCamera*)m_pCamera; }		// カメラのポインタ
-	CLight* GetLight(void) override		{ return m_pLight; }				// ライトのポインタ
-	CPlayer* GetPlayer(void) override	{ return m_pShip; }					// プレイヤーのポインタ
-
 private:
-	CPlayer *m_pShip;				// 船
 	vector<CScene2D*> m_pObject2D;	// 2Dオブジェクト
-	CCameraTitle *m_pCamera;		// カメラのポインタ
-	CLight *m_pLight;				// ライトのポインタ
 };
 #endif

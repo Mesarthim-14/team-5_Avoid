@@ -22,12 +22,13 @@ CXfile::CXfile()
 	memset(m_pFileName, 0, sizeof(m_pFileName));
 	memset(m_nMaxParts, 0, sizeof(m_nMaxParts));
 
+	// 階層構造モデル初期化
 	for (int nCount = 0; nCount < HIERARCHY_XFILE_NUM_MAX; nCount++)
 	{
-		// 初期化処理
 		m_apHierarchyModel[nCount].clear();
 	}
 
+	// モデルファイル初期化
 	for (int nCount = 0; nCount < HIERARCHY_XFILE_NUM_MAX; nCount++)
 	{
 		// 初期化処理
@@ -37,13 +38,13 @@ CXfile::CXfile()
 	// Xファイルネームを取得
 	m_aXfileName =
 	{
-//		{ "data/Model/Bullet/bullet.x" },			// 弾
+		{ "data/Model/Normal/block.x" },			// テストブロック
 	};
 
 	// 階層構造モデル
 	m_aHierarchyXfileName =
 	{
-//		{ "data/Text/Player/motion_Player.txt"},			// プレイヤー
+		{ "data/Text/Test/motion_test.txt"},		// プレイヤー
 	};
 }
 
@@ -63,8 +64,12 @@ CXfile * CXfile::Create(void)
 {
 	// メモリ確保
 	CXfile *pXfile = new CXfile;
+	if (pXfile)
+	{
+		return pXfile;
+	}
 
-	return pXfile;
+	return nullptr;
 }
 
 //=============================================================================
@@ -74,8 +79,9 @@ HRESULT CXfile::ModelLoad(void)
 {
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	size_t size = m_aXfileName.size();
 
-	for (size_t nCount = 0; nCount < m_aXfileName.size(); nCount++)
+	for (size_t nCount = 0; nCount < size; nCount++)
 	{
 		// Xファイルの読み込み
 		D3DXLoadMeshFromX(m_aXfileName.at(nCount).data(),
@@ -120,23 +126,23 @@ void CXfile::ModelUnLoad(void)
 	for (int nCount = 0; nCount < XFILE_NUM_MAX; nCount++)
 	{
 		//メッシュの破棄
-		if (m_aXfile[nCount].pMesh != nullptr)
+		if (m_aXfile[nCount].pMesh)
 		{
 			m_aXfile[nCount].pMesh->Release();
 			m_aXfile[nCount].pMesh = nullptr;
 		}
 		//マテリアルの破棄
-		if (m_aXfile[nCount].pBuffMat != nullptr)
+		if (m_aXfile[nCount].pBuffMat)
 		{
 			m_aXfile[nCount].pBuffMat->Release();
 			m_aXfile[nCount].pBuffMat = nullptr;
 		}
 
-		size_t size = m_aXfile[nCount].apTexture.size();
 		// テクスチャの破棄
+		size_t size = m_aXfile[nCount].apTexture.size();
 		for (size_t nCntTexture = 0; nCntTexture < size; nCntTexture++)
 		{
-			if (m_aXfile[nCount].apTexture.at(nCntTexture) != nullptr)
+			if (m_aXfile[nCount].apTexture.at(nCntTexture))
 			{
 				m_aXfile[nCount].apTexture.at(nCntTexture)->Release();
 				m_aXfile[nCount].apTexture.at(nCntTexture) = nullptr;
@@ -171,7 +177,7 @@ HRESULT CXfile::HierarchyReadFile(void)
 		int nKeyNum = 0;		// キー番号
 		int nMotionNum = 0;		// モーション番号
 
-		if (pFile != nullptr)
+		if (pFile)
 		{
 			do
 			{
@@ -303,11 +309,10 @@ HRESULT CXfile::HierarchyModelLoad(void)
 			{
 				LPDIRECT3DTEXTURE9 pTexture = nullptr;
 
-				if (materials[nCntMat].pTextureFilename != nullptr)
+				if (materials[nCntMat].pTextureFilename)
 				{
 					// ファイルネームの取得
 					char cData[256] = {};
-
 					sprintf(cData, "data/Texture/%s", materials[nCntMat].pTextureFilename);
 
 					// テクスチャの読み込み
@@ -337,14 +342,14 @@ void CXfile::HierarchyModelUnLoad(void)
 		for (size_t nCount = 0; nCount < size; nCount++)
 		{
 			//マテリアル情報の破棄
-			if (m_apHierarchyModel[nXFileNumCnt].at(nCount).pBuffMat != nullptr)
+			if (m_apHierarchyModel[nXFileNumCnt].at(nCount).pBuffMat)
 			{
 				m_apHierarchyModel[nXFileNumCnt].at(nCount).pBuffMat->Release();
 				m_apHierarchyModel[nXFileNumCnt].at(nCount).pBuffMat = nullptr;
 			}
 
 			//メッシュ情報の破棄
-			if (m_apHierarchyModel[nXFileNumCnt].at(nCount).pMesh != nullptr)
+			if (m_apHierarchyModel[nXFileNumCnt].at(nCount).pMesh)
 			{
 				m_apHierarchyModel[nXFileNumCnt].at(nCount).pMesh->Release();
 				m_apHierarchyModel[nXFileNumCnt].at(nCount).pMesh = nullptr;
@@ -353,7 +358,7 @@ void CXfile::HierarchyModelUnLoad(void)
 			// テクスチャの開放
 			for (size_t nCntTexture = 0; nCntTexture < m_apHierarchyModel[nXFileNumCnt].at(nCount).apTexture.size(); nCntTexture++)
 			{
-				if (m_apHierarchyModel[nXFileNumCnt].at(nCount).apTexture.at(nCntTexture) != nullptr)
+				if (m_apHierarchyModel[nXFileNumCnt].at(nCount).apTexture.at(nCntTexture))
 				{
 					m_apHierarchyModel[nXFileNumCnt].at(nCount).apTexture.at(nCntTexture)->Release();
 					m_apHierarchyModel[nXFileNumCnt].at(nCount).apTexture.at(nCntTexture) = nullptr;
@@ -421,7 +426,7 @@ LPDIRECT3DTEXTURE9 *CXfile::GetXfileTexture(XFILE_NUM TexNum)
 {
 	if (TexNum < XFILE_NUM_MAX)
 	{
-		if (m_aXfile[TexNum].apTexture.data() != nullptr)
+		if (m_aXfile[TexNum].apTexture.data())
 		{
 			return m_aXfile[TexNum].apTexture.data();
 		}

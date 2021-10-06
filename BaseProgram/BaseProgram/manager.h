@@ -18,8 +18,6 @@
 #define GET_TEXTURE_PTR		(CManager::GetResourceManager()->GetTextureClass())	// テクスチャのポインタ
 #define GET_SOUND_PTR		(CManager::GetResourceManager()->GetSoundClass())	// サウンドのポインタ
 #define GET_XFILE_PTR		(CManager::GetResourceManager()->GetXfileClass())	// Xファイルのポインタ
-#define GET_PLAYER_PTR		(CManager::GetModePtr()->GetPlayer())				// プレイヤーのポインタ
-#define GET_CAMERA_PTR		(CManager::GetModePtr()->GetCamera())				// カメラのポインタ
 #define GET_RENDERER_DEVICE	(CManager::GetRenderer()->GetDevice())				// デバイス取得
 
 //=============================================================================
@@ -33,6 +31,9 @@ class CScene;
 class CResourceManager;
 class CGame;
 class CModeBase;
+class CLight;
+class CCamera;
+class CPlayer;
 
 //=============================================================================
 //マネージャークラス
@@ -58,8 +59,6 @@ public:
 	void Uninit(void);												// 終了処理
 	void Update(void);												// 更新処理
 	void Draw(void);												// 描画処理
-	void LoadAll(void);												// 全てのロード処理
-	void UnLoadAll(void);											// 全てのアンロード処理
 
 	// Set関数
 	static void SetMode(MODE_TYPE mode);							// モードの設定
@@ -73,8 +72,16 @@ public:
 	static CInputJoypad *GetJoypad(void)				{ return m_pJoypad.get(); }				// ジョイパッドコントローラの情報
 	static CScene *GetScene(void)						{ return m_pScene.get(); }				// シーン情報
 	static CResourceManager *GetResourceManager(void)	{ return m_pResourceManager.get(); }	// リソースマネージャのポインタ
+	static CCamera *GetCamera(void)						{ return m_pCamera.get(); }				// カメラのポインタ
+	static CLight *GetLight(void)						{ return m_pLight.get(); }				// ライトのポインタ
+	static CPlayer* GetPlayer(void);															// プレイヤーの取得
 
 private:
+	// private関数
+	void LoadAll(void);										// 全てのロード処理
+	void UnLoadAll(void);									// 全てのアンロード処理
+
+	// メンバ変数
 	static unique_ptr<CRenderer> m_pRenderer;				// レンダラークラスのポインタ
 	static unique_ptr<CInputKeyboard> m_pInput;				// インプットクラスのポインタ
 	static unique_ptr<CFade> m_pFade;						// フェードクラスのポインタ
@@ -82,6 +89,8 @@ private:
 	static unique_ptr<CScene> m_pScene;						// シーンのポインタ
 	static unique_ptr<CResourceManager> m_pResourceManager;	// リソースマネージャのポインタ
 	static unique_ptr<CModeBase> m_pModeBase;				// モードのポインタ
+	static unique_ptr<CCamera> m_pCamera;					// カメラのポインタ
+	static unique_ptr<CLight> m_pLight;						// ライトのポインタ
 	static MODE_TYPE m_mode;								// モード
 };
 

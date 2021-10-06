@@ -71,14 +71,14 @@ HRESULT CResourceManager::Init(void)
 //=============================================================================
 void CResourceManager::LoadAll(void)
 {
-	// !nullcheck
+	// nullcheck
 	if (m_pTexture != nullptr)
 	{
 		// テクスチャロード
 		m_pTexture->LoadAll();
 	}
 
-	// !nullcheck
+	// nullcheck
 	if (m_pXFile != nullptr)
 	{
 		// モデルロード
@@ -91,8 +91,8 @@ void CResourceManager::LoadAll(void)
 //=============================================================================
 void CResourceManager::UnLoadAll(void)
 {
-	// !nullcheck
-	if (m_pTexture != nullptr)
+	// nullcheck
+	if (m_pTexture)
 	{
 		// テクスチャのアンロード
 		m_pTexture->UnLoadAll();
@@ -100,8 +100,8 @@ void CResourceManager::UnLoadAll(void)
 		m_pTexture = nullptr;
 	}
 
-	// !nullcheck
-	if (m_pXFile != nullptr)
+	// nullcheck
+	if (m_pXFile)
 	{
 		// テクスチャアンロード
 		m_pXFile->UnLoadAll();
@@ -110,7 +110,7 @@ void CResourceManager::UnLoadAll(void)
 	}
 
 	// nullcheck
-	if (m_pSound != nullptr)
+	if (m_pSound)
 	{
 		// 終了処理
 		m_pSound->Uninit();
@@ -125,18 +125,19 @@ void CResourceManager::UnLoadAll(void)
 CResourceManager * CResourceManager::GetInstance(void)
 {
 	// nullcheck
-	if (m_pResourceManager == nullptr)
+	if (!m_pResourceManager)
 	{
 		// メモリ確保
 		m_pResourceManager = new CResourceManager;
 
-		// !nullcheck
-		if (m_pResourceManager != nullptr)
+		// nullcheck
+		if (m_pResourceManager)
 		{
 			// 初期化処理
 			m_pResourceManager->Init();
+			return m_pResourceManager;
 		}
 	}
 
-	return m_pResourceManager;
+	return nullptr;
 }

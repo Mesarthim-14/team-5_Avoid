@@ -220,10 +220,10 @@ void CRenderer::Draw(void)
 		D3DXMATRIX matProj, matView, matWorld;
 		D3DXMATRIX trans;
 
-		if (CManager::GetModePtr() != nullptr)
+		if (CManager::GetCamera() != nullptr)
 		{
 			// カメラのポインタ取得
-			CCamera *pCamera = CManager::GetModePtr()->GetCamera();
+			CCamera *pCamera = CManager::GetCamera();
 
 			// カメラが使われていたら
 			if (pCamera != nullptr)
@@ -249,76 +249,6 @@ void CRenderer::Draw(void)
 
 	// バックバッファとフロントバッファの入れ替え
 	m_pD3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
-}
-
-//=============================================================================
-// ステンシルの設定
-// Author : Konishi Yuuto
-//=============================================================================
-void CRenderer::SetStateStencil(void)
-{
-	//------------------------------------------------------------
-	// パス1:影ボリュームの描画
-	//------------------------------------------------------------
-	// 深度バッファに書き込みはしない
-	m_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-
-	// レンダリングターゲットに書き込みはしない
-	m_pD3DDevice->SetRenderState(D3DRS_COLORWRITEENABLE, FALSE);
-
-	// 両面描く
-	m_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	// 両面ステンシルを使用する
-	m_pD3DDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
-	m_pD3DDevice->SetRenderState(D3DRS_TWOSIDEDSTENCILMODE, TRUE);
-
-	// ステンシルテストは常に合格にする
-	m_pD3DDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
-
-	// 表面は深度テストに合格したらステンシルバッファの内容を+1する
-	m_pD3DDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCR);
-
-	// 裏面は深度テストに合格したらステンシルバッファの内容を-1する
-	m_pD3DDevice->SetRenderState(D3DRS_CCW_STENCILPASS, D3DSTENCILOP_DECR);
-}
-
-//=============================================================================
-// ステンシルテスト設定
-// Author : Konishi Yuuto
-//=============================================================================
-void CRenderer::SetStencilTest(void)
-{
-	// 状態を元に戻す
-	m_pD3DDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
-	m_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	m_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	m_pD3DDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
-
-	//--------------------------------------------------------------
-	// パス2:影の描画
-	//--------------------------------------------------------------
-	// アルファブレンディングは線型に掛ける
-	m_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-
-	// ステンシルバッファの値が1以上の時に書き込む
-	m_pD3DDevice->SetRenderState(D3DRS_STENCILREF, 0x01);
-	m_pD3DDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_LESSEQUAL);
-
-	// 透過あり
-	m_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	m_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-}
-
-//=============================================================================
-// ステンシル設定リセット
-// Author : Konishi Yuuto
-//=============================================================================
-void CRenderer::ReSetStateStencil(void)
-{
-	// 状態を元に戻す
-	m_pD3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-	m_pD3DDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
 }
 
 //=============================================================================

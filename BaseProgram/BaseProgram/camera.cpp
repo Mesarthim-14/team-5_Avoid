@@ -21,9 +21,6 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define CAMERA_DEFAULT_Fθ			(D3DXToRadian(75.0f))			// カメラのθDefault値
-#define DISTANCE					(2200.0f)						// 視点～注視点の距離
-#define PLAYER_HEIGHT				(600.0f)						// 注視点の高さ
 
 //=============================================================================
 // コンストラクタ
@@ -53,15 +50,6 @@ CCamera::~CCamera()
 //=============================================================================
 HRESULT CCamera::Init(void)
 {
-	m_fMove = 5.0f;
-	m_fDistance = DISTANCE;
-	m_fVartical = CAMERA_DEFAULT_Fθ;
-	m_fHorizontal = D3DXToRadian(0.0f);											// 初期値敵のほう向ける
-	m_posR = D3DXVECTOR3(0.0f, PLAYER_HEIGHT, 0.0f);							// 注視点設定
-	m_posU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);										// 上方向ベクトル
-	m_posV.x = m_posR.x + m_fDistance * sinf(m_fVartical) * sinf(m_fHorizontal);// カメラ位置X
-	m_posV.y = m_posR.z + m_fDistance * cosf(m_fVartical);						// カメラ位置Y
-	m_posV.z = m_posR.y + m_fDistance * sinf(m_fVartical) * cosf(m_fHorizontal);// カメラ位置Z
 
 	return S_OK;
 }
@@ -79,20 +67,14 @@ void CCamera::Uninit(void)
 //=============================================================================
 void CCamera::Update(void)
 {
-	// プレイヤーのポインタ取得
-	CPlayer *pPlayer = GET_PLAYER_PTR;
+	// プレイヤー
+	CPlayer *pPlayer = CManager::GetPlayer();
 
 	// プレイヤーが使われていたら
-	if (pPlayer != nullptr)
+	if (pPlayer)
 	{
-		D3DXVECTOR3 PlayerPos = ZeroVector3;	//プレイヤー位置
-		D3DXVECTOR3 PlayerRot = ZeroVector3;	//プレイヤー角度
-
-		//プレイヤー1位置取得
-		PlayerPos = pPlayer->GetPos();
-
-		//プレイヤー1角度取得
-		PlayerRot = pPlayer->GetRot();
+		D3DXVECTOR3 PlayerPos = pPlayer->GetPos();	//プレイヤー位置
+		D3DXVECTOR3 PlayerRot = pPlayer->GetRot();	//プレイヤー角度
 
 		// 通常状態のカメラ移動
 		this->NomalUpdate(PlayerPos, PlayerRot);

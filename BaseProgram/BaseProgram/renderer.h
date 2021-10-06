@@ -26,10 +26,6 @@ public:
 	void Update(void);							// 更新処理
 	void Draw(void);							// 描画処理
 
-	void SetStateStencil(void);					// ステンシルの設定
-	void SetStencilTest(void);					// ステンシルテスト設定
-	void ReSetStateStencil(void);				// ステンシル情報リセット
-
 	LPDIRECT3DDEVICE9 GetDevice(void);			// デバイス情報
 
 private:

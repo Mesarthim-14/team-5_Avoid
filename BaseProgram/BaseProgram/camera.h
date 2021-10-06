@@ -27,6 +27,7 @@ public:
 	virtual void SetCamera(void);						// ƒJƒƒ‰‚Ì•`‰æİ’è
 	virtual void NomalUpdate(D3DXVECTOR3 PlayerPos, D3DXVECTOR3 PlayerRot) = 0;
 
+protected:
 	// SetŠÖ”
 	void SetTarget(bool Target)				{ m_bTarget = Target; }
 	void SetDistance(float fDistance)		{ m_fDistance = fDistance; }

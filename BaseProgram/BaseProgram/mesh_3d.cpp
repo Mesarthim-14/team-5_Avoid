@@ -42,7 +42,7 @@ CMesh3d::CMesh3d(PRIORITY Priority) :CSceneBase(Priority)
 CMesh3d::~CMesh3d()
 {
 	// インデックスバッファの開放
-	if (m_pIdxBuff != nullptr)
+	if (m_pIdxBuff)
 	{
 		m_pIdxBuff->Release();
 		m_pIdxBuff = nullptr;

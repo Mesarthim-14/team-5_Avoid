@@ -11,20 +11,15 @@
 #include "character.h"
 #include "renderer.h"
 #include "manager.h"
-#include "collision.h"
-#include "game.h"
-#include "player.h"
-#include "texture.h"
-#include "sound.h"
 #include "resource_manager.h"
 #include "motion.h"
+#include "model_info.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
 #define GRAVITY_POWAR			(1.0f)						// 重力の強さ
 #define GROUND_RIMIT			(0.0f)						// 地面の制限
-#define PARENT_NUM				(0)							// 親のナンバー
 
 //=============================================================================
 // コンストラクタ
@@ -58,11 +53,8 @@ CCharacter::~CCharacter()
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CCharacter::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+HRESULT CCharacter::Init(void)
 {
-	// 引数の代入
-	m_pos = pos;
-	m_rot = rot;
 
 	return S_OK;
 }
@@ -72,14 +64,14 @@ HRESULT CCharacter::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 //=============================================================================
 void CCharacter::Uninit()
 {
-	for (auto &nCount : m_apModelAnime)
+	for (auto &ModelAnime : m_apModelAnime)
 	{
 		// !nullcheck
-		if (nCount != nullptr)
+		if (ModelAnime)
 		{
 			//メモリの削除
-			delete nCount;
-			nCount = nullptr;
+			delete ModelAnime;
+			ModelAnime = nullptr;
 		}
 	}
 
@@ -87,7 +79,7 @@ void CCharacter::Uninit()
 	m_apModelAnime.clear();
 
 	// !nullcheck
-	if (m_pMotion != nullptr)
+	if (m_pMotion)
 	{
 		//メモリの削除
 		delete m_pMotion;
@@ -111,7 +103,6 @@ void CCharacter::Update()
 
 	// カウンターを進める
 	m_nStateCounter++;
-	
 }
 
 //=============================================================================
@@ -119,10 +110,8 @@ void CCharacter::Update()
 //=============================================================================
 void CCharacter::Draw()
 {
-	// 描画処理
 	//デバイス情報の取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
-
 	D3DXMATRIX mtxRot, mtxTrans, mtxScale;
 
 	//ワールドマトリックスの初期化
@@ -142,18 +131,18 @@ void CCharacter::Draw()
 	// モデルの描画
 	for (auto &model : m_apModelAnime)
 	{
-		if (model != nullptr)
+		if (model)
 		{
 			model->Draw(m_rot);
 		}
 	}
 
+	// 影の描画
 	if (m_bUseShadow)
 	{
-		// 影の描画
 		for (auto &shadow : m_apModelAnime)
 		{
-			if (shadow != nullptr)
+			if (shadow)
 			{
 				shadow->ShadowDraw(m_rot);
 			}
@@ -169,8 +158,8 @@ void CCharacter::ModelCreate(CXfile::HIERARCHY_XFILE_NUM FileNum)
 	// XFileのポインタ取得
 	CXfile *pXfile = CManager::GetResourceManager()->GetXfileClass();
 
-	// !nullcheck
-	if (pXfile != nullptr)
+	// nullcheck
+	if (pXfile)
 	{
 		// モデルパーツの設定
 		m_nParts = pXfile->GetModelParts(FileNum);
@@ -184,15 +173,21 @@ void CCharacter::ModelCreate(CXfile::HIERARCHY_XFILE_NUM FileNum)
 			vector<CXfile::MODEL> model = pXfile->GetHierarchyXfile(FileNum);
 
 			// nullcheck
-			if (pModelAnime == nullptr)
+			if (!pModelAnime)
 			{
 				// インスタンス生成
 				pModelAnime = CModelAnime::Create(ModelFile.offsetPos, ModelFile.offsetRot, model.at(nCntModel));
 
-				// !nullcheck
-				if (pModelAnime != nullptr)
+				// nullcheck
+				if (pModelAnime)
 				{
-					pModelAnime->SetModel(model.at(nCntModel));
+					// モデル情報の設定
+					pModelAnime->GetModelInfo()->SetModelStatus(ModelFile.offsetPos, ModelFile.offsetRot, model.at(nCntModel));
+					if (m_bUseShadow)
+					{
+						// 影の生成
+						pModelAnime->GetModelInfo()->CreateShadowPtr();
+					}
 
 					//親モデルの場合
 					if (nCntModel == 0)
@@ -212,9 +207,9 @@ void CCharacter::ModelCreate(CXfile::HIERARCHY_XFILE_NUM FileNum)
 			}
 		}
 		// nullcheck
-		if (m_pMotion == nullptr)
+		if (!m_pMotion)
 		{
-			// インスタンス生成
+			// モーション情報のインスタンス生成
 			m_pMotion = CMotion::Create(pXfile->GetModelFileName(FileNum));
 		}
 	}
@@ -226,7 +221,7 @@ void CCharacter::ModelCreate(CXfile::HIERARCHY_XFILE_NUM FileNum)
 void CCharacter::ModelAnimeUpdate(void)
 {
 	// モーションの更新処理
-	if (m_pMotion != nullptr)
+	if (m_pMotion)
 	{
 		// モーションの更新
 		m_pMotion->UpdateMotion(m_nParts, m_apModelAnime);
@@ -258,7 +253,7 @@ void CCharacter::Landing(float fHeight)
 	m_pos.y = fHeight;
 
 	// 着地の状態
-	if (m_bLanding == false)
+	if (!m_bLanding)
 	{
 		m_bLanding = true;
 	}
@@ -269,8 +264,8 @@ void CCharacter::Landing(float fHeight)
 //=============================================================================
 void CCharacter::SetMotion(int nMotionState)
 {
-	// !nullcheck
-	if (m_pMotion != nullptr)
+	// nullcheck
+	if (m_pMotion)
 	{
 		// モーションの更新
 		m_pMotion->SetMotion(nMotionState, m_nParts, m_apModelAnime);
@@ -285,9 +280,18 @@ void CCharacter::SetShadowRotCalculation(void)
 	// モデルの描画
 	for (auto &model : m_apModelAnime)
 	{
-		if (model != nullptr)
+		if (model)
 		{
 			model->SetRotCalculation(true);
 		}
 	}
+}
+
+//=============================================================================
+// キャラクターの情報
+//=============================================================================
+void CCharacter::SetCharacterInfo(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+{
+	m_pos = pos;
+	m_rot = rot;
 }

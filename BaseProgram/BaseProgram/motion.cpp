@@ -43,24 +43,19 @@ CMotion::~CMotion()
 //=============================================================================
 CMotion * CMotion::Create(string cFileName)
 {
-	//階層モデルクラスのポインタ変数
-	CMotion *pMotion = nullptr;
-
-	//インスタンス生成
-	pMotion = new CMotion;
+	// インスタンス生成
+	CMotion *pMotion = new CMotion;
 
 	// nullcheck
-	if (pMotion != nullptr)
+	if (pMotion)
 	{
 		// ファイルデータ読み込み
 		pMotion->ReadMotionFile(cFileName);
-	}
-	else
-	{
-		return nullptr;
+		return pMotion;
+
 	}
 
-	return pMotion;
+	return nullptr;
 }
 
 //=============================================================================
@@ -73,14 +68,14 @@ void CMotion::UpdateMotion(int nMaxParts, vector<CModelAnime*> apModelAnime)
 	{
 		for (int nCntModel = 0; nCntModel < nMaxParts; nCntModel++)
 		{
-			// !nullcheck
-			if (apModelAnime.at(nCntModel) != nullptr)
+			// nullcheck
+			if (apModelAnime.at(nCntModel))
 			{
 				D3DXVECTOR3 startPos = apModelAnime.at(nCntModel)->GetPosAnime();
 				D3DXVECTOR3 startRot = apModelAnime.at(nCntModel)->GetRotAnime();
 
 				//	if (m_nCountMotion == 0)
-				if (m_Motion[m_nMotionState].bLoop == false)
+				if (!m_Motion[m_nMotionState].bLoop)
 				{
 					if (m_nKey == 0)
 					{
@@ -157,7 +152,7 @@ void CMotion::UpdateMotion(int nMaxParts, vector<CModelAnime*> apModelAnime)
 	else
 	{
 		//ループするなら
-		if (m_Motion[m_nMotionState].bLoop == true)
+		if (m_Motion[m_nMotionState].bLoop)
 		{
 			m_nKey = 0;
 			m_nCountMotion = 0;
@@ -183,7 +178,7 @@ HRESULT CMotion::ReadMotionFile(string cFileName)
 	// ファイルオープン
 	pFile = fopen(cFileName.c_str(), "r");
 
-	if (pFile != nullptr)
+	if (pFile)
 	{
 		do
 		{
@@ -316,9 +311,10 @@ void CMotion::SetMotion(int nMotion, int nMaxParts, vector<CModelAnime*> apModel
 		m_nMotionState = nMotion;
 		m_bMotionPlaing = true;
 
-		for (size_t nCntModel = 0; nCntModel < apModelAnime.size(); nCntModel++)
+		size_t size = apModelAnime.size();
+		for (size_t nCntModel = 0; nCntModel < size; nCntModel++)
 		{
-			if (apModelAnime.at(nCntModel) != nullptr)
+			if (apModelAnime.at(nCntModel))
 			{
 				//開始位置
 				pos.x = m_Motion[m_nMotionState].aKeyInfo[m_nKey].aKey.at(nCntModel).fPosX;

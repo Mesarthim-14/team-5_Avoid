@@ -22,10 +22,9 @@ public:
 	~CCameraGame();					// デストラクタ
 
 	HRESULT Init(void);					// 初期化処理
-	void Update(void);					// 更新処理
-	void NomalUpdate(D3DXVECTOR3 PlayerPos, D3DXVECTOR3 PlayerRot) override;
 	static CCameraGame*Create(void);	// クリエイト
 
 private:
+	void NomalUpdate(D3DXVECTOR3 PlayerPos, D3DXVECTOR3 PlayerRot) override;
 };
 #endif 

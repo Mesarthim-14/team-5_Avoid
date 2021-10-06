@@ -30,6 +30,17 @@ public:
 		MESH_TYPE_MAX			// 最大値
 	};
 
+
+	CMesh3d(PRIORITY Priority = PRIORITY_0);	// コンストラクタ
+	~CMesh3d();									// デストラクタ
+
+	virtual HRESULT Init(void) = 0;				// 初期化処理
+	virtual void Update(void) = 0;				// 更新処理
+	virtual void Draw(void);					// 描画処理
+
+	static HRESULT ReadFile(void);				// ファイル読み込み
+
+protected:
 	// 何角形かを取得する構造体
 	struct CYLINDER
 	{
@@ -44,16 +55,6 @@ public:
 		D3DXVECTOR2 size;		// サイズ
 	};
 
-	CMesh3d(PRIORITY Priority = PRIORITY_0);	// コンストラクタ
-	~CMesh3d();									// デストラクタ
-
-	virtual HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 size) = 0;	// 初期化処理
-	virtual void Uninit(void) = 0;									// 終了処理
-	virtual void Update(void) = 0;									// 更新処理
-	virtual void Draw(void);										// 描画処理
-
-	static HRESULT ReadFile(void);									// ファイル読み込み
-
 	// Set関数
 	void SetNumVertex(const int nNumVertex)					{ m_nNumVertex = nNumVertex; }						// 頂点数
 	void SetNumIndex(const int nNumIndex)					{ m_nNumIndex = nNumIndex; }						// インデックス数
@@ -67,15 +68,15 @@ public:
 		const MESH_TYPE &typeNum)							{ m_Mesh3D[typeNum].CylinderNum = CylinderNum; }	// 何角形か設定する
 
 	// Get関数
-	int &GetNumVertex(void)						{ return m_nNumVertex; }					// 頂点数の情報
-	int &GetNumIndex(void)						{ return m_nNumIndex; }						// インデックス数の情報
-	int &GetNumPolygon(void)					{ return m_nNumPolygon; }					// ポリゴン数の情報
+	int &GetNumVertex(void) { return m_nNumVertex; }					// 頂点数の情報
+	int &GetNumIndex(void) { return m_nNumIndex; }						// インデックス数の情報
+	int &GetNumPolygon(void) { return m_nNumPolygon; }					// ポリゴン数の情報
 	CYLINDER &GetCylinderNum(MESH_TYPE typeNum) { return m_Mesh3D[typeNum].CylinderNum; }	// 何角形かの情報
-	MESH_TYPE &GetMeshNum(void)					{ return m_MeshNum; }						// メッシュの番号
-	D3DXVECTOR2 &GetOneSize(void)				{ return m_OneSize; }						// サイズ
-	INT_VERTEX_2D &GetPieceNum(void)			{ return m_PieceNum; }						// ブロックの数
-	LPDIRECT3DINDEXBUFFER9 GetIdxBuff(void)		{ return m_pIdxBuff; }						// バッファ番号の情報
-	D3DXMATRIX GetMtxWorld(void)				{ return m_mtxWorld; }						// マトリクス情報
+	MESH_TYPE &GetMeshNum(void) { return m_MeshNum; }						// メッシュの番号
+	D3DXVECTOR2 &GetOneSize(void) { return m_OneSize; }						// サイズ
+	INT_VERTEX_2D &GetPieceNum(void) { return m_PieceNum; }						// ブロックの数
+	LPDIRECT3DINDEXBUFFER9 GetIdxBuff(void) { return m_pIdxBuff; }						// バッファ番号の情報
+	D3DXMATRIX GetMtxWorld(void) { return m_mtxWorld; }						// マトリクス情報
 	static MESH_3D GetMesh3D(MESH_TYPE MeshNum) { return m_Mesh3D[MeshNum]; }				// メッシュの情報
 
 private:

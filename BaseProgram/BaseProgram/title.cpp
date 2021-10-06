@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// タイトル処理 [title.cpp]
+// タイトルクラス [title.cpp]
 // Author : Konishi Yuuto
 //
 //=============================================================================
@@ -19,20 +19,13 @@
 #include "sound.h"
 #include "joypad.h"
 #include "resource_manager.h"
-#include "camera.h"
-#include "camera_title.h"
-#include "light.h"
-#include "player.h"
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CTitle::CTitle()
 {
-	m_pShip = nullptr;
 	m_pObject2D.clear();
-	m_pCamera = nullptr;
-	m_pLight = nullptr;
 }
 
 //=============================================================================
@@ -66,29 +59,6 @@ void CTitle::Uninit(void)
 
 	// オブジェクト削除
 	m_pObject2D.clear();
-
-	// カメラ終了処理
-	if (m_pCamera)
-	{
-		m_pCamera->Uninit();
-		delete m_pCamera;
-		m_pCamera = nullptr;
-	}
-
-	// ライト終了処理
-	if (m_pLight)
-	{
-		m_pLight->Uninit();
-		delete m_pLight;
-		m_pLight = nullptr;
-	}
-
-	// 船終了処理
-	if (m_pShip)
-	{
-		m_pShip->Uninit();
-		m_pShip = nullptr;
-	}
 }
 
 //=============================================================================
@@ -96,11 +66,6 @@ void CTitle::Uninit(void)
 //=============================================================================
 void CTitle::Update(void)
 {
-	// カメラ更新処理
-	if (m_pCamera)
-	{
-		m_pCamera->Update();
-	}
 
 	CInputKeyboard* pKey = CManager::GetKeyboard();
 	CFade::FADE_MODE mode = CManager::GetFade()->GetFade();

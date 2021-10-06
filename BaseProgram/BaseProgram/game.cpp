@@ -9,31 +9,23 @@
 // インクルード
 //=======================================================================================
 #include "game.h"
-#include "camera.h"
-#include "light.h"
-#include "model.h"
 #include "manager.h"
 #include "renderer.h"
 #include "player.h"
-#include "meshfield.h"
 #include "joypad.h"
-#include "time.h"
 #include "sound.h"
 #include "keyboard.h"
-#include "mesh_3d.h"
 #include "resource_manager.h"
-#include "library.h"
-#include "camera_game.h"
-#include "collision.h"
 #include "fade.h"
+#include "test_2d.h"
+#include "test_model.h"
+#include "test_character.h"
 
 //=======================================================================================
 // コンストラクタ
 //=======================================================================================
 CGame::CGame()
 {
-	m_pCamera = nullptr;
-	m_pLight = nullptr;
 	m_pPlayer = nullptr;
 	m_bGameEnd = false;
 	m_pFont = nullptr;
@@ -53,20 +45,10 @@ CGame::~CGame()
 //=======================================================================================
 HRESULT CGame::Init(void)
 {
-	// カメラクラスのクリエイト
-	m_pCamera = CCameraGame::Create();
-
-	//ライトクラスの生成
-	m_pLight = new CLight;
-
-	// ライトの初期化処理
-	if (m_pLight != nullptr)
-	{
-		if (FAILED(m_pLight->Init()))
-		{
-			return -1;
-		}
-	}
+	// インスタンス生成
+//	CTest2d::Create();
+//	CTestModel::Create();
+	CTestCharacter::Create();
 
 	return S_OK;
 }
@@ -76,35 +58,15 @@ HRESULT CGame::Init(void)
 //=======================================================================================
 void CGame::Uninit(void)
 {
-	if (m_pCamera != nullptr)
-	{
-		//カメラクラスの終了処理呼び出す
-		m_pCamera->Uninit();
-
-		//メモリの破棄
-		delete m_pCamera;
-
-		//メモリのクリア
-		m_pCamera = nullptr;
-	}
-
-	// ライトの終了処理
-	if (m_pLight != nullptr)
-	{
-		m_pLight->Uninit();
-		delete m_pLight;
-		m_pLight = nullptr;
-	}
-
 	// プレイヤーの終了処理
-	if (m_pPlayer != nullptr)
+	if (m_pPlayer)
 	{
 		m_pPlayer->Uninit();
 		m_pPlayer = nullptr;
 	}
 
 	// デバッグ情報表示用フォントの破棄
-	if (m_pFont != nullptr)
+	if (m_pFont)
 	{
 		m_pFont->Release();
 		m_pFont = nullptr;
@@ -116,28 +78,13 @@ void CGame::Uninit(void)
 //=======================================================================================
 void CGame::Update(void)
 {
-	if (m_pCamera != nullptr)
-	{
-		//カメラクラスの更新処理
-		m_pCamera->Update();
-	}
 
-	// ゲームの設定
-	SetGame();
 }
 
 //=======================================================================================
 // 描画処理
 //=======================================================================================
 void CGame::Draw(void)
-{
-
-}
-
-//=======================================================================================
-// ゲームの設定
-//=======================================================================================
-void CGame::SetGame(void)
 {
 
 }

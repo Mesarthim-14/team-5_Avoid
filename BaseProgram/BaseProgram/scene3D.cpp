@@ -11,24 +11,18 @@
 #include "scene3D.h"
 #include "manager.h"
 #include "renderer.h"
+#include "texture_animation.h"
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CScene3D::CScene3D(PRIORITY Priority) : CSceneBase(Priority)
 {
-	m_nCountAnim = 0;
-	m_nCountAnimPattern = 0;
-	m_nCounterAnim = 0;
-	m_nPatternAnim = 0;
-	m_nLoop = -1;
 	m_fScaleNum = 0.0f;
 	m_nAlphaTestNum = 0;
 	m_bAlpha = false;
-	m_bInverse = false;
 	m_fAlphaNum = 0.0f;
 	m_move = ZeroVector3;
-
 }
 
 //=============================================================================
@@ -42,14 +36,10 @@ CScene3D::~CScene3D()
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CScene3D::Init(const D3DXVECTOR3 pos, const D3DXVECTOR3 size)
+HRESULT CScene3D::Init(void)
 {
-	// 変数代入
-	SetPos(pos);
-	SetSize(size);
-
 	// 頂点の生成
-	CreateVertex(pos, size);
+	CreateVertex();
 
 	return S_OK;
 }
@@ -59,8 +49,7 @@ HRESULT CScene3D::Init(const D3DXVECTOR3 pos, const D3DXVECTOR3 size)
 //=============================================================================
 void CScene3D::Uninit(void)
 {
-	//オブジェクト破棄
-	Release();
+	CSceneBase::Uninit();
 }
 
 //=============================================================================
@@ -70,13 +59,6 @@ void CScene3D::Update(void)
 {
 	// 移動量加算
 	GetPos() += m_move;
-
-	// アニメーションの設定がされたとき
-	if (m_nPatternAnim != 0)
-	{
-		// アニメーションを更新する
-		UpdateAnimation();
-	}
 }
 
 //=============================================================================
@@ -97,7 +79,7 @@ void CScene3D::Draw(void)
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 
 	// 加算合成
-	if (m_bBlend == true)
+	if (m_bBlend)
 	{
 		// 加算合成を行う
 		pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);			// aデスティネーションカラー
@@ -136,7 +118,7 @@ void CScene3D::Draw(void)
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 
 	// 加算合成を行う処理
-	if (m_bBlend == true)
+	if (m_bBlend)
 	{
 		pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// aデスティネーションカラー
 	}
@@ -151,7 +133,7 @@ void CScene3D::Draw(void)
 //=============================================================================
 // 頂点の生成
 //=============================================================================
-void CScene3D::CreateVertex(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+void CScene3D::CreateVertex(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();	// デバイスの取得
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = nullptr;							// 頂点バッファ変数の宣言
@@ -164,6 +146,8 @@ void CScene3D::CreateVertex(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 		&pVtxBuff,
 		nullptr);
 
+	D3DXVECTOR3 pos = GetPos();
+	D3DXVECTOR3 size = GetSize();
 	VERTEX_3D*pVtx = nullptr;
 
 	//頂点バッファをロック
@@ -201,25 +185,13 @@ void CScene3D::CreateVertex(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 }
 
 //=============================================================================
-// 移動量
-//=============================================================================
-void CScene3D::SetMove(D3DXVECTOR3 move)
-{
-	m_move = move;
-}
-
-//=============================================================================
 // 座標設定(座標更新用)
 //=============================================================================
-void CScene3D::SetPosision(D3DXVECTOR3 pos)
+void CScene3D::SetVertexPos(void)
 {
-	// 座標設定
-	SetPos(pos);
-
-	D3DXVECTOR3 size = GetSize();
-
 	// 頂点情報を設定
 	VERTEX_3D *pVtx = nullptr;
+	D3DXVECTOR3 size = GetSize();
 
 	// バッファ取得
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();
@@ -265,13 +237,8 @@ void CScene3D::SetColor(D3DXCOLOR col)
 //=============================================
 // アニメーション情報取得
 //=============================================
-void CScene3D::InitAnimation(D3DXVECTOR2 TexInfo, int nLoop)
+void CScene3D::InitAnimation(int nCounterAnim, int nPatternAnim, int nLoop)
 {
-	// 値の代入
-	m_nPatternAnim = (int)TexInfo.x;
-	m_nCounterAnim = (int)TexInfo.y;
-	m_nLoop = nLoop;
-
 	// バッファ取得
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();
 	VERTEX_3D *pVtx = nullptr;
@@ -280,10 +247,22 @@ void CScene3D::InitAnimation(D3DXVECTOR2 TexInfo, int nLoop)
 	pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//テクスチャ座標を更新
-	pVtx[0].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern, 0.0f);
-	pVtx[1].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern + (float)(1.0f / m_nPatternAnim), 0.0f);
-	pVtx[2].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern, 1.0f);
-	pVtx[3].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern + (float)(1.0f / m_nPatternAnim), 1.0f);
+	pVtx[0].tex = D3DXVECTOR2((float)(1.0f / nPatternAnim)*(float)nPatternAnim, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2((float)(1.0f / nPatternAnim)*(float)nPatternAnim + (float)(1.0f / nPatternAnim), 0.0f);
+	pVtx[2].tex = D3DXVECTOR2((float)(1.0f / nPatternAnim)*(float)nPatternAnim, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2((float)(1.0f / nPatternAnim)*(float)nPatternAnim + (float)(1.0f / nPatternAnim), 1.0f);
+
+	// テクスチャ座標を渡す
+	D3DXVECTOR2 tex[NUM_VERTEX] = {};
+	for (int nCount = 0; nCount < NUM_VERTEX; nCount++)
+	{
+		tex[nCount] = pVtx[nCount].tex;
+	}
+
+	// テクスチャアニメーション生成
+	CTextureAnimation *pTextureAnimation = CTextureAnimation::Create(tex);
+	pTextureAnimation->InitAnimationInfo(nCounterAnim, nPatternAnim, nLoop);
+	SetTextureAnimationPtr(pTextureAnimation);
 
 	// 頂点バッファをアンロックする
 	pVtxBuff->Unlock();
@@ -294,48 +273,29 @@ void CScene3D::InitAnimation(D3DXVECTOR2 TexInfo, int nLoop)
 //=============================================
 void CScene3D::UpdateAnimation(void)
 {
-	// 爆発のアニメーションカウントを進めて、パターンを切り替える
-	m_nCountAnim++;
-
-	// 頂点情報(テクスチャ座標)の更新
-	if (m_nCountAnim >= m_nCounterAnim)	// 爆発の速さ
+	// テクスチャポインタ取得
+	CTextureAnimation *pTextureAnimation = GetTextureAnimationPtr();
+	if (pTextureAnimation)
 	{
-		// アニメーションのカウントを0にする
-		m_nCountAnim = 0;
-
-		// アニメーションのパターンをカウントさせる
-		m_nCountAnimPattern++;
-	}
-
-	// アニメーションが終わったら
-	if (m_nCountAnimPattern >= m_nPatternAnim)
-	{
-		// 数値を戻しておく
-		m_nCountAnimPattern = 0;
-
-		if (m_nLoop == 0)
+		// テクスチャが更新されていたら
+		if (pTextureAnimation->GetUpdate())
 		{
-			// 終了処理
-			Uninit();
+			// バッファ取得
+			LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();
+			VERTEX_3D *pVtx = nullptr;
+
+			// 頂点バッファをロックし、頂点情報へのポインタを取得
+			pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+			// テクスチャ座標の設定
+			for (int nCount = 0; nCount < NUM_VERTEX; nCount++)
+			{
+				pVtx[nCount].tex = pTextureAnimation->GetTex(nCount);
+			}
+
+			// 頂点バッファをアンロックする
+			pVtxBuff->Unlock();
 		}
-	}
-	else
-	{
-		// バッファ取得
-		LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();
-		VERTEX_3D *pVtx = nullptr;
-
-		// 頂点バッファをロックし、頂点情報へのポインタを取得
-		pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-
-		//テクスチャ座標を更新
-		pVtx[0].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern, 0.0f);
-		pVtx[1].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern + (float)(1.0f / m_nPatternAnim), 0.0f);
-		pVtx[2].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern, 1.0f);
-		pVtx[3].tex = D3DXVECTOR2((float)(1.0f / m_nPatternAnim)*(float)m_nCountAnimPattern + (float)(1.0f / m_nPatternAnim), 1.0f);
-
-		// 頂点バッファをアンロックする
-		pVtxBuff->Unlock();
 	}
 }
 
@@ -389,36 +349,4 @@ void CScene3D::SubAlpha(float fAlphaNum)
 
 	//頂点データをアンロック
 	pVtxBuff->Unlock();
-}
-
-//=============================================================================
-// 透明
-//=============================================================================
-void CScene3D::SetAlpha(bool bAlpha)
-{
-	m_bAlpha = bAlpha;
-}
-
-//=============================================================================
-// アルファテストの値
-//=============================================================================
-void CScene3D::SetAlphaNum(int nAlphaNum)
-{
-	m_nAlphaTestNum = nAlphaNum;
-}
-
-//=============================================================================
-// 加算合成の設定
-//=============================================================================
-void CScene3D::SetBlend(bool bBlend)
-{
-	m_bBlend = bBlend;
-}
-
-//=============================================================================
-// 逆行列の設定
-//=============================================================================
-void CScene3D::SetInverse(bool bInverse)
-{
-	m_bInverse = bInverse;
 }

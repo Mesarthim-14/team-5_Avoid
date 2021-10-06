@@ -45,8 +45,8 @@ public:
 	//=============================================================================
 	enum XFILE_NUM
 	{
-		XFILE_NUM_NONE = -1,			// 初期値
-		XFILE_NUM_BULLET,				// 弾モデル
+		XFILE_NUM_NONE = -1,	// 初期値
+		XFILE_NUM_TEST_BLOCK,	// テストブロック
 		XFILE_NUM_MAX
 	};
 
@@ -56,7 +56,7 @@ public:
 	enum HIERARCHY_XFILE_NUM
 	{
 		HIERARCHY_XFILE_NUM_NONE = -1,			// 初期値
-		HIERARCHY_XFILE_NUM_PLAYER,				// プレイヤーモデル
+		HIERARCHY_XFILE_NUM_TEST,				// プレイヤーモデル
 		HIERARCHY_XFILE_NUM_MAX					// 最大数
 	};
 
@@ -64,16 +64,6 @@ public:
 	~CXfile();							// デストラクタ
 
 	static CXfile *Create(void);		// インスタンス生成
-
-	// 単体モデル
-	HRESULT ModelLoad(void);			// モデルロード
-	void ModelUnLoad(void);				// モデルアンロード
-
-	// 階層構造モデル
-	HRESULT HierarchyReadFile(void);	// 階層構造のあるモデル読み込み
-	HRESULT HierarchyModelLoad(void);	// 階層構造のモデルロード
-	void HierarchyModelUnLoad(void);	// 階層構造のモデルアンロード
-	void SetHierarchyFileName(void);	// ファイルの名前を設定
 	void LoadAll(void);					// 全てのロード
 	void UnLoadAll(void);				// 全てのアンロード
 
@@ -86,6 +76,15 @@ public:
 	LPDIRECT3DTEXTURE9 *GetXfileTexture(XFILE_NUM TexNum);
 
 private:
+	// private関数
+	HRESULT ModelLoad(void);			// モデルロード
+	void ModelUnLoad(void);				// モデルアンロード
+	HRESULT HierarchyReadFile(void);	// 階層構造のあるモデル読み込み
+	HRESULT HierarchyModelLoad(void);	// 階層構造のモデルロード
+	void HierarchyModelUnLoad(void);	// 階層構造のモデルアンロード
+	void SetHierarchyFileName(void);	// ファイルの名前を設定
+
+	// メンバ変数
 	MODEL m_aXfile[XFILE_NUM_MAX];						// Xファイル情報の構造体
 	vector<string> m_aXfileName;						// Xファイルの名前
 

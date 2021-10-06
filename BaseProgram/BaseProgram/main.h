@@ -6,11 +6,11 @@
 // Author : Konishi Yuuto
 //
 //=============================================================================
-#define _CRT_SECURE_NO_WARNINGS
 
 //=============================================================================
 // インクルードファイル
 //=============================================================================
+#define _CRT_SECURE_NO_WARNINGS
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <WinSock2.h>
 #include <windows.h>
@@ -29,6 +29,7 @@
 #include <fstream>
 #include <sstream>
 #include <memory>
+#include <cstring>
 
 //=============================================================================
 // ライブラリのリンク
@@ -73,6 +74,7 @@
 #define ZERO_INT			(0)															// intの0
 #define ZERO_FLOAT			(0.0f)														// floatの0.0f
 #define DIVIDE_2			(2)															// 二つに分ける
+#define MODEL_DEFAULT_SIZE	(D3DXVECTOR3(1.0f, 1.0f, 1.0f))								// モデルの通常の大きさ
 
 // 名前の省略
 using namespace std;

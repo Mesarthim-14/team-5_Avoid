@@ -36,19 +36,14 @@ CPolygon::~CPolygon()
 CPolygon * CPolygon::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 size)
 {
 	// ポリゴンクラスのポインタ変数
-	CPolygon *pPolygon = nullptr;
+	CPolygon *pPolygon = new CPolygon;
 
-	//メモリの確保
-	pPolygon = new CPolygon;
-
-	// !nullcheck
-	if (pPolygon != nullptr)
+	// nullcheck
+	if (pPolygon)
 	{
 		//初期化処理呼び出し
 		pPolygon->Init(pos, size);
-
 		return pPolygon;
-
 	}
 
 	return nullptr;
@@ -113,7 +108,7 @@ HRESULT CPolygon::Init(const D3DXVECTOR3 pos, const D3DXVECTOR3 size)
 void CPolygon::Uninit(void)
 {
 	//頂点バッファの破棄
-	if (m_pVtxBuff != nullptr)
+	if (m_pVtxBuff)
 	{
 		m_pVtxBuff->Release();
 		m_pVtxBuff = nullptr;

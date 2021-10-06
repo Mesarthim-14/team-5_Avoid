@@ -28,6 +28,10 @@
 #include "xfile.h"
 #include "polygon.h"
 #include "shadow.h"
+#include "light.h"
+#include "camera.h"
+#include "camera_title.h"
+#include "camera_game.h"
 
 //=============================================================================
 //静的メンバ変数宣言
@@ -40,6 +44,8 @@ unique_ptr<CInputJoypad> CManager::m_pJoypad = nullptr;
 unique_ptr<CScene> CManager::m_pScene = nullptr;
 unique_ptr<CResourceManager> CManager::m_pResourceManager = nullptr;
 unique_ptr<CModeBase> CManager::m_pModeBase = nullptr;
+unique_ptr<CLight> CManager::m_pLight = nullptr;
+unique_ptr<CCamera> CManager::m_pCamera = nullptr;
 
 //=============================================================================
 // コンストラクタ
@@ -234,7 +240,7 @@ void CManager::LoadAll(void)
 	if (m_pResourceManager != nullptr)
 	{
 		// リソースのロード
-	//	m_pResourceManager->LoadAll();
+		m_pResourceManager->LoadAll();
 	}
 }
 
@@ -247,7 +253,7 @@ void CManager::UnLoadAll(void)
 	if (m_pResourceManager != nullptr)
 	{
 		// リソースのロード
-	//	m_pResourceManager->UnLoadAll();
+		m_pResourceManager->UnLoadAll();
 	}
 }
 
@@ -285,12 +291,15 @@ void CManager::SetMode(MODE_TYPE mode)
 	case MODE_TYPE_TITLE:
 		// タイトル生成
 		m_pModeBase.reset(new CTitle);
+	//	m_pCamera.reset(CCameraTitle::Create());
 		break;
 
 		// ゲーム
 	case MODE_TYPE_GAME:
 		// ゲーム生成
 		m_pModeBase.reset(new CGame);
+		m_pCamera.reset(CCameraGame::Create());
+		m_pLight.reset(CLight::Create());
 		break;
 
 	default:
@@ -326,5 +335,34 @@ CModeBase * CManager::GetModePtr(void)
 	{
 		return pMode;
 	}
+
+	return nullptr;
+}
+
+//=============================================================================
+// プレイヤーのポインタ
+//=============================================================================
+CPlayer * CManager::GetPlayer(void)
+{
+	CCharacter *pScene = (CCharacter*)CScene::GetTop(CScene::PRIORITY_CHARACTER);
+
+	// プレイヤーの情報取得
+	if (pScene)
+	{
+		while (pScene)
+		{
+			// 現在のポインタ
+			CCharacter *pNext = (CCharacter*)pScene->GetNext();
+
+			if (pScene->GetType() == CCharacter::CHARACTER_TYPE_PLAYER)
+			{
+				return (CPlayer*)pScene;
+			}
+
+			// 次のポインタ取得
+			pScene = pNext;
+		}
+	}
+
 	return nullptr;
 }

@@ -12,7 +12,6 @@
 #include "manager.h"
 #include "renderer.h"
 #include "camera.h"
-#include "game.h"
 #include "light.h"
 
 //=============================================================================
@@ -56,9 +55,10 @@ CShadowVolume * CShadowVolume::Create(LPD3DXMESH pSrcMesh)
 	{
 		// 初期化処理
 		pShadowVolume->Init(pSrcMesh);
+		return pShadowVolume;
 	}
 
-	return pShadowVolume;
+	return nullptr;
 }
 
 //=============================================================================
@@ -70,7 +70,7 @@ HRESULT CShadowVolume::Init(LPD3DXMESH pSrcMesh)
 	m_pSrcMesh = pSrcMesh;
 
 	m_dwNumFaces = m_pSrcMesh->GetNumFaces();
-	m_LightPos = CManager::GetModePtr()->GetLight()->GetPos();					// ライトの座標設定
+	m_LightPos = CManager::GetLight()->GetPos();					// ライトの座標設定
 
 	// エッジのメモリ確保
 	m_pEdges = new WORD[m_dwNumFaces * 6];
@@ -155,7 +155,7 @@ HRESULT CShadowVolume::CreateShadow(D3DXVECTOR3 rot, D3DXVECTOR3 ShipRot)
 	int nVerticesNum = m_pSrcMesh->GetNumVertices();				// 頂点の数
 	vector<D3DXVECTOR3> VerticesPos;								// 座標の入れ物
 
-																	// バッファのロック
+	// バッファのロック
 	m_pSrcMesh->LockVertexBuffer(0L, (LPVOID*)&m_MeshVertices);
 	m_pSrcMesh->LockIndexBuffer(0L, (LPVOID*)&m_pIndices);
 
@@ -213,7 +213,7 @@ HRESULT CShadowVolume::CreateShadow(D3DXVECTOR3 ShipRot)
 	vector<D3DXVECTOR3> VerticesPos;												// 座標の入れ物
 	int nVerticesNum = m_pSrcMesh->GetNumVertices();								// 頂点の数
 
-																					// バッファのロック
+	// バッファのロック
 	m_pSrcMesh->LockVertexBuffer(0L, (LPVOID*)&m_MeshVertices);
 	m_pSrcMesh->LockIndexBuffer(0L, (LPVOID*)&m_pIndices);
 
@@ -244,7 +244,7 @@ void CShadowVolume::CreateVolume(vector<D3DXVECTOR3> pos, D3DXVECTOR3 posL)
 	DWORD dwNumEdges = 0;	// エッジのカウント
 	m_dwNumVertices = 0;	// 頂点の数リセット
 
-							// 各面の設定
+	// 各面の設定
 	for (DWORD nCount = 0; nCount < m_dwNumFaces; nCount++)
 	{
 		WORD wFace0 = m_pIndices[TRIANGLE * nCount + 0];
