@@ -14,6 +14,7 @@
 #include "resource_manager.h"
 #include "shadow.h"
 #include "model_info.h"
+#include "library.h"
 
 //=============================================================================
 // コンストラクタ
@@ -75,21 +76,13 @@ void CModelAnime::Draw(D3DXVECTOR3 rot)
 	//デバイス情報の取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
 
-	D3DXMATRIX mtxRot, mtxTrans, mtxParent, mtxWorld;
+	D3DXMATRIX mtxParent, mtxWorld;
 	D3DMATERIAL9 matDef;						//現在のマテリアル保持用
 	D3DXMATERIAL*pMat;							//マテリアルデータへのポインタ
 	D3DXVECTOR3 pos = m_pModelInfo->GetPos();
 
-	//ワールドマトリックスの初期化
-	D3DXMatrixIdentity(&mtxWorld);
-
-	//向きを反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y + m_rotAnime.y, rot.x + m_rotAnime.x, rot.z + m_rotAnime.z);
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
-
-	//位置を反映
-	D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);
+	// マトリクス計算
+	CLibrary::ConfigMatrix(&mtxWorld, pos, rot + m_rotAnime);
 
 	//親が存在する場合
 	if (m_pParent)
@@ -197,7 +190,7 @@ void CModelAnime::HasPtrDelete(void)
 	if (m_pModelInfo)
 	{
 		// 影の終了処理
-		delete m_pModelInfo;
+		m_pModelInfo->Uninit();
 		m_pModelInfo = nullptr;
 	}
 }

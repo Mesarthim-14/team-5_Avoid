@@ -123,3 +123,89 @@ string CLibrary::split(string str, char del, int nNum)
 
 	return result;
 }
+
+//=============================================================================
+// マトリクスの設定
+//=============================================================================
+void CLibrary::ConfigMatrix(D3DXMATRIX* pMtx, D3DXVECTOR3 const &rPos, D3DXVECTOR3 const &rRot)
+{
+	D3DXMATRIX mtxRot, mtxTrans;
+
+	//ワールドマトリックスの初期化
+	D3DXMatrixIdentity(pMtx);
+
+	// 回転を反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, rRot.y, rRot.x, rRot.z);
+	D3DXMatrixMultiply(pMtx, pMtx, &mtxRot);
+
+	// 位置を反映
+	D3DXMatrixTranslation(&mtxTrans, rPos.x, rPos.y, rPos.z);
+	D3DXMatrixMultiply(pMtx, pMtx, &mtxTrans);
+}
+
+//=============================================================================
+// 角度の修正
+//=============================================================================
+void CLibrary::RotFix(float &fRot)
+{
+	//差分が3.14を以上の時
+	if (fRot > D3DX_PI)
+	{
+		//6.28引く
+		fRot -= D3DX_PI * 2;
+	}
+	//差分が-3.14以下の時
+	if (fRot < -D3DX_PI)
+	{
+		//6.28加算
+		fRot += D3DX_PI * 2;
+	}
+}
+
+//=============================================================================
+// ランダムの値を返す (指定した+-の範囲を出力)
+//=============================================================================
+int CLibrary::Random(int nNum)
+{
+	random_device rnd;
+	mt19937 mt(rnd());
+	uniform_int_distribution<> rand(-nNum, nNum);
+
+	return rand(mt);
+}
+
+//=============================================================================
+// ランダムの値を返す (指定した二つの範囲を出力)
+//=============================================================================
+int CLibrary::Random(int nMin, int nMax)
+{
+	random_device rnd;
+	mt19937 mt(rnd());
+	uniform_int_distribution<> rand(nMin, nMax);
+
+	return rand(mt);
+}
+
+//=============================================================================
+// ランダムの値を返す (指定した+-の範囲を出力)
+//=============================================================================
+float CLibrary::Random(float fNum)
+{
+	random_device rnd;
+	mt19937 mt(rnd());
+	uniform_real_distribution<> rand(-fNum, fNum);
+
+	return (float)rand(mt);
+}
+
+//=============================================================================
+// ランダムの値を返す (指定した二つの範囲を出力)
+//=============================================================================
+float CLibrary::Random(float fMin, float fMax)
+{
+	random_device rnd;
+	mt19937 mt(rnd());
+	uniform_real_distribution<> rand(fMin, fMax);
+
+	return (float)rand(mt);
+}

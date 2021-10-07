@@ -119,8 +119,8 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 //=============================================================================
 void CManager::Uninit(void)
 {
-	// !nullchack
-	if (m_pFade != nullptr)
+	// nullchack
+	if (m_pFade)
 	{
 		//フェードクラスの終了処理呼び出し
 		m_pFade->Uninit();
@@ -128,16 +128,16 @@ void CManager::Uninit(void)
 		m_pFade = nullptr;
 	}
 
-	// !nullcheck
-	if (m_pResourceManager != nullptr)
+	// nullcheck
+	if (m_pResourceManager)
 	{
 		// リソースのロード
 		m_pResourceManager.reset();
 		m_pResourceManager = nullptr;
 	}
 
-	// !nullchack
-	if (m_pInput != nullptr)
+	// nullchack
+	if (m_pInput)
 	{
 		//入力処理クラスの終了処理呼び出し
 		m_pInput->Uninit();
@@ -147,8 +147,8 @@ void CManager::Uninit(void)
 		m_pInput = nullptr;
 	}
 
-	// !nullchack
-	if (m_pJoypad != nullptr)
+	// nullchack
+	if (m_pJoypad)
 	{
 		//入力処理クラスの終了処理呼び出し
 		m_pJoypad->Uninit();
@@ -159,14 +159,14 @@ void CManager::Uninit(void)
 	}
 
 	//メモリ開放
-	if (m_pRenderer != nullptr)
+	if (m_pRenderer)
 	{
 		// 描画クラス
 		m_pRenderer.reset();
 		m_pRenderer = nullptr;
 	}
 
-	if (m_pModeBase != nullptr)
+	if (m_pModeBase)
 	{
 		// 描画クラス
 		m_pModeBase.reset();
@@ -182,32 +182,32 @@ void CManager::Uninit(void)
 //=============================================================================
 void CManager::Update(void)
 {
-	if (m_pInput != nullptr)
+	if (m_pInput)
 	{
 		//入力処理クラスの更新処理呼び出し
 		m_pInput->Update();
 	}
 
-	if (m_pJoypad != nullptr)
+	if (m_pJoypad)
 	{
 		//入力処理クラスの更新処理呼び出し
 		m_pJoypad->Update();
 	}
 
-	if (m_pRenderer != nullptr)
+	if (m_pRenderer)
 	{
 		//レンダラークラスの更新処理呼び出し
 		m_pRenderer->Update();
 	}
 
-	if (m_pFade != nullptr)
+	if (m_pFade)
 	{
 		//フェードクラスの更新処理呼び出し
 		m_pFade->Update();
 	}
 
 	// モードの更新処理
-	if (m_pModeBase != nullptr)
+	if (m_pModeBase)
 	{
 		m_pModeBase->Update();
 	}
@@ -218,14 +218,14 @@ void CManager::Update(void)
 //=============================================================================
 void CManager::Draw(void)
 {
-	if (m_pRenderer != nullptr)
+	if (m_pRenderer)
 	{
 		//レンダラークラスの描画処理呼び出し
 		m_pRenderer->Draw();
 	}
 
 	// モードの更新処理
-	if (m_pModeBase != nullptr)
+	if (m_pModeBase)
 	{
 		m_pModeBase->Draw();
 	}
@@ -237,7 +237,7 @@ void CManager::Draw(void)
 void CManager::LoadAll(void)
 {
 	// !nullcheck
-	if (m_pResourceManager != nullptr)
+	if (m_pResourceManager)
 	{
 		// リソースのロード
 		m_pResourceManager->LoadAll();
@@ -250,7 +250,7 @@ void CManager::LoadAll(void)
 void CManager::UnLoadAll(void)
 {
 	// !nullcheck
-	if (m_pResourceManager != nullptr)
+	if (m_pResourceManager)
 	{
 		// リソースのロード
 		m_pResourceManager->UnLoadAll();
@@ -263,7 +263,7 @@ void CManager::UnLoadAll(void)
 void CManager::SetMode(MODE_TYPE mode)
 {
 	// !nullcheck
-	if (m_pModeBase != nullptr)
+	if (m_pModeBase)
 	{
 		//メモリ開放
 		m_pModeBase.reset();
@@ -306,8 +306,8 @@ void CManager::SetMode(MODE_TYPE mode)
 		break;
 	}
 
-	// !nullcheck
-	if (m_pModeBase != nullptr)
+	// nullcheck
+	if (m_pModeBase)
 	{
 		// 初期化処理
 		m_pModeBase->Init();
@@ -331,7 +331,7 @@ CModeBase * CManager::GetModePtr(void)
 	CModeBase *pMode = ((CModeBase*)m_pModeBase.get());
 
 	// !nullcheck
-	if (pMode != nullptr)
+	if (pMode)
 	{
 		return pMode;
 	}

@@ -11,6 +11,7 @@
 #include "mesh_3d.h"
 #include "manager.h"
 #include "renderer.h"
+#include "library.h"
 
 //=============================================================================
 // マクロ定義
@@ -56,36 +57,9 @@ void CMesh3d::Draw(void)
 {
 	// Rendererクラスからデバイスを取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
-	D3DXMATRIX mtxRot, mtxTrans;
 
-	// ワールドマトリックスの初期化
-	D3DXMatrixIdentity(&m_mtxWorld);
-
-	// 回転を反映
-	D3DXVECTOR3 rot = GetRot();
-	D3DXMatrixRotationYawPitchRoll(
-		&mtxRot,
-		rot.y,
-		rot.x,
-		rot.z);
-
-	D3DXMatrixMultiply(
-		&m_mtxWorld,
-		&m_mtxWorld,
-		&mtxRot);
-
-	// 位置を反映
-	D3DXVECTOR3 pos = GetPos();
-	D3DXMatrixTranslation(
-		&mtxTrans,
-		pos.x,
-		pos.y,
-		pos.z);
-
-	D3DXMatrixMultiply(
-		&m_mtxWorld,
-		&m_mtxWorld,
-		&mtxTrans);
+	// マトリクス計算
+	CLibrary::ConfigMatrix(&m_mtxWorld, GetPos(), GetRot());
 
 	// ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
@@ -119,10 +93,10 @@ HRESULT CMesh3d::ReadFile(void)
 	char aParticleName[1024];
 	int nParticleIndex = 0;	// モデルのインデックス
 
-							// ファイルオープン
+	// ファイルオープン
 	pFile = fopen(MESH_3D_FILENAME, "r");
 
-	if (pFile != nullptr)
+	if (pFile)
 	{
 		do
 		{

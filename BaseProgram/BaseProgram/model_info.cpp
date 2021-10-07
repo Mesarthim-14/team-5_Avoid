@@ -15,9 +15,14 @@
 #include "shadow.h"
 
 //=============================================================================
+// static宣言初期化
+//=============================================================================
+list<CModelInfo*> CModelInfo::m_ModelInfoList[MODEL_TYPE_MAX] = {};
+
+//=============================================================================
 // コンストラクタ
 //=============================================================================
-CModelInfo::CModelInfo()
+CModelInfo::CModelInfo(MODEL_TYPE type)
 {
 	//各メンバ変数のクリア
 	memset(&m_model, 0, sizeof(m_model));
@@ -26,6 +31,10 @@ CModelInfo::CModelInfo()
 	ZeroMemory(m_OldMtxWorld, sizeof(m_OldMtxWorld));
 	ZeroMemory(m_mtxWorld, sizeof(m_mtxWorld));
 	m_pShadow = nullptr;
+	m_type = type;
+
+	// リストへ追加
+	m_ModelInfoList[type].push_back(this);
 }
 
 //=============================================================================
@@ -33,19 +42,18 @@ CModelInfo::CModelInfo()
 //=============================================================================
 CModelInfo::~CModelInfo()
 {
-	// ポインタの開放
-	HasPtrDelete();
+
 }
 
 //=============================================================================
 // クリエイト処理
 //=============================================================================
-CModelInfo * CModelInfo::Create(void)
+CModelInfo * CModelInfo::Create(MODEL_TYPE type)
 {
 	//階層モデルクラスのポインタ変数
-	CModelInfo *pModelInfo = new CModelInfo;
+	CModelInfo *pModelInfo = new CModelInfo(type);
 
-	// !nullcheck
+	// nullcheck
 	if (pModelInfo)
 	{
 		//初期化処理呼び出し
@@ -64,6 +72,26 @@ HRESULT CModelInfo::Init(void)
 {
 
 	return S_OK;
+}
+
+//=============================================================================
+// 終了処理
+//=============================================================================
+void CModelInfo::Uninit(void)
+{
+	// ポインタの開放
+	HasPtrDelete();
+	int nCount = 0;
+
+	// 自身と
+	for (auto &itr = m_ModelInfoList[m_type].begin(); itr != m_ModelInfoList[m_type].end(); ++itr)
+	{
+		if (*itr == this)
+		{
+			itr = m_ModelInfoList[m_type].erase(itr);
+			break;
+		}
+	}
 }
 
 //=============================================================================

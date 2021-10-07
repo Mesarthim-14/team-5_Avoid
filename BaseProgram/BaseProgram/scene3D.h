@@ -27,7 +27,7 @@ public:
 	virtual void Draw(void) = 0;					// 描画処理
 
 protected:
-	void SetVertexPos(void);											// 座標の更新
+	void SetVertexPos(void);						// 座標の更新
 
 	// Set関数
 	void SubAlpha(float fAlphaNum);												// 透明度の減算

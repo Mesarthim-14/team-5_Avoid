@@ -12,6 +12,7 @@
 #include "manager.h"
 #include "renderer.h"
 #include "texture_animation.h"
+#include "library.h"
 
 //=============================================================================
 // コンストラクタ
@@ -59,75 +60,6 @@ void CScene3D::Update(void)
 {
 	// 移動量加算
 	GetPos() += m_move;
-}
-
-//=============================================================================
-// 描画処理
-//=============================================================================
-void CScene3D::Draw(void)
-{
-	// デバイス情報取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
-
-	//計算用のマトリクス
-	D3DXMATRIX mtxRot, mtxTrans, mtxScale;
-
-	// ライト無効
-	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-	// アルファテストを有力化
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-
-	// 加算合成
-	if (m_bBlend)
-	{
-		// 加算合成を行う
-		pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);			// aデスティネーションカラー
-	}
-
-	// テクスチャの設定
-	pDevice->SetTexture(0, GetTexture());
-
-	// 頂点バッファをデバイスのデータストリームに設定
-	pDevice->SetStreamSource(0, GetVtxBuff(), 0, sizeof(VERTEX_3D));
-
-	// 頂点フォーマットの設定
-	pDevice->SetFVF(FVF_VERTEX_3D);
-
-	//ワールドマトリクスの初期化
-	D3DXMatrixIdentity(&m_mtxWorld);
-
-	// 向き取得
-	D3DXVECTOR3 rot = GetRot();
-
-	//向きを反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
-
-	// サイズ情報
-	D3DXVECTOR3 pos = GetPos();
-
-	// 位置を反映、ワールドマトリクス設定、ポリゴン描画
-	D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
-
-	// ワールドマトリクスの設定
-	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
-
-	// ポリゴンの描画
-	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
-
-	// 加算合成を行う処理
-	if (m_bBlend)
-	{
-		pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// aデスティネーションカラー
-	}
-
-	// アルファテスト無効化
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-
-	// ライト有効
-	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 //=============================================================================

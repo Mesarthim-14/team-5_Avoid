@@ -14,6 +14,7 @@
 #include "resource_manager.h"
 #include "motion.h"
 #include "model_info.h"
+#include "library.h"
 
 //=============================================================================
 // マクロ定義
@@ -66,7 +67,7 @@ void CCharacter::Uninit()
 {
 	for (auto &ModelAnime : m_apModelAnime)
 	{
-		// !nullcheck
+		// nullcheck
 		if (ModelAnime)
 		{
 			//メモリの削除
@@ -78,7 +79,7 @@ void CCharacter::Uninit()
 	// クリア
 	m_apModelAnime.clear();
 
-	// !nullcheck
+	// nullcheck
 	if (m_pMotion)
 	{
 		//メモリの削除
@@ -112,18 +113,9 @@ void CCharacter::Draw()
 {
 	//デバイス情報の取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
-	D3DXMATRIX mtxRot, mtxTrans, mtxScale;
 
-	//ワールドマトリックスの初期化
-	D3DXMatrixIdentity(&m_mtxWorld);
-
-	//向きを反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
-
-	//位置を反映
-	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
-	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
+	// マトリクスの設定
+	CLibrary::ConfigMatrix(&m_mtxWorld, m_pos, m_rot);
 
 	//ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);

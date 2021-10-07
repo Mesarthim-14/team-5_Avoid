@@ -15,6 +15,7 @@
 #include "fade.h"
 #include "resource_manager.h"
 #include "motion.h"
+#include "library.h"
 
 //=============================================================================
 // マクロ定義
@@ -40,7 +41,6 @@ CPlayer * CPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 		pPlayer->SetCharacterInfo(pos, rot);
 		pPlayer->Init();
 		return pPlayer;
-
 	}
 
 	// CPlayerを返す
@@ -125,7 +125,7 @@ void CPlayer::Update(void)
 	PlayerControl();
 
 	// 角度の更新処理
-	RotFix();
+	CLibrary::RotFix(m_rotDest.y);
 }
 
 //=============================================================================
@@ -151,35 +151,9 @@ void CPlayer::UpdateState(void)
 // プレイヤーの処理
 // Author : Konishi Yuuto
 //=============================================================================
-void CPlayer::PlayerControl()
+void CPlayer::PlayerControl(void)
 {
 
-}
-
-//=============================================================================
-// 向き更新処理
-// Author : Konishi Yuuto
-//=============================================================================
-void CPlayer::RotFix(void)
-{
-	// 向き取得
-	D3DXVECTOR3 rot = GetRot();
-
-	while (m_rotDest.y - rot.y > D3DXToRadian(180))
-	{
-		m_rotDest.y -= D3DXToRadian(360);
-	}
-
-	while (m_rotDest.y - rot.y < D3DXToRadian(-180))
-	{
-		m_rotDest.y += D3DXToRadian(360);
-	}
-
-	// 向き
-	rot += (m_rotDest - rot) * PLAYER_ROT_SPEED;
-
-	// 向き設定
-	SetRot(rot);
 }
 
 //=============================================================================

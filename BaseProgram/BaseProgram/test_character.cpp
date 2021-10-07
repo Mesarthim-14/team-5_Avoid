@@ -35,7 +35,7 @@
 // 生成処理関数
 // Author : Konishi Yuuto
 //=============================================================================
-CTestCharacter * CTestCharacter::Create(void)
+CTestCharacter * CTestCharacter::Create(D3DXVECTOR3 pos)
 {
 	CTestCharacter *pPlayer = new CTestCharacter;
 
@@ -43,12 +43,13 @@ CTestCharacter * CTestCharacter::Create(void)
 	if (pPlayer != nullptr)
 	{
 		// 初期化処理
-		pPlayer->SetCharacterInfo(ZeroVector3, ZeroVector3);
+		pPlayer->SetCharacterInfo(pos, ZeroVector3);
 		pPlayer->Init();
+
+		return pPlayer;
 	}
 
-	// CTestCharacterを返す
-	return pPlayer;
+	return nullptr;
 }
 
 //=============================================================================
@@ -112,17 +113,7 @@ void CTestCharacter::Uninit(void)
 //=============================================================================
 void CTestCharacter::Update(void)
 {
-	// 更新
-	CCharacter::Update();
 
-	// 位置取得
-	D3DXVECTOR3 pos = GetPos();
-
-	// 古い位置設定
-	SetPosOld(pos);
-
-	// 状態更新
-	UpdateState();
 }
 
 //=============================================================================

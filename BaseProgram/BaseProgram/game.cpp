@@ -47,8 +47,7 @@ HRESULT CGame::Init(void)
 {
 	// インスタンス生成
 //	CTest2d::Create();
-//	CTestModel::Create();
-	CTestCharacter::Create();
+	CTestCharacter::Create(ZeroVector3);
 
 	return S_OK;
 }

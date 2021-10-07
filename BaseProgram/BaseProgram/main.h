@@ -30,6 +30,8 @@
 #include <sstream>
 #include <memory>
 #include <cstring>
+#include <random>
+#include <list>
 
 //=============================================================================
 // ƒ‰ƒCƒuƒ‰ƒŠ‚ÌƒŠƒ“ƒN

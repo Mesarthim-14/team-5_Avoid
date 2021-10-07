@@ -32,7 +32,6 @@ private:
 	// private関数
 	void UpdateState(void);		// プレイヤーの状態
 	void PlayerControl(void);	// プレイヤーの制御
-	void RotFix(void);			// 角度の更新処理
 	void Move(void);			// 移動処理
 
 	// メンバ変数

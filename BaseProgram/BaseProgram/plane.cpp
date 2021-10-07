@@ -11,6 +11,7 @@
 #include "plane.h"
 #include "manager.h"
 #include "renderer.h"
+#include "library.h"
 
 //=============================================================================
 // 描画処理
@@ -20,15 +21,16 @@ void CPlane::Draw(void)
 	// デバイス情報取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
 
-	//計算用のマトリクス
-	D3DXMATRIX mtxRot, mtxTrans, mtxScale;
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);			// ライト無効
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);	// アルファテストを有力化
+
+	// マトリクス計算
 	D3DXMATRIX mtxWorld;
+	CLibrary::ConfigMatrix(&mtxWorld, GetPos(), GetRot());
 
-	// ライト無効
-	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-	// アルファテストを有力化
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	// ワールドマトリクスの設定
+	pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);
+	SetMtxWorld(mtxWorld);
 
 	// テクスチャの設定
 	pDevice->SetTexture(0, GetTexture());
@@ -38,27 +40,6 @@ void CPlane::Draw(void)
 
 	// 頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_3D);
-
-	//ワールドマトリクスの初期化
-	D3DXMatrixIdentity(&mtxWorld);
-
-	// 向き取得
-	D3DXVECTOR3 rot = GetRot();
-
-	//向きを反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
-
-	// サイズ情報
-	D3DXVECTOR3 pos = GetPos();
-
-	// 位置を反映、ワールドマトリクス設定、ポリゴン描画
-	D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);
-
-	// ワールドマトリクスの設定
-	pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);
-	SetMtxWorld(mtxWorld);
 
 	// ポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);

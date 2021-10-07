@@ -24,12 +24,22 @@ class CShadow;
 class CModelInfo
 {
 public:
-	CModelInfo();		// コンストラクタ
+	// モデルの種類
+	enum MODEL_TYPE
+	{
+		MODEL_TYPE_NONE = 0,	// 設定なし
+		MODEL_TYPE_CHARACTER,	// キャラクター
+		MODEL_TYPE_OBJECT,		// オブジェクト
+		MODEL_TYPE_MAX			// 最大値
+	};
+
+	CModelInfo(MODEL_TYPE type);		// コンストラクタ
 	~CModelInfo();		// デストラクタ
 
-	static CModelInfo *Create(void);	// インスタンス生成
+	static CModelInfo *Create(MODEL_TYPE type);	// インスタンス生成
 
 	HRESULT Init(void);					// 初期化処理
+	void Uninit(void);					// 終了処理
 	void Draw(D3DXVECTOR3 rot);			// 描画処理
 	void ShadowDraw(D3DXVECTOR3 rot);	// 影の描画
 	void CreateShadowPtr(void);			// 影の生成
@@ -64,10 +74,14 @@ private:
 	D3DXMATRIX m_mtxWorld;		// ワールドマトリックス
 	D3DXMATRIX m_OldMtxWorld;	// 古いワールド座標
 	CXfile::MODEL m_model;		// モデル情報
+	MODEL_TYPE m_type;			// 種類
 
 	// 影の生成用
 	CShadow *m_pShadow;		// 影のポインタ
 	bool m_bUseShadow;		// 影の使用フラグ
+
+	// モデルの情報リスト
+	static list<CModelInfo*> m_ModelInfoList[MODEL_TYPE_MAX];
 };
 
 #endif 

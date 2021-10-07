@@ -164,7 +164,7 @@ void CModel::HasPtrDelete(void)
 {
 	if (m_pModelInfo)
 	{
-		delete m_pModelInfo;
+		m_pModelInfo->Uninit();
 		m_pModelInfo = nullptr;
 	}
 }

@@ -23,7 +23,7 @@ public:
 	CTestCharacter(PRIORITY Priority = PRIORITY_CHARACTER);	// コンストラクタ
 	~CTestCharacter();										// デストラクタ
 
-	static CTestCharacter*Create(void);	// クリエイト
+	static CTestCharacter*Create(D3DXVECTOR3 pos);	// クリエイト
 
 	HRESULT Init(void);					// 初期化処理
 	void Uninit(void);					// 終了処理
