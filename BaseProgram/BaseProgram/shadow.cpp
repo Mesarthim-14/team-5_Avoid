@@ -41,7 +41,7 @@ CShadow::~CShadow()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CShadow * CShadow::Create(LPD3DXMESH pSrcMesh)
+CShadow * CShadow::Create(const LPD3DXMESH pSrcMesh)
 {
 	// メモリ確保
 	CShadow *pShadow = new CShadow;
@@ -59,7 +59,7 @@ CShadow * CShadow::Create(LPD3DXMESH pSrcMesh)
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CShadow::Init(LPD3DXMESH pSrcMesh)
+HRESULT CShadow::Init(const LPD3DXMESH pSrcMesh)
 {
 	// nullcheck
 	if (!m_pShadowVolume)
@@ -114,32 +114,37 @@ void CShadow::VolumeDraw(void)
 		m_pShadowVolume->Draw();
 
 		// 状態を元に戻す
-		pDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
+		// ステンシルテストは常に合格にする
+		pDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
+	//	pDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
 		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+
+		// レンダリングターゲットに書き込みはしない
 		pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
+		pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 	}
 }
 
 //=============================================================================
 // 影の生成処理
 //=============================================================================
-void CShadow::CreateShadow(D3DXVECTOR3 rot, D3DXVECTOR3 ShipRot, D3DXMATRIX ModelMtxWorld)
+void CShadow::CreateShadow(const D3DXVECTOR3 rot, const D3DXVECTOR3 ShipRot, const D3DXMATRIX ModelMtxWorld)
 {
+	// ワールド座標を受け取る
+	m_ModelMtxWorld = ModelMtxWorld;
+
 	// 影の生成
 	if (m_pShadowVolume)
 	{
 		m_pShadowVolume->CreateShadow(rot, ShipRot);
 	}
-
-	// ワールド座標を受け取る
-	m_ModelMtxWorld = ModelMtxWorld;
 }
 
 //=============================================================================
 // 影の生成処理
 //=============================================================================
-void CShadow::CreateShadow(D3DXVECTOR3 rot, D3DXMATRIX ModelMtxWorld)
+void CShadow::CreateShadow(const D3DXVECTOR3 rot, const D3DXMATRIX ModelMtxWorld)
 {
 	// 影の生成
 	if (m_pShadowVolume)
@@ -158,6 +163,7 @@ void CShadow::CreateShadow(D3DXVECTOR3 rot, D3DXMATRIX ModelMtxWorld)
 void CShadow::SetShadowStateStencil(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
+
 
 	//------------------------------------------------------------
 	// パス1:影ボリュームの描画
@@ -192,6 +198,8 @@ void CShadow::SetShadowStateStencil(void)
 void CShadow::SetShadowStencilTest(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
+
+	pDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
 
 	// 状態を元に戻す
 	pDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);

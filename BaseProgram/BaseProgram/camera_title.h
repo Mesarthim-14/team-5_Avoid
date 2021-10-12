@@ -25,6 +25,6 @@ public:
 	static CCameraTitle*Create(void);	// クリエイト
 
 private:
-	void NomalUpdate(D3DXVECTOR3 PlayerPos, D3DXVECTOR3 PlayerRot) override;
+	void NomalUpdate(void) override;
 };
 #endif 

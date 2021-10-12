@@ -20,6 +20,7 @@
 #include "test_2d.h"
 #include "test_model.h"
 #include "test_character.h"
+#include "ground.h"
 
 //=======================================================================================
 // コンストラクタ
@@ -45,9 +46,9 @@ CGame::~CGame()
 //=======================================================================================
 HRESULT CGame::Init(void)
 {
-	// インスタンス生成
-//	CTest2d::Create();
-	CTestCharacter::Create(ZeroVector3);
+	// プレイヤーの生成
+	CreatePlayer();
+	CGround::Create();
 
 	return S_OK;
 }
@@ -77,7 +78,17 @@ void CGame::Uninit(void)
 //=======================================================================================
 void CGame::Update(void)
 {
+#ifdef _DEBUG
+	CInputKeyboard* pKey = CManager::GetKeyboard();
+	CFade::FADE_MODE mode = CManager::GetFade()->GetFade();
 
+	// タイトルに戻る
+	if (pKey->GetTrigger(DIK_TAB) && mode == CFade::FADE_MODE_NONE)
+	{
+		CFade *pFade = CManager::GetFade();
+		pFade->SetFade(CManager::MODE_TYPE_TITLE);
+	}
+#endif // !_DEBUG
 }
 
 //=======================================================================================
@@ -86,4 +97,20 @@ void CGame::Update(void)
 void CGame::Draw(void)
 {
 
+}
+
+//=======================================================================================
+// プレイヤーの生成
+//=======================================================================================
+void CGame::CreatePlayer(void)
+{
+	// プレイヤーの生成
+	if (!m_pPlayer)
+	{
+		m_pPlayer = CPlayer::Create(ZeroVector3, ZeroVector3);
+	}
+
+//	CTestCharacter::Create(D3DXVECTOR3(1000.0f, 0.0f, 0.0f));
+//	CTestCharacter::Create(ZeroVector3);
+//	CTestCharacter::Create(D3DXVECTOR3(-1000.0f, 0.0f, 0.0f));
 }

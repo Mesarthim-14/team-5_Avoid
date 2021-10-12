@@ -82,7 +82,7 @@ void CModelAnime::Draw(D3DXVECTOR3 rot)
 	D3DXVECTOR3 pos = m_pModelInfo->GetPos();
 
 	// マトリクス計算
-	CLibrary::ConfigMatrix(&mtxWorld, pos, rot + m_rotAnime);
+	CLibrary::ConfigMatrix(&mtxWorld, pos, m_rotAnime);
 
 	//親が存在する場合
 	if (m_pParent)
@@ -178,7 +178,7 @@ void CModelAnime::CreateInfoPtr(void)
 {
 	if (!m_pModelInfo)
 	{
-		m_pModelInfo = CModelInfo::Create();
+		m_pModelInfo = CModelInfo::Create(CModelInfo::MODEL_TYPE_NONE);
 	}
 }
 

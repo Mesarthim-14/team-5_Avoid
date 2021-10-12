@@ -188,7 +188,7 @@ void CTexture::SeparateTexUnLoad(void)
 //=============================================================================
 // テクスチャ情報
 //=============================================================================
-LPDIRECT3DTEXTURE9 CTexture::GetTexture(TEXTURE_TYPE Tex_Num)
+LPDIRECT3DTEXTURE9 CTexture::GetTexture(const TEXTURE_TYPE Tex_Num)
 {
 	if (Tex_Num < TEXTURE_NUM_MAX)
 	{
@@ -204,7 +204,7 @@ LPDIRECT3DTEXTURE9 CTexture::GetTexture(TEXTURE_TYPE Tex_Num)
 //=============================================================================
 // 分割テクスチャ情報
 //=============================================================================
-LPDIRECT3DTEXTURE9 CTexture::GetSeparateTexture(SEPARATE_TEX_TYPE SepaTex_Type)
+LPDIRECT3DTEXTURE9 CTexture::GetSeparateTexture(const SEPARATE_TEX_TYPE SepaTex_Type)
 {
 	// 配列より小さかったら
 	if (SepaTex_Type < SEPARATE_TEX_MAX)
@@ -223,7 +223,7 @@ LPDIRECT3DTEXTURE9 CTexture::GetSeparateTexture(SEPARATE_TEX_TYPE SepaTex_Type)
 //=============================================================================
 // 分割テクスチャの情報
 //=============================================================================
-INT_VERTEX_2D CTexture::GetSparateTexInfo(SEPARATE_TEX_TYPE SepaTex_Type)
+INT_VERTEX_2D CTexture::GetSparateTexInfo(const SEPARATE_TEX_TYPE SepaTex_Type)
 {
 	// 配列より小さかったら
 	if (SepaTex_Type < SEPARATE_TEX_MAX)
@@ -238,7 +238,7 @@ INT_VERTEX_2D CTexture::GetSparateTexInfo(SEPARATE_TEX_TYPE SepaTex_Type)
 //=============================================================================
 // 分割テクスチャのループフラグ
 //=============================================================================
-bool CTexture::GetSparateTexLoop(SEPARATE_TEX_TYPE SepaTex_Type)
+bool CTexture::GetSparateTexLoop(const SEPARATE_TEX_TYPE SepaTex_Type)
 {
 	// 配列より小さかったら
 	if (SepaTex_Type < SEPARATE_TEX_MAX)
@@ -286,7 +286,7 @@ void CTexture::VolumeTexUnLoad(void)
 //=============================================================================
 // ボリュームテクスチャの情報
 //=============================================================================
-LPDIRECT3DVOLUMETEXTURE9 CTexture::GetVolumeTexture(VOLUME_TEX_TYPE Tex_Type)
+LPDIRECT3DVOLUMETEXTURE9 CTexture::GetVolumeTexture(const VOLUME_TEX_TYPE Tex_Type)
 {
 	if (Tex_Type < VOLUME_TEX_MAX)
 	{
@@ -335,7 +335,7 @@ void CTexture::CubeTexUnLoad(void)
 //=============================================================================
 // キューブテクスチャの情報
 //=============================================================================
-LPDIRECT3DCUBETEXTURE9 CTexture::GetCubeTexture(CUBE_TEX_TYPE Tex_Type)
+LPDIRECT3DCUBETEXTURE9 CTexture::GetCubeTexture(const CUBE_TEX_TYPE Tex_Type)
 {
 	if (Tex_Type < CUBE_TEX_MAX)
 	{

@@ -53,10 +53,6 @@ CMeshField * CMeshField::Create(void)
 //=============================================================================
 HRESULT CMeshField::Init(void)
 {
-	// テクスチャの設定
-	CTexture *pTexture = CManager::GetResourceManager()->GetTextureClass();
-//	BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_FLOOR));
-
 	// 頂点の設定
 	CreateVerterx();
 	return S_OK;
@@ -179,7 +175,7 @@ void CMeshField::CreateVerterx(void)
 //=============================================================================
 // 情報の設定
 //=============================================================================
-void CMeshField::SetInfo(D3DXVECTOR3 size, INT_VERTEX_2D PieceNum)
+void CMeshField::SetInfo(const D3DXVECTOR3 &size, const INT_VERTEX_2D &PieceNum)
 {
 	// 値の初期化
 	SetNumVertex((PieceNum.x + 1) * (PieceNum.y + 1));								// 25

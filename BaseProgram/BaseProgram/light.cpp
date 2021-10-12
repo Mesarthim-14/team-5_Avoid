@@ -11,6 +11,7 @@
 #include "light.h"
 #include "manager.h"
 #include "renderer.h"
+#include "library.h"
 
 //=============================================================================
 // マクロ定義
@@ -104,6 +105,29 @@ void CLight::Uninit(void)
 //=============================================================================
 void CLight::Update(void)
 {
+}
+
+//=============================================================================
+// imgui ライトの情報
+//=============================================================================
+void CLight::ShowLightInfo()
+{
+	if (ImGui::CollapsingHeader("LightInfo"))
+	{
+		LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();	// デバイスの取得
+
+		if (ImGui::TreeNode("Light0"))
+		{
+			ImGui::SliderFloat3("direction", m_vecDir, -1.0f, 1.0f);
+
+			D3DXVec3Normalize(&m_vecDir, &m_vecDir);		//正規化
+			m_Light.Direction = m_vecDir;
+
+			pDevice->SetLight(0, &m_Light);
+			ImGui::TreePop();
+		}
+	}
+
 }
 
 //=============================================================================

@@ -176,6 +176,6 @@ void CModel::CreateInfoPtr(void)
 {
 	if (!m_pModelInfo)
 	{
-		m_pModelInfo = CModelInfo::Create();
+		m_pModelInfo = CModelInfo::Create(CModelInfo::MODEL_TYPE_NONE);
 	}
 }

@@ -26,6 +26,9 @@ public:
 	void Update(void);							// 更新処理
 	void Draw(void);							// 描画処理
 
+	void SetDispImGuiInfo(bool ImGuiInfo)	{ m_bDispImGuiInfo = ImGuiInfo; };			// Imgui表示非表示設定
+	bool CheckShowImGuiInfo(void)			{ return m_bDispImGuiInfo; };				// Imgui情報表示してるか確認
+
 	LPDIRECT3DDEVICE9 GetDevice(void);			// デバイス情報
 
 private:
@@ -33,6 +36,8 @@ private:
 	LPDIRECT3D9	m_pD3D;							// Direct3Dオブジェクト
 	LPDIRECT3D9 m_pD3DInterface;				// DirectXインターフェース
 	D3DFILLMODE m_fillMode;						// ワイヤーフレーム
+	bool m_bDispImGuiInfo;						//Imgui描画するかどうか
+
 };
 
 #endif

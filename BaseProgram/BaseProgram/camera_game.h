@@ -25,6 +25,11 @@ public:
 	static CCameraGame*Create(void);	// クリエイト
 
 private:
-	void NomalUpdate(D3DXVECTOR3 PlayerPos, D3DXVECTOR3 PlayerRot) override;
+	// private関数
+	void NomalUpdate(void) override;
+	void Tracking(const float &fDistance, float &fVartical,
+		float &fHorizontal, const D3DXVECTOR3 &PlayerPos, const D3DXVECTOR3 &PlayerRot);	// 追従
+	void KeyBoardMove(const float &fDistance, float &fVartical,
+		float &fHorizontal, D3DXVECTOR3 PlayerPos);											// キーボードの動き
 };
 #endif 

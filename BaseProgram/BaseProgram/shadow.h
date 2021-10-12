@@ -27,17 +27,17 @@ public:
 	CShadow();		// コンストラクタ
 	~CShadow();		// デストラクタ
 
-	static CShadow *Create(LPD3DXMESH pSrcMesh);										// インスタンス生成
-	HRESULT Init(LPD3DXMESH pSrcMesh);													// 初期化生成処理
-	void Uninit(void);																	// 終了処理
-	void VolumeDraw(void);																// 影描画処理
-	void CreateShadow(D3DXVECTOR3 rot, D3DXVECTOR3 ShipRot, D3DXMATRIX ModelMtxWorld);	// 影の生成
-	void CreateShadow(D3DXVECTOR3 rot, D3DXMATRIX ModelMtxWorld);						// 影の生成
+	static CShadow *Create(const LPD3DXMESH pSrcMesh);														// インスタンス生成
+	HRESULT Init(const LPD3DXMESH pSrcMesh);																// 初期化生成処理
+	void Uninit(void);																						// 終了処理
+	void VolumeDraw(void);																					// 影描画処理
+	void CreateShadow(const D3DXVECTOR3 rot, const D3DXVECTOR3 ShipRot, const D3DXMATRIX ModelMtxWorld);	// 影の生成
+	void CreateShadow(const D3DXVECTOR3 rot, const D3DXMATRIX ModelMtxWorld);								// 影の生成
 
-	static void SetShadowStateStencil(void);											// ステンシルの設定
-	static void SetShadowStencilTest(void);												// ステンシルテスト設定
-	static void ReSetShadowStateStencil(void);											// ステンシル情報リセット
-	static void PolygonUninit(void);													// 描画処理
+	static void SetShadowStateStencil(void);			// ステンシルの設定
+	static void SetShadowStencilTest(void);				// ステンシルテスト設定
+	static void ReSetShadowStateStencil(void);			// ステンシル情報リセット
+	static void PolygonUninit(void);					// 描画処理
 
 private:
 	CShadowVolume *m_pShadowVolume;		// シャドウボリュームのポインタ

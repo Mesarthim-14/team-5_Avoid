@@ -34,20 +34,20 @@ public:
 		PRIORITY_MAX		// 優先順位の最大数
 	};
 
-	CScene(PRIORITY Priority = PRIORITY_0);	// コンストラクタ
-	virtual ~CScene();						// デストラクタ
-	static void ReleaseAll(void);			// 全てのオブジェクトをリリース
-	static void UpdateAll(void);			// 全てのオブジェクトを更新
-	static void DrawAll(void);				// 全てのオブジェクトを描画
+	CScene(PRIORITY Priority = PRIORITY_0);		// コンストラクタ
+	virtual ~CScene();							// デストラクタ
+	static void ReleaseAll(void);				// 全てのオブジェクトをリリース
+	static void UpdateAll(void);				// 全てのオブジェクトを更新
+	static void DrawAll(void);					// 全てのオブジェクトを描画
 
-	virtual HRESULT Init(void) = 0;			// 初期化処理
-	virtual void Uninit(void) = 0;			// 終了処理
-	virtual void Update(void) = 0;			// 更新処理
-	virtual void Draw(void) = 0;			// 描画処理
+	virtual HRESULT Init(void) = 0;				// 初期化処理
+	virtual void Uninit(void) = 0;				// 終了処理
+	virtual void Update(void) = 0;				// 更新処理
+	virtual void Draw(void) = 0;				// 描画処理
 
-	CScene *GetNext(void);					// 次の情報を受け取る
-	static CScene *GetTop(int nCount);		// シーンの情報受け取り
-	static void SetPause(bool Pause);		// ポーズの情報
+	CScene *GetNext(void);						// 次の情報を受け取る
+	static CScene *GetTop(const int nCount);	// シーンの情報受け取り
+	static void SetPause(const bool Pause);		// ポーズの情報
 
 protected:
 	void Release(void);						// オブジェクトを開放

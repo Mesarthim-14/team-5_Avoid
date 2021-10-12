@@ -90,6 +90,8 @@ HRESULT CTestCharacter::Init(void)
 	// 初期化処理
 	CCharacter::Init();
 
+	JsonLoad();
+
 	// 初期化
 	m_rotDest = GetRot();	// 向き
 	SetSize(SIZE);			// サイズ設定
@@ -142,4 +144,50 @@ void CTestCharacter::UpdateState(void)
 void CTestCharacter::Move(void)
 {
 
+}
+
+HRESULT CTestCharacter::JsonLoad(void)
+{
+ // JSONデータの読み込み。
+    ifstream ifs("data/Text/json/test.json", ios::in);
+    if (ifs.fail()) 
+	{
+        cerr << "failed to read test.json" << endl;
+        return 1;
+    }
+
+    const string json((istreambuf_iterator<char>(ifs)), istreambuf_iterator<char>());
+
+    // JSONデータを解析する。
+    picojson::value v;
+    const string err = picojson::parse(v, json);
+    if (err.empty() == false) 
+	{
+        cerr << err << endl;
+        return 2;
+    }
+
+	picojson::object& obj = v.get<picojson::object>();
+
+	double dSpeed = obj["Player"].get<picojson::object>()
+		["SPEED"].get<double>();
+	dSpeed = 10.00;
+
+//	picojson::array arr;
+//	arr.emplace_back(picojson::value(dSpeed));
+
+	obj["Player"].get<picojson::object>()
+		["SPEED"] = picojson::value(dSpeed);
+
+	std::ofstream ofs("data/Text/json/test.json");
+	ofs << picojson::value(obj).serialize(true) << std::endl;
+
+	ifs.close();
+	ofs.close();
+
+	return S_OK;
+}
+
+void CTestCharacter::JsonWrite(void)
+{
 }

@@ -32,7 +32,10 @@ public:
 	void Draw(void);								// 描画処理
 
 private:
-	// ポインタ
+	// private関数
+	void CreatePlayer(void);				// プレイヤーの生成関数
+
+	// メンバ変数
 	CPlayer *m_pPlayer;						// プレイヤーのポインタ
 	bool m_bGameEnd;						// ゲームのエンドフラグ
 	LPD3DXFONT m_pFont;						// デバック用フォント

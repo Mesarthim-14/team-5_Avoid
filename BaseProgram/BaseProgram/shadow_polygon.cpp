@@ -75,9 +75,6 @@ HRESULT CShadowPolygon::Init(void)
 //=============================================================================
 void CShadowPolygon::Draw(void)
 {
-	// レンダラーポインタ取得
-	CRenderer *pRenderer = CManager::GetRenderer();
-
 	// ステンシルテスト
 	CShadow::SetShadowStencilTest();
 

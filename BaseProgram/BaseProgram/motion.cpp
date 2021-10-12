@@ -61,7 +61,7 @@ CMotion * CMotion::Create(string cFileName)
 //=============================================================================
 // モーションの更新処理
 //=============================================================================
-void CMotion::UpdateMotion(int nMaxParts, vector<CModelAnime*> apModelAnime)
+void CMotion::UpdateMotion(const int nMaxParts, const vector<CModelAnime*> apModelAnime)
 {
 	//現在キーが最大キー数未満の場合
 	if (m_nKey < m_Motion[m_nMotionState].nNumKey)
@@ -298,7 +298,7 @@ HRESULT CMotion::ReadMotionFile(string cFileName)
 //=============================================================================
 // モーションの設定
 //=============================================================================
-void CMotion::SetMotion(int nMotion, int nMaxParts, vector<CModelAnime*> apModelAnime)
+void CMotion::SetMotion(const int nMotion, const int nMaxParts, const vector<CModelAnime*> apModelAnime)
 {
 	// 元のモーションと違ったら
 	if (m_nMotionState != nMotion)

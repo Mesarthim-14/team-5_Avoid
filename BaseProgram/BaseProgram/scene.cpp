@@ -265,7 +265,7 @@ void CScene::DeathRelease(void)
 //=============================================================================
 // æ“ªî•ñ‚Ìæ“¾ˆ—
 //=============================================================================
-CScene * CScene::GetTop(int nNum)
+CScene * CScene::GetTop(const int nNum)
 {
 	return m_pTop[nNum];
 }
@@ -281,7 +281,7 @@ CScene * CScene::GetNext(void)
 //=============================================================================
 // ƒ|[ƒYî•ñ‚Ìæ“¾
 //=============================================================================
-void CScene::SetPause(bool Pause)
+void CScene::SetPause(const bool Pause)
 {
 	m_bPause = Pause;
 }

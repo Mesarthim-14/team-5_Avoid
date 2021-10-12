@@ -12,6 +12,7 @@
 //=============================================================================
 #include "character.h"
 #include "modelanime.h"
+#include "json.h"
 
 //=============================================================================
 // プレイヤークラス
@@ -19,7 +20,6 @@
 class CTestCharacter : public CCharacter
 {
 public:
-
 	CTestCharacter(PRIORITY Priority = PRIORITY_CHARACTER);	// コンストラクタ
 	~CTestCharacter();										// デストラクタ
 
@@ -33,6 +33,9 @@ public:
 	void Move(void);					// 移動処理
 
 private:
+	HRESULT JsonLoad(void);	
+	void JsonWrite(void);
+
 	D3DXVECTOR3 m_rotDest;							// 回転(目標値)
 	bool m_bMove;									// 移動のフラグ
 };

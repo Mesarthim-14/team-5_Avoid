@@ -19,6 +19,7 @@
 #include "sound.h"
 #include "joypad.h"
 #include "resource_manager.h"
+#include "player_editor.h"
 
 //=============================================================================
 // コンストラクタ
@@ -77,6 +78,14 @@ void CTitle::Update(void)
 		CFade *pFade = CManager::GetFade();
 		pFade->SetFade(CManager::MODE_TYPE_GAME);
 	}
+
+	// エディットモード
+	if (pKey->GetTrigger(DIK_1) && mode == CFade::FADE_MODE_NONE)
+	{
+		CFade *pFade = CManager::GetFade();
+		pFade->SetFade(CManager::MODE_TYPE_PLAYER_EDITOR);
+	}
+
 }
 
 //=============================================================================

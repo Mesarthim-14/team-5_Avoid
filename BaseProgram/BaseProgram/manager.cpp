@@ -32,6 +32,8 @@
 #include "camera.h"
 #include "camera_title.h"
 #include "camera_game.h"
+#include "library.h"
+#include "player_editor.h"
 
 //=============================================================================
 //静的メンバ変数宣言
@@ -74,7 +76,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	m_pResourceManager.reset(CResourceManager::GetInstance());
 
 	//メモリが確保できたら
-	if (m_pRenderer != nullptr)
+	if (m_pRenderer)
 	{
 		// 初期化処理
 		if (FAILED(m_pRenderer->Init(hWnd, bWindow)))
@@ -84,7 +86,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	}
 
 	//メモリが確保できたら
-	if (m_pInput != nullptr)
+	if (m_pInput)
 	{
 		if (FAILED(m_pInput->Init(hInstance, hWnd)))
 		{
@@ -93,7 +95,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	}
 
 	//メモリが確保できたら
-	if (m_pJoypad != nullptr)
+	if (m_pJoypad)
 	{
 		if (FAILED(m_pJoypad->Init(hInstance, hWnd)))
 		{
@@ -101,11 +103,19 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 		}
 	}
 
-	// !nullcheck
-	if (m_pFade != nullptr)
+	// nullcheck
+	if (m_pFade)
 	{
 		// 初期化処理
 		m_pFade->Init();
+	}
+
+	//ライブラリ生成
+	if (FAILED(CLibrary::InitImgui(hWnd)))
+	{
+		//失敗
+		MessageBox(hWnd, "初期化失敗", "InputMacro", MB_OK | MB_ICONHAND);
+		return E_FAIL;
 	}
 
 	//全テクスチャの読み込み
@@ -119,6 +129,9 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 //=============================================================================
 void CManager::Uninit(void)
 {
+	//ImGui終了
+	CLibrary::UninitImgui();
+
 	// nullchack
 	if (m_pFade)
 	{
@@ -211,6 +224,21 @@ void CManager::Update(void)
 	{
 		m_pModeBase->Update();
 	}
+
+	// カメラの更新処理
+	if (m_pCamera)
+	{
+		m_pCamera->Update();
+		m_pCamera->ShowInfo();
+	}
+
+	if (m_pLight)
+	{
+		//レンダラーで管理してるやつの情報
+		ImGui::Begin("DebugInfo");
+		m_pLight->ShowLightInfo();
+		ImGui::End();
+	}
 }
 
 //=============================================================================
@@ -302,6 +330,10 @@ void CManager::SetMode(MODE_TYPE mode)
 		m_pLight.reset(CLight::Create());
 		break;
 
+	case MODE_TYPE_PLAYER_EDITOR:
+		m_pModeBase.reset(new CPlayerEditor);
+		m_pCamera.reset(CCameraGame::Create());
+		m_pLight.reset(CLight::Create());
 	default:
 		break;
 	}

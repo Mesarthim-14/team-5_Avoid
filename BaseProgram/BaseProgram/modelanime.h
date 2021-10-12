@@ -34,8 +34,8 @@ public:
 
 	// Set関数
 	void SetParent(CModelAnime *pParent)			{ m_pParent = pParent; }		// 親の設定
-	void SetPosAnime(const D3DXVECTOR3 posAnime)	{ m_posAnime = posAnime; }		// アニメーションパーツの座標
-	void SetRotAnime(const D3DXVECTOR3 rotAnime)	{ m_rotAnime = rotAnime; }		// パーツの角度
+	void SetPosAnime(const D3DXVECTOR3& posAnime)	{ m_posAnime = posAnime; }		// アニメーションパーツの座標
+	void SetRotAnime(const D3DXVECTOR3& rotAnime)	{ m_rotAnime = rotAnime; }		// パーツの角度
 	void SetRotCalculation(bool bFlag)				{ m_bRotCalculation = bFlag; }	// 角度の計算フラグの設定
 
 	// Get情報

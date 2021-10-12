@@ -9,11 +9,23 @@
 // インクルード
 //=============================================================================
 #include "library.h"
+#include "keyboard.h"
+#include "manager.h"
+#include "renderer.h"
+#include "json.h"
+
+//=============================================================================
+//静的メンバ変数の初期化
+//=============================================================================
+bool CLibrary::m_bWireFrame = false;
+bool CLibrary::m_bLighting = true;
+bool CLibrary::m_bDebugPlayer = false;
+int CLibrary::m_Culling = false;
 
 //=============================================================================
 // 文字列を分割し、取り出すクラス
 //=============================================================================
-string CLibrary::split(string str, char del, int nNum)
+string CLibrary::split(const string str, const char del, const int nNum)
 {
 	// ローカル変数宣言
 	int first = 0;								// 何番目の文字か
@@ -163,9 +175,19 @@ void CLibrary::RotFix(float &fRot)
 }
 
 //=============================================================================
+// 角度の修正
+//=============================================================================
+void CLibrary::RotFixVector3(D3DXVECTOR3 & rot)
+{
+	CLibrary::RotFix(rot.x);
+	CLibrary::RotFix(rot.y);
+	CLibrary::RotFix(rot.z);
+}
+
+//=============================================================================
 // ランダムの値を返す (指定した+-の範囲を出力)
 //=============================================================================
-int CLibrary::Random(int nNum)
+int CLibrary::Random(const int nNum)
 {
 	random_device rnd;
 	mt19937 mt(rnd());
@@ -177,7 +199,7 @@ int CLibrary::Random(int nNum)
 //=============================================================================
 // ランダムの値を返す (指定した二つの範囲を出力)
 //=============================================================================
-int CLibrary::Random(int nMin, int nMax)
+int CLibrary::Random(const int nMin, const int nMax)
 {
 	random_device rnd;
 	mt19937 mt(rnd());
@@ -189,7 +211,7 @@ int CLibrary::Random(int nMin, int nMax)
 //=============================================================================
 // ランダムの値を返す (指定した+-の範囲を出力)
 //=============================================================================
-float CLibrary::Random(float fNum)
+float CLibrary::Random(const float fNum)
 {
 	random_device rnd;
 	mt19937 mt(rnd());
@@ -201,11 +223,137 @@ float CLibrary::Random(float fNum)
 //=============================================================================
 // ランダムの値を返す (指定した二つの範囲を出力)
 //=============================================================================
-float CLibrary::Random(float fMin, float fMax)
+float CLibrary::Random(const float fMin, const float fMax)
 {
 	random_device rnd;
 	mt19937 mt(rnd());
 	uniform_real_distribution<> rand(fMin, fMax);
 
 	return (float)rand(mt);
+}
+
+//=============================================================================
+// jsonのファイルロード
+//=============================================================================
+picojson::value CLibrary::JsonLoadFile(const string &FileName)
+{
+	// JSONデータの読み込み。
+	ifstream ifs(FileName, ios::in);
+	if (ifs.fail())
+	{
+		cerr << "failed to jsonfile" << endl;
+	}
+	const string json((istreambuf_iterator<char>(ifs)), istreambuf_iterator<char>());
+	// JSONデータを解析する。
+	picojson::value v;
+	const string err = picojson::parse(v, json);
+	if (err.empty() == false)
+	{
+		cerr << err << endl;
+	}
+
+	ifs.close();
+	return v;
+}
+
+//=============================================================================
+// Imguiの生成
+//=============================================================================
+HRESULT CLibrary::InitImgui(HWND hWnd)
+{
+	//ゲームパッドとキーボードの情報取得
+	//所有権は貰ってないから開放の必要はない
+	CInputKeyboard *pKeyboard = CManager::GetKeyboard();
+
+	//NULLチェック
+	if (!pKeyboard)
+	{
+		return E_FAIL;
+	}
+
+	//create
+	IMGUI_CHECKVERSION();
+
+	//生成
+	ImGui::CreateContext();
+
+	//デフォルトカラー設定
+	ImGui::StyleColorsDark();
+
+	//初期化
+	ImGui_ImplWin32_Init(hWnd);
+	ImGui_ImplDX9_Init(CManager::GetRenderer()->GetDevice());
+
+	return S_OK;
+}
+
+//=============================================================================
+// Imguiの終了処理
+//=============================================================================
+void CLibrary::UninitImgui(void)
+{
+	ImGui_ImplDX9_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+}
+
+//=============================================================================
+// Imgui デバッグ情報表示
+//=============================================================================
+void CLibrary::ShowDebugInfo()
+{
+#ifdef _DEBUG
+
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+
+	//開始
+	if (ImGui::CollapsingHeader("Debug"))
+	{
+		//FPS情報
+		if (ImGui::TreeNode("FPS"))
+		{
+			//FPS
+			ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			ImGui::TreePop();
+		}
+
+		//情報
+		if (ImGui::TreeNode("DebugCommand"))
+		{
+			//ワイヤーフレーム
+			if (ImGui::Checkbox("WireFrame", &m_bWireFrame))
+			{
+				CheckWireMode();
+			}
+
+			//ライティング
+			if (ImGui::Checkbox("Lighting", &m_bLighting))
+			{
+				pDevice->SetRenderState(D3DRS_LIGHTING, m_bLighting);		// ライティングモード切り替え
+			}
+			//プレイヤーデバッグ
+			if (ImGui::Checkbox("DebugPlayer", &m_bDebugPlayer))
+			{
+
+			}
+			ImGui::TreePop();
+		}
+	}
+
+#endif //DEBUG
+}
+
+//=============================================================================
+//ワイヤーフレームかどうか確認
+//Imguiのウィンドウだけワイヤーフレームにならない為に必要
+//=============================================================================
+void CLibrary::CheckWireMode(void)
+{
+	//デバイス取得
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+
+	//trueかfalseかで決める
+	m_bWireFrame ?
+		pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME) :
+		pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }

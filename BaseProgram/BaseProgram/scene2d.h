@@ -21,8 +21,8 @@ public:
 	CScene2D(PRIORITY Priority = PRIORITY_0);									// コンストラクタ
 	~CScene2D();																// デストラクタ
 
-	static CScene2D* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);					// インスタンス生成
-	static CScene2D* Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, float fFadeNum);	// インスタンス生成(フェード有り)
+	static CScene2D* Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size);							// インスタンス生成
+	static CScene2D* Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size, const float &fFadeNum);	// インスタンス生成(フェード有り)
 
 	HRESULT Init(void);													// 初期化処理
 	void Uninit(void);													// 終了処理

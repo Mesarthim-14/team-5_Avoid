@@ -17,6 +17,12 @@
 #include "keyboard.h"
 #include "polygon.h"
 #include "shadow.h"
+#include "library.h"
+
+//=============================================================================
+// マクロ定義
+//=============================================================================
+#define FOG_COLOR (D3DCOLOR_RGBA(45, 45, 45, 0))
 
 //=============================================================================
 // レンダリングクラスのコンストラクタ
@@ -126,6 +132,15 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 	m_pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);		// テクスチャ拡大時の補完設定
 	m_pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);		// テクスチャ縮小時の補完設定
 
+	//フォグの設定
+	float fStart = 1000.0f;
+	float fEnd = 3500.0f;
+	m_pD3DDevice->SetRenderState(D3DRS_FOGCOLOR, FOG_COLOR);					// カラー設定
+	m_pD3DDevice->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_NONE);				// 頂点モード
+	m_pD3DDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);			// テーブルモード
+	m_pD3DDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD*)(&fStart));			// 開始位置
+	m_pD3DDevice->SetRenderState(D3DRS_FOGEND, *(DWORD*)(&fEnd));				// 終了位置
+
 	// テクスチャステージステートの設定
 	m_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);		// アルファブレンディング処理
 	m_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);		// 最初のアルファ引数（初期値）
@@ -169,8 +184,35 @@ void CRenderer::Uninit(void)
 //=============================================================================
 void CRenderer::Update(void)
 {
+#ifdef _DEBUG
+
+	//ImGuiの更新
+	ImGui_ImplDX9_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+
+#endif	//DEBUG
+
 	// 全ての更新
 	CScene::UpdateAll();
+#ifdef _DEBUG
+
+	//情報
+//	ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.0f, 0.7f, 0.2f, 1.0f));
+//	ImGui::PushStyleColor(ImGuiCol_TitleBg, ImVec4(0.0f, 0.3f, 0.1f, 1.0f));
+
+	//デバッグのコマンド
+	CLibrary::ShowDebugInfo();
+	//レンダラー関係の終了
+//	ImGui::End();
+
+	//ポップの色情報初期化
+//	ImGui::PopStyleColor();
+//	ImGui::PopStyleColor();
+
+//	ImGui::EndFrame();//更新処理の終わりに
+
+#endif	//DEBUG
 
 	// キーボード情報
 	CInputKeyboard *pKeyboard = CManager::GetKeyboard();
@@ -242,6 +284,24 @@ void CRenderer::Draw(void)
 			// 描画処理
 			pFade->Draw();
 		}
+#ifdef _DEBUG
+		//ImGuiの情報表示する時
+		if (m_bDispImGuiInfo)
+		{
+			//通常描画
+			m_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+			//ImGui描画
+			ImGui::Render();
+			ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
+
+			//ワイヤーフレーム描画の時は元に戻す
+			CLibrary::CheckWireMode();
+
+#endif	//DEBUG
+
+		}
+
 
 		// Direct3Dによる描画の終了
 		m_pD3DDevice->EndScene();

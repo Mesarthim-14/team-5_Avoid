@@ -18,12 +18,12 @@
 class CBillboard : public CScene3D
 {
 public:
-	CBillboard(PRIORITY Priority = PRIORITY_EFFECT);	// コンストラクタ
-	~CBillboard() {}									// デストラクタ
-	virtual void Draw(void);							// 描画処理
+	explicit CBillboard(PRIORITY Priority = PRIORITY_EFFECT);	// コンストラクタ
+	~CBillboard() {}											// デストラクタ
+	virtual void Draw(void);									// 描画処理
 	
 private:
-	void SetBlend(bool bBlend)	{ m_bBlend = bBlend; }	// 加算合成
+	void SetBlend(const bool &bBlend)	{ m_bBlend = bBlend; }	// 加算合成
 
 private:
 	bool m_bBlend;				// 加算合成

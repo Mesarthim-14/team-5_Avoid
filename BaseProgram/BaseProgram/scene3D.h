@@ -30,15 +30,15 @@ protected:
 	void SetVertexPos(void);						// 座標の更新
 
 	// Set関数
-	void SubAlpha(float fAlphaNum);												// 透明度の減算
-	void InitAnimation(int nPatternNum, int nSpeed, int nLoop);					// アニメーション情報初期化
-	void SetColor(D3DXCOLOR color);												// カラーの設定
-	void ScaleUp(float fScale);													// 拡大処理
-	void SetMove(D3DXVECTOR3 move)			{ m_move = move; }					// 移動量
-	void SetAlpha(bool bAlpha)				{ m_bAlpha = bAlpha; }				// アルファテスト
-	void SetAlphaNum(int nAlphaNum)			{ m_nAlphaTestNum = nAlphaNum; }	// アルファテストの値
-	void SetBlend(bool bBlend)				{ m_bBlend = bBlend; }				// 加算合成
-	void SetMtxWorld(D3DXMATRIX mtxWorld)	{ m_mtxWorld = mtxWorld; }			// ワールドマトリクスの設定
+	void SubAlpha(float fAlphaNum);														// 透明度の減算
+	void InitAnimation(int nPatternNum, int nSpeed, int nLoop);							// アニメーション情報初期化
+	void SetColor(const D3DXCOLOR color);												// カラーの設定
+	void ScaleUp(float fScale);															// 拡大処理
+	void SetMove(const D3DXVECTOR3 move)			{ m_move = move; }					// 移動量
+	void SetAlpha(const bool bAlpha)				{ m_bAlpha = bAlpha; }				// アルファテスト
+	void SetAlphaNum(const int nAlphaNum)			{ m_nAlphaTestNum = nAlphaNum; }	// アルファテストの値
+	void SetBlend(const bool bBlend)				{ m_bBlend = bBlend; }				// 加算合成
+	void SetMtxWorld(const D3DXMATRIX mtxWorld)		{ m_mtxWorld = mtxWorld; }			// ワールドマトリクスの設定
 
 	// Get関数
 	D3DXMATRIX GetMtxWorld(void)	{ return m_mtxWorld; }				// ワールドマトリクス

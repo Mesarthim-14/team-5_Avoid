@@ -40,7 +40,7 @@ CScene2D::~CScene2D()
 //=======================================================================================
 // Sceneクラスの生成
 //=======================================================================================
-CScene2D* CScene2D::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 size)
+CScene2D* CScene2D::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size)
 {
 	// オブジェクトを生成
 	CScene2D* pScene = new CScene2D();
@@ -59,7 +59,7 @@ CScene2D* CScene2D::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 size)
 //=======================================================================================
 // Sceneクラスの生成 (Fade有り)
 //=======================================================================================
-CScene2D * CScene2D::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, float fFadeNum)
+CScene2D * CScene2D::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size, const float &fFadeNum)
 {
 	// オブジェクトを生成
 	CScene2D* pScene = new CScene2D();

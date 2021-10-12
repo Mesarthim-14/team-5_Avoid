@@ -17,6 +17,7 @@
 #include "player.h"
 #include "joypad.h"
 #include "motion.h"
+#include "library.h"
 
 //=============================================================================
 // マクロ定義
@@ -36,6 +37,8 @@ CCamera::CCamera()
 	m_rot = ZeroVector3;
 	m_fDistance = 0.0f;
 	m_fMove = 0.0f;
+	m_fHorizontal = 0.0f;
+	m_fVartical = 0.0f;
 }
 
 //=============================================================================
@@ -67,18 +70,8 @@ void CCamera::Uninit(void)
 //=============================================================================
 void CCamera::Update(void)
 {
-	// プレイヤー
-	CPlayer *pPlayer = CManager::GetPlayer();
-
-	// プレイヤーが使われていたら
-	if (pPlayer)
-	{
-		D3DXVECTOR3 PlayerPos = pPlayer->GetPos();	//プレイヤー位置
-		D3DXVECTOR3 PlayerRot = pPlayer->GetRot();	//プレイヤー角度
-
-		// 通常状態のカメラ移動
-		this->NomalUpdate(PlayerPos, PlayerRot);
-	}
+	// 通常状態のカメラ移動
+	this->NomalUpdate();
 }
 
 //=============================================================================
@@ -114,4 +107,26 @@ void CCamera::SetCamera(void)
 	//プロジェクションマトリックスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION,
 		&m_mtxProjection);
+}
+
+//=============================================================================
+// imguiの設定
+//=============================================================================
+void CCamera::ShowInfo(void)
+{
+	ImGui::Begin("DebugInfo");
+
+	if (ImGui::CollapsingHeader("CameraInfo"))
+	{
+		LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();	// デバイスの取得
+
+		if (ImGui::TreeNode("Camera"))
+		{
+			ImGui::SliderFloat("Horizontal", &m_fHorizontal, D3DXToRadian(-180), D3DXToRadian(180));
+
+			ImGui::TreePop();
+		}
+	}
+
+	ImGui::End();
 }

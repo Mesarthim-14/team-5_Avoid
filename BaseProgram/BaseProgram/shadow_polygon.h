@@ -22,8 +22,8 @@
 class CShadowPolygon : public CScene2D
 {
 public:
-	CShadowPolygon(PRIORITY = PRIORITY_1);	// コンストラクタ
-	~CShadowPolygon();						// デストラクタ
+	CShadowPolygon(PRIORITY = PRIORITY_SHADOW);	// コンストラクタ
+	~CShadowPolygon();							// デストラクタ
 
 	static CShadowPolygon *Create(void);	// インスタンス生成
 	HRESULT Init(void);						// 初期化処理

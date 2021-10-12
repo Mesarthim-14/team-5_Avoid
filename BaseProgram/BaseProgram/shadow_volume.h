@@ -21,12 +21,12 @@ public:
 	CShadowVolume();		// コンストラクタ
 	~CShadowVolume();		// デストラクタ
 
-	static CShadowVolume *Create(LPD3DXMESH pSrcMesh);					// インスタンス生成
-	HRESULT Init(LPD3DXMESH pSrcMesh);									// 初期化生成処理
-	void Uninit(void);													// 終了処理
-	void Draw(void);													// 描画処理
-	HRESULT CreateShadow(D3DXVECTOR3 rot, D3DXVECTOR3 ShipRot);			// 影の生成
-	HRESULT CreateShadow(D3DXVECTOR3 ShipRot);							// 影の生成
+	static CShadowVolume *Create(const LPD3DXMESH pSrcMesh);					// インスタンス生成
+	HRESULT Init(const LPD3DXMESH pSrcMesh);									// 初期化生成処理
+	void Uninit(void);															// 終了処理
+	void Draw(void);															// 描画処理
+	HRESULT CreateShadow(const D3DXVECTOR3 rot, const D3DXVECTOR3 ShipRot);		// 影の生成
+	HRESULT CreateShadow(const D3DXVECTOR3 ShipRot);							// 影の生成
 
 private:
 	// メッシュ情報の構造体

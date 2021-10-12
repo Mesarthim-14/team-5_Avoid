@@ -11,6 +11,10 @@
 // インクルードファイル
 //=============================================================================
 #include "main.h"
+#include "ImGui/Imgui.h"
+#include "ImGui/imgui_impl_dx9.h"
+#include "ImGui/imgui_impl_win32.h"
+#include "json.h"
 
 //=============================================================================
 // 当たり判定クラス
@@ -21,12 +25,48 @@ public:
 	static string split(string str, char del, int nNum);											// 文字列を分割し、取り出す関数
 	static void ConfigMatrix(D3DXMATRIX *pMtx, D3DXVECTOR3 const &rPos, D3DXVECTOR3 const &rRot);	// マトリクスの設定
 	static void RotFix(float &fRot);																// 角度の修正
-	static int Random(int nNum);																	// ランダム変数
-	static int Random(int nMin, int nMax);															// ランダム変数
-	static float Random(float fNum);																// ランダム変数
-	static float Random(float fMin, float fMax);													// ランダム変数
+	static void RotFixVector3(D3DXVECTOR3 &rot);													// 角度の修正
+	static int Random(const int nNum);																// ランダム変数
+	static int Random(const int nMin, const int nMax);												// ランダム変数
+	static float Random(const float fNum);															// ランダム変数
+	static float Random(const float fMin, const float fMax);										// ランダム変数
+	
+	// ジェイソンのファイルロード
+	static picojson::value JsonLoadFile(const string &FileName);
+
+	// ジェイソンのデータ受け取り
+	template <typename T> static void JsonGetState(
+		picojson::value &v, const string &ObjName, const string &StateName, T &Data)
+	{
+		picojson::object& obj = v.get<picojson::object>();
+		Data = (T)(obj[ObjName].get<picojson::object>()[StateName].get<double>());
+	}
+
+	// ジェイソンへデータ設定
+	template <typename T> static void JsonSetState(const string &FileName,
+		const string &ObjName, const string &StateName, T &Data)
+	{
+		picojson::value& v = JsonLoadFile(FileName);
+		picojson::object& obj = v.get<picojson::object>();
+		obj[ObjName].get<picojson::object>()
+			[StateName] = picojson::value(Data);
+
+		std::ofstream ofs(FileName);
+		ofs << picojson::value(obj).serialize(true) << endl;
+		ofs.close();
+	}
+
+	// Imgui
+	static HRESULT InitImgui(HWND hWnd);	//Imgui生成処理
+	static void UninitImgui(void);			//Imgui終了
+	static void ShowDebugInfo(void);		//デバッグ情報表示
+	static void CheckWireMode(void);		//ワイヤーフレーム確認
 
 private:
+	static bool m_bWireFrame;		// ワイヤーフレーム
+	static bool m_bLighting;		//ライティングするか
+	static bool m_bDebugPlayer;		//プレイヤーデバック
+	static int m_Culling;			//カリング情報
 };
 
 #endif

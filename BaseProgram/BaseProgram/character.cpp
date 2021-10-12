@@ -145,7 +145,7 @@ void CCharacter::Draw()
 //=============================================================================
 // モデルの生成
 //=============================================================================
-void CCharacter::ModelCreate(CXfile::HIERARCHY_XFILE_NUM FileNum)
+void CCharacter::ModelCreate(const CXfile::HIERARCHY_XFILE_NUM &FileNum)
 {
 	// XFileのポインタ取得
 	CXfile *pXfile = CManager::GetResourceManager()->GetXfileClass();
@@ -282,7 +282,7 @@ void CCharacter::SetShadowRotCalculation(void)
 //=============================================================================
 // キャラクターの情報
 //=============================================================================
-void CCharacter::SetCharacterInfo(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+void CCharacter::SetCharacterInfo(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
 	m_pos = pos;
 	m_rot = rot;

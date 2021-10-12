@@ -17,15 +17,17 @@
 #include "player.h"
 #include "joypad.h"
 #include "motion.h"
+#include "library.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define GAME_CAMERA_DEFAULT_Fθ		(D3DXToRadian(60.0f))	// カメラのθDefault値
-#define GAME_CAMERA_DEFAULT_Hθ		(D3DXToRadian(95.0f))	// カメラ角度横
+#define GAME_CAMERA_DEFAULT_Fθ		(D3DXToRadian(55.0f))	// カメラのθDefault値
+#define GAME_CAMERA_DEFAULT_Hθ		(D3DXToRadian(0.0f))	// カメラ角度横
 #define PLAYER_HEIGHT				(0.0f)					// 注視点の高さ
 #define GAME_CAMERA_DISTANCE		(2500.0f)				// 距離
 #define CAMERA_MIN_HIGHT			(2.0f)					// カメラの最低高度
+#define INPUT_CONVERSION			(D3DXToRadian(1.0f))	// スティック入力変化量
 
 //=============================================================================
 // インスタンス生成
@@ -92,24 +94,43 @@ HRESULT CCameraGame::Init(void)
 //=============================================================================
 // 通常状態の更新処理
 //=============================================================================
-void CCameraGame::NomalUpdate(D3DXVECTOR3 PlayerPos, D3DXVECTOR3 PlayerRot)
+void CCameraGame::NomalUpdate(void)
 {
-	//キーボードクラス情報の取得
-	CInputKeyboard *pKeyInput = CManager::GetKeyboard();
+	// プレイヤー
+	CPlayer *pPlayer = CManager::GetPlayer();
 
-	// ジョイパッドの取得
-	DIJOYSTATE js = CInputJoypad::GetStick(0);
+	// プレイヤーが使われていたら
+	if (pPlayer)
+	{
+		D3DXVECTOR3 PlayerPos = pPlayer->GetPos();	//プレイヤー位置
+		D3DXVECTOR3 PlayerRot = pPlayer->GetPos();	//プレイヤー位置
 
-	// 角度の取得
-	float fAngle3 = atan2f((float)js.lX, -(float)js.lY);	// コントローラの角度
-	float fAngle2 = atan2f(-(float)js.lX, (float)js.lY);	// コントローラの角度
-	float fAngle = GetHorizontal();							// カメラの角度
+		// キーボードクラス情報の取得
+		CInputKeyboard *pKeyInput = CManager::GetKeyboard();
 
-	// カメラ座標
+		// カメラ座標
+		D3DXVECTOR3 VDest = ZeroVector3;
+		D3DXVECTOR3 posRDest = GetposRDest();
+		float fDistance = GetDistance();
+		float fVartical = GetVartical();
+		float fHorizontal = GetHorizontal();							// カメラの角度
+
+		// 追従
+		//	Tracking(fDistance, fVartical, fHorizontal, PlayerPos, PlayerRot);
+
+		// キーボード更新
+		KeyBoardMove(fDistance, fVartical, fHorizontal, PlayerPos);
+	}
+}
+
+//=============================================================================
+// 追従処理
+//=============================================================================
+void CCameraGame::Tracking(const float &fDistance, float &fVartical,
+	float &fHorizontal, const D3DXVECTOR3 &PlayerPos, const D3DXVECTOR3 &PlayerRot)
+{
 	D3DXVECTOR3 VDest = ZeroVector3;
-	D3DXVECTOR3 posRDest = GetposRDest();
-	float fDistance = GetDistance();
-	float fVartical = GetVartical();
+	D3DXVECTOR3 posRDest = ZeroVector3;
 
 	// カメラの位置設定
 	VDest.x = PlayerPos.x + fDistance * sinf(fVartical) * sinf(PlayerRot.y);	// カメラ位置X設定
@@ -117,6 +138,66 @@ void CCameraGame::NomalUpdate(D3DXVECTOR3 PlayerPos, D3DXVECTOR3 PlayerRot)
 	VDest.z = PlayerPos.z + fDistance * sinf(fVartical) * cosf(PlayerRot.y);	// カメラ位置Z設定
 
 	posRDest = D3DXVECTOR3(PlayerPos.x, PlayerPos.y + PLAYER_HEIGHT, PlayerPos.z);	//注視点設定
+
+	//カメラPOSYの下限
+	if (VDest.y <= CAMERA_MIN_HIGHT)
+	{
+		VDest.y = CAMERA_MIN_HIGHT;	//限界値に戻す
+	}
+
+	//設定値の反映
+	GetposV() += (VDest - GetposV())*0.1f;
+	GetposR() += (posRDest - GetposR())*0.9f;
+
+}
+
+//=============================================================================
+// キーボードの更新
+//=============================================================================
+void CCameraGame::KeyBoardMove(const float &fDistance, float &fVartical,
+	float &fHorizontal, D3DXVECTOR3 PlayerPos)
+{
+	// プレイヤー
+	CPlayer *pPlayer = CManager::GetPlayer();
+
+	//キーボードクラス情報の取得
+	CInputKeyboard *pKeyInput = CManager::GetKeyboard();
+	D3DXVECTOR3 VDest = ZeroVector3;
+
+	//視点（カメラ座標）の左旋回
+	if (pKeyInput->GetPress(DIK_LEFT))
+	{
+		fHorizontal += INPUT_CONVERSION;
+	}
+	//視点（カメラ座標）の右旋回
+	if (pKeyInput->GetPress(DIK_RIGHT))
+	{
+		fHorizontal -= INPUT_CONVERSION;
+	}
+	//視点（カメラ座標）の上旋回
+	if (pKeyInput->GetPress(DIK_UP))
+	{
+		fVartical -= INPUT_CONVERSION;
+	}
+	//視点（カメラ座標）の下旋回
+	if (pKeyInput->GetPress(DIK_DOWN))
+	{
+		fVartical += INPUT_CONVERSION;
+	}
+
+	// 角度の修正
+	CLibrary::RotFix(fHorizontal);
+
+	// 角度の設定
+	SetVartical(fVartical);
+	SetHorizontal(fHorizontal);
+
+	// カメラの位置設定
+	VDest.x = PlayerPos.x + fDistance * sinf(fVartical) * sinf(fHorizontal);	// カメラ位置X設定
+	VDest.y = PlayerPos.y + fDistance * cosf(fVartical);						// カメラ位置Y設定
+	VDest.z = PlayerPos.z + fDistance * sinf(fVartical) * cosf(fHorizontal);	// カメラ位置Z設定
+	
+	D3DXVECTOR3 posRDest = D3DXVECTOR3(PlayerPos.x, PlayerPos.y + PLAYER_HEIGHT, PlayerPos.z);	//注視点設定
 
 	//カメラPOSYの下限
 	if (VDest.y <= CAMERA_MIN_HIGHT)

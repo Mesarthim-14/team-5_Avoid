@@ -412,17 +412,9 @@ void CXfile::UnLoadAll(void)
 }
 
 //=============================================================================
-// モデルの情報
-//=============================================================================
-CXfile::MODEL CXfile::GetXfile(XFILE_NUM Tex_Num)
-{
-	return m_aXfile[Tex_Num];
-}
-
-//=============================================================================
 // モデルに使用するテクスチャ情報
 //=============================================================================
-LPDIRECT3DTEXTURE9 *CXfile::GetXfileTexture(XFILE_NUM TexNum)
+LPDIRECT3DTEXTURE9 *CXfile::GetXfileTexture(const XFILE_NUM TexNum)
 {
 	if (TexNum < XFILE_NUM_MAX)
 	{

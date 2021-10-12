@@ -16,6 +16,7 @@
 #include "resource_manager.h"
 #include "motion.h"
 #include "library.h"
+#include "camera.h"
 
 //=============================================================================
 // マクロ定義
@@ -24,12 +25,13 @@
 #define PLAYER_SPEED			(10.0f)									// プレイヤーの移動量
 #define PLAYER_ROT_SPEED		(0.1f)									// キャラクターの回転する速度
 #define SIZE					(D3DXVECTOR3 (1200.0f,1000.0f,1200.0f))	// サイズ
+#define PLAYER_INERTIA			(0.08f)		// 慣性の大きさ
 
 //=============================================================================
 // 生成処理関数
 // Author : Konishi Yuuto
 //=============================================================================
-CPlayer * CPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+CPlayer * CPlayer::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
 	// メモリ確保
 	CPlayer *pPlayer = new CPlayer;
@@ -55,6 +57,9 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 {
 	m_rotDest = ZeroVector3;
 	m_bMove = false;
+	m_Inertia = ZeroVector3;
+	m_fInertiaNum = 0.0f;
+	m_fRotationSpeed = 0.0f;
 }
 
 //=============================================================================
@@ -79,7 +84,7 @@ HRESULT CPlayer::Init(void)
 	{
 		SetUseShadow();									// 影の使用
 		ModelCreate(CXfile::HIERARCHY_XFILE_NUM_TEST);	// モデルの生成
-		SetShadowRotCalculation();						// 影の向き
+	//	SetShadowRotCalculation();						// 影の向き
 	}
 
 	// 初期化処理
@@ -88,9 +93,8 @@ HRESULT CPlayer::Init(void)
 	// 初期化
 	m_rotDest = GetRot();			// 向き
 	SetSize(SIZE);					// サイズ設定
-	SetSpeed(PLAYER_SPEED);			// スピード設定
 	SetType(CHARACTER_TYPE_PLAYER);	// プレイヤー
-
+	LoadInfo();
 	return S_OK;
 }
 
@@ -124,8 +128,8 @@ void CPlayer::Update(void)
 	// プレイヤー処理
 	PlayerControl();
 
-	// 角度の更新処理
-	CLibrary::RotFix(m_rotDest.y);
+	// 更新処理
+	UpdateRot();
 }
 
 //=============================================================================
@@ -153,7 +157,8 @@ void CPlayer::UpdateState(void)
 //=============================================================================
 void CPlayer::PlayerControl(void)
 {
-
+	// 移動
+	Move();
 }
 
 //=============================================================================
@@ -162,5 +167,180 @@ void CPlayer::PlayerControl(void)
 //=============================================================================
 void CPlayer::Move(void)
 {
+	// キーボード移動
+	KeyBoardMove();
+}
 
+//=============================================================================
+// 移動処理
+// Author : Konishi Yuuto
+//=============================================================================
+void CPlayer::KeyBoardMove(void)
+{
+	CInputKeyboard *pKeyboard = CManager::GetKeyboard();	// キーボード更新
+	D3DXVECTOR3 pos = GetPos();								// 座標
+	D3DXVECTOR3 rot = GetRot();								// 角度
+	float fSpeed = GetSpeed();								// 移動量
+	float fAngle = CManager::GetCamera()->GetHorizontal();	// カメラの角度
+
+	// 前に移動
+	if (pKeyboard->GetPress(DIK_W))
+	{
+		// 移動量・角度の設定
+		m_Inertia.x = -sinf(fAngle)*fSpeed;
+		m_Inertia.z = -cosf(fAngle)*fSpeed;
+		m_rotDest.y = fAngle;
+		m_bMove = true;
+	}
+	// 後ろに移動
+	if (pKeyboard->GetPress(DIK_S))
+	{
+		// 移動量・角度の設定
+		m_Inertia.x = sinf((fAngle))*fSpeed;
+		m_Inertia.z = cosf((fAngle))*fSpeed;
+		m_rotDest.y = fAngle + D3DXToRadian(-180.0f);
+		m_bMove = true;
+	}
+	// 左に移動
+	if (pKeyboard->GetPress(DIK_A))
+	{
+		// 移動量・角度の設定
+		m_Inertia.x = sinf((fAngle + D3DXToRadian(90.0f)))*fSpeed;
+		m_Inertia.z = cosf((fAngle + D3DXToRadian(90.0f)))*fSpeed;
+		m_rotDest.y = fAngle + D3DXToRadian(-90.0f);
+		m_bMove = true;
+	}
+	// 右に移動
+	if (pKeyboard->GetPress(DIK_D))
+	{
+		// 移動量・角度の設定
+		m_Inertia.x = sinf((fAngle + D3DXToRadian(-90.0f)))*fSpeed;
+		m_Inertia.z = cosf((fAngle + D3DXToRadian(-90.0f)))*fSpeed;
+		m_rotDest.y = fAngle + D3DXToRadian(90.0f);
+		m_bMove = true;
+	}
+
+	// 座標設定
+	SetPos(pos);
+
+	if(!m_bMove)
+	{
+		m_Inertia = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	}
+	else
+	{
+		m_bMove = false;
+	}
+
+	// 慣性
+	D3DXVECTOR3 move = GetMove();
+	move += (m_Inertia - move) * m_fInertiaNum;
+	SetMove(move);
+}
+
+//=============================================================================
+// 更新処理
+// Author : Konishi Yuuto
+//=============================================================================
+void CPlayer::UpdateRot(void)
+{
+	// 角度の取得
+	D3DXVECTOR3 rot = GetRot();
+
+	while (m_rotDest.y - rot.y > D3DXToRadian(180))
+	{
+		m_rotDest.y -= D3DXToRadian(360);
+	}
+
+	while (m_rotDest.y - rot.y < D3DXToRadian(-180))
+	{
+		m_rotDest.y += D3DXToRadian(360);
+	}
+
+	// キャラクター回転の速度
+	rot += (m_rotDest - rot) * m_fRotationSpeed;
+
+	// 角度の更新処理
+	CLibrary::RotFix(rot.y);
+
+	// 角度の設定
+	SetRot(rot);
+}
+
+//=============================================================================
+// Imgui 情報
+// Author : Konishi Yuuto
+//=============================================================================
+void CPlayer::ShowInfo(void)
+{
+#ifdef _DEBUG
+
+	//レンダラーで管理してるやつの情報
+	ImGui::Begin("DebugInfo");
+
+	if (ImGui::CollapsingHeader("PlayerInfo"))
+	{
+		LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();	// デバイスの取得
+
+		if (ImGui::TreeNode("Player"))
+		{
+			// 移動量
+			D3DXVECTOR3 pos = GetPos();
+			ImGui::Text("Pos : %.1ff %.1ff %.1ff", pos.x, pos.y, pos.z);
+
+			// 移動量
+			D3DXVECTOR3 rot = GetRot();
+			ImGui::Text("Rot : %.1ff %.1ff %.1ff", rot.x, rot.y, rot.z);
+
+			// 移動量
+			float fSpeed = GetSpeed();
+			ImGui::SliderFloat("Speed", &fSpeed, 0.0f, 50.0f);
+			SetSpeed(fSpeed);
+
+			// 慣性の値
+			ImGui::SliderFloat("InertiaNum", &m_fInertiaNum, 0.0f, 0.5f);
+
+			// 目的の角度の値
+			ImGui::SliderFloat("rotDest", &m_rotDest.y, D3DXToRadian(-180), D3DXToRadian(180));
+
+			// 回転速度の値
+			ImGui::SliderFloat("RotationSpeed", &m_fRotationSpeed, 0.0f, 1.0f);
+
+			ImGui::TreePop();
+		}
+	}
+
+	ImGui::End();
+#endif // !_DEBUG
+}
+
+//=============================================================================
+// データロード
+// Author : Konishi Yuuto
+//=============================================================================
+HRESULT CPlayer::LoadInfo(void)
+{
+	// ファイルデータ取得
+	picojson::value& v = CLibrary::JsonLoadFile("data/Text/json/test.json");
+
+	// ステータス取得
+	CLibrary::JsonGetState(v, "Player", "SPEED", GetSpeed());
+	CLibrary::JsonGetState(v, "Player", "INERTIA_NUM", m_fInertiaNum);
+	CLibrary::JsonGetState(v, "Player", "ROTATION_SPEED", m_fRotationSpeed);
+
+	return S_OK;
+}
+
+//=============================================================================
+// データセーブ
+// Author : Konishi Yuuto
+//=============================================================================
+void CPlayer::SaveInfo(void)
+{
+	string FileName = "data/Text/json/test.json";
+
+	// ファイルデータ取得
+	CLibrary::JsonSetState(FileName, "Player", "SPEED", GetSpeed());				// 速度
+	CLibrary::JsonSetState(FileName, "Player", "INERTIA_NUM", m_fInertiaNum);		// 慣性
+	CLibrary::JsonSetState(FileName, "Player", "ROTATION_SPEED", m_fRotationSpeed);	// 回転の速度
 }

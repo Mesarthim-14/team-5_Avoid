@@ -68,7 +68,6 @@ HRESULT CTest2d::Init(void)
 	CTexture *pTexture = GET_TEXTURE_PTR;
 	INT_VERTEX_2D TexInfo = pTexture->GetSparateTexInfo(CTexture::SEPARATE_TEX_TEST);
 	bool bLoop = pTexture->GetSparateTexLoop(CTexture::SEPARATE_TEX_TEST);
-//	BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_TEST));
 	BindTexture(pTexture->GetSeparateTexture(CTexture::SEPARATE_TEX_TEST));
 	InitAnimation(TexInfo.x, TexInfo.y, bLoop);
 

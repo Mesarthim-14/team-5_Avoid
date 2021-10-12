@@ -75,12 +75,12 @@ public:
 	void LoadAll(void);														// 全てのロード
 	void UnLoadAll(void);													// 全てのアンロード
 
-	LPDIRECT3DTEXTURE9 GetTexture(TEXTURE_TYPE Tex_Type);					// テクスチャの情報
-	LPDIRECT3DTEXTURE9 GetSeparateTexture(SEPARATE_TEX_TYPE SepaTex_Type);	// 分割テクスチャ情報
-	INT_VERTEX_2D GetSparateTexInfo(SEPARATE_TEX_TYPE SepaTex_Type);		// 分割テクスチャ　UVの枚数取得
-	bool GetSparateTexLoop(SEPARATE_TEX_TYPE SepaTex_Type);					// ループするか
-	LPDIRECT3DVOLUMETEXTURE9 GetVolumeTexture(VOLUME_TEX_TYPE Tex_Type);	// ボリュームテクスチャの情報
-	LPDIRECT3DCUBETEXTURE9 GetCubeTexture(CUBE_TEX_TYPE Tex_Type);			// キューブテクスチャの情報
+	LPDIRECT3DTEXTURE9 GetTexture(const TEXTURE_TYPE Tex_Type);						// テクスチャの情報
+	LPDIRECT3DTEXTURE9 GetSeparateTexture(const SEPARATE_TEX_TYPE SepaTex_Type);	// 分割テクスチャ情報
+	INT_VERTEX_2D GetSparateTexInfo(const SEPARATE_TEX_TYPE SepaTex_Type);			// 分割テクスチャ　UVの枚数取得
+	bool GetSparateTexLoop(const SEPARATE_TEX_TYPE SepaTex_Type);					// ループするか
+	LPDIRECT3DVOLUMETEXTURE9 GetVolumeTexture(const VOLUME_TEX_TYPE Tex_Type);		// ボリュームテクスチャの情報
+	LPDIRECT3DCUBETEXTURE9 GetCubeTexture(const CUBE_TEX_TYPE Tex_Type);			// キューブテクスチャの情報
 
 private:
 	// private関数

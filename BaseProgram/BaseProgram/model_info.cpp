@@ -92,6 +92,8 @@ void CModelInfo::Uninit(void)
 			break;
 		}
 	}
+
+	delete this;
 }
 
 //=============================================================================
@@ -180,6 +182,5 @@ void CModelInfo::SetModelStatus(D3DXVECTOR3 pos, D3DXVECTOR3 rot, CXfile::MODEL 
 //=============================================================================
 D3DXVECTOR3 CModelInfo::GetMtxPos(void)
 {
-	D3DXMATRIX mtxWorld = GetMtxWorld();
-	return D3DXVECTOR3(mtxWorld._41, mtxWorld._42, mtxWorld._43);
+	return D3DXVECTOR3(m_mtxWorld._41, m_mtxWorld._42, m_mtxWorld._43);
 }

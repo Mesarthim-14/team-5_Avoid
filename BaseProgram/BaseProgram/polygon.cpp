@@ -33,7 +33,7 @@ CPolygon::~CPolygon()
 //=============================================================================
 // インスタンス生成処理
 //=============================================================================
-CPolygon * CPolygon::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 size)
+CPolygon * CPolygon::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size)
 {
 	// ポリゴンクラスのポインタ変数
 	CPolygon *pPolygon = new CPolygon;
@@ -52,7 +52,7 @@ CPolygon * CPolygon::Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 size)
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CPolygon::Init(const D3DXVECTOR3 pos, const D3DXVECTOR3 size)
+HRESULT CPolygon::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size)
 {
 	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetRenderer()->GetDevice();	//デバイスの取得
 	VERTEX_2D *pVtx = nullptr;												//頂点情報へのポインタ
@@ -152,7 +152,7 @@ void CPolygon::Draw(void)
 //=============================================================================
 // 色の設定
 //=============================================================================
-void CPolygon::SetColor(const D3DXCOLOR color)
+void CPolygon::SetColor(const D3DXCOLOR &color)
 {
 	//頂点情報へのポインタ
 	VERTEX_2D *pVtx;

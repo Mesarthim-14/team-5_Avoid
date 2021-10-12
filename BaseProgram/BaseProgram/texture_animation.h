@@ -30,10 +30,10 @@ public:
 	void UpdateScroll(void);																// スクロールの更新
 	
 	// Set関数
-	void SetCountAnim(int nCountAnim)			{ m_nCountAnim = nCountAnim; }				// アニメーションのカウンタ設定
-	void SetCountPattern(int nCountPattern)		{ m_nCountAnimPattern = nCountPattern; }	// アニメーションパターンのカウント
-	void SetScrollCounter(int nScrollCounter)	{ m_nScrollCounter = nScrollCounter; }		// スクロールの情報
-	void SetUpdateFlag(bool bFlag)				{ m_bUpdate = bFlag; }						// 更新のフラグ設定
+	void SetCountAnim(const int nCountAnim)			{ m_nCountAnim = nCountAnim; }				// アニメーションのカウンタ設定
+	void SetCountPattern(const int nCountPattern)	{ m_nCountAnimPattern = nCountPattern; }	// アニメーションパターンのカウント
+	void SetScrollCounter(const int nScrollCounter)	{ m_nScrollCounter = nScrollCounter; }		// スクロールの情報
+	void SetUpdateFlag(const bool bFlag)			{ m_bUpdate = bFlag; }						// 更新のフラグ設定
 
 	// Get関数
 	D3DXVECTOR2 GetTex(int nCount)	{ return m_tex[nCount]; }	// テクスチャ座標の情報

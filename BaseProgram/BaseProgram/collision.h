@@ -35,9 +35,9 @@ public:
 		SURFACE_BACK
 		
 	};
-	static bool CollisionRectangleAndRectangle(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, D3DXVECTOR3 size1, D3DXVECTOR3 size2);
-	static bool CollisionCircularAndCircular(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, float radius1, float radius2);
-	static bool CollisionRectangleAndCircular(D3DXVECTOR3 RectanglePos, D3DXVECTOR3 CircularPos, D3DXVECTOR3 RectangleSize, float CircularRadius, float RectangleRadian);
+	static bool CollisionRectangleAndRectangle(const D3DXVECTOR3 pos1, const D3DXVECTOR3 pos2, const D3DXVECTOR3 size1, const D3DXVECTOR3 size2);
+	static bool CollisionCircularAndCircular(const D3DXVECTOR3 pos1, const D3DXVECTOR3 pos2, const float radius1, const float radius2);
+	static bool CollisionRectangleAndCircular(const D3DXVECTOR3 RectanglePos, const D3DXVECTOR3 CircularPos, const D3DXVECTOR3 RectangleSize, const float CircularRadius, const float RectangleRadian);
 };
 
 #endif

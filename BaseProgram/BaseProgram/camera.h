@@ -18,21 +18,21 @@
 class CCamera
 {
 public:
-	CCamera();					// コンストラクタ
-	~CCamera();					// デストラクタ
+	CCamera();				// コンストラクタ
+	virtual ~CCamera();		// デストラクタ
 
 	HRESULT Init(void);									// 初期化処理
 	virtual void Uninit(void);							// 終了処理
 	virtual void Update(void);							// 更新処理
 	virtual void SetCamera(void);						// カメラの描画設定
-	virtual void NomalUpdate(D3DXVECTOR3 PlayerPos, D3DXVECTOR3 PlayerRot) = 0;
+	void ShowInfo(void);								// imguiの設定
+	virtual void NomalUpdate(void) = 0;					// 通常の更新処理
 
-protected:
 	// Set関数
-	void SetTarget(bool Target)				{ m_bTarget = Target; }
-	void SetDistance(float fDistance)		{ m_fDistance = fDistance; }
-	void SetVartical(float fVartical)		{ m_fVartical = fVartical; }
-	void SetHorizontal(float fHorizontal)	{ m_fHorizontal = fHorizontal; }
+	void SetTarget(const bool Target)			{ m_bTarget = Target; }
+	void SetDistance(const float fDistance)		{ m_fDistance = fDistance; }
+	void SetVartical(const float fVartical)		{ m_fVartical = fVartical; }
+	void SetHorizontal(const float fHorizontal)	{ m_fHorizontal = fHorizontal; }
 
 	// Get関数
 	D3DXVECTOR3 &GetposV(void)		{ return m_posV; }				// カメラ座標

@@ -88,7 +88,7 @@ HRESULT CCameraTitle::Init(void)
 //=============================================================================
 // ’Êíó‘Ô‚ÌXVˆ—
 //=============================================================================
-void CCameraTitle::NomalUpdate(D3DXVECTOR3 PlayerPos, D3DXVECTOR3 PlayerRot)
+void CCameraTitle::NomalUpdate(void)
 {
 
 }

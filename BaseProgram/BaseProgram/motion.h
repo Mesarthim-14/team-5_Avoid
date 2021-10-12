@@ -24,8 +24,8 @@ public:
 
 	static CMotion *Create(string cFileName);
 
-	void SetMotion(int nMotion, int nMaxParts, vector<CModelAnime*> pModelAnime);	// モーションの設定
-	void UpdateMotion(int nMaxParts, vector<CModelAnime*> pModelAnime);				// モーションの更新
+	void SetMotion(const int nMotion, const int nMaxParts, const vector<CModelAnime*> pModelAnime);	// モーションの設定
+	void UpdateMotion(const int nMaxParts, const vector<CModelAnime*> pModelAnime);					// モーションの更新
 
 	// Get関数
 	int GetMotionState(void)	{ return m_nMotionState; }		// モーション状態

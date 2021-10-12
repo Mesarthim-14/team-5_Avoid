@@ -49,6 +49,7 @@ public:
 		MODE_TYPE_NONE = 0,
 		MODE_TYPE_TITLE,			// タイトルモード
 		MODE_TYPE_GAME,				// ゲームモード
+		MODE_TYPE_PLAYER_EDITOR,	// プレイヤーのエディタ
 		MODE_TYPE_MAX,
 	};
 
@@ -74,7 +75,7 @@ public:
 	static CResourceManager *GetResourceManager(void)	{ return m_pResourceManager.get(); }	// リソースマネージャのポインタ
 	static CCamera *GetCamera(void)						{ return m_pCamera.get(); }				// カメラのポインタ
 	static CLight *GetLight(void)						{ return m_pLight.get(); }				// ライトのポインタ
-	static CPlayer* GetPlayer(void);															// プレイヤーの取得
+	static CPlayer *GetPlayer(void);															// プレイヤーの取得
 
 private:
 	// private関数

@@ -68,12 +68,12 @@ public:
 	void UnLoadAll(void);				// 全てのアンロード
 
 	// Get関数
-	MODEL GetXfile(XFILE_NUM Tex_Num);																				// モデルの情報
-	MODELFILE GetModelFile(int nCount, HIERARCHY_XFILE_NUM FileNum) { return m_apModelFile[FileNum].at(nCount); }	// モデルパーツの情報
-	int GetModelParts(HIERARCHY_XFILE_NUM FileNum)					{ return m_nMaxParts[FileNum]; }				// モデルのパーツ数
-	string GetModelFileName(HIERARCHY_XFILE_NUM FileNum)			{ return m_pFileName[FileNum]; }				// モデルファイルの名前
-	vector<MODEL> GetHierarchyXfile(HIERARCHY_XFILE_NUM FileNum)	{ return m_apHierarchyModel[FileNum]; }
-	LPDIRECT3DTEXTURE9 *GetXfileTexture(XFILE_NUM TexNum);
+	MODEL GetXfile(const XFILE_NUM Tex_Num)										{ return m_aXfile[Tex_Num]; }					// モデルの情報
+	MODELFILE GetModelFile(const int nCount, const HIERARCHY_XFILE_NUM FileNum) { return m_apModelFile[FileNum].at(nCount); }	// モデルパーツの情報
+	int GetModelParts(const HIERARCHY_XFILE_NUM FileNum)						{ return m_nMaxParts[FileNum]; }				// モデルのパーツ数
+	string GetModelFileName(const HIERARCHY_XFILE_NUM FileNum)					{ return m_pFileName[FileNum]; }				// モデルファイルの名前
+	vector<MODEL> GetHierarchyXfile(const HIERARCHY_XFILE_NUM FileNum)			{ return m_apHierarchyModel[FileNum]; }
+	LPDIRECT3DTEXTURE9 *GetXfileTexture(const XFILE_NUM TexNum);
 
 private:
 	// private関数

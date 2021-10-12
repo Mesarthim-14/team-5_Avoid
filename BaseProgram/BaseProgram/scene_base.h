@@ -24,12 +24,12 @@ class CTextureAnimation;
 class CSceneBase : public CScene
 {
 public:
-	CSceneBase(PRIORITY Priority = PRIORITY_0);		// コンストラクタ
-	virtual ~CSceneBase();							// デストラクタ
+	CSceneBase(PRIORITY Priority = PRIORITY_0);										// コンストラクタ
+	virtual ~CSceneBase();															// デストラクタ
 
-	virtual void Uninit(void);		// 終了処理
-	virtual void Update(void);		// 更新処理
-	void BindTexture(LPDIRECT3DTEXTURE9 pTexture) { m_pTexture = pTexture; }	// テクスチャの設定
+	virtual void Uninit(void);														// 終了処理
+	virtual void Update(void);														// 更新処理
+	void BindTexture(const LPDIRECT3DTEXTURE9 pTexture) { m_pTexture = pTexture; }	// テクスチャの設定
 
 	// 純粋仮想関数
 	virtual HRESULT Init(void) = 0;												// 初期化処理

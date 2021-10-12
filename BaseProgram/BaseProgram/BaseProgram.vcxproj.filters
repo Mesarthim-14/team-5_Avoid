@@ -34,9 +34,6 @@
     <Filter Include="06_Effect">
       <UniqueIdentifier>{3d47cdce-98bd-450a-8b9b-f4528afe88b9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07_Model">
-      <UniqueIdentifier>{0b7fa75f-6142-4860-9ba6-676d79aa1bdd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00_Important\Camera">
       <UniqueIdentifier>{72e190c9-dba1-4c73-89c1-c95bfbda1fdc}</UniqueIdentifier>
     </Filter>
@@ -66,6 +63,15 @@
     </Filter>
     <Filter Include="09_Ui">
       <UniqueIdentifier>{3680b137-e782-432a-9a65-4679115e88d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00_Important\Imgui">
+      <UniqueIdentifier>{461840e8-50f6-457d-bfbe-49e969fbe9e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07_Model">
+      <UniqueIdentifier>{0b7fa75f-6142-4860-9ba6-676d79aa1bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03_Mode\Editor">
+      <UniqueIdentifier>{304cf4d0-331b-4b82-9633-1318a2680623}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +201,27 @@
     <ClCompile Include="test_character.cpp">
       <Filter>08_Object</Filter>
     </ClCompile>
+    <ClCompile Include="ImGui\imgui.cpp">
+      <Filter>00_Important\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_draw.cpp">
+      <Filter>00_Important\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_dx9.cpp">
+      <Filter>00_Important\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_win32.cpp">
+      <Filter>00_Important\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_widgets.cpp">
+      <Filter>00_Important\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ground.cpp">
+      <Filter>08_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="player_editor.cpp">
+      <Filter>03_Mode\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision.h">
@@ -322,6 +349,36 @@
     </ClInclude>
     <ClInclude Include="test_character.h">
       <Filter>08_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="json.h">
+      <Filter>01_Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui.h">
+      <Filter>00_Important\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_dx9.h">
+      <Filter>00_Important\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_win32.h">
+      <Filter>00_Important\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_internal.h">
+      <Filter>00_Important\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_rectpack.h">
+      <Filter>00_Important\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_textedit.h">
+      <Filter>00_Important\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_truetype.h">
+      <Filter>00_Important\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ground.h">
+      <Filter>08_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="player_editor.h">
+      <Filter>03_Mode\Editor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
