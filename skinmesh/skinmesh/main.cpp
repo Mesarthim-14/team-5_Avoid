@@ -10,6 +10,7 @@
 //=============================================================================
 #include "main.h"
 #include "skinmesh.h"
+#include "animation.h"
 
 TCHAR gName[] = _T("XFile Skin Mesh Animation");//windowネーム
 
@@ -48,21 +49,22 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 
 	// スキンメッシュ情報をXファイル保存用
 	SkinMesh::AllocateHierarchy allocater;
-	// D3DXFRAME(ボーン)関連の情報保存用
 	SkinMesh::SMD3DXFRAME *pRootFrame = 0;
-	//アニメーションコントローラー保存用
 	ID3DXAnimationController *controller = 0;
+	//メモリ確保
+	std::shared_ptr<IHighLevelAnimController> HLcontroller(new IHighLevelAnimController);
 
-	//エラー確認用
 	HRESULT model = D3DERR_WRONGTEXTUREFORMAT;
 
-	model = D3DXLoadMeshHierarchyFromX(_T("resource/test_slime_model01.x"), D3DXMESH_MANAGED, g_pD3DDev, &allocater, 0, (D3DXFRAME**)&pRootFrame, &controller);
+	model = D3DXLoadMeshHierarchyFromX(_T("resource/test_slime_model02.x"), D3DXMESH_MANAGED, g_pD3DDev, &allocater, 0, (D3DXFRAME**)&pRootFrame, &controller);
 
 	if (model == D3DERR_INVALIDCALL)
 	{
 		return 0;
 	}
 
+	//アニメーションコントローラーのコピー
+	HLcontroller->SetAnimationController(controller);
 	// SMD3DXMESHCONTAINER(メッシュ)関連の情報を保存用
 	std::vector<SkinMesh::SMD3DXMESHCONTAINER*> cont;
 
@@ -87,19 +89,30 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 	// ビュー、射影変換行列設定
 	D3DXMATRIX world, view, proj;
 	D3DXMatrixIdentity(&world);
-	D3DXMatrixLookAtLH(&view, &D3DXVECTOR3(500.0f, 500.0f, -2000.0f), &D3DXVECTOR3(0.0f, -100.0f, 0.0f), &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+	D3DXMatrixLookAtLH(&view, &D3DXVECTOR3(0.0f, 0.0f, 2000.0f), &D3DXVECTOR3(0.0f, -100.0f, 0.0f), &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 	D3DXMatrixPerspectiveFovLH(&proj, D3DXToRadian(30.0f), 1.0f, 0.01f, 10000000.0f);
+	g_pD3DDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	g_pD3DDev->SetTransform(D3DTS_VIEW, &view);
 	g_pD3DDev->SetTransform(D3DTS_PROJECTION, &proj);
-
-	// ライトオフ
-	g_pD3DDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	ShowWindow(hWnd, nCmdShow);
 	// メッセージ ループ
 
 	//現在フレーム(fps)のワールド変換行列
 	std::map<DWORD, D3DXMATRIX> combMatrixMap;
+
+	//ループ時間
+	HLcontroller->SetLoopTime(1, 100);
+	HLcontroller->SetLoopTime(0, 100);
+
+	//アニメーション変更
+	HLcontroller->ChangeAnimation(0);
+
+	//アニメーションのシフトにかかる時間
+	HLcontroller->SetShiftTime(1, 100);
+	HLcontroller->SetShiftTime(0, 100);
+
+	HLcontroller->ChangeAnimation(1);
 
 	do {
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -108,17 +121,33 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 		}
 		else
 		{
-			// 時間を進めて姿勢更新
-			controller->AdvanceTime(0.00001f, 0);
-			controller->SetTrackAnimationSet(0, 0);
+			static int hoge = 0;
+
+			hoge++;
+
+			if (hoge == 1000)
+			{
+				HLcontroller->ChangeAnimation(0);
+			}
+
+			//// 時間を進めて姿勢更新
+			//controller->AdvanceTime(0.00001f, 0);
+			//controller->SetTrackAnimationSet(0, 0);
+
+			////controller->GetMaxNumAnimationOutputs();
+			////controller->GetMaxNumAnimationSets();
+			////controller->GetMaxNumTracks();
+			////controller->GetMaxNumEvents();
 
 			updateCombMatrix(combMatrixMap, pRootFrame);
 
 			// Direct3Dの処理
 			g_pD3DDev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_STENCIL | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(255, 0, 255), 1.0f, 0);
 			g_pD3DDev->BeginScene();
-
 			//g_pD3DDev->SetTexture(0, tex);
+
+			//アニメーション更新
+			HLcontroller->AdvanceTime(1);
 
 			for (DWORD BCombiId = 0; BCombiId < cont.size(); BCombiId++)
 			{
@@ -140,10 +169,17 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 						}
 					}
 
+					for (int nCntMat = 0; nCntMat < (int)cont[BCombiId]->NumMaterials; nCntMat++)
+					{
+						//マテリアルの設定
+						g_pD3DDev->SetMaterial(&cont[BCombiId]->pMaterials->MatD3D);
+					}
+
 					g_pD3DDev->SetRenderState(D3DRS_VERTEXBLEND, boneCount - 1);
 
 					//メッシュコンテナ内のメッシュデータ
 					cont[BCombiId]->MeshData.pMesh->DrawSubset(AttribId);
+
 				}
 			}
 
@@ -156,6 +192,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 	allocater.DestroyFrame(pRootFrame);
 
 	//tex->Release();
+
 	g_pD3DDev->Release();
 	g_pD3D->Release();
 
