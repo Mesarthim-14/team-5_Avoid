@@ -168,7 +168,6 @@ void CSkinmeshModel::Draw(void)
 		}
 	}
 
-	
 	//
 	////ワールドマトリックスの初期化
 	//D3DXMatrixIdentity(&mtxWorld);

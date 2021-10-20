@@ -51,6 +51,7 @@ HRESULT CGame::Init(void)
 	CreatePlayer();
 	CGround::Create();
 	CSkinmeshModel::Create(D3DXVECTOR3(0.0f,100.0f,0.0f),ZeroVector3);
+
 	return S_OK;
 }
 

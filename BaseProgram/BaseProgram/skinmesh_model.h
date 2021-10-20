@@ -68,6 +68,5 @@ private:
 	std::vector<SkinMesh::SMD3DXMESHCONTAINER*> m_cont;
 	//ボーンコンビネーションテーブルのポインタ取得
 	std::vector<D3DXBONECOMBINATION*> m_combs;
-
 };
 #endif 
