@@ -222,6 +222,12 @@
     <ClCompile Include="player_editor.cpp">
       <Filter>03_Mode\Editor</Filter>
     </ClCompile>
+    <ClCompile Include="skinmesh_model.cpp">
+      <Filter>07_Model</Filter>
+    </ClCompile>
+    <ClCompile Include="skinmesh.cpp">
+      <Filter>07_Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision.h">
@@ -379,6 +385,12 @@
     </ClInclude>
     <ClInclude Include="player_editor.h">
       <Filter>03_Mode\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="skinmesh_model.h">
+      <Filter>07_Model</Filter>
+    </ClInclude>
+    <ClInclude Include="skinmesh.h">
+      <Filter>07_Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -185,6 +185,8 @@
     <ClCompile Include="shadow.cpp" />
     <ClCompile Include="shadow_polygon.cpp" />
     <ClCompile Include="shadow_volume.cpp" />
+    <ClCompile Include="skinmesh.cpp" />
+    <ClCompile Include="skinmesh_model.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="test_2d.cpp" />
     <ClCompile Include="test_character.cpp" />
@@ -239,6 +241,8 @@
     <ClInclude Include="shadow.h" />
     <ClInclude Include="shadow_polygon.h" />
     <ClInclude Include="shadow_volume.h" />
+    <ClInclude Include="skinmesh.h" />
+    <ClInclude Include="skinmesh_model.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="test_2d.h" />
     <ClInclude Include="test_character.h" />

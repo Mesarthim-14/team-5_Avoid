@@ -21,6 +21,7 @@
 #include "test_model.h"
 #include "test_character.h"
 #include "ground.h"
+#include "skinmesh_model.h"
 
 //=======================================================================================
 // コンストラクタ
@@ -49,7 +50,7 @@ HRESULT CGame::Init(void)
 	// プレイヤーの生成
 	CreatePlayer();
 	CGround::Create();
-
+	CSkinmeshModel::Create(D3DXVECTOR3(0.0f,100.0f,0.0f),ZeroVector3);
 	return S_OK;
 }
 
