@@ -18,6 +18,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include<memory>
 
 //=============================================================================
 // ƒ‰ƒCƒuƒ‰ƒŠ‚ÌƒŠƒ“ƒN
