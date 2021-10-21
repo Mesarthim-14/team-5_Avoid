@@ -75,7 +75,7 @@ HRESULT CSkinmeshModel::Init(void)
 	//エラー確認用
 	HRESULT model = D3DERR_WRONGTEXTUREFORMAT;
 	//仮モデル
-	model = D3DXLoadMeshHierarchyFromX(("data/Model/Hierarchy/test_slime_model01.x"), D3DXMESH_MANAGED, pDevice, &allocater, 0, (D3DXFRAME**)&m_pRootFrame, &m_pAnimetionController);
+	model = D3DXLoadMeshHierarchyFromX(("data/Model/Hierarchy/test_slime_model02.x"), D3DXMESH_MANAGED, pDevice, &allocater, 0, (D3DXFRAME**)&m_pRootFrame, &m_pAnimetionController);
 
 	if (model == D3DERR_INVALIDCALL)
 	{

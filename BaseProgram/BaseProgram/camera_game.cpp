@@ -29,6 +29,9 @@
 #define CAMERA_MIN_HIGHT			(2.0f)					// カメラの最低高度
 #define INPUT_CONVERSION			(D3DXToRadian(1.0f))	// スティック入力変化量
 
+#define CAMERA_DISTANCE (2000.0f)//プレイヤーとカメラの距離
+#define PLAYER_CAMERA_HEIGHT (300.0f) //プレイヤーの高さ
+
 //=============================================================================
 // インスタンス生成
 //=============================================================================
@@ -116,11 +119,76 @@ void CCameraGame::NomalUpdate(void)
 		float fHorizontal = GetHorizontal();							// カメラの角度
 
 		// 追従
-		//	Tracking(fDistance, fVartical, fHorizontal, PlayerPos, PlayerRot);
+		//Tracking(fDistance, fVartical, fHorizontal, PlayerPos, PlayerRot);
 
 		// キーボード更新
 		KeyBoardMove(fDistance, fVartical, fHorizontal, PlayerPos);
 	}
+}
+
+//=============================================================================
+// マウスの時の更新処理
+// Author Hayashikawa Sarina
+//=============================================================================
+void CCameraGame::MouseUpdate(void)
+{
+	CInputKeyboard *pKeyboard = CManager::GetKeyboard();	// キーボード更新
+	// プレイヤー
+	CPlayer *pPlayer = CManager::GetPlayer();
+	D3DXVECTOR3 fRotateCenter; //カメラ回転の中心
+
+	POINT point;
+	GetCursorPos(&point);
+	D3DXVECTOR3 CameraRot = CManager::GetCamera()->GetRot();
+	//if (CManager::GetIsActiveWindow() == true)//ウィンドウがアクティブならカーソルセット
+	//{
+	if (!pKeyboard->GetPress(DIK_LCONTROL))//LCONT押しているときはカーソル開放する
+	{
+		SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);              //マウス位置をリセット
+		CameraRot.y -= (point.x - (SCREEN_WIDTH / 2))*(0.01f*15.0f);    //マウス位置を反映
+		CameraRot.x += (point.y - (SCREEN_HEIGHT / 2))*(0.01f*15.0f);
+	}
+
+	//rot補正
+	if (CameraRot.x >= 50)
+	{
+		CameraRot.x = 50;
+	}
+	else if (CameraRot.x <= -50)
+	{
+		CameraRot.x = -50;
+	}
+
+	//反転しないように
+	if (CameraRot.y < 0)
+	{
+		CameraRot.y += 360;
+	}
+	if (CameraRot.y > 360)
+	{
+		CameraRot.y -= 360;
+	}
+
+	Setrot(CameraRot);
+
+	if (pPlayer != NULL)
+	{
+		//カメラ回転の中心をプレイヤーの位置にする（少し上に）
+		fRotateCenter = pPlayer->GetPos() + D3DXVECTOR3(0.0f, PLAYER_CAMERA_HEIGHT, 0.0f);
+	}
+	
+	//カメラが地面を貫通してしまう場合地面に這わせるように
+	if (fRotateCenter.y + sinf(D3DXToRadian(GetRot().x)) * CAMERA_DISTANCE > 0)
+	{
+		SetposV(fRotateCenter + D3DXVECTOR3(sinf(D3DXToRadian(-GetRot().y)) * cosf(D3DXToRadian(GetRot().x)) * CAMERA_DISTANCE, sinf(D3DXToRadian(GetRot().x)) * CAMERA_DISTANCE, cosf(D3DXToRadian(-GetRot().y)) * cosf(D3DXToRadian(GetRot().x)) * CAMERA_DISTANCE));
+	}
+	else
+	{
+		SetposV(fRotateCenter + D3DXVECTOR3(sinf(D3DXToRadian(-GetRot().y)) * cosf(D3DXToRadian(GetRot().x))* CAMERA_DISTANCE, -fRotateCenter.y + 1, cosf(D3DXToRadian(-GetRot().y)) * cosf(D3DXToRadian(GetRot().x))* CAMERA_DISTANCE));
+	}
+
+	//注視点を中心にあわせる
+	SetposR(fRotateCenter);
 }
 
 //=============================================================================

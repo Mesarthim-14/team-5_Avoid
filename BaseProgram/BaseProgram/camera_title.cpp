@@ -92,3 +92,7 @@ void CCameraTitle::NomalUpdate(void)
 {
 
 }
+
+void CCameraTitle::MouseUpdate(void)
+{
+}

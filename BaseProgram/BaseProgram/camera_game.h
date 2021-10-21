@@ -27,6 +27,8 @@ public:
 private:
 	// privateä÷êî
 	void NomalUpdate(void) override;
+	// privateä÷êî
+	void MouseUpdate(void) override;
 	void Tracking(const float &fDistance, float &fVartical,
 		float &fHorizontal, const D3DXVECTOR3 &PlayerPos, const D3DXVECTOR3 &PlayerRot);	// í«è]
 	void KeyBoardMove(const float &fDistance, float &fVartical,

@@ -31,6 +31,7 @@ public:
 	void ShowInfo(void);		// 情報
 	HRESULT LoadInfo(void);		// データロード
 	void SaveInfo(void);		// データセーブ
+	void SubLife(int nDamage);			// ダメージ
 
 private:
 	// private関数
@@ -39,6 +40,14 @@ private:
 	void Move(void);			// 移動処理
 	void KeyBoardMove(void);	// 移動関数
 	void UpdateRot(void);		// 角度の更新処理
+	void ChangeModel(void);		// モデルチェンジ
+
+	typedef enum
+	{
+		SLIME_LITTLESIZE = 0,
+		SLIME_MIDDLESIZE,
+		SLIME_LARGESIZE
+	}SLIME_STATE;//スライムの状態（大きさ）
 
 	// メンバ変数
 	D3DXVECTOR3 m_rotDest;		// 回転(目標値)
@@ -46,5 +55,7 @@ private:
 	float m_fInertiaNum;		// 慣性の値
 	float m_fRotationSpeed;		// 回転の速度
 	bool m_bMove;				// 移動のフラグ
+	int m_nHP;				    // スライムHP ~100まで（パーセント）
+	SLIME_STATE	m_SlimeState;	// スライムの状態
 };
 #endif
