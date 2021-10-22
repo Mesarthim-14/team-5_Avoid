@@ -61,9 +61,12 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	m_bMove = false;
 	m_Inertia = ZeroVector3;
 	m_fInertiaNum = 0.0f;
-	m_fRotationSpeed = 0.0f;
+	m_fRotationSpeed = 0.1f;
+	m_fAngleSpeed = 0.0f;
 	m_SlimeState = SLIME_MIDDLESIZE;
 	m_nHP = 50;
+	m_fAngle = 0.0f;
+	m_ActionState = ACTION_NONE;
 }
 
 //=============================================================================
@@ -168,6 +171,8 @@ void CPlayer::PlayerControl(void)
 {
 	// 移動
 	Move();
+	// アクション
+	Action();
 }
 
 //=============================================================================
@@ -181,6 +186,26 @@ void CPlayer::Move(void)
 }
 
 //=============================================================================
+// アクション処理
+// Author : Hayashikawa Sarina
+//=============================================================================
+void CPlayer::Action(void)
+{
+	CInputKeyboard *pKeyboard = CManager::GetKeyboard();	// キーボード更新
+
+	// ジャンプ
+	if (pKeyboard->GetTrigger(DIK_SPACE))
+	{
+		Jump();
+	}
+	//回避
+	if (pKeyboard->GetTrigger(DIK_LSHIFT))
+	{
+		Avoidance();
+	}
+}
+
+//=============================================================================
 // 移動処理
 // Author : Konishi Yuuto
 //=============================================================================
@@ -190,15 +215,16 @@ void CPlayer::KeyBoardMove(void)
 	D3DXVECTOR3 pos = GetPos();								// 座標
 	D3DXVECTOR3 rot = GetRot();								// 角度
 	float fSpeed = GetSpeed();								// 移動量
-	float fAngle = CManager::GetCamera()->GetHorizontal();	// カメラの角度
+	float fCameraRot = D3DXToRadian(CManager::GetCamera()->GetRot().y);	// カメラの角度
 
 	// 前に移動
 	if (pKeyboard->GetPress(DIK_W))
 	{
 		// 移動量・角度の設定
-		m_Inertia.x = -sinf(fAngle)*fSpeed;
-		m_Inertia.z = -cosf(fAngle)*fSpeed;
-		m_rotDest.y = fAngle;
+		m_Inertia.x = +sinf(m_fAngle)*fSpeed;
+		m_Inertia.z = -cosf(m_fAngle)*fSpeed;
+		//進行方向に向きを合わせる
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(180.0f);
 		m_bMove = true;
 	}
 
@@ -206,9 +232,10 @@ void CPlayer::KeyBoardMove(void)
 	if (pKeyboard->GetPress(DIK_S))
 	{
 		// 移動量・角度の設定
-		m_Inertia.x = sinf((fAngle))*fSpeed;
-		m_Inertia.z = cosf((fAngle))*fSpeed;
-		m_rotDest.y = fAngle + D3DXToRadian(-180.0f);
+		m_Inertia.x = -sinf((m_fAngle))*fSpeed;
+		m_Inertia.z = +cosf((m_fAngle))*fSpeed;
+		//進行方向に向きを合わせる
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(-180.0f);
 		m_bMove = true;
 	}
 
@@ -216,9 +243,11 @@ void CPlayer::KeyBoardMove(void)
 	if (pKeyboard->GetPress(DIK_A))
 	{
 		// 移動量・角度の設定
-		m_Inertia.x = sinf((fAngle + D3DXToRadian(90.0f)))*fSpeed;
-		m_Inertia.z = cosf((fAngle + D3DXToRadian(90.0f)))*fSpeed;
-		m_rotDest.y = fAngle + D3DXToRadian(-90.0f);
+		m_Inertia.x = +sinf((m_fAngle + D3DXToRadian(90.0f)))*fSpeed;
+		m_Inertia.z = -cosf((m_fAngle + D3DXToRadian(90.0f)))*fSpeed;
+
+		//進行方向に向きを合わせる
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(180.0f);
 		m_bMove = true;
 	}
 
@@ -226,9 +255,10 @@ void CPlayer::KeyBoardMove(void)
 	if (pKeyboard->GetPress(DIK_D))
 	{
 		// 移動量・角度の設定
-		m_Inertia.x = sinf((fAngle + D3DXToRadian(-90.0f)))*fSpeed;
-		m_Inertia.z = cosf((fAngle + D3DXToRadian(-90.0f)))*fSpeed;
-		m_rotDest.y = fAngle + D3DXToRadian(90.0f);
+		m_Inertia.x = +sinf((m_fAngle + D3DXToRadian(-90.0f)))*fSpeed;
+		m_Inertia.z = -cosf((m_fAngle + D3DXToRadian(-90.0f)))*fSpeed;
+		//進行方向に向きを合わせる
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(-180.0f);
 		m_bMove = true;
 	}
 
@@ -236,9 +266,9 @@ void CPlayer::KeyBoardMove(void)
 	if (pKeyboard->GetPress(DIK_W) && pKeyboard->GetPress(DIK_A))
 	{
 		// 移動量・角度の設定
-		m_Inertia.x = +sinf((fAngle + D3DXToRadian(45.0f)))*fSpeed;
-		m_Inertia.z = -cosf((fAngle + D3DXToRadian(45.0f)))*fSpeed;
-		m_rotDest.y = fAngle + D3DXToRadian(-45.0f);
+		m_Inertia.x = +sinf((m_fAngle + D3DXToRadian(45.0f)))*fSpeed;
+		m_Inertia.z = -cosf((m_fAngle + D3DXToRadian(45.0f)))*fSpeed;
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(180.0f);
 		m_bMove = true;
 	}
 
@@ -246,9 +276,9 @@ void CPlayer::KeyBoardMove(void)
 	if (pKeyboard->GetPress(DIK_W) && pKeyboard->GetPress(DIK_D))
 	{
 		// 移動量・角度の設定
-		m_Inertia.x = +sinf((fAngle + D3DXToRadian(-45.0f)))*fSpeed;
-		m_Inertia.z = -cosf((fAngle + D3DXToRadian(-45.0f)))*fSpeed;
-		m_rotDest.y = fAngle + D3DXToRadian(45.0f);
+		m_Inertia.x = +sinf((m_fAngle + D3DXToRadian(-45.0f)))*fSpeed;
+		m_Inertia.z = -cosf((m_fAngle + D3DXToRadian(-45.0f)))*fSpeed;
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(180.0f);
 		m_bMove = true;
 	}
 
@@ -256,9 +286,9 @@ void CPlayer::KeyBoardMove(void)
 	if (pKeyboard->GetPress(DIK_S) && pKeyboard->GetPress(DIK_A))
 	{
 		// 移動量・角度の設定
-		m_Inertia.x = -sinf((fAngle + D3DXToRadian(-45.0f)))*fSpeed;
-		m_Inertia.z = +cosf((fAngle + D3DXToRadian(-45.0f)))*fSpeed;
-		m_rotDest.y = fAngle + D3DXToRadian(-135.0f);
+		m_Inertia.x = -sinf((m_fAngle + D3DXToRadian(-45.0f)))*fSpeed;
+		m_Inertia.z = +cosf((m_fAngle + D3DXToRadian(-45.0f)))*fSpeed;
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(180.0f);
 		m_bMove = true;
 	}
 
@@ -266,9 +296,9 @@ void CPlayer::KeyBoardMove(void)
     if (pKeyboard->GetPress(DIK_S) && pKeyboard->GetPress(DIK_D))
 	{
 		// 移動量・角度の設定
-		m_Inertia.x = -sinf((fAngle + D3DXToRadian(45.0f)))*fSpeed;
-		m_Inertia.z = +cosf((fAngle + D3DXToRadian(45.0f)))*fSpeed;
-		m_rotDest.y = fAngle + D3DXToRadian(135.0f);
+		m_Inertia.x = -sinf((m_fAngle + D3DXToRadian(45.0f)))*fSpeed;
+		m_Inertia.z = +cosf((m_fAngle + D3DXToRadian(45.0f)))*fSpeed;
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(180.0f);
 		m_bMove = true;
 	}
 
@@ -283,6 +313,20 @@ void CPlayer::KeyBoardMove(void)
 	{
 		m_bMove = false;
 	}
+
+	//角度補正
+	while (fCameraRot - m_fAngle > D3DXToRadian(180))
+	{
+		fCameraRot -= D3DXToRadian(360);
+	}
+
+	while (fCameraRot - m_fAngle < D3DXToRadian(-180))
+	{
+		fCameraRot += D3DXToRadian(360);
+	}
+
+	//カメラの転換速度よりちょっと遅く向かせる
+	m_fAngle += (fCameraRot - m_fAngle) * m_fAngleSpeed;
 
 	// 慣性
 	D3DXVECTOR3 move = GetMove();
@@ -347,6 +391,32 @@ void CPlayer::ChangeModel(void)
 }
 
 //=============================================================================
+// ジャンプ
+// Author : Hayashikawa Sarina
+//=============================================================================
+void CPlayer::Jump(void)
+{
+	if (m_ActionState != ACTION_JUMP)
+	{
+		//状態をジャンプ状態
+		m_ActionState = ACTION_JUMP;
+	}
+}
+
+//=============================================================================
+// 回避
+// Author : Hayashikawa Sarina
+//=============================================================================
+void CPlayer::Avoidance(void)
+{
+	if (m_ActionState != ACTION_AVOID)
+	{
+		//状態を回避状態
+		m_ActionState = ACTION_AVOID;
+	}
+}
+
+//=============================================================================
 // Imgui 情報
 // Author : Konishi Yuuto
 //=============================================================================
@@ -387,6 +457,9 @@ void CPlayer::ShowInfo(void)
 
 			// 回転速度の値
 			ImGui::SliderFloat("RotationSpeed", &m_fRotationSpeed, 0.0f, 1.0f);
+
+			// 目標向きに向かうまでの速度の値
+			ImGui::SliderFloat("AngleSpeed", &m_fAngleSpeed, 0.0f, 1.0f);
 
 			ImGui::TreePop();
 		}

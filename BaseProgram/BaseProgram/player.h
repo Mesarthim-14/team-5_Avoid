@@ -31,7 +31,7 @@ public:
 	void ShowInfo(void);		// 情報
 	HRESULT LoadInfo(void);		// データロード
 	void SaveInfo(void);		// データセーブ
-	void SubLife(int nDamage);			// ダメージ
+	void SubLife(int nDamage);	// ダメージ
 
 private:
 	// private関数
@@ -41,6 +41,9 @@ private:
 	void KeyBoardMove(void);	// 移動関数
 	void UpdateRot(void);		// 角度の更新処理
 	void ChangeModel(void);		// モデルチェンジ
+	void Action(void);			// アクション
+	void Jump(void);			// ジャンプ
+	void Avoidance(void);		// 回避アクション
 
 	typedef enum
 	{
@@ -48,6 +51,14 @@ private:
 		SLIME_MIDDLESIZE,
 		SLIME_LARGESIZE
 	}SLIME_STATE;//スライムの状態（大きさ）
+
+	typedef enum
+	{
+		ACTION_NONE = 0,
+		ACTION_JUMP,
+		ACTION_AVOID,
+		ACTION_STAN
+	}ACTION_STATE;//行動状態
 
 	// メンバ変数
 	D3DXVECTOR3 m_rotDest;		// 回転(目標値)
@@ -57,5 +68,8 @@ private:
 	bool m_bMove;				// 移動のフラグ
 	int m_nHP;				    // スライムHP ~100まで（パーセント）
 	SLIME_STATE	m_SlimeState;	// スライムの状態
+	float m_fAngle;				// カメラ向きアングル
+	float m_fAngleSpeed;		// 目標向きまで向かうスピード
+	ACTION_STATE m_ActionState; // 行動状態
 };
 #endif
