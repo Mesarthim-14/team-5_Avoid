@@ -14,6 +14,13 @@
 #include "shadow.h"
 #include "model_info.h"
 #include "skinmesh.h"
+#include "animation_skinmesh.h"
+
+const char * CSkinmeshModel::m_aParam[MODEL_MAX] =
+{
+	"data/Model/Hierarchy/test_slime_model02.x"
+};
+
 
 //=============================================================================
 // コンストラクタ
@@ -28,6 +35,7 @@ CSkinmeshModel::CSkinmeshModel(PRIORITY Priority) : CScene(Priority)
 	m_pModelInfo = nullptr;
 	m_pAnimetionController = 0;
 	m_pRootFrame = 0;
+	m_HLcontroller = nullptr;
 }
 
 //=============================================================================
@@ -72,15 +80,21 @@ HRESULT CSkinmeshModel::Init(void)
 	// スキンメッシュ情報をXファイル保存用
 	SkinMesh::AllocateHierarchy allocater;
 
+	//メモリ確保(アニメーション）
+	m_HLcontroller = new IHighLevelAnimController;
+
 	//エラー確認用
 	HRESULT model = D3DERR_WRONGTEXTUREFORMAT;
 	//仮モデル
-	model = D3DXLoadMeshHierarchyFromX(("data/Model/Hierarchy/test_slime_model02.x"), D3DXMESH_MANAGED, pDevice, &allocater, 0, (D3DXFRAME**)&m_pRootFrame, &m_pAnimetionController);
+	model = D3DXLoadMeshHierarchyFromX((m_aParam[0]), D3DXMESH_MANAGED, pDevice, &allocater, 0, (D3DXFRAME**)&m_pRootFrame, &m_pAnimetionController);
 
 	if (model == D3DERR_INVALIDCALL)
 	{
 		return 0;
 	}
+
+	//アニメーションコントローラーのコピー
+	m_HLcontroller->SetAnimationController(m_pAnimetionController);
 
 	//メッシュコンテナ取得関数
 	SkinMesh::getMeshContainer(m_pRootFrame, &m_cont);
@@ -118,6 +132,11 @@ void CSkinmeshModel::Update(void)
 
 	// 座標の更新
 	m_pModelInfo->GetPos() += m_move;
+
+	//仮
+	//アニメーション変更
+	m_HLcontroller->ChangeAnimation(0);
+	
 }
 
 //=============================================================================
@@ -223,6 +242,9 @@ void CSkinmeshModel::Draw(void)
 
 	// 影の描画
 	m_pModelInfo->ShadowDraw(rot);
+
+	//アニメーション更新
+	m_HLcontroller->AdvanceTime(1);
 }
 
 //=============================================================================

@@ -228,6 +228,9 @@
     <ClCompile Include="skinmesh.cpp">
       <Filter>07_Model</Filter>
     </ClCompile>
+    <ClCompile Include="animation_skinmesh.cpp">
+      <Filter>07_Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision.h">
@@ -390,6 +393,9 @@
       <Filter>07_Model</Filter>
     </ClInclude>
     <ClInclude Include="skinmesh.h">
+      <Filter>07_Model</Filter>
+    </ClInclude>
+    <ClInclude Include="animation_skinmesh.h">
       <Filter>07_Model</Filter>
     </ClInclude>
   </ItemGroup>
