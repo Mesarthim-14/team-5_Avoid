@@ -17,6 +17,7 @@
 #include "motion.h"
 #include "library.h"
 #include "camera.h"
+#include "game.h"
 
 //=============================================================================
 // マクロ定義
@@ -26,7 +27,9 @@
 #define PLAYER_ROT_SPEED		(0.1f)									// キャラクターの回転する速度
 #define SIZE					(D3DXVECTOR3 (1200.0f,1000.0f,1200.0f))	// サイズ
 #define PLAYER_INERTIA			(0.08f)		// 慣性の大きさ
-
+#define PLAYER_LITTLESIZE_VALUE (10)									// 最小サイズモデルの値
+#define PLAYER_MIDLLESIZE_VALUE (50)									// 中サイズモデルの値
+#define PLAYER_LARGESIZE_VALUE  (100)									// 最大サイズモデルの値
 //=============================================================================
 // 生成処理関数
 // Author : Konishi Yuuto
@@ -59,7 +62,14 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	m_bMove = false;
 	m_Inertia = ZeroVector3;
 	m_fInertiaNum = 0.0f;
-	m_fRotationSpeed = 0.0f;
+	m_fRotationSpeed = 0.1f;
+	m_fAngleSpeed = 0.0f;
+	m_SlimeState = SLIME_MIDDLESIZE;
+	m_nHP = 50;
+	m_fAngle = 0.0f;
+	m_ActionState = ACTION_NONE;
+	m_fJumpValue = 0.0f;
+	m_fDushJumpValue = 0.0f;
 }
 
 //=============================================================================
@@ -104,6 +114,10 @@ HRESULT CPlayer::Init(void)
 //=============================================================================
 void CPlayer::Uninit(void)
 {
+#ifdef _DEBUG
+	//情報保存
+	SaveInfo();
+#endif // !_DEBUG
 	CCharacter::Uninit();
 }
 
@@ -130,6 +144,11 @@ void CPlayer::Update(void)
 
 	// 更新処理
 	UpdateRot();
+
+#ifdef _DEBUG
+	//情報確認
+	ShowInfo();
+#endif // !_DEBUG
 }
 
 //=============================================================================
@@ -159,6 +178,8 @@ void CPlayer::PlayerControl(void)
 {
 	// 移動
 	Move();
+	// アクション
+	Action();
 }
 
 //=============================================================================
@@ -172,6 +193,27 @@ void CPlayer::Move(void)
 }
 
 //=============================================================================
+// アクション処理
+// Author : Hayashikawa Sarina
+//=============================================================================
+void CPlayer::Action(void)
+{
+	CInputKeyboard *pKeyboard = CManager::GetKeyboard();	// キーボード更新
+
+	// ジャンプ
+	if (pKeyboard->GetTrigger(DIK_SPACE))
+	{
+		Jump();
+	}
+	//回避
+	if (pKeyboard->GetTrigger(DIK_LSHIFT))
+	{
+		Avoidance();
+	}
+}
+
+
+//=============================================================================
 // 移動処理
 // Author : Konishi Yuuto
 //=============================================================================
@@ -181,42 +223,90 @@ void CPlayer::KeyBoardMove(void)
 	D3DXVECTOR3 pos = GetPos();								// 座標
 	D3DXVECTOR3 rot = GetRot();								// 角度
 	float fSpeed = GetSpeed();								// 移動量
-	float fAngle = CManager::GetCamera()->GetHorizontal();	// カメラの角度
+	float fCameraRot = D3DXToRadian(CManager::GetCamera()->GetRot().y);	// カメラの角度
 
 	// 前に移動
 	if (pKeyboard->GetPress(DIK_W))
 	{
 		// 移動量・角度の設定
-		m_Inertia.x = -sinf(fAngle)*fSpeed;
-		m_Inertia.z = -cosf(fAngle)*fSpeed;
-		m_rotDest.y = fAngle;
+		m_Inertia.x = +sinf(m_fAngle)*fSpeed;
+		m_Inertia.z = -cosf(m_fAngle)*fSpeed;
+		//進行方向に向きを合わせる
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(180.0f);
 		m_bMove = true;
 	}
+
 	// 後ろに移動
 	if (pKeyboard->GetPress(DIK_S))
 	{
 		// 移動量・角度の設定
-		m_Inertia.x = sinf((fAngle))*fSpeed;
-		m_Inertia.z = cosf((fAngle))*fSpeed;
-		m_rotDest.y = fAngle + D3DXToRadian(-180.0f);
+		m_Inertia.x = -sinf((m_fAngle))*fSpeed;
+		m_Inertia.z = +cosf((m_fAngle))*fSpeed;
+		//進行方向に向きを合わせる
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(-180.0f);
 		m_bMove = true;
 	}
+
 	// 左に移動
 	if (pKeyboard->GetPress(DIK_A))
 	{
 		// 移動量・角度の設定
-		m_Inertia.x = sinf((fAngle + D3DXToRadian(90.0f)))*fSpeed;
-		m_Inertia.z = cosf((fAngle + D3DXToRadian(90.0f)))*fSpeed;
-		m_rotDest.y = fAngle + D3DXToRadian(-90.0f);
+		m_Inertia.x = +sinf((m_fAngle + D3DXToRadian(90.0f)))*fSpeed;
+		m_Inertia.z = -cosf((m_fAngle + D3DXToRadian(90.0f)))*fSpeed;
+
+		//進行方向に向きを合わせる
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(180.0f);
 		m_bMove = true;
 	}
+
 	// 右に移動
 	if (pKeyboard->GetPress(DIK_D))
 	{
 		// 移動量・角度の設定
-		m_Inertia.x = sinf((fAngle + D3DXToRadian(-90.0f)))*fSpeed;
-		m_Inertia.z = cosf((fAngle + D3DXToRadian(-90.0f)))*fSpeed;
-		m_rotDest.y = fAngle + D3DXToRadian(90.0f);
+		m_Inertia.x = +sinf((m_fAngle + D3DXToRadian(-90.0f)))*fSpeed;
+		m_Inertia.z = -cosf((m_fAngle + D3DXToRadian(-90.0f)))*fSpeed;
+		//進行方向に向きを合わせる
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(-180.0f);
+		m_bMove = true;
+	}
+
+	//左前に移動
+	if (pKeyboard->GetPress(DIK_W) && pKeyboard->GetPress(DIK_A))
+	{
+		// 移動量・角度の設定
+		m_Inertia.x = +sinf((m_fAngle + D3DXToRadian(45.0f)))*fSpeed;
+		m_Inertia.z = -cosf((m_fAngle + D3DXToRadian(45.0f)))*fSpeed;
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(180.0f);
+		m_bMove = true;
+	}
+
+	//右前に移動
+	if (pKeyboard->GetPress(DIK_W) && pKeyboard->GetPress(DIK_D))
+	{
+		// 移動量・角度の設定
+		m_Inertia.x = +sinf((m_fAngle + D3DXToRadian(-45.0f)))*fSpeed;
+		m_Inertia.z = -cosf((m_fAngle + D3DXToRadian(-45.0f)))*fSpeed;
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(180.0f);
+		m_bMove = true;
+	}
+
+	//左後ろに移動
+	if (pKeyboard->GetPress(DIK_S) && pKeyboard->GetPress(DIK_A))
+	{
+		// 移動量・角度の設定
+		m_Inertia.x = -sinf((m_fAngle + D3DXToRadian(-45.0f)))*fSpeed;
+		m_Inertia.z = +cosf((m_fAngle + D3DXToRadian(-45.0f)))*fSpeed;
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(180.0f);
+		m_bMove = true;
+	}
+
+	//右後ろに移動
+    if (pKeyboard->GetPress(DIK_S) && pKeyboard->GetPress(DIK_D))
+	{
+		// 移動量・角度の設定
+		m_Inertia.x = -sinf((m_fAngle + D3DXToRadian(45.0f)))*fSpeed;
+		m_Inertia.z = +cosf((m_fAngle + D3DXToRadian(45.0f)))*fSpeed;
+		m_rotDest.y = atan2f(m_Inertia.x, m_Inertia.z) + D3DXToRadian(180.0f);
 		m_bMove = true;
 	}
 
@@ -232,9 +322,40 @@ void CPlayer::KeyBoardMove(void)
 		m_bMove = false;
 	}
 
+	//角度補正
+	while (fCameraRot - m_fAngle > D3DXToRadian(180))
+	{
+		fCameraRot -= D3DXToRadian(360);
+	}
+
+	while (fCameraRot - m_fAngle < D3DXToRadian(-180))
+	{
+		fCameraRot += D3DXToRadian(360);
+	}
+
+	//カメラの転換速度よりちょっと遅く向かせる
+	m_fAngle += (fCameraRot - m_fAngle) * m_fAngleSpeed;
+
 	// 慣性
 	D3DXVECTOR3 move = GetMove();
 	move += (m_Inertia - move) * m_fInertiaNum;
+
+	//ジャンプ
+	if (pKeyboard->GetTrigger(DIK_SPACE))
+	{
+		if (GetLanding() == true && GetState() != STATE_JUMP)
+		{
+			move.y += m_fJumpValue;
+			move.x += move.x / 2;
+			move.z += move.z / 2;
+			SetState(STATE_JUMP);
+		}
+	}
+	if (GetLanding() == true && GetState() == STATE_JUMP)
+	{
+		SetState(STATE_NORMAL);
+	}
+
 	SetMove(move);
 }
 
@@ -268,6 +389,59 @@ void CPlayer::UpdateRot(void)
 }
 
 //=============================================================================
+// スライムモデルチェンジ
+// Author : Hayashikawa Sarina
+//=============================================================================
+void CPlayer::ChangeModel(void)
+{
+	//現在のライフを見てスライムの見た目を変える
+	if (m_nHP == PLAYER_LARGESIZE_VALUE)//最大
+	{
+		//スライムの状態を最大に
+		m_SlimeState = SLIME_LARGESIZE;
+
+	}
+	else if (m_nHP < PLAYER_LARGESIZE_VALUE && m_nHP >= PLAYER_MIDLLESIZE_VALUE)//中くらい
+	{
+		//スライムの状態を中に
+		m_SlimeState = SLIME_MIDDLESIZE;
+		//HP量で大きさ変える
+	}
+	else if (m_nHP < PLAYER_MIDLLESIZE_VALUE && m_nHP >= 0)//小
+	{
+		//スライムの状態を最小に
+		m_SlimeState = SLIME_LITTLESIZE;
+		//HP量で大きさ変える
+	}
+}
+
+//=============================================================================
+// ジャンプ
+// Author : Hayashikawa Sarina
+//=============================================================================
+void CPlayer::Jump(void)
+{
+	if (m_ActionState != ACTION_JUMP)
+	{
+		//状態をジャンプ状態
+		m_ActionState = ACTION_JUMP;
+	}
+}
+
+//=============================================================================
+// 回避
+// Author : Hayashikawa Sarina
+//=============================================================================
+void CPlayer::Avoidance(void)
+{
+	if (m_ActionState != ACTION_AVOID)
+	{
+		//状態を回避状態
+		m_ActionState = ACTION_AVOID;
+	}
+}
+
+//=============================================================================
 // Imgui 情報
 // Author : Konishi Yuuto
 //=============================================================================
@@ -292,10 +466,16 @@ void CPlayer::ShowInfo(void)
 			D3DXVECTOR3 rot = GetRot();
 			ImGui::Text("Rot : %.1ff %.1ff %.1ff", rot.x, rot.y, rot.z);
 
+			// HP
+			ImGui::Text("HP : %d", m_nHP);
+
 			// 移動量
 			float fSpeed = GetSpeed();
 			ImGui::SliderFloat("Speed", &fSpeed, 0.0f, 50.0f);
 			SetSpeed(fSpeed);
+
+			// ジャンプの値
+			ImGui::SliderFloat("JumpValue", &m_fJumpValue, 0.0f, 50.0f);
 
 			// 慣性の値
 			ImGui::SliderFloat("InertiaNum", &m_fInertiaNum, 0.0f, 0.5f);
@@ -305,6 +485,9 @@ void CPlayer::ShowInfo(void)
 
 			// 回転速度の値
 			ImGui::SliderFloat("RotationSpeed", &m_fRotationSpeed, 0.0f, 1.0f);
+
+			// 目標向きに向かうまでの速度の値
+			ImGui::SliderFloat("AngleSpeed", &m_fAngleSpeed, 0.0f, 1.0f);
 
 			ImGui::TreePop();
 		}
@@ -327,7 +510,8 @@ HRESULT CPlayer::LoadInfo(void)
 	CLibrary::JsonGetState(v, "Player", "SPEED", GetSpeed());
 	CLibrary::JsonGetState(v, "Player", "INERTIA_NUM", m_fInertiaNum);
 	CLibrary::JsonGetState(v, "Player", "ROTATION_SPEED", m_fRotationSpeed);
-
+	CLibrary::JsonGetState(v, "Player", "ANGLE_SPEED", m_fAngleSpeed);
+	CLibrary::JsonGetState(v, "Player", "JUMP_VALUE", m_fJumpValue);
 	return S_OK;
 }
 
@@ -343,4 +527,15 @@ void CPlayer::SaveInfo(void)
 	CLibrary::JsonSetState(FileName, "Player", "SPEED", GetSpeed());				// 速度
 	CLibrary::JsonSetState(FileName, "Player", "INERTIA_NUM", m_fInertiaNum);		// 慣性
 	CLibrary::JsonSetState(FileName, "Player", "ROTATION_SPEED", m_fRotationSpeed);	// 回転の速度
+	CLibrary::JsonSetState(FileName, "Player", "ANGLE_SPEED", m_fAngleSpeed);	// 回転遅さの速度
+	CLibrary::JsonSetState(FileName, "Player", "JUMP_VALUE", m_fJumpValue);	// 回転遅さの速度
+}
+
+//=============================================================================
+// ライフ減少
+// Author : Hayashikawa Sarina
+//=============================================================================
+void CPlayer::SubLife(int nDamage)
+{
+	m_nHP -= nDamage;
 }

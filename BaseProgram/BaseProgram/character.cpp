@@ -15,6 +15,7 @@
 #include "motion.h"
 #include "model_info.h"
 #include "library.h"
+#include "game.h"
 
 //=============================================================================
 // マクロ定義
@@ -142,6 +143,7 @@ void CCharacter::Draw()
 	}
 }
 
+
 //=============================================================================
 // モデルの生成
 //=============================================================================
@@ -226,13 +228,17 @@ void CCharacter::ModelAnimeUpdate(void)
 void CCharacter::Gravity(void)
 {
 	// 重力をかける
-	m_move.y -= GRAVITY_POWAR;
+	m_move.y -= CGame::GetGravity();
 	m_pos.y += m_move.y;		// 落下
 
 	// 地面の判定
 	if (m_pos.y <= GROUND_RIMIT)
 	{
 		Landing(GROUND_RIMIT);
+	}
+	else
+	{
+		m_bLanding = false;
 	}
 }
 

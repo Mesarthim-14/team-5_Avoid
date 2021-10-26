@@ -18,7 +18,7 @@
 // 前方宣言
 //=============================================================================
 class CModelInfo;
-
+class IHighLevelAnimController;
 
 //=============================================================================
 // モデルクラス
@@ -26,6 +26,12 @@ class CModelInfo;
 class CSkinmeshModel : public CScene
 {
 public:
+
+	typedef enum
+	{
+		MODEL_PLAYER_100 = 0,//スライム１００％の状態
+		MODEL_MAX
+	}MODEL;//モデル名前
 	CSkinmeshModel(PRIORITY Priority = PRIORITY_EFFECT);	// コンストラクタ
 	~CSkinmeshModel();
 
@@ -34,6 +40,8 @@ public:
 	void Update(void);								// 更新処理
 	void Draw(void);								// 描画処理
 	static CSkinmeshModel *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);	// インスタンス生成
+	IHighLevelAnimController * GetHLcontroller(void) { return m_HLcontroller; };
+	void SetModelNumber(MODEL model);
 
 protected:
 	// Set関数
@@ -51,22 +59,24 @@ protected:
 	CModelInfo* GetModelInfo(void) { return m_pModelInfo; }		// モデルの情報
 
 private:
+
 	// private関数
 	void HasPtrDelete(void);									// 保持ポインタの開放処理
 	void CreateInfoPtr(void);									// 情報のポインタ生成
 
 	// メンバ変数
-	CModelInfo* m_pModelInfo;			// モデルの情報
-	D3DXVECTOR3 m_move;					// 移動量
-	D3DXVECTOR3 m_size;					// サイズ
-	D3DXVECTOR3 m_scale;				// 拡大率
-	int m_nTexPattern;					// テクスチャのパターン数
-	int m_nLife;						// ライフ
-	ID3DXAnimationController * m_pAnimetionController; //アニメーションコントローラー
-	SkinMesh::SMD3DXFRAME				 * m_pRootFrame;			// ルートフレーム
-	// SMD3DXMESHCONTAINER(メッシュ)関連の情報を保存用
-	std::vector<SkinMesh::SMD3DXMESHCONTAINER*> m_cont;
-	//ボーンコンビネーションテーブルのポインタ取得
-	std::vector<D3DXBONECOMBINATION*> m_combs;
+	CModelInfo* m_pModelInfo;									// モデルの情報
+	D3DXVECTOR3 m_move;											// 移動量
+	D3DXVECTOR3 m_size;											// サイズ
+	D3DXVECTOR3 m_scale;										// 拡大率
+	int m_nTexPattern;											// テクスチャのパターン数
+	int m_nLife;												// ライフ
+	ID3DXAnimationController * m_pAnimetionController;			//アニメーションコントローラー
+	SkinMesh::SMD3DXFRAME				 * m_pRootFrame;		// ルートフレーム
+	std::vector<SkinMesh::SMD3DXMESHCONTAINER*> m_cont;			// SMD3DXMESHCONTAINER(メッシュ)関連の情報を保存用
+	std::vector<D3DXBONECOMBINATION*> m_combs;					//ボーンコンビネーションテーブルのポインタ取得
+	IHighLevelAnimController * m_HLcontroller;					//ハイレベルアニメーションコントローラー
+	static const char* m_aParam[MODEL_MAX];						//モデルパス名
+	MODEL			   m_ModelNum;								// モデルの名前
 };
 #endif 

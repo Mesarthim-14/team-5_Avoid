@@ -26,5 +26,6 @@ public:
 
 private:
 	void NomalUpdate(void) override;
+	void MouseUpdate(void) override;
 };
 #endif 

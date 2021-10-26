@@ -22,7 +22,9 @@
 #include "test_character.h"
 #include "ground.h"
 #include "skinmesh_model.h"
+#include "library.h"
 
+float CGame::m_fGravity = 4.0f;
 //=======================================================================================
 // コンストラクタ
 //=======================================================================================
@@ -90,6 +92,8 @@ void CGame::Update(void)
 		CFade *pFade = CManager::GetFade();
 		pFade->SetFade(CManager::MODE_TYPE_TITLE);
 	}
+
+	ShowInfo();
 #endif // !_DEBUG
 }
 
@@ -115,4 +119,29 @@ void CGame::CreatePlayer(void)
 //	CTestCharacter::Create(D3DXVECTOR3(1000.0f, 0.0f, 0.0f));
 //	CTestCharacter::Create(ZeroVector3);
 //	CTestCharacter::Create(D3DXVECTOR3(-1000.0f, 0.0f, 0.0f));
+	CTestModel::Create();
+}
+
+//=======================================================================================
+// 情報表示
+//=======================================================================================
+void CGame::ShowInfo(void)
+{
+#ifdef _DEBUG
+
+	//レンダラーで管理してるやつの情報
+	ImGui::Begin("DebugInfo");
+
+	if (ImGui::CollapsingHeader("WorldInfo"))
+	{
+		LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();	// デバイスの取得
+
+			// 重力の値
+			ImGui::SliderFloat("Gravity", &m_fGravity, 0.0f, 50.0f);
+
+			//ImGui::TreePop();
+	}
+
+	ImGui::End();
+#endif // !_DEBUG
 }

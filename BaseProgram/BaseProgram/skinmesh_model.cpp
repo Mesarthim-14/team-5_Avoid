@@ -14,6 +14,13 @@
 #include "shadow.h"
 #include "model_info.h"
 #include "skinmesh.h"
+#include "animation_skinmesh.h"
+
+const char * CSkinmeshModel::m_aParam[MODEL_MAX] =
+{
+	"data/Model/Hierarchy/test_slime_model02.x"
+};
+
 
 //=============================================================================
 // コンストラクタ
@@ -28,6 +35,8 @@ CSkinmeshModel::CSkinmeshModel(PRIORITY Priority) : CScene(Priority)
 	m_pModelInfo = nullptr;
 	m_pAnimetionController = 0;
 	m_pRootFrame = 0;
+	m_HLcontroller = nullptr;
+	m_ModelNum = MODEL_PLAYER_100;
 }
 
 //=============================================================================
@@ -72,15 +81,21 @@ HRESULT CSkinmeshModel::Init(void)
 	// スキンメッシュ情報をXファイル保存用
 	SkinMesh::AllocateHierarchy allocater;
 
+	//メモリ確保(アニメーション）
+	m_HLcontroller = new IHighLevelAnimController;
+
 	//エラー確認用
 	HRESULT model = D3DERR_WRONGTEXTUREFORMAT;
 	//仮モデル
-	model = D3DXLoadMeshHierarchyFromX(("data/Model/Hierarchy/Test/00_ship.x"), D3DXMESH_MANAGED, pDevice, &allocater, 0, (D3DXFRAME**)&m_pRootFrame, &m_pAnimetionController);
+	model = D3DXLoadMeshHierarchyFromX((m_aParam[0]), D3DXMESH_MANAGED, pDevice, &allocater, 0, (D3DXFRAME**)&m_pRootFrame, &m_pAnimetionController);
 
 	if (model == D3DERR_INVALIDCALL)
 	{
 		return 0;
 	}
+
+	//アニメーションコントローラーのコピー
+	m_HLcontroller->SetAnimationController(m_pAnimetionController);
 
 	//メッシュコンテナ取得関数
 	SkinMesh::getMeshContainer(m_pRootFrame, &m_cont);
@@ -118,6 +133,23 @@ void CSkinmeshModel::Update(void)
 
 	// 座標の更新
 	m_pModelInfo->GetPos() += m_move;
+
+	//仮
+	//アニメーション変更
+	//m_HLcontroller->ChangeAnimation(0);
+	//ループ時間
+	m_HLcontroller->SetLoopTime(1, 60);
+	m_HLcontroller->SetLoopTime(0, 60);
+
+	//アニメーション変更
+	m_HLcontroller->ChangeAnimation(0);
+
+	//アニメーションのシフトにかかる時間
+	m_HLcontroller->SetShiftTime(1, 10);
+	m_HLcontroller->SetShiftTime(0, 10);
+
+	m_HLcontroller->ChangeAnimation(1);
+	
 }
 
 //=============================================================================
@@ -135,9 +167,11 @@ void CSkinmeshModel::Draw(void)
 	//現在フレーム(fps)のワールド変換行列
 	std::map<DWORD, D3DXMATRIX> combMatrixMap;
 		
-	// 時間を進めて姿勢更新
-	m_pAnimetionController->AdvanceTime(0.0001f, 0);
-	m_pAnimetionController->SetTrackAnimationSet(0, 0);
+	//// 時間を進めて姿勢更新
+	//m_pAnimetionController->AdvanceTime(0.0001f, 0);
+	//m_pAnimetionController->SetTrackAnimationSet(0, 0);
+	//アニメーション更新
+	m_HLcontroller->AdvanceTime(1);
 
 	SkinMesh::updateCombMatrix(combMatrixMap, m_pRootFrame);
 
@@ -223,6 +257,8 @@ void CSkinmeshModel::Draw(void)
 
 	// 影の描画
 	m_pModelInfo->ShadowDraw(rot);
+
+
 }
 
 //=============================================================================
@@ -246,4 +282,12 @@ void CSkinmeshModel::CreateInfoPtr(void)
 	{
 		m_pModelInfo = CModelInfo::Create(CModelInfo::MODEL_TYPE_NONE);
 	}
+}
+
+//=============================================================================
+// 情報のポインタ生成
+//=============================================================================
+void CSkinmeshModel::SetModelNumber(MODEL model)
+{
+	m_ModelNum = model;
 }

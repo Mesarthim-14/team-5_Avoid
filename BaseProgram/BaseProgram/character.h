@@ -14,6 +14,7 @@
 #include "scene.h"
 #include "modelanime.h"
 
+
 //=============================================================================
 // 前方宣言
 //=============================================================================
@@ -33,6 +34,7 @@ public:
 	{
 		STATE_NORMAL = 0,
 		STATE_DEAD,
+		STATE_JUMP,
 		STATE_MAX
 	};
 
@@ -85,7 +87,7 @@ protected:
 	void SetGravityFlag(const bool bFlag)		{ m_bGravity = bFlag; }		// 重力のフラグ
 	void SetType(const CHARACTER_TYPE &type)	{ m_type = type; }			// 種類
 	void SetUseShadow(void)						{ m_bUseShadow = true; }	// 影の使用判定
-
+	bool GetLanding(void)					    { return m_bLanding; }      // 着地判定取得
 private:
 	// private関数
 	void ModelAnimeUpdate(void);				// モデルアニメーション

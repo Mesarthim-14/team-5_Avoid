@@ -228,11 +228,8 @@
     <ClCompile Include="skinmesh.cpp">
       <Filter>07_Model</Filter>
     </ClCompile>
-    <ClCompile Include="gauge.cpp">
-      <Filter>09_Ui</Filter>
-    </ClCompile>
-    <ClCompile Include="gaugebar.cpp">
-      <Filter>09_Ui</Filter>
+    <ClCompile Include="animation_skinmesh.cpp">
+      <Filter>07_Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -398,11 +395,8 @@
     <ClInclude Include="skinmesh.h">
       <Filter>07_Model</Filter>
     </ClInclude>
-    <ClInclude Include="gauge.h">
-      <Filter>09_Ui</Filter>
-    </ClInclude>
-    <ClInclude Include="gaugebar.h">
-      <Filter>09_Ui</Filter>
+    <ClInclude Include="animation_skinmesh.h">
+      <Filter>07_Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
