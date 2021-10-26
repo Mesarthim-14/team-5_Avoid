@@ -30,14 +30,16 @@ public:
 	void Uninit(void);								// 終了処理
 	void Update(void);								// 更新処理
 	void Draw(void);								// 描画処理
-
+	static float GetGravity(void) { return m_fGravity; }; //重力
 private:
 	// private関数
 	void CreatePlayer(void);				// プレイヤーの生成関数
+	void ShowInfo(void);//情報表示
 
 	// メンバ変数
 	CPlayer *m_pPlayer;						// プレイヤーのポインタ
 	bool m_bGameEnd;						// ゲームのエンドフラグ
 	LPD3DXFONT m_pFont;						// デバック用フォント
+	static float		m_fGravity;					// 重力
 };
 #endif

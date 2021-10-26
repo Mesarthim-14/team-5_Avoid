@@ -44,7 +44,6 @@ private:
 	void Action(void);			// アクション
 	void Jump(void);			// ジャンプ
 	void Avoidance(void);		// 回避アクション
-
 	typedef enum
 	{
 		SLIME_LITTLESIZE = 0,
@@ -71,5 +70,7 @@ private:
 	float m_fAngle;				// カメラ向きアングル
 	float m_fAngleSpeed;		// 目標向きまで向かうスピード
 	ACTION_STATE m_ActionState; // 行動状態
+	float m_fJumpValue;			// ジャンプ量
+	float m_fDushJumpValue;		// 移動ジャンプ時の横移動加算量
 };
 #endif

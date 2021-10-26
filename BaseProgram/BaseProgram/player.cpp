@@ -17,6 +17,7 @@
 #include "motion.h"
 #include "library.h"
 #include "camera.h"
+#include "game.h"
 
 //=============================================================================
 // マクロ定義
@@ -67,6 +68,8 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	m_nHP = 50;
 	m_fAngle = 0.0f;
 	m_ActionState = ACTION_NONE;
+	m_fJumpValue = 0.0f;
+	m_fDushJumpValue = 0.0f;
 }
 
 //=============================================================================
@@ -111,6 +114,10 @@ HRESULT CPlayer::Init(void)
 //=============================================================================
 void CPlayer::Uninit(void)
 {
+#ifdef _DEBUG
+	//情報保存
+	SaveInfo();
+#endif // !_DEBUG
 	CCharacter::Uninit();
 }
 
@@ -331,6 +338,23 @@ void CPlayer::KeyBoardMove(void)
 	// 慣性
 	D3DXVECTOR3 move = GetMove();
 	move += (m_Inertia - move) * m_fInertiaNum;
+
+	//ジャンプ
+	if (pKeyboard->GetTrigger(DIK_SPACE))
+	{
+		if (GetLanding() == true && GetState() != STATE_JUMP)
+		{
+			move.y += m_fJumpValue;
+			move.x += move.x / 2;
+			move.z += move.z / 2;
+			SetState(STATE_JUMP);
+		}
+	}
+	if (GetLanding() == true && GetState() == STATE_JUMP)
+	{
+		SetState(STATE_NORMAL);
+	}
+
 	SetMove(move);
 }
 
@@ -449,6 +473,9 @@ void CPlayer::ShowInfo(void)
 			ImGui::SliderFloat("Speed", &fSpeed, 0.0f, 50.0f);
 			SetSpeed(fSpeed);
 
+			// ジャンプの値
+			ImGui::SliderFloat("JumpValue", &m_fJumpValue, 0.0f, 50.0f);
+
 			// 慣性の値
 			ImGui::SliderFloat("InertiaNum", &m_fInertiaNum, 0.0f, 0.5f);
 
@@ -482,7 +509,8 @@ HRESULT CPlayer::LoadInfo(void)
 	CLibrary::JsonGetState(v, "Player", "SPEED", GetSpeed());
 	CLibrary::JsonGetState(v, "Player", "INERTIA_NUM", m_fInertiaNum);
 	CLibrary::JsonGetState(v, "Player", "ROTATION_SPEED", m_fRotationSpeed);
-
+	CLibrary::JsonGetState(v, "Player", "ANGLE_SPEED", m_fAngleSpeed);
+	CLibrary::JsonGetState(v, "Player", "JUMP_VALUE", m_fJumpValue);
 	return S_OK;
 }
 
@@ -498,6 +526,8 @@ void CPlayer::SaveInfo(void)
 	CLibrary::JsonSetState(FileName, "Player", "SPEED", GetSpeed());				// 速度
 	CLibrary::JsonSetState(FileName, "Player", "INERTIA_NUM", m_fInertiaNum);		// 慣性
 	CLibrary::JsonSetState(FileName, "Player", "ROTATION_SPEED", m_fRotationSpeed);	// 回転の速度
+	CLibrary::JsonSetState(FileName, "Player", "ANGLE_SPEED", m_fAngleSpeed);	// 回転遅さの速度
+	CLibrary::JsonSetState(FileName, "Player", "JUMP_VALUE", m_fJumpValue);	// 回転遅さの速度
 }
 
 //=============================================================================

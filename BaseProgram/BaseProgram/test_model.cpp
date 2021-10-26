@@ -63,12 +63,13 @@ CTestModel * CTestModel::Create(void)
 //=============================================================================
 HRESULT CTestModel::Init(void)
 {
+	//SetScale(D3DXVECTOR3(100.0f, 100.0f, 100.0f));
 	// ‰Šú‰»ˆ—
 	CModel::Init();
 
 	CXfile *pXfile = GET_XFILE_PTR;
 	//BindModel(pXfile->GetXfile(CXfile::XFILE_NUM_TEST_BLOCK));
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_TEST_BLOCK);
+	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MAP);
 	GetModelInfo()->SetModelStatus(TEST_POS, TEST_ROT, model);
 
 	return S_OK;

@@ -36,6 +36,7 @@ CSkinmeshModel::CSkinmeshModel(PRIORITY Priority) : CScene(Priority)
 	m_pAnimetionController = 0;
 	m_pRootFrame = 0;
 	m_HLcontroller = nullptr;
+	m_ModelNum = MODEL_PLAYER_100;
 }
 
 //=============================================================================
@@ -135,7 +136,19 @@ void CSkinmeshModel::Update(void)
 
 	//仮
 	//アニメーション変更
+	//m_HLcontroller->ChangeAnimation(0);
+	//ループ時間
+	m_HLcontroller->SetLoopTime(1, 60);
+	m_HLcontroller->SetLoopTime(0, 60);
+
+	//アニメーション変更
 	m_HLcontroller->ChangeAnimation(0);
+
+	//アニメーションのシフトにかかる時間
+	m_HLcontroller->SetShiftTime(1, 10);
+	m_HLcontroller->SetShiftTime(0, 10);
+
+	m_HLcontroller->ChangeAnimation(1);
 	
 }
 
@@ -154,9 +167,11 @@ void CSkinmeshModel::Draw(void)
 	//現在フレーム(fps)のワールド変換行列
 	std::map<DWORD, D3DXMATRIX> combMatrixMap;
 		
-	// 時間を進めて姿勢更新
-	m_pAnimetionController->AdvanceTime(0.0001f, 0);
-	m_pAnimetionController->SetTrackAnimationSet(0, 0);
+	//// 時間を進めて姿勢更新
+	//m_pAnimetionController->AdvanceTime(0.0001f, 0);
+	//m_pAnimetionController->SetTrackAnimationSet(0, 0);
+	//アニメーション更新
+	m_HLcontroller->AdvanceTime(1);
 
 	SkinMesh::updateCombMatrix(combMatrixMap, m_pRootFrame);
 
@@ -243,8 +258,7 @@ void CSkinmeshModel::Draw(void)
 	// 影の描画
 	m_pModelInfo->ShadowDraw(rot);
 
-	//アニメーション更新
-	m_HLcontroller->AdvanceTime(1);
+
 }
 
 //=============================================================================
@@ -268,4 +282,12 @@ void CSkinmeshModel::CreateInfoPtr(void)
 	{
 		m_pModelInfo = CModelInfo::Create(CModelInfo::MODEL_TYPE_NONE);
 	}
+}
+
+//=============================================================================
+// 情報のポインタ生成
+//=============================================================================
+void CSkinmeshModel::SetModelNumber(MODEL model)
+{
+	m_ModelNum = model;
 }

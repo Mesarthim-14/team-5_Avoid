@@ -39,6 +39,7 @@ CXfile::CXfile()
 	m_aXfileName =
 	{
 		{ "data/Model/Normal/block.x" },			// テストブロック
+		{ "data/Model/Normal/map.x" },			// マップ
 	};
 
 	// 階層構造モデル
