@@ -144,7 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="animation_skinmesh.cpp" />
+    <ClCompile Include="..\..\..\team-5_Avoid - コピー\BaseProgram\BaseProgram\animation_skinmesh.cpp" />
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="camera_game.cpp" />
@@ -200,7 +200,7 @@
     <ClCompile Include="xfile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="animation_skinmesh.h" />
+    <ClInclude Include="..\..\..\team-5_Avoid - コピー\BaseProgram\BaseProgram\animation_skinmesh.h" />
     <ClInclude Include="billboard.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="camera_game.h" />

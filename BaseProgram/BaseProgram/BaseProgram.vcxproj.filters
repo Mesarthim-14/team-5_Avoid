@@ -228,7 +228,13 @@
     <ClCompile Include="skinmesh.cpp">
       <Filter>07_Model</Filter>
     </ClCompile>
-    <ClCompile Include="animation_skinmesh.cpp">
+    <ClCompile Include="gauge.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="gaugebar.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\team-5_Avoid - コピー\BaseProgram\BaseProgram\animation_skinmesh.cpp">
       <Filter>07_Model</Filter>
     </ClCompile>
   </ItemGroup>
@@ -395,7 +401,13 @@
     <ClInclude Include="skinmesh.h">
       <Filter>07_Model</Filter>
     </ClInclude>
-    <ClInclude Include="animation_skinmesh.h">
+    <ClInclude Include="gauge.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="gaugebar.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\team-5_Avoid - コピー\BaseProgram\BaseProgram\animation_skinmesh.h">
       <Filter>07_Model</Filter>
     </ClInclude>
   </ItemGroup>
