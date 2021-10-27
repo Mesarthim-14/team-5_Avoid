@@ -463,6 +463,7 @@ void CPlayer::Jump(void)
 		m_nChargeJumpCount = 0;
 		m_bIsReadyChargeJump = false;
 	}
+
 	else if (GetLanding() == true && pKeyboard->GetRelease(DIK_SPACE) && GetState() != STATE_JUMP)//通常ジャンプ
 	{
 		move.y += m_fJumpValue;
