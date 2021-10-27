@@ -1,14 +1,27 @@
+//=============================================================================
+//
+// スキンメッシュ処理 [skinmesh.cpp]
+// Author : Takahashi Naoyuki
+//
+//=============================================================================
 #ifndef SKINMESH_H
 #define SKINMESH_H
 
+//=============================================================================
+// インクルードファイル
+//=============================================================================
 #include "main.h"
 
-#define TRIANGLE 3
+//=============================================================================
+// マクロ定義
+//=============================================================================
+#define TRIANGLE 3 //隣接ポリゴンインデックス
 
+//スキンメッシュ
 namespace SkinMesh
 {
 	// D3DXFRAME(ボーン)関連の情報を保持
-	// D3DXFRAMEの派生クラス(SMD3DXFRAME)作成idとoffsetMatrixを追加
+	// D3DXFRAMEの派生(SMD3DXFRAME)作成idとoffsetMatrixを追加
 	struct SMD3DXFRAME : public D3DXFRAME
 	{
 		DWORD id;						// ボーンID
@@ -29,7 +42,7 @@ namespace SkinMesh
 		SMD3DXMESHCONTAINER() : maxFaceInfl(1), numBoneCombinations(0), boneCombinationTable(0) {}	// 初期化
 	};
 
-	// ボーンの構成であるフレームツリー（D3DXFRAME）、FKアニメーション（ID3DXAnimationController）という2つのオブジェクトを返す。
+	// 階層割り当てクラス（ボーンの構成であるフレームツリー（D3DXFRAME）、FKアニメーション（ID3DXAnimationController）という2つのオブジェクトを返す。）
 	class AllocateHierarchy : public ID3DXAllocateHierarchy
 	{
 	public:
@@ -48,14 +61,17 @@ namespace SkinMesh
 			LPD3DXSKININFO pSkinInfo,					// スキニング(メッシュを変形)情報
 			LPD3DXMESHCONTAINER *ppNewMeshContainer);	// メッシュコンテナ構造体へのポインタ
 
-														//指定されたメッシュコンテナを削除
+		//指定されたメッシュコンテナを削除関数
 		STDMETHOD(DestroyMeshContainer)(THIS_ LPD3DXMESHCONTAINER pMeshContainerToFree);
 	private:
-		char *copyName(const char* name);//名前
+		//名前コピー関数
+		char *copyName(const char* name);
 	};
-	void updateCombMatrix(std::map<DWORD, D3DXMATRIX> &combMatrixMap, SkinMesh::SMD3DXFRAME *frame);
+	//ボーンマトリクス更新関数
+	void updateCombMatrix(std::map<DWORD, D3DXMATRIX> &combMatrixMap, D3DXMATRIX matrix, SkinMesh::SMD3DXFRAME *frame);
+	//メッシュコンテナー取得関数
 	void getMeshContainer(D3DXFRAME *frame, std::vector<SkinMesh::SMD3DXMESHCONTAINER*> *cont);
+	//ボーンデータ格納関数
 	void setFrameId(SkinMesh::SMD3DXFRAME * frame, ID3DXSkinInfo * info);
 }
-
 #endif

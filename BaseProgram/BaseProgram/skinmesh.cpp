@@ -110,7 +110,7 @@ HRESULT SkinMesh::AllocateHierarchy::CreateMeshContainer(LPCSTR Name, CONST D3DX
 
 	newCont->pEffects = 0;// 初期化
 
-						  // pEffectInstancesが真なら
+	// pEffectInstancesが真なら
 	if (pEffectInstances)
 	{
 		newCont->pEffects = new D3DXEFFECTINSTANCE;// メモリ確保
@@ -290,11 +290,7 @@ void boneMatrixLink(std::map<DWORD, D3DXMATRIX> &combMatrixMap, D3DXMATRIX &pare
 }
 
 //現在フレーム(fps)のワールド変換行列計算(行列保存用,参照フレーム)
-void SkinMesh::updateCombMatrix(std::map<DWORD, D3DXMATRIX>& combMatrixMap, SkinMesh::SMD3DXFRAME * frame)
+void SkinMesh::updateCombMatrix(std::map<DWORD, D3DXMATRIX>& combMatrixMap, D3DXMATRIX matrix, SkinMesh::SMD3DXFRAME * frame)
 {
-	D3DXMATRIX matrix;
-
-	D3DXMatrixIdentity(&matrix);//行列初期化
-
 	boneMatrixLink(combMatrixMap, matrix, frame);
 }
