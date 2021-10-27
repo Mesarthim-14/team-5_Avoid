@@ -198,6 +198,7 @@
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="texture_animation.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="translation.cpp" />
     <ClCompile Include="xfile.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +259,7 @@
     <ClInclude Include="texture.h" />
     <ClInclude Include="texture_animation.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="translation.h" />
     <ClInclude Include="xfile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
