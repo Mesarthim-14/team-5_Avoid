@@ -234,7 +234,7 @@
     <ClCompile Include="gaugebar.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\team-5_Avoid - コピー\BaseProgram\BaseProgram\animation_skinmesh.cpp">
+    <ClCompile Include="animation_skinmesh.cpp">
       <Filter>07_Model</Filter>
     </ClCompile>
   </ItemGroup>
@@ -407,7 +407,7 @@
     <ClInclude Include="gaugebar.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\team-5_Avoid - コピー\BaseProgram\BaseProgram\animation_skinmesh.h">
+    <ClInclude Include="animation_skinmesh.h">
       <Filter>07_Model</Filter>
     </ClInclude>
   </ItemGroup>

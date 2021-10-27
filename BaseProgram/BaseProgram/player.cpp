@@ -18,6 +18,9 @@
 #include "library.h"
 #include "camera.h"
 #include "game.h"
+#include "test_model.h"
+#include "model.h"
+#include "model_info.h"
 
 //=============================================================================
 // マクロ定義
@@ -180,6 +183,28 @@ void CPlayer::PlayerControl(void)
 	Move();
 	// アクション
 	Action();
+
+	//CTestModel* pTestModel = nullptr;
+	//pTestModel = (CTestModel*)GetTop(PRIORITY_TEST_MODEL);
+	//if (pTestModel != nullptr)
+	//{
+	//	D3DXVECTOR3 RayDir = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+	//	BOOL bHit = FALSE;
+	//	FLOAT fDistance = 0.0f;
+
+	//	//下方向
+	//	D3DXIntersect(
+	//		pTestModel->GetModelInfo()->GetMesh() ,
+	//		&(GetPos() - D3DXVECTOR3(0.0f, 4.0f, 0.0f)),
+	//		&RayDir,
+	//		&bHit,
+	//		nullptr,
+	//		nullptr,
+	//		nullptr,
+	//		&fDistance,
+	//		nullptr,
+	//		nullptr);
+	//}
 }
 
 //=============================================================================
