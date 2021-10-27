@@ -25,6 +25,7 @@ public:
 	{
 		PRIORITY_0 = 0,
 		PRIORITY_1,
+		PRIORITY_TEST_MODEL,// テストモデル
 		PRIORITY_MODEL,		// モデル
 		PRIORITY_CHARACTER,	// キャラクター
 		PRIORITY_EFFECT,	// エフェクト

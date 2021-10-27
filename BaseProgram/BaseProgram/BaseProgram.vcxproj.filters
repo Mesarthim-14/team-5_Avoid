@@ -235,7 +235,7 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="animation_skinmesh.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>07_Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -408,7 +408,7 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="animation_skinmesh.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>07_Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
