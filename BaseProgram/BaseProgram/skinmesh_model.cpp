@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // モデルクラス [model.cpp]
-// Author : Konishi Yuuto
+// Author : Takahashi Naoyuki
 //
 //=============================================================================
 
@@ -164,6 +164,23 @@ void CSkinmeshModel::Draw(void)
 	D3DXVECTOR3 pos = m_pModelInfo->GetPos();
 	D3DXVECTOR3 rot = m_pModelInfo->GetRot();
 
+	//現在のマテリアルを取得する
+	pDevice->GetMaterial(&matDef);
+	//ワールドマトリックスの初期化
+	D3DXMatrixIdentity(&mtxWorld);
+
+	// 拡大率を反映
+	D3DXMatrixScaling(&mtxScale, m_scale.x, m_scale.y, m_scale.z);
+	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxScale);
+
+	//向きを反映
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.y, rot.z);
+	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
+
+	//位置を反映
+	D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
+	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);
+
 	//現在フレーム(fps)のワールド変換行列
 	std::map<DWORD, D3DXMATRIX> combMatrixMap;
 		
@@ -173,7 +190,7 @@ void CSkinmeshModel::Draw(void)
 	//アニメーション更新
 	m_HLcontroller->AdvanceTime(1);
 
-	SkinMesh::updateCombMatrix(combMatrixMap, m_pRootFrame);
+	SkinMesh::updateCombMatrix(combMatrixMap, mtxWorld, m_pRootFrame);
 
 	for (DWORD BCombiId = 0; BCombiId < m_cont.size(); BCombiId++)
 	{
@@ -197,68 +214,20 @@ void CSkinmeshModel::Draw(void)
 
 			pDevice->SetRenderState(D3DRS_VERTEXBLEND, boneCount - 1);
 
+			m_cont[BCombiId]->pMaterials->MatD3D.Ambient = WhiteColor;
+			pDevice->SetMaterial(&m_cont[BCombiId]->pMaterials->MatD3D);
 			//メッシュコンテナ内のメッシュデータ
 			m_cont[BCombiId]->MeshData.pMesh->DrawSubset(AttribId);
+
 		}
 	}
 
-	//
-	////ワールドマトリックスの初期化
-	//D3DXMatrixIdentity(&mtxWorld);
-
-	//// 拡大率を反映
-	//D3DXMatrixScaling(&mtxScale, m_scale.x, m_scale.y, m_scale.z);
-	//D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxScale);
-
-	////向きを反映
-	//D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);
-	//D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
-
-	////位置を反映
-	//D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
-	//D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);
-
-	////ワールドマトリックスの設定
-	//pDevice->SetTransform(D3DTS_WORLD, &combMatrixMap[0]);
-	//m_pModelInfo->SetMtxWorld(mtxWorld);
-
-	//現在のマテリアルを取得する
-	pDevice->GetMaterial(&matDef);
-
-	////マテリアルデータへのポインタを取得
-	//CXfile::MODEL model = m_pModelInfo->GetModel();
-	//D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_pModelInfo->GetBuffMat()->GetBufferPointer();
-	//for (int nCntMat = 0; nCntMat < (int)model.dwNumMat; nCntMat++)
-	//{
-	//	//マテリアルのアンビエントにディフューズカラーを設定
-	//	pMat[nCntMat].MatD3D.Ambient = pMat[nCntMat].MatD3D.Diffuse;
-
-	//	//マテリアルの設定
-	//	pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
-
-	//	// テクスチャの設定
-	//	if (model.apTexture[nCntMat])
-	//	{
-	//		pDevice->SetTexture(0, model.apTexture[nCntMat]);
-	//	}
-	//	else
-	//	{
-	//		pDevice->SetTexture(0, nullptr);
-	//	}
-
-	//	//モデルパーツの描画
-	//	model.pMesh->DrawSubset(nCntMat);
-	//	pDevice->SetTexture(0, nullptr);
-	//}
-
 	//保持していたマテリアルを戻す
-	//pDevice->SetMaterial(&matDef);
+	pDevice->SetMaterial(&matDef);
 	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
 	// 影の描画
 	m_pModelInfo->ShadowDraw(rot);
-
-
 }
 
 //=============================================================================
