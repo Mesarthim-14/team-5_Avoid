@@ -14,6 +14,7 @@
 #include "input.h"
 #include "joypad.h"
 #include "keyboard.h"
+#include "mouse.h"
 #include "manager.h"
 #include "mesh_3d.h"
 #include "model.h"
@@ -41,6 +42,7 @@
 CManager::MODE_TYPE CManager::m_mode = CManager::MODE_TYPE_TITLE;
 unique_ptr<CRenderer> CManager::m_pRenderer = nullptr;
 unique_ptr<CInputKeyboard> CManager::m_pInput = nullptr;
+unique_ptr<CMouse> CManager::m_pInputMouse = nullptr;
 unique_ptr<CFade> CManager::m_pFade = nullptr;
 unique_ptr<CInputJoypad> CManager::m_pJoypad = nullptr;
 unique_ptr<CScene> CManager::m_pScene = nullptr;
@@ -71,6 +73,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	// メモリ確保
 	m_pRenderer.reset(new CRenderer);
 	m_pInput.reset(new CInputKeyboard);
+	m_pInputMouse.reset(new CMouse);
 	m_pJoypad.reset(new CInputJoypad);
 	m_pFade.reset(new CFade);
 	m_pResourceManager.reset(CResourceManager::GetInstance());
@@ -89,6 +92,15 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	if (m_pInput)
 	{
 		if (FAILED(m_pInput->Init(hInstance, hWnd)))
+		{
+			return -1;
+		}
+	}
+
+	//メモリが確保できたら
+	if (m_pInputMouse)
+	{
+		if (FAILED(m_pInputMouse->Init(hInstance, hWnd)))
 		{
 			return -1;
 		}
@@ -161,6 +173,17 @@ void CManager::Uninit(void)
 	}
 
 	// nullchack
+	if (m_pInputMouse)
+	{
+		//入力処理クラスの終了処理呼び出し
+		m_pInputMouse->Uninit();
+
+		//メモリの削除
+		m_pInputMouse.reset();
+		m_pInputMouse = nullptr;
+	}
+
+	// nullchack
 	if (m_pJoypad)
 	{
 		//入力処理クラスの終了処理呼び出し
@@ -199,6 +222,12 @@ void CManager::Update(void)
 	{
 		//入力処理クラスの更新処理呼び出し
 		m_pInput->Update();
+	}
+
+	if (m_pInputMouse)
+	{
+		//入力処理クラスの更新処理呼び出し
+		m_pInputMouse->Update();
 	}
 
 	if (m_pJoypad)

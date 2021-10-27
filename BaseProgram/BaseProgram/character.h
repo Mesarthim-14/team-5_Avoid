@@ -35,6 +35,7 @@ public:
 		STATE_NORMAL = 0,
 		STATE_DEAD,
 		STATE_JUMP,
+		STATE_AVOID,
 		STATE_MAX
 	};
 

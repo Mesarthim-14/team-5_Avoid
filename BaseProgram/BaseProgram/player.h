@@ -73,6 +73,8 @@ private:
 	ACTION_STATE m_ActionState; // 行動状態
 	float m_fJumpValue;			// ジャンプ量
 	float m_fDushJumpValue;		// 移動ジャンプ時の横移動加算量
+	float m_fAvoidValueY;		// 回避移動量（上方向）
+	float m_fAvoidValueXZ;		// 回避移動量（横方向）
 	int   m_nChargeJumpCount;   // ためジャンプカウント
 	bool m_bIsReadyChargeJump;	// ためジャンプ準備完了か
 };
