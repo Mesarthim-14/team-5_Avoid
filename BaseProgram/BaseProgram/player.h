@@ -73,5 +73,7 @@ private:
 	ACTION_STATE m_ActionState; // 行動状態
 	float m_fJumpValue;			// ジャンプ量
 	float m_fDushJumpValue;		// 移動ジャンプ時の横移動加算量
+	int   m_nChargeJumpCount;   // ためジャンプカウント
+	bool m_bIsReadyChargeJump;	// ためジャンプ準備完了か
 };
 #endif
