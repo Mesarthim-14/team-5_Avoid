@@ -28,6 +28,7 @@
 CGauge::CGauge()
 {
 	m_fDown = MAX_GAUGE;
+	m_fSave = 0.0f;
 }
 
 //=====================================================================
@@ -103,7 +104,7 @@ void CGauge::SetVertexGauge(void)
 
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = nullptr;		// バッファ
 
-	// 頂点バッファの生成
+													// 頂点バッファの生成
 	pD3DDevice->CreateVertexBuffer(sizeof(VERTEX_2D)*NUM_VERTEX,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
@@ -176,5 +177,16 @@ void CGauge::SetDownUp(void)
 			m_fDown -= 0.1f;
 			SetVertexGauge();
 		}
+	}
+	if (pKey->GetTrigger(DIK_8))
+	{
+		// 減らしたい値
+		m_fSave += 30.0f;
+	}
+	if (m_fSave >= 0.0f)
+	{
+		m_fDown -= 0.1f;
+		SetVertexGauge();
+		m_fSave -= 0.1f;
 	}
 }
