@@ -33,6 +33,8 @@
 #define PLAYER_LITTLESIZE_VALUE (10)									// 最小サイズモデルの値
 #define PLAYER_MIDLLESIZE_VALUE (50)									// 中サイズモデルの値
 #define PLAYER_LARGESIZE_VALUE  (100)									// 最大サイズモデルの値
+#define CHARGEJUMP_COUNT_MAX (10)										// タメ判定用カウント
+#define CHARGEJUMP_MAX (100)												// タメカウント最大
 //=============================================================================
 // 生成処理関数
 // Author : Konishi Yuuto
@@ -73,6 +75,8 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	m_ActionState = ACTION_NONE;
 	m_fJumpValue = 0.0f;
 	m_fDushJumpValue = 0.0f;
+	m_nChargeJumpCount = 0;
+	m_bIsReadyChargeJump = false;
 }
 
 //=============================================================================
@@ -230,6 +234,10 @@ void CPlayer::Action(void)
 	{
 		Jump();
 	}
+	if (GetLanding() == true && GetState() == STATE_JUMP)//ジャンプ終了
+	{
+		SetState(STATE_NORMAL);
+	}
 	//回避
 	if (pKeyboard->GetTrigger(DIK_LSHIFT))
 	{
@@ -365,22 +373,6 @@ void CPlayer::KeyBoardMove(void)
 	D3DXVECTOR3 move = GetMove();
 	move += (m_Inertia - move) * m_fInertiaNum;
 
-	//ジャンプ
-	if (pKeyboard->GetTrigger(DIK_SPACE))
-	{
-		if (GetLanding() == true && GetState() != STATE_JUMP)
-		{
-			move.y += m_fJumpValue;
-			move.x += move.x / 2;
-			move.z += move.z / 2;
-			SetState(STATE_JUMP);
-		}
-	}
-	if (GetLanding() == true && GetState() == STATE_JUMP)
-	{
-		SetState(STATE_NORMAL);
-	}
-
 	SetMove(move);
 }
 
@@ -446,11 +438,40 @@ void CPlayer::ChangeModel(void)
 //=============================================================================
 void CPlayer::Jump(void)
 {
-	if (m_ActionState != ACTION_JUMP)
+	D3DXVECTOR3 move = GetMove();
+	CInputKeyboard *pKeyboard = CManager::GetKeyboard();	// キーボード更新
+
+	// ためジャンプ
+	if (pKeyboard->GetPress(DIK_SPACE))
 	{
-		//状態をジャンプ状態
-		m_ActionState = ACTION_JUMP;
+   		m_nChargeJumpCount++;
+		if (GetLanding() == true && GetState() != STATE_JUMP && m_nChargeJumpCount >= CHARGEJUMP_COUNT_MAX)//こっからタメジャンプ判定スタート
+		{
+			//エフェクト発生
+			if (m_nChargeJumpCount >= CHARGEJUMP_MAX)
+			{
+				m_bIsReadyChargeJump = true;
+			}
+		}
 	}
+	if (!pKeyboard->GetPress(DIK_SPACE) && m_bIsReadyChargeJump == true)//ため状態で離したら
+	{
+		move.y += m_fJumpValue * 2;
+		move.x += move.x * (m_fDushJumpValue * (move.y / m_fJumpValue));
+		move.z += move.z * (m_fDushJumpValue * (move.y / m_fJumpValue));
+		SetState(STATE_JUMP);
+		SetMove(move);
+	}
+
+	////通常ジャンプ
+	//if (GetLanding() == true && GetState() != STATE_JUMP && m_bIsReadyChargeJump == false)
+	//{
+	//	move.y += m_fJumpValue;
+	//	move.x += move.x * (m_fDushJumpValue * (move.y / m_fJumpValue));
+	//	move.z += move.z * (m_fDushJumpValue * (move.y / m_fJumpValue));
+	//	SetState(STATE_JUMP);
+	//	SetMove(move);
+	//}
 }
 
 //=============================================================================
@@ -500,7 +521,10 @@ void CPlayer::ShowInfo(void)
 			SetSpeed(fSpeed);
 
 			// ジャンプの値
-			ImGui::SliderFloat("JumpValue", &m_fJumpValue, 0.0f, 50.0f);
+			ImGui::SliderFloat("JumpValue", &m_fJumpValue, 0.0f, 200.0f);
+
+			// ダッシュジャンプの値
+			ImGui::SliderFloat("DushJumpValue", &m_fDushJumpValue, 0.0f, 50.0f);
 
 			// 慣性の値
 			ImGui::SliderFloat("InertiaNum", &m_fInertiaNum, 0.0f, 0.5f);
