@@ -204,11 +204,9 @@ void CPlayer::Action(void)
 {
 	CInputKeyboard *pKeyboard = CManager::GetKeyboard();	// キーボード更新
 
-	// ジャンプ
-	if (pKeyboard->GetTrigger(DIK_SPACE))
-	{
-		Jump();
-	}
+	
+	Jump();
+
 	if (GetLanding() == true && GetState() == STATE_JUMP)//ジャンプ終了
 	{
 		SetState(STATE_NORMAL);
@@ -429,13 +427,25 @@ void CPlayer::Jump(void)
 			}
 		}
 	}
-	if (!pKeyboard->GetPress(DIK_SPACE) && m_bIsReadyChargeJump == true)//ため状態で離したら
+
+	if (pKeyboard->GetRelease(DIK_SPACE) && m_bIsReadyChargeJump == true)//ため状態で離したら
 	{
-		move.y += m_fJumpValue * 2;
-		move.x += move.x * (m_fDushJumpValue * (move.y / m_fJumpValue));
-		move.z += move.z * (m_fDushJumpValue * (move.y / m_fJumpValue));
+		move.y += m_fJumpValue * 3;
+		move.x += move.x * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
+		move.z += move.z * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
 		SetState(STATE_JUMP);
 		SetMove(move);
+		m_nChargeJumpCount = 0;
+		m_bIsReadyChargeJump = false;
+	}
+	else if (GetLanding() == true && pKeyboard->GetRelease(DIK_SPACE) && GetState() != STATE_JUMP)//通常ジャンプ
+	{
+		move.y += m_fJumpValue;
+		move.x += move.x * (m_fDushJumpValue * tanf(move.y / m_fJumpValue));
+		move.z += move.z * (m_fDushJumpValue * tanf(move.y / m_fJumpValue));
+		SetState(STATE_JUMP);
+		SetMove(move);
+		m_nChargeJumpCount = 0;
 	}
 
 	////通常ジャンプ
