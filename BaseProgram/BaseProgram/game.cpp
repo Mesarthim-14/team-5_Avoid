@@ -53,7 +53,6 @@ HRESULT CGame::Init(void)
 	CreatePlayer();
 	CGround::Create();
 	
-
 	return S_OK;
 }
 
