@@ -22,6 +22,7 @@
 #include "test_model.h"
 #include "model.h"
 #include "model_info.h"
+#include "skinmesh_model.h"
 
 //=============================================================================
 // マクロ定義
@@ -80,6 +81,7 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	m_bIsReadyChargeJump = false;
 	m_fAvoidValueY = 30.0f;
 	m_fAvoidValueXZ = 20.0f;
+	m_pSkinmeshModel = nullptr;
 }
 
 //=============================================================================
@@ -103,9 +105,11 @@ HRESULT CPlayer::Init(void)
 	if (pXfile)
 	{
 		SetUseShadow();									// 影の使用
-		ModelCreate(CXfile::HIERARCHY_XFILE_NUM_TEST);	// モデルの生成
+		//ModelCreate(CXfile::HIERARCHY_XFILE_NUM_TEST);	// モデルの生成
 	//	SetShadowRotCalculation();						// 影の向き
 	}
+
+	m_pSkinmeshModel = CSkinmeshModel::Create(GetPos(),GetRot());
 
 	// 初期化処理
 	CCharacter::Init();
@@ -151,6 +155,10 @@ void CPlayer::Update(void)
 
 	// プレイヤー処理
 	PlayerControl();
+
+	//モデル位置向き反映
+	m_pSkinmeshModel->SetPos(GetPos());
+	m_pSkinmeshModel->SetRot(GetRot());
 
 	// 更新処理
 	UpdateRot();

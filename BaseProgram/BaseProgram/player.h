@@ -12,7 +12,7 @@
 //=============================================================================
 #include "character.h"
 #include "json.h"
-
+#include "skinmesh_model.h"
 
 //=============================================================================
 // プレイヤークラス
@@ -77,5 +77,6 @@ private:
 	float m_fAvoidValueXZ;		// 回避移動量（横方向）
 	int   m_nChargeJumpCount;   // ためジャンプカウント
 	bool m_bIsReadyChargeJump;	// ためジャンプ準備完了か
+	CSkinmeshModel * m_pSkinmeshModel; //スキンメッシュモデルポインタ
 };
 #endif
