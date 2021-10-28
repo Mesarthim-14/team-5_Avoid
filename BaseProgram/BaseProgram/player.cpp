@@ -110,7 +110,6 @@ HRESULT CPlayer::Init(void)
 	}
 
 	m_pSkinmeshModel = CSkinmeshModel::Create(GetPos(),GetRot());
-
 	// 初期化処理
 	CCharacter::Init();
 
@@ -156,7 +155,7 @@ void CPlayer::Update(void)
 	// プレイヤー処理
 	PlayerControl();
 
-	//モデル位置向き反映
+	//モデル位置向き反映(いずれcharacterに移動させたい）
 	m_pSkinmeshModel->SetPos(GetPos());
 	m_pSkinmeshModel->SetRot(GetRot());
 

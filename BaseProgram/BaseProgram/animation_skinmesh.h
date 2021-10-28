@@ -4,7 +4,7 @@
 #include <d3dx9.h>
 #include <vector>
 
-interface IHighLevelAnimController
+class IHighLevelAnimController
 {
 public:
 	struct HLANIMATION_DESC
