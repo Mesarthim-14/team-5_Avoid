@@ -35,7 +35,7 @@ public:
 		PRIORITY_MAX		// 優先順位の最大数
 	};
 
-	CScene(PRIORITY Priority = PRIORITY_0);		// コンストラクタ
+	CScene(PRIORITY Priority);					// コンストラクタ
 	virtual ~CScene();							// デストラクタ
 	static void ReleaseAll(void);				// 全てのオブジェクトをリリース
 	static void UpdateAll(void);				// 全てのオブジェクトを更新

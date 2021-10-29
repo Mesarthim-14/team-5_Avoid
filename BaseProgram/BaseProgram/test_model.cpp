@@ -45,7 +45,7 @@ CTestModel::~CTestModel()
 CTestModel * CTestModel::Create(void)
 {
 	// ƒƒ‚ƒŠŠm•Û
-	CTestModel *pTestModel = new CTestModel(PRIORITY_UI);
+	CTestModel *pTestModel = new CTestModel(PRIORITY_TEST_MODEL);
 
 	// !nullcheck
 	if (pTestModel)
@@ -91,7 +91,7 @@ void CTestModel::Update(void)
 {
 	CModel::Update();
 
-	//Õ“Ë”»’è
+	// Õ“Ë”»’è
 	Hit();
 }
 
@@ -117,22 +117,32 @@ void CTestModel::Hit(void)
 		BOOL bHit = FALSE;
 		FLOAT fDistance = 0.0f;
 
-		//‰º•ûŒü
-		D3DXIntersect(
-			GetModelInfo()->GetMesh(),
-			&pPlayer->GetPos(),
-			&RayDir,
-			&bHit,
-			nullptr,
-			nullptr,
-			nullptr,
-			&fDistance,
-			nullptr,
-			nullptr);
-
-		if (bHit && pPlayer->GetLanding())
+		for (int nCount = 0; nCount < (int)GetModelInfo()->GetMesh()->GetNumFaces(); nCount++)
 		{
-			pPlayer->SetPos(D3DXVECTOR3(pPlayer->GetPos().x, 0.0f, pPlayer->GetPos().z));
+			//‰º•ûŒü
+			D3DXIntersect(
+				GetModelInfo()->GetMesh(),
+				&pPlayer->GetPos(),
+				&RayDir,
+				&bHit,
+				nullptr,
+				nullptr,
+				nullptr,
+				&fDistance,
+				nullptr,
+				nullptr);
+
+			if (bHit && fDistance < 50.0f)
+			{
+				// ’…’n‚Ìˆ—
+				pPlayer->Landing(pPlayer->GetPos().y + fDistance);
+
+				break;
+			}
+			else if (!bHit)
+			{
+				pPlayer->SetLanding(false);
+			}
 		}
 	}
 }

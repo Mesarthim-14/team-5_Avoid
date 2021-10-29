@@ -24,7 +24,7 @@ class CModelInfo;
 class CModel : public CScene
 {
 public:
-	CModel(PRIORITY Priority = PRIORITY_EFFECT);	// コンストラクタ
+	CModel(PRIORITY Priority);	// コンストラクタ
 	~CModel();
 
 	HRESULT Init(void);								// 初期化処理

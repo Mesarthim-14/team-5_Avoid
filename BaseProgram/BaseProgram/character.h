@@ -72,7 +72,10 @@ public:
 	CHARACTER_TYPE GetType(void)					{ return m_type; }						// 種類
 
 	void SetPos(const D3DXVECTOR3 &pos)			{ m_pos = pos; }			// 座標の設定
+	void SetLanding(const bool bLanding)		{ m_bLanding = bLanding; }	// 着地
 	bool GetLanding(void)					    { return m_bLanding; }      // 着地判定取得
+
+	void Landing(const float fHeight);			// 着地
 
 protected:
 	void SetCharacterInfo(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);	// キャラクターの基本情報
@@ -86,7 +89,6 @@ protected:
 	void SetSize(const D3DXVECTOR3 &size)		{ m_size = size; }			// サイズ設定
 	void SetSpeed(const float &fSpeed)			{ m_fSpeed = fSpeed; }		// 速度の設定
 	void SetState(const STATE &state)			{ m_State = state; }		// 状態設定
-	void SetLanding(const bool bLanding)		{ m_bLanding = bLanding; }	// 着地
 	void SetGravityFlag(const bool bFlag)		{ m_bGravity = bFlag; }		// 重力のフラグ
 	void SetType(const CHARACTER_TYPE &type)	{ m_type = type; }			// 種類
 	void SetUseShadow(void)						{ m_bUseShadow = true; }	// 影の使用判定
@@ -94,7 +96,6 @@ private:
 	// private関数
 	void ModelAnimeUpdate(void);				// モデルアニメーション
 	void Gravity(void);							// 重力
-	void Landing(const float fHeight);			// 着地
 	void SetMotion(const int nMotionState);		// モーションの設定
 
 	// 純粋仮想関数

@@ -227,20 +227,23 @@ void CCharacter::ModelAnimeUpdate(void)
 //=============================================================================
 void CCharacter::Gravity(void)
 {
-	// 重力をかける
-	m_move.y -= CGame::GetGravity();
-	m_pos.y += m_move.y;		// 落下
+	if (!m_bLanding)
+	{
+		// 重力をかける
+		m_move.y -= CGame::GetGravity();
+		m_pos.y += m_move.y;		// 落下
+	}
 
-	// 地面の判定
-	if (m_pos.y <= GROUND_RIMIT)
-	{
-		//Landing(GROUND_RIMIT);
-		m_bLanding = true;
-	}
-	else
-	{
-		m_bLanding = false;
-	}
+	//// 地面の判定
+	//if (m_pos.y <= GROUND_RIMIT)
+	//{
+	//	//Landing(GROUND_RIMIT);
+	//	m_bLanding = true;
+	//}
+	//else
+	//{
+	//	m_bLanding = false;
+	//}
 }
 
 //=============================================================================

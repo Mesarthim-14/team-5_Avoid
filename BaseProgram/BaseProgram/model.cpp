@@ -40,16 +40,16 @@ CModel::~CModel()
 //=============================================================================
 CModel * CModel::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
-	//モデルクラスのポインタ変数
-	CModel *pModel = new CModel;
+	////モデルクラスのポインタ変数
+	//CModel *pModel = new CModel();
 
-	// nullcheck
-	if (pModel)
-	{
-		//初期化処理呼び出し
-		pModel->Init();
-		return pModel;
-	}
+	//// nullcheck
+	//if (pModel)
+	//{
+	//	//初期化処理呼び出し
+	//	pModel->Init();
+	//	return pModel;
+	//}
 
 	return nullptr;
 }

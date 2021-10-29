@@ -175,7 +175,7 @@ void CSkinmeshModel::Draw(void)
 	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxScale);
 
 	//Œü‚«‚ð”½‰f
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.y, rot.z);
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);
 	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
 
 	//ˆÊ’u‚ð”½‰f
