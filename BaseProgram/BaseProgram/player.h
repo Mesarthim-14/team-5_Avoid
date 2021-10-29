@@ -45,6 +45,7 @@ private:
 	void Action(void);			// アクション
 	void Jump(void);			// ジャンプ
 	void Avoidance(void);		// 回避アクション
+	void JumpProcess(void);		// ジャンプ中の処理
 	typedef enum
 	{
 		SLIME_LITTLESIZE = 0,
@@ -78,5 +79,7 @@ private:
 	int   m_nChargeJumpCount;   // ためジャンプカウント
 	bool m_bIsReadyChargeJump;	// ためジャンプ準備完了か
 	CSkinmeshModel * m_pSkinmeshModel; //スキンメッシュモデルポインタ
+	float m_fJumpTimeCount;		// ジャンプ時間カウント
+	bool m_fJumpCheck;			// ジャンプし始めたか
 };
 #endif

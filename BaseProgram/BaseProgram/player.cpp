@@ -79,8 +79,10 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	m_nChargeJumpCount = 0;
 	m_bIsReadyChargeJump = false;
 	m_fAvoidValueY = 30.0f;
-	m_fAvoidValueXZ = 20.0f;
+	m_fAvoidValueXZ = 5.0f;
 	m_pSkinmeshModel = nullptr;
+	m_fJumpTimeCount = 0;
+	m_fJumpCheck = false;
 }
 
 //=============================================================================
@@ -139,6 +141,9 @@ void CPlayer::Uninit(void)
 //=============================================================================
 void CPlayer::Update(void)
 {
+	// プレイヤー処理
+	PlayerControl();
+
 	// 更新
 	CCharacter::Update();
 
@@ -150,9 +155,6 @@ void CPlayer::Update(void)
 
 	// 状態更新
 	UpdateState();
-
-	// プレイヤー処理
-	PlayerControl();
 
 	//モデル位置向き反映(いずれcharacterに移動させたい）
 	m_pSkinmeshModel->SetPos(GetPos());
@@ -216,19 +218,22 @@ void CPlayer::Action(void)
 {
 	CInputKeyboard *pKeyboard = CManager::GetKeyboard();	// キーボード更新
 
+	if (GetLanding() == true && GetState() == STATE_JUMP)//ジャンプ終了
+	{
+		SetState(STATE_NORMAL);
+		m_fJumpTimeCount = 0;
+	}
+	if (GetLanding() == true && GetState() == STATE_AVOID)//ジャンプ終了
+	{
+		SetState(STATE_NORMAL);
+	}
+
 	// ジャンプ
 	Jump();
 
 	// 回避
 	Avoidance();
-
-	if (GetLanding() == true && GetState() == STATE_JUMP ||
-		GetLanding() == true && GetState() == STATE_AVOID)//ジャンプ終了
-	{
-		SetState(STATE_NORMAL);
-	}
 }
-
 
 //=============================================================================
 // 移動処理
@@ -425,6 +430,9 @@ void CPlayer::Jump(void)
 	D3DXVECTOR3 move = GetMove();
 	CInputKeyboard *pKeyboard = CManager::GetKeyboard();	// キーボード更新
 
+	//ジャンプ中の処理
+	//JumpProcess();
+
 	// ためジャンプ
 	if (pKeyboard->GetPress(DIK_SPACE))
 	{
@@ -442,6 +450,7 @@ void CPlayer::Jump(void)
 
 	if (pKeyboard->GetRelease(DIK_SPACE) && m_bIsReadyChargeJump == true)//ため状態で離したら
 	{
+		m_fJumpCheck = true;
 		move.y += m_fJumpValue * 3;
 		move.x += move.x * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
 		move.z += move.z * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
@@ -459,13 +468,36 @@ void CPlayer::Jump(void)
 
 	else if (GetLanding() == true && pKeyboard->GetRelease(DIK_SPACE) && GetState() != STATE_JUMP)//通常ジャンプ
 	{
+		m_fJumpCheck = true;
 		move.y += m_fJumpValue;
-		move.x += move.x * (m_fDushJumpValue * tanf(move.y / m_fJumpValue));
-		move.z += move.z * (m_fDushJumpValue * tanf(move.y / m_fJumpValue));
+		move.x += move.x * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
+		move.z += move.z * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
+		m_fJumpTimeCount += 1.0f;
+		//move.y = 0.5f * CGame::GetGravity()*m_fJumpTimeCount*m_fJumpTimeCount + m_fJumpValue*m_fJumpTimeCount;
 		SetState(STATE_JUMP);
 		SetMove(move);
 		m_nChargeJumpCount = 0;
  		SetLanding(false);
+	}
+}
+
+void CPlayer::JumpProcess(void)
+{
+	D3DXVECTOR3 move = GetMove();
+
+	if (GetState() == STATE_JUMP)
+	{
+		if (m_fJumpTimeCount <= 2)
+		{
+			m_fJumpTimeCount += 1.0f;
+			move.y = 0.5f * CGame::GetGravity()*m_fJumpTimeCount*m_fJumpTimeCount + m_fJumpValue*m_fJumpTimeCount;
+		}
+		else
+		{
+
+		}
+
+		SetMove(move);
 	}
 }
 
@@ -518,8 +550,18 @@ void CPlayer::ShowInfo(void)
 			D3DXVECTOR3 rot = GetRot();
 			ImGui::Text("Rot : %.1ff %.1ff %.1ff", rot.x, rot.y, rot.z);
 
+			// 移動量
+			D3DXVECTOR3 move = GetMove();
+			ImGui::Text("Move : %.1ff %.1ff %.1ff", move.x, move.y, move.z);
+
 			// HP
 			ImGui::Text("HP : %d", m_nHP);
+
+			// 状態
+			ImGui::Text("STATE : %d", GetState());
+
+			// ジャンプ時間
+			ImGui::Text("JUMP_TIME : %.1f", m_fJumpTimeCount);
 
 			// 移動量
 			float fSpeed = GetSpeed();
