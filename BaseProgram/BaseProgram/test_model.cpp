@@ -16,6 +16,7 @@
 #include "resource_manager.h"
 #include "xfile.h"
 #include "model_info.h"
+#include "player.h"
 
 //=============================================================================
 // ƒ}ƒNƒ’è‹`
@@ -89,6 +90,9 @@ void CTestModel::Uninit(void)
 void CTestModel::Update(void)
 {
 	CModel::Update();
+
+	//Õ“Ë”»’è
+	Hit();
 }
 
 //=============================================================================
@@ -97,4 +101,38 @@ void CTestModel::Update(void)
 void CTestModel::Draw(void)
 {
 	CModel::Draw();
+}
+
+//=============================================================================
+// Õ“Ë”»’è
+//=============================================================================
+void CTestModel::Hit(void)
+{
+	CPlayer* pPlayer = nullptr;
+	pPlayer = (CPlayer*)GetTop(PRIORITY_CHARACTER);
+
+	if (pPlayer != nullptr)
+	{
+		D3DXVECTOR3 RayDir = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+		BOOL bHit = FALSE;
+		FLOAT fDistance = 0.0f;
+
+		//‰º•ûŒü
+		D3DXIntersect(
+			GetModelInfo()->GetMesh(),
+			&pPlayer->GetPos(),
+			&RayDir,
+			&bHit,
+			nullptr,
+			nullptr,
+			nullptr,
+			&fDistance,
+			nullptr,
+			nullptr);
+
+		if (bHit && pPlayer->GetLanding())
+		{
+			pPlayer->SetPos(D3DXVECTOR3(pPlayer->GetPos().x, 0.0f, pPlayer->GetPos().z));
+		}
+	}
 }

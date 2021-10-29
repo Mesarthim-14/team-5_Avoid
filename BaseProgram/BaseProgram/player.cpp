@@ -20,7 +20,6 @@
 #include "game.h"
 #include "test_model.h"
 #include "model.h"
-#include "model_info.h"
 
 //=============================================================================
 // マクロ定義
@@ -187,28 +186,6 @@ void CPlayer::PlayerControl(void)
 	Move();
 	// アクション
 	Action();
-
-	//CTestModel* pTestModel = nullptr;
-	//pTestModel = (CTestModel*)GetTop(PRIORITY_TEST_MODEL);
-	//if (pTestModel != nullptr)
-	//{
-	//	D3DXVECTOR3 RayDir = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
-	//	BOOL bHit = FALSE;
-	//	FLOAT fDistance = 0.0f;
-
-	//	//下方向
-	//	D3DXIntersect(
-	//		pTestModel->GetModelInfo()->GetMesh() ,
-	//		&(GetPos() - D3DXVECTOR3(0.0f, 4.0f, 0.0f)),
-	//		&RayDir,
-	//		&bHit,
-	//		nullptr,
-	//		nullptr,
-	//		nullptr,
-	//		&fDistance,
-	//		nullptr,
-	//		nullptr);
-	//}
 }
 
 //=============================================================================
@@ -449,6 +426,7 @@ void CPlayer::Jump(void)
 			if (m_nChargeJumpCount >= CHARGEJUMP_MAX)
 			{
 				m_bIsReadyChargeJump = true;
+				SetLanding(false);
 			}
 		}
 	}
@@ -462,6 +440,7 @@ void CPlayer::Jump(void)
 		SetMove(move);
 		m_nChargeJumpCount = 0;
 		m_bIsReadyChargeJump = false;
+		SetLanding(false);
 	}
 
 	else if (GetLanding() == true && pKeyboard->GetRelease(DIK_SPACE) && GetState() != STATE_JUMP)//通常ジャンプ
@@ -472,6 +451,7 @@ void CPlayer::Jump(void)
 		SetState(STATE_JUMP);
 		SetMove(move);
 		m_nChargeJumpCount = 0;
+ 		SetLanding(false);
 	}
 
 	////通常ジャンプ

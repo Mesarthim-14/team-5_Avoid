@@ -27,7 +27,7 @@ public:
 	void Update(void);					// XVˆ—
 	void Draw(void);					// •`‰æ
 
-	CModelInfo* GetModelInfo(void) { return CModel::GetModelInfo(); }	// ƒ‚ƒfƒ‹‚Ìî•ñ
+	void Hit(void);						// Õ“Ë”»’è
 
 private:
 };

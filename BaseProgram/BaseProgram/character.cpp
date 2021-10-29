@@ -234,7 +234,8 @@ void CCharacter::Gravity(void)
 	// ’n–Ê‚Ì”»’è
 	if (m_pos.y <= GROUND_RIMIT)
 	{
-		Landing(GROUND_RIMIT);
+		//Landing(GROUND_RIMIT);
+		m_bLanding = true;
 	}
 	else
 	{

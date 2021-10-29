@@ -70,13 +70,15 @@ public:
 	STATE GetState(void)							{ return m_State; }						// 状態取得
 	CHARACTER_TYPE GetType(void)					{ return m_type; }						// 種類
 
+	void SetPos(const D3DXVECTOR3 &pos)			{ m_pos = pos; }			// 座標の設定
+	bool GetLanding(void)					    { return m_bLanding; }      // 着地判定取得
+
 protected:
 	void SetCharacterInfo(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);	// キャラクターの基本情報
 	void ModelCreate(const CXfile::HIERARCHY_XFILE_NUM &FileNum);			// モデルの生成
 	void SetShadowRotCalculation(void);										// 影を回す
 
 	// Set関数
-	void SetPos(const D3DXVECTOR3 &pos)			{ m_pos = pos; }			// 座標の設定
 	void SetPosOld(const D3DXVECTOR3 &posOld)	{ m_posOld = posOld; }		// 座標の設定
 	void SetMove(const D3DXVECTOR3 &move)		{ m_move = move; }			// 移動量の設定
 	void SetRot(const D3DXVECTOR3 &rot)			{ m_rot = rot; }			// 角度の設定
@@ -87,7 +89,6 @@ protected:
 	void SetGravityFlag(const bool bFlag)		{ m_bGravity = bFlag; }		// 重力のフラグ
 	void SetType(const CHARACTER_TYPE &type)	{ m_type = type; }			// 種類
 	void SetUseShadow(void)						{ m_bUseShadow = true; }	// 影の使用判定
-	bool GetLanding(void)					    { return m_bLanding; }      // 着地判定取得
 private:
 	// private関数
 	void ModelAnimeUpdate(void);				// モデルアニメーション

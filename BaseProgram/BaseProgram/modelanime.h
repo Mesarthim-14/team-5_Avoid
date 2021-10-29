@@ -39,6 +39,7 @@ public:
 	void SetRotCalculation(bool bFlag)				{ m_bRotCalculation = bFlag; }	// 角度の計算フラグの設定
 
 	// Get情報
+	CModelAnime* GetParent(void) { return m_pParent; }								// 親情報の取得
 	D3DXVECTOR3 GetPosAnime(void)const	{ return m_posAnime; }						// アニメーション座標情報
 	D3DXVECTOR3 GetRotAnime(void)const	{ return m_rotAnime; }						// アニメーション角度情報
 	CModelInfo* GetModelInfo(void)		{ return m_pModelInfo; }					// モデルの情報
