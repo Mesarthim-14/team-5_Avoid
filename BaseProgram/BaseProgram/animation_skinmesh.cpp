@@ -13,7 +13,7 @@ bool IHighLevelAnimController::SetAnimationController(ID3DXAnimationController *
 		//サイズ確保
 		m_Anim.resize(pAnimCont->GetMaxNumTracks());
 		//アニメーションセット取得
-		for (int size = 0; size < m_Anim.size(); size++)
+		for (unsigned int size = 0; size < m_Anim.size(); size++)
 		{
 			pAnimCont->GetAnimationSet(size, &m_Anim[size].pAnimSet);
 
@@ -52,7 +52,7 @@ bool IHighLevelAnimController::SetLoopTime(UINT animID, FLOAT time)
 	}
 
 	// トラックスピード調節値を算出
-	FLOAT DefTime = m_Anim[animID].pAnimSet->GetPeriod();
+	FLOAT DefTime = float(m_Anim[animID].pAnimSet->GetPeriod());
 	m_Anim[animID].fLoopTime = time;
 	m_Anim[animID].fTrackSpeed = DefTime / time;
 

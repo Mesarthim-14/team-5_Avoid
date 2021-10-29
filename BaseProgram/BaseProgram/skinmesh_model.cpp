@@ -100,7 +100,7 @@ HRESULT CSkinmeshModel::Init(void)
 	//メッシュコンテナ取得関数
 	SkinMesh::getMeshContainer(m_pRootFrame, &m_cont);
 
-	for (int i = 0; i < m_cont.size(); i++)
+	for (unsigned int i = 0; i < m_cont.size(); i++)
 	{
 		m_combs.push_back((D3DXBONECOMBINATION*)m_cont[i]->boneCombinationTable->GetBufferPointer());
 
@@ -119,6 +119,7 @@ void CSkinmeshModel::Uninit(void)
 	// 影の終了処理
 	HasPtrDelete();
 
+	
 	//オブジェクトの破棄
 	Release();
 }

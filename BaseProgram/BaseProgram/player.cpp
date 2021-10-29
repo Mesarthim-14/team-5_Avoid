@@ -9,6 +9,7 @@
 #include "player.h"
 #include "manager.h"
 #include "keyboard.h"
+#include "mouse.h"
 #include "renderer.h"
 #include "input.h"
 #include "joypad.h"
@@ -20,6 +21,7 @@
 #include "game.h"
 #include "test_model.h"
 #include "model.h"
+#include "skinmesh_model.h"
 
 //=============================================================================
 // マクロ定義
@@ -76,6 +78,9 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	m_fDushJumpValue = 0.0f;
 	m_nChargeJumpCount = 0;
 	m_bIsReadyChargeJump = false;
+	m_fAvoidValueY = 30.0f;
+	m_fAvoidValueXZ = 20.0f;
+	m_pSkinmeshModel = nullptr;
 }
 
 //=============================================================================
@@ -99,10 +104,11 @@ HRESULT CPlayer::Init(void)
 	if (pXfile)
 	{
 		SetUseShadow();									// 影の使用
-		ModelCreate(CXfile::HIERARCHY_XFILE_NUM_TEST);	// モデルの生成
+		//ModelCreate(CXfile::HIERARCHY_XFILE_NUM_TEST);	// モデルの生成
 	//	SetShadowRotCalculation();						// 影の向き
 	}
 
+	m_pSkinmeshModel = CSkinmeshModel::Create(GetPos(),GetRot());
 	// 初期化処理
 	CCharacter::Init();
 
@@ -147,6 +153,10 @@ void CPlayer::Update(void)
 
 	// プレイヤー処理
 	PlayerControl();
+
+	//モデル位置向き反映(いずれcharacterに移動させたい）
+	m_pSkinmeshModel->SetPos(GetPos());
+	m_pSkinmeshModel->SetRot(GetRot());
 
 	// 更新処理
 	UpdateRot();
@@ -206,17 +216,16 @@ void CPlayer::Action(void)
 {
 	CInputKeyboard *pKeyboard = CManager::GetKeyboard();	// キーボード更新
 
-	
+	// ジャンプ
 	Jump();
 
-	if (GetLanding() == true && GetState() == STATE_JUMP)//ジャンプ終了
+	// 回避
+	Avoidance();
+
+	if (GetLanding() == true && GetState() == STATE_JUMP ||
+		GetLanding() == true && GetState() == STATE_AVOID)//ジャンプ終了
 	{
 		SetState(STATE_NORMAL);
-	}
-	//回避
-	if (pKeyboard->GetTrigger(DIK_LSHIFT))
-	{
-		Avoidance();
 	}
 }
 
@@ -440,7 +449,12 @@ void CPlayer::Jump(void)
 		SetMove(move);
 		m_nChargeJumpCount = 0;
 		m_bIsReadyChargeJump = false;
-		SetLanding(false);
+
+		// Hp消費
+		if (m_nHP != 0)
+		{
+
+		}
 	}
 
 	else if (GetLanding() == true && pKeyboard->GetRelease(DIK_SPACE) && GetState() != STATE_JUMP)//通常ジャンプ
@@ -453,16 +467,6 @@ void CPlayer::Jump(void)
 		m_nChargeJumpCount = 0;
  		SetLanding(false);
 	}
-
-	////通常ジャンプ
-	//if (GetLanding() == true && GetState() != STATE_JUMP && m_bIsReadyChargeJump == false)
-	//{
-	//	move.y += m_fJumpValue;
-	//	move.x += move.x * (m_fDushJumpValue * (move.y / m_fJumpValue));
-	//	move.z += move.z * (m_fDushJumpValue * (move.y / m_fJumpValue));
-	//	SetState(STATE_JUMP);
-	//	SetMove(move);
-	//}
 }
 
 //=============================================================================
@@ -471,10 +475,21 @@ void CPlayer::Jump(void)
 //=============================================================================
 void CPlayer::Avoidance(void)
 {
-	if (m_ActionState != ACTION_AVOID)
+	D3DXVECTOR3 move = GetMove();
+	CMouse *pMouse = CManager::GetMouse();	// キーボード更新
+	if (GetLanding() == true && pMouse->GetButtonTrigger(CMouse::MOUSE_LEFT) && GetState() != STATE_AVOID)//回避
 	{
-		//状態を回避状態
-		m_ActionState = ACTION_AVOID;
+		move.y += m_fAvoidValueY;
+		move.x += move.x * (m_fAvoidValueXZ * tanf(move.y / m_fAvoidValueY));
+		move.z += move.z * (m_fAvoidValueXZ * tanf(move.y / m_fAvoidValueY));
+		SetState(STATE_AVOID);
+		SetMove(move);
+
+		// Hp消費
+		if (m_nHP != 0)
+		{
+
+		}
 	}
 }
 

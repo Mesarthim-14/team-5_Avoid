@@ -228,14 +228,20 @@
     <ClCompile Include="skinmesh.cpp">
       <Filter>07_Model</Filter>
     </ClCompile>
-    <ClCompile Include="gauge.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="gaugebar.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="animation_skinmesh.cpp">
       <Filter>07_Model</Filter>
+    </ClCompile>
+    <ClCompile Include="mouse.cpp">
+      <Filter>02_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="gauge.cpp">
+      <Filter>09_Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="gaugebar.cpp">
+      <Filter>09_Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="translation.cpp">
+      <Filter>09_Ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -401,14 +407,20 @@
     <ClInclude Include="skinmesh.h">
       <Filter>07_Model</Filter>
     </ClInclude>
-    <ClInclude Include="gauge.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="gaugebar.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="animation_skinmesh.h">
       <Filter>07_Model</Filter>
+    </ClInclude>
+    <ClInclude Include="mouse.h">
+      <Filter>02_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="gauge.h">
+      <Filter>09_Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="gaugebar.h">
+      <Filter>09_Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="translation.h">
+      <Filter>09_Ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

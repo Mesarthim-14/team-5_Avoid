@@ -13,6 +13,7 @@
 #include "scene.h"
 #include "xfile.h"
 #include "skinmesh.h"
+#include "model_info.h"
 
 //=============================================================================
 // 前方宣言
@@ -42,6 +43,8 @@ public:
 	static CSkinmeshModel *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);	// インスタンス生成
 	IHighLevelAnimController * GetHLcontroller(void) { return m_HLcontroller; };
 	void SetModelNumber(MODEL model);
+	void SetPos(D3DXVECTOR3 pos) { m_pModelInfo->SetPos(pos); }						// 現在の座標情報
+	void SetRot(D3DXVECTOR3 rot){ m_pModelInfo->SetRot(rot); }						// 角度情報
 
 protected:
 	// Set関数

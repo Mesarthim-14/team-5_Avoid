@@ -25,6 +25,7 @@
 //=============================================================================
 class CRenderer;
 class CInputKeyboard;
+class CMouse;
 class CFade;
 class CInputJoypad;
 class CScene;
@@ -69,6 +70,7 @@ public:
 	static CModeBase *GetModePtr(void);															// ゲームの情報
 	static CRenderer *GetRenderer(void)					{ return m_pRenderer.get(); }			// レンダラー情報
 	static CInputKeyboard *GetKeyboard(void)			{ return m_pInput.get(); }				// キーボード情報
+	static CMouse *GetMouse(void)						{ return m_pInputMouse.get(); }			// マウス情報
 	static CFade *GetFade(void)							{ return m_pFade.get(); }				// フェード情報
 	static CInputJoypad *GetJoypad(void)				{ return m_pJoypad.get(); }				// ジョイパッドコントローラの情報
 	static CScene *GetScene(void)						{ return m_pScene.get(); }				// シーン情報
@@ -85,6 +87,7 @@ private:
 	// メンバ変数
 	static unique_ptr<CRenderer> m_pRenderer;				// レンダラークラスのポインタ
 	static unique_ptr<CInputKeyboard> m_pInput;				// インプットクラスのポインタ
+	static unique_ptr<CMouse> m_pInputMouse;				// マウスインプットクラスのポインタ
 	static unique_ptr<CFade> m_pFade;						// フェードクラスのポインタ
 	static unique_ptr<CInputJoypad> m_pJoypad;				// ジョイパッドコントローラのポインタ
 	static unique_ptr<CScene> m_pScene;						// シーンのポインタ
