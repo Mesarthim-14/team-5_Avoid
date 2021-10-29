@@ -132,7 +132,7 @@ void CTestModel::Hit(void)
 				nullptr,
 				nullptr);
 
-			if (bHit && fDistance < 50.0f)
+			if (bHit && fDistance < 80.0f)
 			{
 				// ’…’n‚Ìˆ—
 				pPlayer->Landing(pPlayer->GetPos().y + fDistance);
