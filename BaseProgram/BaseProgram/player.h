@@ -50,7 +50,8 @@ private:
 	{
 		SLIME_LITTLESIZE = 0,
 		SLIME_MIDDLESIZE,
-		SLIME_LARGESIZE
+		SLIME_LARGESIZE,
+		SLIME_STATE_MAX
 	}SLIME_STATE;//スライムの状態（大きさ）
 
 	typedef enum
@@ -78,7 +79,7 @@ private:
 	float m_fAvoidValueXZ;		// 回避移動量（横方向）
 	int   m_nChargeJumpCount;   // ためジャンプカウント
 	bool m_bIsReadyChargeJump;	// ためジャンプ準備完了か
-	CSkinmeshModel * m_pSkinmeshModel; //スキンメッシュモデルポインタ
+	CSkinmeshModel * m_pSkinmeshModel[SLIME_STATE_MAX]; //スキンメッシュモデルポインタ
 	float m_fJumpTimeCount;		// ジャンプ時間カウント
 	bool m_fJumpCheck;			// ジャンプし始めたか
 };

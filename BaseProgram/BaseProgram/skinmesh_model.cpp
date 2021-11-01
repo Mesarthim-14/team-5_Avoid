@@ -37,6 +37,7 @@ CSkinmeshModel::CSkinmeshModel(PRIORITY Priority) : CScene(Priority)
 	m_pRootFrame = 0;
 	m_HLcontroller = nullptr;
 	m_ModelNum = MODEL_PLAYER_100;
+	m_bIsDraw = true;
 }
 
 //=============================================================================
@@ -158,77 +159,80 @@ void CSkinmeshModel::Update(void)
 //=============================================================================
 void CSkinmeshModel::Draw(void)
 {
-	//デバイス情報の取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
-	D3DMATERIAL9 matDef;
-	D3DXMATRIX mtxRot, mtxTrans, mtxScale, mtxWorld;
-	D3DXVECTOR3 pos = m_pModelInfo->GetPos();
-	D3DXVECTOR3 rot = m_pModelInfo->GetRot();
-
-	//現在のマテリアルを取得する
-	pDevice->GetMaterial(&matDef);
-	//ワールドマトリックスの初期化
-	D3DXMatrixIdentity(&mtxWorld);
-
-	// 拡大率を反映
-	D3DXMatrixScaling(&mtxScale, m_scale.x, m_scale.y, m_scale.z);
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxScale);
-
-	//向きを反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
-
-	//位置を反映
-	D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);
-
-	//現在フレーム(fps)のワールド変換行列
-	std::map<DWORD, D3DXMATRIX> combMatrixMap;
-		
-	//// 時間を進めて姿勢更新
-	//m_pAnimetionController->AdvanceTime(0.0001f, 0);
-	//m_pAnimetionController->SetTrackAnimationSet(0, 0);
-	//アニメーション更新
-	m_HLcontroller->AdvanceTime(1);
-
-	SkinMesh::updateCombMatrix(combMatrixMap, mtxWorld, m_pRootFrame);
-
-	for (DWORD BCombiId = 0; BCombiId < m_cont.size(); BCombiId++)
+	if (m_bIsDraw)
 	{
-		for (DWORD AttribId = 0; AttribId < m_cont[BCombiId]->numBoneCombinations; AttribId++)
+		//デバイス情報の取得
+		LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+		D3DMATERIAL9 matDef;
+		D3DXMATRIX mtxRot, mtxTrans, mtxScale, mtxWorld;
+		D3DXVECTOR3 pos = m_pModelInfo->GetPos();
+		D3DXVECTOR3 rot = m_pModelInfo->GetRot();
+
+		//現在のマテリアルを取得する
+		pDevice->GetMaterial(&matDef);
+		//ワールドマトリックスの初期化
+		D3DXMatrixIdentity(&mtxWorld);
+
+		// 拡大率を反映
+		D3DXMatrixScaling(&mtxScale, m_scale.x, m_scale.y, m_scale.z);
+		D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxScale);
+
+		//向きを反映
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);
+		D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
+
+		//位置を反映
+		D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
+		D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);
+
+		//現在フレーム(fps)のワールド変換行列
+		std::map<DWORD, D3DXMATRIX> combMatrixMap;
+
+		//// 時間を進めて姿勢更新
+		//m_pAnimetionController->AdvanceTime(0.0001f, 0);
+		//m_pAnimetionController->SetTrackAnimationSet(0, 0);
+		//アニメーション更新
+		m_HLcontroller->AdvanceTime(1);
+
+		SkinMesh::updateCombMatrix(combMatrixMap, mtxWorld, m_pRootFrame);
+
+		for (DWORD BCombiId = 0; BCombiId < m_cont.size(); BCombiId++)
 		{
-			DWORD boneCount = 0;
-
-			for (DWORD Count = 0; Count < m_cont[BCombiId]->maxFaceInfl; Count++)
+			for (DWORD AttribId = 0; AttribId < m_cont[BCombiId]->numBoneCombinations; AttribId++)
 			{
-				//ボーンコンビネーションテーブルからボーンIDを抽出
-				DWORD BoneId = m_combs[BCombiId][AttribId].BoneId[Count];
+				DWORD boneCount = 0;
 
-				//ボーンIDが存在している
-				if (BoneId != UINT_MAX)
+				for (DWORD Count = 0; Count < m_cont[BCombiId]->maxFaceInfl; Count++)
 				{
-					// インデックス付きワールドマトリックスの設定
-					pDevice->SetTransform(D3DTS_WORLDMATRIX(Count), &combMatrixMap[BoneId]);
-					boneCount++;
+					//ボーンコンビネーションテーブルからボーンIDを抽出
+					DWORD BoneId = m_combs[BCombiId][AttribId].BoneId[Count];
+
+					//ボーンIDが存在している
+					if (BoneId != UINT_MAX)
+					{
+						// インデックス付きワールドマトリックスの設定
+						pDevice->SetTransform(D3DTS_WORLDMATRIX(Count), &combMatrixMap[BoneId]);
+						boneCount++;
+					}
 				}
+
+				pDevice->SetRenderState(D3DRS_VERTEXBLEND, boneCount - 1);
+
+				m_cont[BCombiId]->pMaterials->MatD3D.Ambient = WhiteColor;
+				pDevice->SetMaterial(&m_cont[BCombiId]->pMaterials->MatD3D);
+				//メッシュコンテナ内のメッシュデータ
+				m_cont[BCombiId]->MeshData.pMesh->DrawSubset(AttribId);
+
 			}
-
-			pDevice->SetRenderState(D3DRS_VERTEXBLEND, boneCount - 1);
-
-			m_cont[BCombiId]->pMaterials->MatD3D.Ambient = WhiteColor;
-			pDevice->SetMaterial(&m_cont[BCombiId]->pMaterials->MatD3D);
-			//メッシュコンテナ内のメッシュデータ
-			m_cont[BCombiId]->MeshData.pMesh->DrawSubset(AttribId);
-
 		}
+
+		//保持していたマテリアルを戻す
+		pDevice->SetMaterial(&matDef);
+		pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+
+		// 影の描画
+		m_pModelInfo->ShadowDraw(rot);
 	}
-
-	//保持していたマテリアルを戻す
-	pDevice->SetMaterial(&matDef);
-	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
-
-	// 影の描画
-	m_pModelInfo->ShadowDraw(rot);
 }
 
 //=============================================================================

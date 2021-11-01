@@ -80,7 +80,10 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	m_bIsReadyChargeJump = false;
 	m_fAvoidValueY = 30.0f;
 	m_fAvoidValueXZ = 5.0f;
-	m_pSkinmeshModel = nullptr;
+	for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
+	{
+		m_pSkinmeshModel[nCount] = nullptr;
+	}
 	m_fJumpTimeCount = 0;
 	m_fJumpCheck = false;
 }
@@ -109,8 +112,16 @@ HRESULT CPlayer::Init(void)
 		//ModelCreate(CXfile::HIERARCHY_XFILE_NUM_TEST);	// モデルの生成
 	//	SetShadowRotCalculation();						// 影の向き
 	}
+	//三つ分モデル出して現在のサイズモデルだけ描画させる
+	for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
+	{
+		m_pSkinmeshModel[nCount] = CSkinmeshModel::Create(GetPos(), GetRot());
+		if (int(m_SlimeState) != nCount)
+		{
+			m_pSkinmeshModel[nCount]->IsDraw(false);
+		}
+	}
 
-	m_pSkinmeshModel = CSkinmeshModel::Create(GetPos(),GetRot());
 	// 初期化処理
 	CCharacter::Init();
 
@@ -156,9 +167,12 @@ void CPlayer::Update(void)
 	// 状態更新
 	UpdateState();
 
+	// モデル変更
+	ChangeModel();
+
 	//モデル位置向き反映(いずれcharacterに移動させたい）
-	m_pSkinmeshModel->SetPos(GetPos());
-	m_pSkinmeshModel->SetRot(GetRot());
+	m_pSkinmeshModel[m_SlimeState]->SetPos(GetPos());
+	m_pSkinmeshModel[m_SlimeState]->SetRot(GetRot());
 
 	// 更新処理
 	UpdateRot();
@@ -400,6 +414,8 @@ void CPlayer::UpdateRot(void)
 //=============================================================================
 void CPlayer::ChangeModel(void)
 {
+	SLIME_STATE OldState = m_SlimeState; //前回の状態を保存
+
 	//現在のライフを見てスライムの見た目を変える
 	if (m_nHP == PLAYER_LARGESIZE_VALUE)//最大
 	{
@@ -418,6 +434,22 @@ void CPlayer::ChangeModel(void)
 		//スライムの状態を最小に
 		m_SlimeState = SLIME_LITTLESIZE;
 		//HP量で大きさ変える
+	}
+
+	if (m_SlimeState != OldState)
+	{
+		//モデル変更
+		for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
+		{
+			if (int(m_SlimeState) != nCount)
+			{
+				m_pSkinmeshModel[nCount]->IsDraw(false);
+			}
+			else
+			{
+				m_pSkinmeshModel[nCount]->IsDraw(true);
+			}
+		}
 	}
 }
 
@@ -472,7 +504,7 @@ void CPlayer::Jump(void)
 		move.y += m_fJumpValue;
 		move.x += move.x * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
 		move.z += move.z * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
-		m_fJumpTimeCount += 1.0f;
+		//m_fJumpTimeCount += 1.0f;
 		//move.y = 0.5f * CGame::GetGravity()*m_fJumpTimeCount*m_fJumpTimeCount + m_fJumpValue*m_fJumpTimeCount;
 		SetState(STATE_JUMP);
 		SetMove(move);
@@ -559,6 +591,9 @@ void CPlayer::ShowInfo(void)
 
 			// 状態
 			ImGui::Text("STATE : %d", GetState());
+
+			// 状態
+			ImGui::Text("SLIME_SIZE : %d", m_SlimeState);
 
 			// ジャンプ時間
 			ImGui::Text("JUMP_TIME : %.1f", m_fJumpTimeCount);

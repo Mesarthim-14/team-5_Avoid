@@ -45,6 +45,7 @@ public:
 	void SetModelNumber(MODEL model);
 	void SetPos(D3DXVECTOR3 pos) { m_pModelInfo->SetPos(pos); }						// 現在の座標情報
 	void SetRot(D3DXVECTOR3 rot){ m_pModelInfo->SetRot(rot); }						// 角度情報
+	void IsDraw(bool bIsDraw) { m_bIsDraw = bIsDraw; };								// 描画するか
 
 protected:
 	// Set関数
@@ -71,6 +72,7 @@ private:
 	D3DXVECTOR3 m_move;											// 移動量
 	D3DXVECTOR3 m_size;											// サイズ
 	D3DXVECTOR3 m_scale;										// 拡大率
+	bool		m_bIsDraw;										// 描画するか
 	int m_nTexPattern;											// テクスチャのパターン数
 	int m_nLife;												// ライフ
 	ID3DXAnimationController * m_pAnimetionController;			//アニメーションコントローラー
