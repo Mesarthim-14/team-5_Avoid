@@ -18,7 +18,9 @@
 
 const char * CSkinmeshModel::m_aParam[MODEL_MAX] =
 {
-	"data/Model/Hierarchy/test_slime_model02.x"
+	"data/Model/Hierarchy/player/slime_50.x",
+	"data/Model/Hierarchy/player/slime_50.x",
+	"data/Model/Hierarchy/player/slime_100.x",
 };
 
 
@@ -38,6 +40,7 @@ CSkinmeshModel::CSkinmeshModel(PRIORITY Priority) : CScene(Priority)
 	m_HLcontroller = nullptr;
 	m_ModelNum = MODEL_PLAYER_100;
 	m_bIsDraw = true;
+
 }
 
 //=============================================================================
@@ -51,7 +54,7 @@ CSkinmeshModel::~CSkinmeshModel()
 //=============================================================================
 // クリエイト処理
 //=============================================================================
-CSkinmeshModel * CSkinmeshModel::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+CSkinmeshModel * CSkinmeshModel::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, MODEL modelNum)
 {
 	//モデルクラスのポインタ変数
 	CSkinmeshModel *pModel = new CSkinmeshModel;
@@ -59,6 +62,7 @@ CSkinmeshModel * CSkinmeshModel::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 	// nullcheck
 	if (pModel)
 	{
+		pModel->m_ModelNum = modelNum;
 		//初期化処理呼び出し
 		pModel->Init();
 		pModel->GetModelInfo()->SetPos(pos);
@@ -88,7 +92,7 @@ HRESULT CSkinmeshModel::Init(void)
 	//エラー確認用
 	HRESULT model = D3DERR_WRONGTEXTUREFORMAT;
 	//仮モデル
-	model = D3DXLoadMeshHierarchyFromX((m_aParam[0]), D3DXMESH_MANAGED, pDevice, &allocater, 0, (D3DXFRAME**)&m_pRootFrame, &m_pAnimetionController);
+	model = D3DXLoadMeshHierarchyFromX((m_aParam[m_ModelNum]), D3DXMESH_MANAGED, pDevice, &allocater, 0, (D3DXFRAME**)&m_pRootFrame, &m_pAnimetionController);
 
 	if (model == D3DERR_INVALIDCALL)
 	{
@@ -136,21 +140,21 @@ void CSkinmeshModel::Update(void)
 	// 座標の更新
 	m_pModelInfo->GetPos() += m_move;
 
-	//仮
-	//アニメーション変更
-	//m_HLcontroller->ChangeAnimation(0);
-	//ループ時間
-	m_HLcontroller->SetLoopTime(1, 60);
-	m_HLcontroller->SetLoopTime(0, 60);
+	////仮
+	////アニメーション変更
+	////m_HLcontroller->ChangeAnimation(0);
+	////ループ時間
+	//m_HLcontroller->SetLoopTime(1, 60);
+	//m_HLcontroller->SetLoopTime(0, 60);
 
-	//アニメーション変更
-	m_HLcontroller->ChangeAnimation(0);
+	//////アニメーション変更
+	////m_HLcontroller->ChangeAnimation(0);
 
-	//アニメーションのシフトにかかる時間
-	m_HLcontroller->SetShiftTime(1, 10);
-	m_HLcontroller->SetShiftTime(0, 10);
+	////アニメーションのシフトにかかる時間
+	//m_HLcontroller->SetShiftTime(1, 10);
+	//m_HLcontroller->SetShiftTime(0, 10);
 
-	m_HLcontroller->ChangeAnimation(1);
+	////m_HLcontroller->ChangeAnimation(1);
 	
 }
 

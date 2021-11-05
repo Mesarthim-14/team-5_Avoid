@@ -22,6 +22,7 @@
 #include "test_model.h"
 #include "model.h"
 #include "skinmesh_model.h"
+#include "animation_skinmesh.h"
 
 //=============================================================================
 // マクロ定義
@@ -36,6 +37,8 @@
 #define PLAYER_LARGESIZE_VALUE  (100)									// 最大サイズモデルの値
 #define CHARGEJUMP_COUNT_MAX (10)										// タメ判定用カウント
 #define CHARGEJUMP_MAX (100)												// タメカウント最大
+#define AVOID_CONSUME (1)												// 回避した時のライフ減少量
+#define HIGHJUMP_CONSUME (1)												// ためジャンプした時のライフ減少量
 //=============================================================================
 // 生成処理関数
 // Author : Konishi Yuuto
@@ -70,8 +73,8 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	m_fInertiaNum = 0.0f;
 	m_fRotationSpeed = 0.1f;
 	m_fAngleSpeed = 0.0f;
-	m_SlimeState = SLIME_MIDDLESIZE;
-	m_nHP = 50;
+	m_SlimeState = SLIME_LARGESIZE;
+	m_nHP = 60;
 	m_fAngle = 0.0f;
 	m_ActionState = ACTION_NONE;
 	m_fJumpValue = 0.0f;
@@ -115,12 +118,20 @@ HRESULT CPlayer::Init(void)
 	//三つ分モデル出して現在のサイズモデルだけ描画させる
 	for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
 	{
-		m_pSkinmeshModel[nCount] = CSkinmeshModel::Create(GetPos(), GetRot());
+		m_pSkinmeshModel[nCount] = CSkinmeshModel::Create(GetPos(), GetRot(), CSkinmeshModel::MODEL(nCount));
 		if (int(m_SlimeState) != nCount)
 		{
 			m_pSkinmeshModel[nCount]->IsDraw(false);
 		}
+		else
+		{
+			m_pSkinmeshModel[nCount]->IsDraw(true);
+		}
 	}
+
+	m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->ChangeAnimation(0);
+	m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->SetLoopTime(0, 60);
+	m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->SetShiftTime(0, 60);
 
 	// 初期化処理
 	CCharacter::Init();
@@ -199,7 +210,8 @@ void CPlayer::Draw(void)
 //=============================================================================
 void CPlayer::UpdateState(void)
 {
-
+	// アニメーション制御
+	AnimationProcess();
 }
 
 //=============================================================================
@@ -352,10 +364,18 @@ void CPlayer::KeyBoardMove(void)
 	if(!m_bMove)
 	{
 		m_Inertia = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		if (GetState() == STATE_WALK)
+		{
+			SetState(STATE_NORMAL);
+		}
 	}
 	else
 	{
 		m_bMove = false;
+		if (GetState() == STATE_NORMAL)
+		{
+			SetState(STATE_WALK);
+		}
 	}
 
 	//角度補正
@@ -494,7 +514,7 @@ void CPlayer::Jump(void)
 		// Hp消費
 		if (m_nHP != 0)
 		{
-
+			SubLife(HIGHJUMP_CONSUME);
 		}
 	}
 
@@ -534,6 +554,36 @@ void CPlayer::JumpProcess(void)
 }
 
 //=============================================================================
+// アニメーション処理
+// Author : Hayashikawa Sarina
+//=============================================================================
+void CPlayer::AnimationProcess(void)
+{
+	switch (GetState())
+	{
+	case STATE_NORMAL:
+		m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->ChangeAnimation(1);
+		m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->SetLoopTime(1,60);
+		/*m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->SetShiftTime(2, 60);*/
+		break;
+	case STATE_WALK:
+		m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->ChangeAnimation(0);
+		m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->SetLoopTime(0, 60);
+		/*m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->SetShiftTime(1, 60);*/
+		break;
+	case STATE_JUMP:
+		m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->ChangeAnimation(0);
+		m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->SetLoopTime(0, 60);
+		/*m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->SetShiftTime(0, 60);*/
+		break;
+	case STATE_AVOID:
+		break;
+	default:
+		break;
+	}
+}
+
+//=============================================================================
 // 回避
 // Author : Hayashikawa Sarina
 //=============================================================================
@@ -552,7 +602,7 @@ void CPlayer::Avoidance(void)
 		// Hp消費
 		if (m_nHP != 0)
 		{
-
+			SubLife(AVOID_CONSUME);
 		}
 	}
 }
@@ -586,9 +636,6 @@ void CPlayer::ShowInfo(void)
 			D3DXVECTOR3 move = GetMove();
 			ImGui::Text("Move : %.1ff %.1ff %.1ff", move.x, move.y, move.z);
 
-			// HP
-			ImGui::Text("HP : %d", m_nHP);
-
 			// 状態
 			ImGui::Text("STATE : %d", GetState());
 
@@ -602,6 +649,9 @@ void CPlayer::ShowInfo(void)
 			float fSpeed = GetSpeed();
 			ImGui::SliderFloat("Speed", &fSpeed, 0.0f, 50.0f);
 			SetSpeed(fSpeed);
+
+			// ライフの値
+			ImGui::SliderInt("HP", &m_nHP, 0, 100);
 
 			// ジャンプの値
 			ImGui::SliderFloat("JumpValue", &m_fJumpValue, 0.0f, 200.0f);
@@ -644,6 +694,7 @@ HRESULT CPlayer::LoadInfo(void)
 	CLibrary::JsonGetState(v, "Player", "ROTATION_SPEED", m_fRotationSpeed);
 	CLibrary::JsonGetState(v, "Player", "ANGLE_SPEED", m_fAngleSpeed);
 	CLibrary::JsonGetState(v, "Player", "JUMP_VALUE", m_fJumpValue);
+	CLibrary::JsonGetState(v, "Player", "DUSH_JUMP_VALUE", m_fDushJumpValue);
 	return S_OK;
 }
 
@@ -661,6 +712,7 @@ void CPlayer::SaveInfo(void)
 	CLibrary::JsonSetState(FileName, "Player", "ROTATION_SPEED", m_fRotationSpeed);	// 回転の速度
 	CLibrary::JsonSetState(FileName, "Player", "ANGLE_SPEED", m_fAngleSpeed);	// 回転遅さの速度
 	CLibrary::JsonSetState(FileName, "Player", "JUMP_VALUE", m_fJumpValue);	// 回転遅さの速度
+	CLibrary::JsonSetState(FileName, "Player", "DUSH_JUMP_VALUE", m_fDushJumpValue);	// 回転遅さの速度
 }
 
 //=============================================================================
@@ -669,5 +721,8 @@ void CPlayer::SaveInfo(void)
 //=============================================================================
 void CPlayer::SubLife(int nDamage)
 {
-	m_nHP -= nDamage;
+	if (m_nHP > 0)
+	{
+		m_nHP -= nDamage;
+	}
 }
