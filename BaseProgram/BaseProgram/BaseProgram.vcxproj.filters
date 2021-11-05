@@ -73,6 +73,9 @@
     <Filter Include="03_Mode\Editor">
       <UniqueIdentifier>{304cf4d0-331b-4b82-9633-1318a2680623}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03_Mode\pause">
+      <UniqueIdentifier>{0d451309-488e-4534-acd7-dd6ee910099d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="collision.cpp">
@@ -242,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="translation.cpp">
       <Filter>09_Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="pause.cpp">
+      <Filter>03_Mode\pause</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -421,6 +427,9 @@
     </ClInclude>
     <ClInclude Include="translation.h">
       <Filter>09_Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="pause.h">
+      <Filter>03_Mode\pause</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

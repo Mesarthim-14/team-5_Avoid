@@ -176,6 +176,7 @@
     <ClCompile Include="mode_base.cpp" />
     <ClCompile Include="motion.cpp" />
     <ClCompile Include="mouse.cpp" />
+    <ClCompile Include="pause.cpp" />
     <ClCompile Include="plane.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="player_editor.cpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="mode_base.h" />
     <ClInclude Include="motion.h" />
     <ClInclude Include="mouse.h" />
+    <ClInclude Include="pause.h" />
     <ClInclude Include="plane.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="player_editor.h" />

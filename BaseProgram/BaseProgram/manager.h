@@ -35,6 +35,7 @@ class CModeBase;
 class CLight;
 class CCamera;
 class CPlayer;
+class CPause;
 
 //=============================================================================
 //マネージャークラス
@@ -78,6 +79,9 @@ public:
 	static CCamera *GetCamera(void)						{ return m_pCamera.get(); }				// カメラのポインタ
 	static CLight *GetLight(void)						{ return m_pLight.get(); }				// ライトのポインタ
 	static CPlayer *GetPlayer(void);															// プレイヤーの取得
+	static CPause * GetPause(void) { return m_pPause; }					// ポーズの取得処理
+	static void SetActivePause(bool bPause) { m_bPause = bPause; }					// ポーズのセット
+	static bool GetActivePause(void) { return m_bPause; }					// フェードの取得処理
 
 private:
 	// private関数
@@ -95,7 +99,9 @@ private:
 	static unique_ptr<CModeBase> m_pModeBase;				// モードのポインタ
 	static unique_ptr<CCamera> m_pCamera;					// カメラのポインタ
 	static unique_ptr<CLight> m_pLight;						// ライトのポインタ
+	static CPause *m_pPause;						// ポーズのポインタ
 	static MODE_TYPE m_mode;								// モード
+	static bool m_bPause;									// ポーズフラグ
 };
 
 #endif

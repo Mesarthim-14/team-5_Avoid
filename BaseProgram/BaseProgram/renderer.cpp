@@ -18,6 +18,7 @@
 #include "polygon.h"
 #include "shadow.h"
 #include "library.h"
+#include "pause.h"
 
 //=============================================================================
 // マクロ定義
@@ -283,6 +284,12 @@ void CRenderer::Draw(void)
 		{
 			// 描画処理
 			pFade->Draw();
+		}
+
+		if (CManager::GetMode() == CManager::MODE_TYPE_GAME&&CManager::GetActivePause())
+		{// ポーズ状態の時
+		 // ポーズメニューの表示
+			CManager::GetPause()->Draw();
 		}
 #ifdef _DEBUG
 		//ImGuiの情報表示する時
