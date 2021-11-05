@@ -46,6 +46,7 @@ private:
 	void Jump(void);			// ジャンプ
 	void Avoidance(void);		// 回避アクション
 	void JumpProcess(void);		// ジャンプ中の処理
+	void AnimationProcess(void); // アニメーション制御
 	typedef enum
 	{
 		SLIME_LITTLESIZE = 0,

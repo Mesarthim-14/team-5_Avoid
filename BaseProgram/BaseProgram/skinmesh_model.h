@@ -30,7 +30,9 @@ public:
 
 	typedef enum
 	{
-		MODEL_PLAYER_100 = 0,//スライム１００％の状態
+		MODEL_PLAYER_10 = 0,//スライム１０％の状態
+		MODEL_PLAYER_50,//スライム５０％の状態
+		MODEL_PLAYER_100,//スライム１００％の状態
 		MODEL_MAX
 	}MODEL;//モデル名前
 	CSkinmeshModel(PRIORITY Priority = PRIORITY_EFFECT);	// コンストラクタ
@@ -40,7 +42,7 @@ public:
 	void Uninit(void);								// 終了処理
 	void Update(void);								// 更新処理
 	void Draw(void);								// 描画処理
-	static CSkinmeshModel *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);	// インスタンス生成
+	static CSkinmeshModel *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, MODEL modelNum);	// インスタンス生成
 	IHighLevelAnimController * GetHLcontroller(void) { return m_HLcontroller; };
 	void SetModelNumber(MODEL model);
 	void SetPos(D3DXVECTOR3 pos) { m_pModelInfo->SetPos(pos); }						// 現在の座標情報
