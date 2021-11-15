@@ -136,6 +136,9 @@
     <Filter Include="10_State\PlayerState">
       <UniqueIdentifier>{c5b1ba84-127b-4781-aff4-9e72a75d3851}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03_Mode\pause">
+      <UniqueIdentifier>{0d451309-488e-4534-acd7-dd6ee910099d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="collision.cpp">
@@ -440,6 +443,9 @@
     </ClCompile>
     <ClCompile Include="state_player_knockback.cpp">
       <Filter>10_State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="pause.cpp">
+      <Filter>03_Mode\pause</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -754,6 +760,9 @@
     </ClInclude>
     <ClInclude Include="state_player_knockback.h">
       <Filter>10_State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="pause.h">
+      <Filter>03_Mode\pause</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

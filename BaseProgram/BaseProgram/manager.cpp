@@ -39,7 +39,10 @@
 //=============================================================================
 //静的メンバ変数宣言
 //=============================================================================
+
 CManager* CManager::m_pManager = nullptr;
+CPause * CManager::m_pPause = nullptr;
+bool CManager::m_bPause = false;
 
 //=============================================================================
 // コンストラクタ
@@ -219,6 +222,7 @@ void CManager::Uninit(void)
 //=============================================================================
 void CManager::Update(void)
 {
+	CInputKeyboard* pKey = CManager::GetKeyboard();
 	if (m_pInput)
 	{
 		//入力処理クラスの更新処理呼び出し
@@ -242,7 +246,6 @@ void CManager::Update(void)
 		//レンダラークラスの更新処理呼び出し
 		m_pRenderer->Update();
 	}
-
 	if (m_pFade)
 	{
 		//フェードクラスの更新処理呼び出し
@@ -269,6 +272,50 @@ void CManager::Update(void)
 		m_pLight->ShowLightInfo();
 		ImGui::End();
 	}
+
+	// ポーズの設定
+	//if (m_pRenderer)
+	//{
+	//	if (m_mode == MODE_TYPE_GAME)
+	//	{// モードゲームのときポーズ画面の処理
+
+	//		if (pKey->GetTrigger(DIK_6))
+	//		{
+
+	//			if (m_pPause == NULL)
+	//			{
+	//				// 生成
+	//				m_pPause = CPause::Create();
+	//			}
+	//			// ポーズの切り替え
+	//			m_bPause ^= true;
+	//		}
+	//		if (!m_bPause)
+	//		{// ポーズじゃないとき
+
+	//			if (m_pPause != NULL)
+	//			{
+	//				m_pPause->Uninit();
+	//				delete m_pPause;
+	//				m_pPause = NULL;
+	//			}
+	//			m_pRenderer->Update();
+	//		}
+	//		else
+	//		{// ポーズ状態
+	//			if (m_pPause != NULL)
+	//			{
+	//				// ポーズの更新処理
+	//				m_pPause->Update();
+	//			}
+	//		}
+	//	}
+	//	else
+	//	{
+	//		//レンダラークラスの更新処理呼び出し
+	//		m_pRenderer->Update();
+	//	}
+	//}
 }
 
 //=============================================================================

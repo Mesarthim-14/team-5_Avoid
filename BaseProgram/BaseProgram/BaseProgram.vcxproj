@@ -200,6 +200,7 @@
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="move_scaffold.cpp" />
     <ClCompile Include="parallax_mapping2.cpp" />
+    <ClCompile Include="pause.cpp" />
     <ClCompile Include="plane.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="player_editor.cpp" />
@@ -306,6 +307,7 @@
     <ClInclude Include="mouse.h" />
     <ClInclude Include="move_scaffold.h" />
     <ClInclude Include="parallax_mapping2.h" />
+    <ClInclude Include="pause.h" />
     <ClInclude Include="plane.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="player_editor.h" />

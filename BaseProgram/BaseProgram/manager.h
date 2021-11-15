@@ -35,6 +35,7 @@ class CModeBase;
 class CLight;
 class CCamera;
 class CPlayer;
+class CPause;
 
 //=============================================================================
 //マネージャークラス
@@ -54,6 +55,7 @@ public:
 		MODE_TYPE_MAX,
 	};
 
+
 	~CManager();	// デストラクタ
 
 	HRESULT Init(HINSTANCE hInstance, HWND hWnd, bool bWindow);		// 初期化処理
@@ -62,9 +64,11 @@ public:
 	void Draw(void);												// 描画処理
 
 	// Set関数
+
 	void SetMode(MODE_TYPE mode);							// モードの設定
 
 	// Get関数
+
 	MODE_TYPE GetMode(void);															// モードの情報
 	CModeBase *GetModePtr(void);														// ゲームの情報
 	CRenderer *GetRenderer(void)				{ return m_pRenderer.get(); }			// レンダラー情報
@@ -77,6 +81,9 @@ public:
 	CCamera *GetCamera(void)					{ return m_pCamera.get(); }				// カメラのポインタ
 	CLight *GetLight(void)						{ return m_pLight.get(); }				// ライトのポインタ
 	CPlayer *GetPlayer(void);															// プレイヤーの取得
+	static CPause * GetPause(void) { return m_pPause; }					// ポーズの取得処理
+	static void SetActivePause(bool bPause) { m_bPause = bPause; }					// ポーズのセット
+	static bool GetActivePause(void) { return m_bPause; }					// フェードの取得処理
 
 	static CManager* GetInstance();		// インスタンス情報
 
@@ -102,6 +109,7 @@ private:
 	CManager();		// コンストラクタ
 	static CManager* m_pManager;
 
+	static bool m_bPause;									// ポーズフラグ
 };
 
 #endif
