@@ -113,7 +113,7 @@ void CCharacter::Update()
 void CCharacter::Draw()
 {
 	//デバイス情報の取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	// マトリクスの設定
 	CLibrary::ConfigMatrix(&m_mtxWorld, m_pos, m_rot);
@@ -143,14 +143,13 @@ void CCharacter::Draw()
 	}
 }
 
-
 //=============================================================================
 // モデルの生成
 //=============================================================================
 void CCharacter::ModelCreate(const CXfile::HIERARCHY_XFILE_NUM &FileNum)
 {
 	// XFileのポインタ取得
-	CXfile *pXfile = CManager::GetResourceManager()->GetXfileClass();
+	CXfile *pXfile = CManager::GetInstance()->GetResourceManager()->GetXfileClass();
 
 	// nullcheck
 	if (pXfile)
@@ -227,7 +226,7 @@ void CCharacter::ModelAnimeUpdate(void)
 //=============================================================================
 void CCharacter::Gravity(void)
 {
-	if (!m_bLanding)
+	if (!m_bLanding && m_bGravity)
 	{
 		// 重力をかける
 		m_move.y -= CGame::GetGravity();

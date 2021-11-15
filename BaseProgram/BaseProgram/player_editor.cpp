@@ -84,8 +84,8 @@ void CPlayerEditor::Update(void)
 		m_pPlayer->ShowInfo();
 	}
 
-	CInputKeyboard* pKey = CManager::GetKeyboard();
-	CFade::FADE_MODE mode = CManager::GetFade()->GetFade();
+	CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
+	CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
 
 	// コントローラのstartを押したときか、エンターキーを押したとき
 	if (pKey->GetTrigger(DIK_7))
@@ -100,7 +100,7 @@ void CPlayerEditor::Update(void)
 	// コントローラのstartを押したときか、エンターキーを押したとき
 	if (pKey->GetTrigger(DIK_TAB) && mode == CFade::FADE_MODE_NONE)
 	{
-		CFade *pFade = CManager::GetFade();
+		CFade *pFade = CManager::GetInstance()->GetFade();
 		pFade->SetFade(CManager::MODE_TYPE_TITLE);
 	}
 }

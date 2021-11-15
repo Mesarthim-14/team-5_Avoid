@@ -11,7 +11,7 @@ bool IHighLevelAnimController::SetAnimationController(ID3DXAnimationController *
 		//コンテナコピー
 		m_AnimCont = pAnimCont;
 		//サイズ確保
-		m_Anim.resize(pAnimCont->GetMaxNumTracks());
+		m_Anim.resize(pAnimCont->GetMaxNumAnimationSets());
 		//アニメーションセット取得
 		for (unsigned int size = 0; size < m_Anim.size(); size++)
 		{

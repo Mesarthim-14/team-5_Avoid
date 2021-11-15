@@ -8,10 +8,10 @@
 //=============================================================================
 // インクルード
 //=============================================================================
+#include "test_model.h"
 #include "manager.h"
 #include "renderer.h"
 #include "game.h"
-#include "test_model.h"
 #include "texture.h"
 #include "resource_manager.h"
 #include "xfile.h"

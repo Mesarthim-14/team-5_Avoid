@@ -74,7 +74,7 @@ HRESULT CModelAnime::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, CXfile::MODEL model)
 void CModelAnime::Draw(D3DXVECTOR3 rot)
 {
 	//デバイス情報の取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	D3DXMATRIX mtxParent, mtxWorld;
 	D3DMATERIAL9 matDef;						//現在のマテリアル保持用

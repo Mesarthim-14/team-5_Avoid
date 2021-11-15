@@ -14,7 +14,6 @@
 #include "scene.h"
 #include "modelanime.h"
 
-
 //=============================================================================
 // 前方宣言
 //=============================================================================
@@ -37,6 +36,9 @@ public:
 		STATE_DEAD,
 		STATE_JUMP,
 		STATE_AVOID,
+		STATE_LANDING,
+		STATE_STAN,
+		STATE_KNOCKBACK,
 		STATE_MAX
 	};
 
@@ -47,6 +49,7 @@ public:
 	{
 		CHARACTER_TYPE_NONE = -1,	// 初期値
 		CHARACTER_TYPE_PLAYER,		// プレイヤー
+		CHARACTER_TYPE_ENEMY,		// 敵
 		CHARACTER_TYPE_MAX			// 最大値
 	};
 
@@ -71,10 +74,12 @@ public:
 	float &GetSpeed(void)							{ return m_fSpeed; }					// スピードの情報
 	STATE GetState(void)							{ return m_State; }						// 状態取得
 	CHARACTER_TYPE GetType(void)					{ return m_type; }						// 種類
+	vector<CModelAnime*> GetModelAnimeVec()const	{ return m_apModelAnime; }				// ポインタ全ての取得
+	D3DXMATRIX GetMtxWorld()const					{ return m_mtxWorld; }					// マトリクスワールド
 
 	void SetPos(const D3DXVECTOR3 &pos)			{ m_pos = pos; }			// 座標の設定
 	void SetLanding(const bool bLanding)		{ m_bLanding = bLanding; }	// 着地
-	bool GetLanding(void)					    { return m_bLanding; }      // 着地判定取得
+	bool GetLanding(void)						{ return m_bLanding; }		// 着地判定取得
 
 	void Landing(const float fHeight);			// 着地
 
@@ -90,9 +95,10 @@ protected:
 	void SetSize(const D3DXVECTOR3 &size)		{ m_size = size; }			// サイズ設定
 	void SetSpeed(const float &fSpeed)			{ m_fSpeed = fSpeed; }		// 速度の設定
 	void SetState(const STATE &state)			{ m_State = state; }		// 状態設定
-	void SetGravityFlag(const bool bFlag)		{ m_bGravity = bFlag; }		// 重力のフラグ
+	void SetGravityFlag(const bool &bFlag)		{ m_bGravity = bFlag; }		// 重力のフラグ
 	void SetType(const CHARACTER_TYPE &type)	{ m_type = type; }			// 種類
 	void SetUseShadow(void)						{ m_bUseShadow = true; }	// 影の使用判定
+
 private:
 	// private関数
 	void ModelAnimeUpdate(void);				// モデルアニメーション
@@ -101,7 +107,7 @@ private:
 
 	// 純粋仮想関数
 	virtual void UpdateState(void) = 0;			// キャラクター状態
-	virtual void Move(void) = 0;				// 移動関数
+	virtual void CreateModel() = 0;				// モデル生成
 
 	// メンバ変数
 	vector<CModelAnime*> m_apModelAnime;	// モデルパーツ用ポインタ

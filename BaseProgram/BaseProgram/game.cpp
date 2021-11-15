@@ -23,6 +23,12 @@
 #include "ground.h"
 #include "skinmesh_model.h"
 #include "library.h"
+#include "check_point.h"
+#include "water_fresnel.h"
+#include "shark.h"
+#include "ghost.h"
+#include "gimmick_factory.h"
+#include "game_mode.h"
 
 float CGame::m_fGravity = 4.0f;
 //=======================================================================================
@@ -33,6 +39,8 @@ CGame::CGame()
 	m_pPlayer = nullptr;
 	m_bGameEnd = false;
 	m_pFont = nullptr;
+	m_pGimmickFactory = nullptr;
+	m_pGameMode = nullptr;
 }
 
 //=======================================================================================
@@ -49,10 +57,14 @@ CGame::~CGame()
 //=======================================================================================
 HRESULT CGame::Init(void)
 {
+	// モード生成
+	CreateMode();
+
 	// プレイヤーの生成
 	CreatePlayer();
-	CGround::Create();
-	
+	CreateEnemy();
+	CreateMap();
+
 	return S_OK;
 }
 
@@ -74,6 +86,17 @@ void CGame::Uninit(void)
 		m_pFont->Release();
 		m_pFont = nullptr;
 	}
+	if (m_pGimmickFactory)
+	{
+		m_pGimmickFactory->Uninit();
+		delete m_pGimmickFactory;
+		m_pGimmickFactory = nullptr;
+	}
+	if (m_pGameMode)
+	{
+		delete m_pGameMode;
+		m_pGameMode = nullptr;
+	}
 }
 
 //=======================================================================================
@@ -81,14 +104,23 @@ void CGame::Uninit(void)
 //=======================================================================================
 void CGame::Update(void)
 {
+	if (m_pGimmickFactory)
+	{
+		m_pGimmickFactory->Update();
+	}
+	if (m_pGameMode)
+	{
+		m_pGameMode->Update();
+	}
+
 #ifdef _DEBUG
-	CInputKeyboard* pKey = CManager::GetKeyboard();
-	CFade::FADE_MODE mode = CManager::GetFade()->GetFade();
+	CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
+	CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
 
 	// タイトルに戻る
 	if (pKey->GetTrigger(DIK_TAB) && mode == CFade::FADE_MODE_NONE)
 	{
-		CFade *pFade = CManager::GetFade();
+		CFade *pFade = CManager::GetInstance()->GetFade();
 		pFade->SetFade(CManager::MODE_TYPE_TITLE);
 	}
 
@@ -118,7 +150,28 @@ void CGame::CreatePlayer(void)
 //	CTestCharacter::Create(D3DXVECTOR3(1000.0f, 0.0f, 0.0f));
 //	CTestCharacter::Create(ZeroVector3);
 //	CTestCharacter::Create(D3DXVECTOR3(-1000.0f, 0.0f, 0.0f));
+}
+
+//=======================================================================================
+// エネミーの生成
+//=======================================================================================
+void CGame::CreateEnemy()
+{
+//	CShark::Create();
+	CGhost::Create();
+}
+
+//=======================================================================================
+// マップの生成
+//=======================================================================================
+void CGame::CreateMap()
+{
 	CTestModel::Create();
+	CWaterFresnel::Create();
+	if (!m_pGimmickFactory)
+	{
+		m_pGimmickFactory = CGimmickFactory::Create();
+	}
 }
 
 //=======================================================================================
@@ -133,14 +186,25 @@ void CGame::ShowInfo(void)
 
 	if (ImGui::CollapsingHeader("WorldInfo"))
 	{
-		LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();	// デバイスの取得
+		LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	// デバイスの取得
 
-			// 重力の値
-			ImGui::SliderFloat("Gravity", &m_fGravity, 0.0f, 50.0f);
+		// 重力の値
+		ImGui::SliderFloat("Gravity", &m_fGravity, 0.0f, 50.0f);
 
-			//ImGui::TreePop();
+	//	ImGui::TreePop();
 	}
 
 	ImGui::End();
 #endif // !_DEBUG
+}
+
+//=======================================================================================
+// ゲームモードクラス生成
+//=======================================================================================
+void CGame::CreateMode()
+{
+	if (!m_pGameMode)
+	{
+		m_pGameMode = CGameMode::Create();
+	}
 }

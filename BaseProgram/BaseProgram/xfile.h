@@ -45,9 +45,25 @@ public:
 	//=============================================================================
 	enum XFILE_NUM
 	{
-		XFILE_NUM_NONE = -1,	// 初期値
-		XFILE_NUM_TEST_BLOCK,	// テストブロック
-		XFILE_NUM_MAP,
+		XFILE_NUM_NONE = -1,		// 初期値
+		XFILE_NUM_TEST_BLOCK,		// テストブロック
+		XFILE_NUM_MAP,				// マップ
+		XFILE_NUM_CHECK_FLAG,		// チェックポイントのフラグ
+		XFILE_NUM_PLANE,			// 平面
+		XFILE_NUM_SKY,				// 空
+		XFILE_NUM_ENEMY_BOX,		// box
+		XFILE_NUM_MOVE_SCAFFOLD,	// 進む足場
+		XFILE_NUM_MOVE_RUBBLE1,		// 瓦礫
+		XFILE_NUM_MOVE_RUBBLE2,		// 瓦礫
+		XFILE_NUM_ROTATE_FLOOR,		// 回転床
+		XFILE_NUM_ROTATE_BODY,		// 回転本体
+		XFILE_NUM_CYLINDER,			// 酒樽
+		XFILE_NUM_SLOPE,			// 坂道
+		XFILE_NUM_RECOVER,			// 回復ポイント
+		XFILE_NUM_CANNON,			// 大砲
+		XFILE_NUM_BRIDGE,			// 橋
+		XFILE_NUM_CANNON_BULLET,	// 大砲の弾
+		XFILE_NUM_SWIRL_SCAFFOLD,	// 渦の足場
 		XFILE_NUM_MAX
 	};
 

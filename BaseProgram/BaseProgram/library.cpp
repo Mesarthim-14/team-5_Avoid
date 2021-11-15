@@ -13,6 +13,7 @@
 #include "manager.h"
 #include "renderer.h"
 #include "json.h"
+#include "keyboard.h"
 
 //=============================================================================
 //静的メンバ変数の初期化
@@ -233,6 +234,41 @@ float CLibrary::Random(const float fMin, const float fMax)
 }
 
 //=============================================================================
+// 二点の距離を計算
+//=============================================================================
+float CLibrary::DistanceCal(const D3DXVECTOR3 & pos1, const D3DXVECTOR3 & pos2)
+{
+	return D3DXVec3Length(&(pos1 - pos2));
+}
+
+//=============================================================================
+// キーボードの押し込み判定
+//=============================================================================
+BOOL CLibrary::KeyboardPress(const int &nKey)
+{
+	CInputKeyboard *pKeyboard = CManager::GetInstance()->GetKeyboard();
+	return pKeyboard->GetPress(nKey);
+}
+
+//=============================================================================
+// キーボードの押した判定
+//=============================================================================
+BOOL CLibrary::KeyboardTrigger(const int &nKey)
+{
+	CInputKeyboard *pKeyboard = CManager::GetInstance()->GetKeyboard();
+	return pKeyboard->GetTrigger(nKey);
+}
+
+//=============================================================================
+// キーボードの離した判定
+//=============================================================================
+BOOL CLibrary::KeyboardRelease(const int &nKey)
+{
+	CInputKeyboard *pKeyboard = CManager::GetInstance()->GetKeyboard();
+	return pKeyboard->GetRelease(nKey);
+}
+
+//=============================================================================
 // jsonのファイルロード
 //=============================================================================
 picojson::value CLibrary::JsonLoadFile(const string &FileName)
@@ -263,7 +299,7 @@ HRESULT CLibrary::InitImgui(HWND hWnd)
 {
 	//ゲームパッドとキーボードの情報取得
 	//所有権は貰ってないから開放の必要はない
-	CInputKeyboard *pKeyboard = CManager::GetKeyboard();
+	CInputKeyboard *pKeyboard = CManager::GetInstance()->GetKeyboard();
 
 	//NULLチェック
 	if (!pKeyboard)
@@ -282,7 +318,7 @@ HRESULT CLibrary::InitImgui(HWND hWnd)
 
 	//初期化
 	ImGui_ImplWin32_Init(hWnd);
-	ImGui_ImplDX9_Init(CManager::GetRenderer()->GetDevice());
+	ImGui_ImplDX9_Init(CManager::GetInstance()->GetRenderer()->GetDevice());
 
 	return S_OK;
 }
@@ -304,7 +340,7 @@ void CLibrary::ShowDebugInfo()
 {
 #ifdef _DEBUG
 
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	//開始
 	if (ImGui::CollapsingHeader("Debug"))
@@ -350,7 +386,7 @@ void CLibrary::ShowDebugInfo()
 void CLibrary::CheckWireMode(void)
 {
 	//デバイス取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	//trueかfalseかで決める
 	m_bWireFrame ?

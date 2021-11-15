@@ -54,7 +54,7 @@ CPolygon * CPolygon::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size)
 //=============================================================================
 HRESULT CPolygon::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size)
 {
-	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetRenderer()->GetDevice();	//デバイスの取得
+	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスの取得
 	VERTEX_2D *pVtx = nullptr;												//頂点情報へのポインタ
 
 	m_pos = pos;	//初期位置の設定
@@ -128,7 +128,7 @@ void CPolygon::Update(void)
 void CPolygon::Draw(void)
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetRenderer()->GetDevice();	//デバイスのポインタ
+	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	//デバイスのポインタ
 
 	//頂点バッファをデバイスのデータストリームにバインド
 	pD3DDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));

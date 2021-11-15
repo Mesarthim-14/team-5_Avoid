@@ -25,15 +25,22 @@ class CModel : public CScene
 {
 public:
 	CModel(PRIORITY Priority);	// コンストラクタ
-	~CModel();
+	virtual ~CModel();
 
-	HRESULT Init(void);								// 初期化処理
-	void Uninit(void);								// 終了処理
-	void Update(void);								// 更新処理
-	void Draw(void);								// 描画処理
+	virtual HRESULT Init(void);									// 初期化処理
+	virtual void Uninit(void);									// 終了処理
+	virtual void Update(void);									// 更新処理
+	virtual void Draw(void);									// 描画処理
 	static CModel *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);	// インスタンス生成
 
+	// Get関数
+	D3DXVECTOR3 GetPos();
+	D3DXVECTOR3 GetRot();
+	CModelInfo* GetModelInfo(void) { return m_pModelInfo; }		// モデルの情報
+
 protected:
+	bool PlayerDisCollision(const float &fDistanse);							// プレイヤーとの距離の当たり判定
+
 	// Set関数
 	void SetMove(const D3DXVECTOR3 move)	{ m_move = move; }					// 移動量の設定
 	void SetSize(D3DXVECTOR3 size)			{ m_size = size; }					// サイズの設定
@@ -41,12 +48,10 @@ protected:
 	void SetLife(int nLife)					{ m_nLife = nLife; }				// ライフの設定
 	void SetScale(D3DXVECTOR3 scale)		{ m_scale = scale; }				// 拡大率
 
-	// Get関数
 	D3DXVECTOR3 &GetMove(void)			{ return m_move; }				// 移動量の情報
 	D3DXVECTOR3 GetSize(void)const		{ return m_size; }				// サイズの設定
 	int GetTexPattern(void)				{ return m_nTexPattern; }		// テクスチャ
 	int GetLife(void)					{ return m_nLife; }				// ライフの設定
-	CModelInfo* GetModelInfo(void)		{ return m_pModelInfo; }		// モデルの情報
 
 private:
 	// private関数

@@ -81,7 +81,6 @@ void CCamera::Update(void)
 		// 通常状態のカメラ移動
 		this->NomalUpdate();
 	}
-
 }
 
 //=============================================================================
@@ -90,7 +89,7 @@ void CCamera::Update(void)
 void CCamera::SetCamera(void)
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	//ビューマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxView);
@@ -112,7 +111,7 @@ void CCamera::SetCamera(void)
 		D3DXToRadian(45.0f),
 		(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,
 		10.0f,
-		200000.0f);
+		500000.0f);
 
 	//プロジェクションマトリックスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION,
@@ -128,7 +127,7 @@ void CCamera::ShowInfo(void)
 
 	if (ImGui::CollapsingHeader("CameraInfo"))
 	{
-		LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();	// デバイスの取得
+		LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	// デバイスの取得
 
 		if (ImGui::TreeNode("Camera"))
 		{
