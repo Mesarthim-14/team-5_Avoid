@@ -41,7 +41,6 @@
 //=============================================================================
 
 CManager* CManager::m_pManager = nullptr;
-CPause * CManager::m_pPause = nullptr;
 bool CManager::m_bPause = false;
 
 //=============================================================================
@@ -60,6 +59,7 @@ CManager::CManager()
 	m_pModeBase = nullptr;
 	m_pLight = nullptr;
 	m_pCamera = nullptr;
+	m_pPause = nullptr;
 }
 
 //=============================================================================

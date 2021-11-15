@@ -286,10 +286,10 @@ void CRenderer::Draw(void)
 			pFade->Draw();
 		}
 
-		if (CManager::GetMode() == CManager::MODE_TYPE_GAME&&CManager::GetActivePause())
+		if (CManager::GetInstance()->GetMode() == CManager::MODE_TYPE_GAME&&CManager::GetActivePause())
 		{// ポーズ状態の時
 		 // ポーズメニューの表示
-			CManager::GetPause()->Draw();
+			CManager::GetInstance()->GetPause()->Draw();
 		}
 #ifdef _DEBUG
 		//ImGuiの情報表示する時

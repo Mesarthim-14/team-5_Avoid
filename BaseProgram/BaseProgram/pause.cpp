@@ -103,8 +103,8 @@ void CPause::Uninit(void)
 //=====================================================================
 void CPause::Update(void)
 {
-	CInputKeyboard* pKey = CManager::GetKeyboard();
-	CFade *pFade = CManager::GetFade();
+	CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
+	CFade *pFade = CManager::GetInstance()->GetFade();
 	// 選んでるメニューで色分け
 	for (int nCntMenu = RESUME; nCntMenu < MAX; nCntMenu++)
 	{

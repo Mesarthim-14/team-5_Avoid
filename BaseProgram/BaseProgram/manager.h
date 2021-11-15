@@ -81,7 +81,7 @@ public:
 	CCamera *GetCamera(void)					{ return m_pCamera.get(); }				// カメラのポインタ
 	CLight *GetLight(void)						{ return m_pLight.get(); }				// ライトのポインタ
 	CPlayer *GetPlayer(void);															// プレイヤーの取得
-	static CPause * GetPause(void) { return m_pPause; }					// ポーズの取得処理
+	CPause *GetPause(void) { return m_pPause; }					// ポーズの取得処理
 	static void SetActivePause(bool bPause) { m_bPause = bPause; }					// ポーズのセット
 	static bool GetActivePause(void) { return m_bPause; }					// フェードの取得処理
 
@@ -104,7 +104,7 @@ private:
 	unique_ptr<CCamera> m_pCamera;						// カメラのポインタ
 	unique_ptr<CLight> m_pLight;						// ライトのポインタ
 	MODE_TYPE m_mode;									// モード
-
+	CPause *m_pPause;									// ポーズ
 	// シングルトン
 	CManager();		// コンストラクタ
 	static CManager* m_pManager;
