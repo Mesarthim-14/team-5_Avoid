@@ -30,7 +30,11 @@ public:
 	static int Random(const int nMin, const int nMax);												// ランダム変数
 	static float Random(const float fNum);															// ランダム変数
 	static float Random(const float fMin, const float fMax);										// ランダム変数
-	
+	static float DistanceCal(const D3DXVECTOR3 &pos1, const D3DXVECTOR3 &pos2);						// 二点の距離を計算
+	static BOOL KeyboardPress(const int &nKey);														// キーボードの押し込み判定
+	static BOOL KeyboardTrigger(const int &nKey);													// キーボードの押した判定
+	static BOOL KeyboardRelease(const int &nKey);													// キーボードの離した判定
+
 	// ジェイソンのファイルロード
 	static picojson::value JsonLoadFile(const string &FileName);
 

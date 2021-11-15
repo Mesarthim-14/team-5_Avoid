@@ -39,18 +39,8 @@
 //=============================================================================
 //静的メンバ変数宣言
 //=============================================================================
-CManager::MODE_TYPE CManager::m_mode = CManager::MODE_TYPE_TITLE;
-unique_ptr<CRenderer> CManager::m_pRenderer = nullptr;
-unique_ptr<CInputKeyboard> CManager::m_pInput = nullptr;
-unique_ptr<CMouse> CManager::m_pInputMouse = nullptr;
-unique_ptr<CFade> CManager::m_pFade = nullptr;
-unique_ptr<CInputJoypad> CManager::m_pJoypad = nullptr;
-unique_ptr<CScene> CManager::m_pScene = nullptr;
-unique_ptr<CResourceManager> CManager::m_pResourceManager = nullptr;
-unique_ptr<CModeBase> CManager::m_pModeBase = nullptr;
-unique_ptr<CLight> CManager::m_pLight = nullptr;
-unique_ptr<CCamera> CManager::m_pCamera = nullptr;
-CPause * CManager::m_pPause = nullptr;
+
+CManager* CManager::m_pManager = nullptr;
 bool CManager::m_bPause = false;
 
 //=============================================================================
@@ -58,6 +48,18 @@ bool CManager::m_bPause = false;
 //=============================================================================
 CManager::CManager()
 {
+	m_mode = CManager::MODE_TYPE_TITLE;
+	m_pRenderer = nullptr;
+	m_pInput = nullptr;
+	m_pInputMouse = nullptr;
+	m_pFade = nullptr;
+	m_pJoypad = nullptr;
+	m_pScene = nullptr;
+	m_pResourceManager = nullptr;
+	m_pModeBase = nullptr;
+	m_pLight = nullptr;
+	m_pCamera = nullptr;
+	m_pPause = nullptr;
 }
 
 //=============================================================================
@@ -375,6 +377,7 @@ void CManager::SetMode(MODE_TYPE mode)
 
 	// サウンドの情報
 	CSound *pSound = CManager::GetResourceManager()->GetSoundClass();
+
 	//サウンドストップ
 	pSound->StopAll();
 
@@ -472,4 +475,18 @@ CPlayer * CManager::GetPlayer(void)
 	}
 
 	return nullptr;
+}
+
+//=============================================================================
+// インスタンスの取得
+//=============================================================================
+CManager * CManager::GetInstance()
+{
+	if (!m_pManager)
+	{
+		m_pManager = new CManager;
+		return m_pManager;
+	}
+
+	return m_pManager;
 }

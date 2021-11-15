@@ -13,6 +13,8 @@
 #include "renderer.h"
 #include "shadow.h"
 #include "model_info.h"
+#include "player.h"
+#include "library.h"
 
 //=============================================================================
 // コンストラクタ
@@ -40,18 +42,39 @@ CModel::~CModel()
 //=============================================================================
 CModel * CModel::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
-	////モデルクラスのポインタ変数
-	//CModel *pModel = new CModel();
+	//モデルクラスのポインタ変数
+	CModel *pModel = new CModel(PRIORITY_MODEL);
 
-	//// nullcheck
-	//if (pModel)
-	//{
-	//	//初期化処理呼び出し
-	//	pModel->Init();
-	//	return pModel;
-	//}
+	// nullcheck
+	if (pModel)
+	{
+		//初期化処理呼び出し
+		pModel->Init();
+		return pModel;
+	}
 
 	return nullptr;
+}
+
+//=============================================================================
+// プレイヤーとの距離の当たり判定
+//=============================================================================
+bool CModel::PlayerDisCollision(const float & fDistanse)
+{
+	// 座標の取得
+	D3DXVECTOR3 PPos = CManager::GetInstance()->GetPlayer()->GetPos();
+	D3DXVECTOR3 ThisPos = GetModelInfo()->GetPos();
+
+	// 距離の取得
+	float fDistance = CLibrary::DistanceCal(PPos, ThisPos);
+
+	// 距離を測る
+	if (fDistance <= fDistanse)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 //=============================================================================
@@ -95,7 +118,7 @@ void CModel::Update(void)
 void CModel::Draw(void)
 {
 	//デバイス情報の取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 	D3DMATERIAL9 matDef;
 	D3DXMATRIX mtxRot, mtxTrans, mtxScale, mtxWorld;
 	D3DXVECTOR3 pos = m_pModelInfo->GetPos();
@@ -178,4 +201,20 @@ void CModel::CreateInfoPtr(void)
 	{
 		m_pModelInfo = CModelInfo::Create(CModelInfo::MODEL_TYPE_NONE);
 	}
+}
+
+//=============================================================================
+// 座標の情報取得
+//=============================================================================
+D3DXVECTOR3 CModel::GetPos()
+{
+	return GetModelInfo()->GetPos();
+}
+
+//=============================================================================
+// 角度の情報取得
+//=============================================================================
+D3DXVECTOR3 CModel::GetRot()
+{
+	return GetModelInfo()->GetRot();
 }

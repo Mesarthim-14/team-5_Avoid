@@ -112,7 +112,7 @@ void CFade::Update(void)
 					m_colorFade.a = 1.0f;
 					m_FadeMode = FADE_MODE_IN;
 
-					CManager::SetMode(m_modeNext);
+					CManager::GetInstance()->SetMode(m_modeNext);
 				}
 			}
 

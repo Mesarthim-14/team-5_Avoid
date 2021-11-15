@@ -83,7 +83,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	CManager *pManager = nullptr;	//マネージャークラスのポインタ
 
 	//マネージャークラスのインスタンス生成
-	pManager = new CManager;
+	pManager = CManager::GetInstance();
 
 	//メモリを確保できていたら
 	if (pManager != nullptr)

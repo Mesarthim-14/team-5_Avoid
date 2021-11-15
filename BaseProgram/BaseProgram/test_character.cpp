@@ -77,7 +77,7 @@ CTestCharacter::~CTestCharacter()
 HRESULT CTestCharacter::Init(void)
 {
 	// CXfileŽæ“¾
-	CXfile *pXfile = CManager::GetResourceManager()->GetXfileClass();
+	CXfile *pXfile = CManager::GetInstance()->GetResourceManager()->GetXfileClass();
 
 	// !nullcheck
 	if (pXfile != nullptr)
@@ -189,5 +189,9 @@ HRESULT CTestCharacter::JsonLoad(void)
 }
 
 void CTestCharacter::JsonWrite(void)
+{
+}
+
+void CTestCharacter::CreateModel()
 {
 }

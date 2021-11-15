@@ -68,21 +68,21 @@ void CTitle::Uninit(void)
 void CTitle::Update(void)
 {
 
-	CInputKeyboard* pKey = CManager::GetKeyboard();
-	CFade::FADE_MODE mode = CManager::GetFade()->GetFade();
+	CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
+	CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
 
 	// コントローラのstartを押したときか、エンターキーを押したとき
-	if (CManager::GetJoypad()->GetJoystickTrigger(CInputJoypad::JOY_BUTTON_START, 0) && mode == CFade::FADE_MODE_NONE
+	if (CManager::GetInstance()->GetJoypad()->GetJoystickTrigger(CInputJoypad::JOY_BUTTON_START, 0) && mode == CFade::FADE_MODE_NONE
 		|| pKey->GetTrigger(DIK_RETURN) && mode == CFade::FADE_MODE_NONE)
 	{
-		CFade *pFade = CManager::GetFade();
+		CFade *pFade = CManager::GetInstance()->GetFade();
 		pFade->SetFade(CManager::MODE_TYPE_GAME);
 	}
 
 	// エディットモード
 	if (pKey->GetTrigger(DIK_1) && mode == CFade::FADE_MODE_NONE)
 	{
-		CFade *pFade = CManager::GetFade();
+		CFade *pFade = CManager::GetInstance()->GetFade();
 		pFade->SetFade(CManager::MODE_TYPE_PLAYER_EDITOR);
 	}
 

@@ -29,8 +29,8 @@
 #define CAMERA_MIN_HIGHT			(2.0f)					// カメラの最低高度
 #define INPUT_CONVERSION			(D3DXToRadian(1.0f))	// スティック入力変化量
 
-#define CAMERA_DISTANCE (2000.0f)//プレイヤーとカメラの距離
-#define PLAYER_CAMERA_HEIGHT (300.0f) //プレイヤーの高さ
+#define CAMERA_DISTANCE			(2000.0f)//プレイヤーとカメラの距離
+#define PLAYER_CAMERA_HEIGHT	(300.0f) //プレイヤーの高さ
 
 //=============================================================================
 // インスタンス生成
@@ -100,7 +100,7 @@ HRESULT CCameraGame::Init(void)
 void CCameraGame::NomalUpdate(void)
 {
 	// プレイヤー
-	CPlayer *pPlayer = CManager::GetPlayer();
+	CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
 
 	// プレイヤーが使われていたら
 	if (pPlayer)
@@ -109,7 +109,7 @@ void CCameraGame::NomalUpdate(void)
 		D3DXVECTOR3 PlayerRot = pPlayer->GetPos();	//プレイヤー位置
 
 		// キーボードクラス情報の取得
-		CInputKeyboard *pKeyInput = CManager::GetKeyboard();
+		CInputKeyboard *pKeyInput = CManager::GetInstance()->GetKeyboard();
 
 		// カメラ座標
 		D3DXVECTOR3 VDest = ZeroVector3;
@@ -132,14 +132,14 @@ void CCameraGame::NomalUpdate(void)
 //=============================================================================
 void CCameraGame::MouseUpdate(void)
 {
-	CInputKeyboard *pKeyboard = CManager::GetKeyboard();	// キーボード更新
+	CInputKeyboard *pKeyboard = CManager::GetInstance()->GetKeyboard();	// キーボード更新
 	// プレイヤー
-	CPlayer *pPlayer = CManager::GetPlayer();
+	CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
 	D3DXVECTOR3 fRotateCenter; //カメラ回転の中心
 
 	POINT point;
 	GetCursorPos(&point);
-	D3DXVECTOR3 CameraRot = CManager::GetCamera()->GetRot();
+	D3DXVECTOR3 CameraRot = CManager::GetInstance()->GetCamera()->GetRot();
 	//if (CManager::GetIsActiveWindow() == true)//ウィンドウがアクティブならカーソルセット
 	//{
 	if (!pKeyboard->GetPress(DIK_LCONTROL))//LCONT押しているときはカーソル開放する
@@ -226,10 +226,10 @@ void CCameraGame::KeyBoardMove(const float &fDistance, float &fVartical,
 	float &fHorizontal, D3DXVECTOR3 PlayerPos)
 {
 	// プレイヤー
-	CPlayer *pPlayer = CManager::GetPlayer();
+	CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
 
 	//キーボードクラス情報の取得
-	CInputKeyboard *pKeyInput = CManager::GetKeyboard();
+	CInputKeyboard *pKeyInput = CManager::GetInstance()->GetKeyboard();
 	D3DXVECTOR3 VDest = ZeroVector3;
 
 	//視点（カメラ座標）の左旋回

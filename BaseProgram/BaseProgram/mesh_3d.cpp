@@ -56,7 +56,7 @@ CMesh3d::~CMesh3d()
 void CMesh3d::Draw(void)
 {
 	// Rendererクラスからデバイスを取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	// マトリクス計算
 	CLibrary::ConfigMatrix(&m_mtxWorld, GetPos(), GetRot());

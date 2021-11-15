@@ -123,7 +123,7 @@ void CScene2D::Update(void)
 void CScene2D::Draw(void)
 {
 	// Rendererクラスからデバイスを取得
-	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	//アルファテストを有効化
 	pD3DDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
@@ -185,7 +185,7 @@ void CScene2D::SetColor(const D3DXCOLOR &col)
 void CScene2D::CreateVertex(void)
 {
 	// Rendererクラスからデバイスを取得
-	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = nullptr;		// バッファ
 
@@ -243,7 +243,7 @@ void CScene2D::CreateVertex(void)
 void CScene2D::SetVertexPos(void)
 {
 	// Rendererクラスからデバイスを取得
-	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();		// バッファ
 

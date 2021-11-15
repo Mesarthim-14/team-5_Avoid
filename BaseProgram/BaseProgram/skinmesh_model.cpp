@@ -21,6 +21,7 @@ const char * CSkinmeshModel::m_aParam[MODEL_MAX] =
 	"data/Model/Hierarchy/player/slime_50.x",
 	"data/Model/Hierarchy/player/slime_50.x",
 	"data/Model/Hierarchy/player/slime_100.x",
+	"data/Model/Hierarchy/Enemy/Kraken.x",
 };
 
 
@@ -81,7 +82,7 @@ HRESULT CSkinmeshModel::Init(void)
 	CreateInfoPtr();
 
 	//デバイス情報の取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	// スキンメッシュ情報をXファイル保存用
 	SkinMesh::AllocateHierarchy allocater;
@@ -166,7 +167,7 @@ void CSkinmeshModel::Draw(void)
 	if (m_bIsDraw)
 	{
 		//デバイス情報の取得
-		LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+		LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 		D3DMATERIAL9 matDef;
 		D3DXMATRIX mtxRot, mtxTrans, mtxScale, mtxWorld;
 		D3DXVECTOR3 pos = m_pModelInfo->GetPos();

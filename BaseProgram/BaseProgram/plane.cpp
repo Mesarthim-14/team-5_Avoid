@@ -19,7 +19,7 @@
 void CPlane::Draw(void)
 {
 	// デバイス情報取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);			// ライト無効
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);	// アルファテストを有力化

@@ -99,7 +99,7 @@ void CShadow::VolumeDraw(void)
 	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
 
 	// レンダラーポインタ取得
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//ワールドマトリクスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_ModelMtxWorld);

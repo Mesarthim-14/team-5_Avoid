@@ -26,7 +26,7 @@ CBillboard::CBillboard(PRIORITY Priority) : CScene3D(Priority)
 void CBillboard::Draw(void)
 {
 	// デバイス情報取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	//計算用のマトリクス
 	D3DXMATRIX mtxRot, mtxTrans, mtxScale, mtxWorld;

@@ -18,6 +18,9 @@
 CTexture::CTexture()
 {
 	memset(m_apTexture, 0, sizeof(m_apTexture));
+	memset(m_pVolumeTexture, 0, sizeof(m_pVolumeTexture));
+	memset(m_pCubeTexture, 0, sizeof(m_pCubeTexture));
+	memset(m_aTexFileName, 0, sizeof(m_aTexFileName));
 }
 
 //=============================================================================
@@ -62,6 +65,7 @@ HRESULT CTexture::SetTextureName(void)
 		{ "data/Texture/test.jpg" },				// テスト
 		{ "data/Texture/Gauge.png" },
 		{ "data/Texture/Gauge_Frame.png" },
+		{ "data/Texture/E-key.png" },				// E-KEY
 	};
 
 	// 分割テクスチャ
@@ -127,7 +131,7 @@ void CTexture::UnLoadAll(void)
 HRESULT CTexture::NormalTexLoad(void)
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	// テクスチャの読み込み
 	size_t size = m_aTexFileName[TEXTURE_TYPE_NUM_NORMAL].size();
@@ -160,7 +164,7 @@ void CTexture::NormalTexUnLoad(void)
 HRESULT CTexture::SeparateTexLoad(void)
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	// 分割テクスチャの読み込み
 	size_t size = m_aTexFileName[TEXTURE_TYPE_NUM_SEPARATE].size();

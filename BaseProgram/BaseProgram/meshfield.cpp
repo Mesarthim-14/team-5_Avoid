@@ -81,7 +81,7 @@ void CMeshField::Draw(void)
 void CMeshField::CreateVerterx(void)
 {
 	// Rendererクラスからデバイスを取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 	VERTEX_3D *pVtx = nullptr;
 
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = nullptr;		// バッファ

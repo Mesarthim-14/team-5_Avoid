@@ -67,7 +67,7 @@ void CScene3D::Update(void)
 //=============================================================================
 void CScene3D::CreateVertex(void)
 {
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();	// デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	// デバイスの取得
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = nullptr;							// 頂点バッファ変数の宣言
 
 	//頂点バッファの生成

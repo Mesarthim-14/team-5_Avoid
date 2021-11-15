@@ -28,13 +28,15 @@ class CSkinmeshModel : public CScene
 {
 public:
 
-	typedef enum
+	//モデル名前
+	enum MODEL
 	{
-		MODEL_PLAYER_10 = 0,//スライム１０％の状態
-		MODEL_PLAYER_50,//スライム５０％の状態
-		MODEL_PLAYER_100,//スライム１００％の状態
+		MODEL_PLAYER_10 = 0,	//スライム１０％の状態
+		MODEL_PLAYER_50,		//スライム５０％の状態
+		MODEL_PLAYER_100,		//スライム１００％の状態
+		MODEL_ENEMY_KRAKEN,		// クラーケン
 		MODEL_MAX
-	}MODEL;//モデル名前
+	};
 	CSkinmeshModel(PRIORITY Priority = PRIORITY_EFFECT);	// コンストラクタ
 	~CSkinmeshModel();
 
@@ -48,6 +50,7 @@ public:
 	void SetPos(D3DXVECTOR3 pos) { m_pModelInfo->SetPos(pos); }						// 現在の座標情報
 	void SetRot(D3DXVECTOR3 rot){ m_pModelInfo->SetRot(rot); }						// 角度情報
 	void IsDraw(bool bIsDraw) { m_bIsDraw = bIsDraw; };								// 描画するか
+	UINT MaxAction() { return m_pAnimetionController->GetMaxNumAnimationSets(); }
 
 protected:
 	// Set関数
@@ -63,26 +66,25 @@ protected:
 	int GetTexPattern(void) { return m_nTexPattern; }		// テクスチャ
 	int GetLife(void) { return m_nLife; }					// ライフの設定
 	CModelInfo* GetModelInfo(void) { return m_pModelInfo; }	// モデルの情報
-
 private:
 	// private関数
 	void HasPtrDelete(void);	// 保持ポインタの開放処理
 	void CreateInfoPtr(void);	// 情報のポインタ生成
 
 	// メンバ変数
-	CModelInfo* m_pModelInfo;									// モデルの情報
-	D3DXVECTOR3 m_move;											// 移動量
-	D3DXVECTOR3 m_size;											// サイズ
-	D3DXVECTOR3 m_scale;										// 拡大率
-	bool		m_bIsDraw;										// 描画するか
-	int m_nTexPattern;											// テクスチャのパターン数
-	int m_nLife;												// ライフ
-	ID3DXAnimationController * m_pAnimetionController;			//アニメーションコントローラー
-	SkinMesh::SMD3DXFRAME				 * m_pRootFrame;		// ルートフレーム
-	std::vector<SkinMesh::SMD3DXMESHCONTAINER*> m_cont;			// SMD3DXMESHCONTAINER(メッシュ)関連の情報を保存用
-	std::vector<D3DXBONECOMBINATION*> m_combs;					//ボーンコンビネーションテーブルのポインタ取得
-	IHighLevelAnimController * m_HLcontroller;					//ハイレベルアニメーションコントローラー
-	static const char* m_aParam[MODEL_MAX];						//モデルパス名
-	MODEL			   m_ModelNum;								// モデルの名前
+	CModelInfo* m_pModelInfo;								// モデルの情報
+	D3DXVECTOR3 m_move;										// 移動量
+	D3DXVECTOR3 m_size;										// サイズ
+	D3DXVECTOR3 m_scale;									// 拡大率
+	bool m_bIsDraw;											// 描画するか
+	int m_nTexPattern;										// テクスチャのパターン数
+	int m_nLife;											// ライフ
+	ID3DXAnimationController * m_pAnimetionController;		//アニメーションコントローラー
+	SkinMesh::SMD3DXFRAME *m_pRootFrame;					// ルートフレーム
+	std::vector<SkinMesh::SMD3DXMESHCONTAINER*> m_cont;		// SMD3DXMESHCONTAINER(メッシュ)関連の情報を保存用
+	std::vector<D3DXBONECOMBINATION*> m_combs;				//ボーンコンビネーションテーブルのポインタ取得
+	IHighLevelAnimController * m_HLcontroller;				//ハイレベルアニメーションコントローラー
+	static const char* m_aParam[MODEL_MAX];					//モデルパス名
+	MODEL m_ModelNum;										// モデルの名前
 };
 #endif 

@@ -35,6 +35,7 @@ public:
 private:
 	HRESULT JsonLoad(void);	
 	void JsonWrite(void);
+	void CreateModel();
 
 	D3DXVECTOR3 m_rotDest;							// 回転(目標値)
 	bool m_bMove;									// 移動のフラグ
