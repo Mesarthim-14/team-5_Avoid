@@ -76,6 +76,9 @@
     <Filter Include="03_Mode\pause">
       <UniqueIdentifier>{0d451309-488e-4534-acd7-dd6ee910099d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06_Effect\particle">
+      <UniqueIdentifier>{a24672c1-e42c-44fe-9d90-32c964d0aad0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="collision.cpp">
@@ -248,6 +251,9 @@
     </ClCompile>
     <ClCompile Include="pause.cpp">
       <Filter>03_Mode\pause</Filter>
+    </ClCompile>
+    <ClCompile Include="particle_info.cpp">
+      <Filter>06_Effect\particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -430,6 +436,9 @@
     </ClInclude>
     <ClInclude Include="pause.h">
       <Filter>03_Mode\pause</Filter>
+    </ClInclude>
+    <ClInclude Include="particle_info.h">
+      <Filter>06_Effect\particle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
