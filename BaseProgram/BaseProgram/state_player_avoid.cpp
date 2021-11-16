@@ -17,6 +17,7 @@
 #include "animation_skinmesh.h"
 #include "mouse.h"
 #include "state_player_normal.h"
+#include "state_player_stun.h"
 
 //=====================================================================
 // マクロ定義
@@ -65,7 +66,7 @@ void CPlayerStateAvoid::Init()
 	// アニメーション設定
 	SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_JUMP), 60);
 	SetMove();
-//	Update();
+	Update();
 }
 
 //=====================================================================
@@ -81,7 +82,7 @@ void CPlayerStateAvoid::Update()
 
 	if (pPlayer->GetLanding())
 	{
-		pPlayer->ChangeState(CPlayerStateNormal::Create());
+		pPlayer->ChangeState(CPlayerStateStun::Create());
 	}
 }
 

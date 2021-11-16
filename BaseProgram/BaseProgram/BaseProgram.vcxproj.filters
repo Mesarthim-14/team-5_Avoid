@@ -139,6 +139,9 @@
     <Filter Include="03_Mode\pause">
       <UniqueIdentifier>{0d451309-488e-4534-acd7-dd6ee910099d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="08_Object\EnemyObject">
+      <UniqueIdentifier>{d187ac1d-2400-4b01-8b57-d82df842dcad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="collision.cpp">
@@ -446,6 +449,12 @@
     </ClCompile>
     <ClCompile Include="pause.cpp">
       <Filter>03_Mode\pause</Filter>
+    </ClCompile>
+    <ClCompile Include="boss_bullet.cpp">
+      <Filter>08_Object\EnemyObject</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>08_Object\EnemyObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -763,6 +772,12 @@
     </ClInclude>
     <ClInclude Include="pause.h">
       <Filter>03_Mode\pause</Filter>
+    </ClInclude>
+    <ClInclude Include="boss_bullet.h">
+      <Filter>08_Object\EnemyObject</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>08_Object\EnemyObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

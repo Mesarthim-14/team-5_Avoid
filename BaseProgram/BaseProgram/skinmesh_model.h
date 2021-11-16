@@ -34,7 +34,7 @@ public:
 		MODEL_PLAYER_10 = 0,	//スライム１０％の状態
 		MODEL_PLAYER_50,		//スライム５０％の状態
 		MODEL_PLAYER_100,		//スライム１００％の状態
-		MODEL_ENEMY_KRAKEN,		// クラーケン
+		MODEL_ENEMY_KRAKEN_HEAD,		// クラーケン
 		MODEL_MAX
 	};
 	CSkinmeshModel(PRIORITY Priority = PRIORITY_EFFECT);	// コンストラクタ

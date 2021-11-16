@@ -29,8 +29,9 @@
 #include "ghost.h"
 #include "gimmick_factory.h"
 #include "game_mode.h"
+#include "kraken.h"
 
-float CGame::m_fGravity = 4.0f;
+float CGame::m_fGravity = 1.5f;
 //=======================================================================================
 // コンストラクタ
 //=======================================================================================
@@ -159,6 +160,7 @@ void CGame::CreateEnemy()
 {
 //	CShark::Create();
 	CGhost::Create();
+	CKraken::Create();
 }
 
 //=======================================================================================
