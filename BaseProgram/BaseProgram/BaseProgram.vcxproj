@@ -149,7 +149,9 @@
     <ClCompile Include="barrel_factory.cpp" />
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="blur_filter.cpp" />
+    <ClCompile Include="boss_bullet.cpp" />
     <ClCompile Include="bridge.cpp" />
+    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="camera_game.cpp" />
     <ClCompile Include="camera_title.cpp" />
@@ -255,7 +257,9 @@
     <ClInclude Include="barrel_factory.h" />
     <ClInclude Include="billboard.h" />
     <ClInclude Include="blur_filter.h" />
+    <ClInclude Include="boss_bullet.h" />
     <ClInclude Include="bridge.h" />
+    <ClInclude Include="bullet.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="camera_game.h" />
     <ClInclude Include="camera_title.h" />

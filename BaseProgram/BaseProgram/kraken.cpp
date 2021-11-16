@@ -11,6 +11,10 @@
 #include "kraken.h"
 #include "animation_skinmesh.h"
 #include "skinmesh_model.h"
+#include "boss_bullet.h"
+
+#define BULLET_INTERVAL         (120)									// たま発射間隔
+
 
 //=============================================================================
 // コンストラクタ
@@ -18,6 +22,7 @@
 CKraken::CKraken(PRIORITY Priority) : CEnemy(Priority)
 {
 	m_pSkinmeshModel = nullptr;
+	m_nBulletCount = 0;
 }
 
 //=============================================================================
@@ -75,10 +80,29 @@ void CKraken::Uninit()
 void CKraken::Update()
 {
 	CEnemy::Update();
+	Attack();
 }
 
+//=============================================================================
+// 攻撃処理
+//=============================================================================
 void CKraken::Attack()
 {
+	ShotBullet();
+}
+
+//=============================================================================
+// 弾発射
+// Author : hayashikawa sarina
+//=============================================================================
+void CKraken::ShotBullet(void)
+{
+	m_nBulletCount++;
+	if (m_nBulletCount == BULLET_INTERVAL)
+	{
+		CBossBullet::Create(ZeroVector3, ZeroVector3, D3DXVECTOR3(50.0f, 0.0f, 0.0f));
+		m_nBulletCount = 0;
+	}
 }
 
 //=============================================================================
@@ -86,7 +110,10 @@ void CKraken::Attack()
 //=============================================================================
 void CKraken::CreateModel()
 {
-	m_pSkinmeshModel = CSkinmeshModel::Create(GetPos(), GetRot(), CSkinmeshModel::MODEL_ENEMY_KRAKEN);
+	m_pSkinmeshModel = CSkinmeshModel::Create(GetPos(), GetRot(), CSkinmeshModel::MODEL_ENEMY_KRAKEN_HEAD);
+
+	m_pSkinmeshModel->IsDraw(true);
+	//SetAction(m_pSkinmeshModel->MaxAction());
 
 	// モデルの情報…分からない
 	m_pSkinmeshModel->GetHLcontroller()->ChangeAnimation(0);

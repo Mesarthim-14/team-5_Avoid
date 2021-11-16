@@ -139,8 +139,8 @@
     <Filter Include="03_Mode\pause">
       <UniqueIdentifier>{0d451309-488e-4534-acd7-dd6ee910099d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06_Effect\particle">
-      <UniqueIdentifier>{a24672c1-e42c-44fe-9d90-32c964d0aad0}</UniqueIdentifier>
+    <Filter Include="08_Object\EnemyObject">
+      <UniqueIdentifier>{d187ac1d-2400-4b01-8b57-d82df842dcad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -450,8 +450,11 @@
     <ClCompile Include="pause.cpp">
       <Filter>03_Mode\pause</Filter>
     </ClCompile>
-    <ClCompile Include="particle_info.cpp">
-      <Filter>06_Effect\particle</Filter>
+    <ClCompile Include="boss_bullet.cpp">
+      <Filter>08_Object\EnemyObject</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>08_Object\EnemyObject</Filter>
     </ClCompile>
     <ClCompile Include="particlepop.cpp">
       <Filter>06_Effect\particle</Filter>
@@ -773,8 +776,11 @@
     <ClInclude Include="pause.h">
       <Filter>03_Mode\pause</Filter>
     </ClInclude>
-    <ClInclude Include="particle_info.h">
-      <Filter>06_Effect\particle</Filter>
+    <ClInclude Include="boss_bullet.h">
+      <Filter>08_Object\EnemyObject</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>08_Object\EnemyObject</Filter>
     </ClInclude>
     <ClInclude Include="particlepop.h">
       <Filter>06_Effect\particle</Filter>

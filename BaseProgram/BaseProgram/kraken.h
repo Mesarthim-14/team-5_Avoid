@@ -26,15 +26,16 @@ public:
 	CKraken(PRIORITY Priority = PRIORITY_CHARACTER);	// コンストラクタ
 	~CKraken();											// デストラクタ
 
-	CKraken *Create();									// インスタンス生成
+	static CKraken *Create();									// インスタンス生成
 	HRESULT Init();										// 初期化処理
 	void Uninit();										// 終了処理
 	void Update();										// 更新処理
 private:
 	// private関数
 	void Attack();						// 攻撃
+	void ShotBullet(void);				// 弾発射
 	void CreateModel();					// モデルの生成
 	CSkinmeshModel *m_pSkinmeshModel;	// スキンメッシュモデルポインタ
-
+	int m_nBulletCount;					// 発射カウント
 };
 #endif

@@ -365,7 +365,7 @@ void CPlayer::Jump(void)
 void CPlayer::Avoidance(void)
 {
 	CMouse *pMouse = CManager::GetInstance()->GetMouse();	// キーボード更新
-	if (GetLanding() == true && pMouse->GetButtonTrigger(CMouse::MOUSE_LEFT) && GetState() != STATE_AVOID)//回避
+	if (GetLanding() == true && pMouse->GetButtonTrigger(CMouse::MOUSE_LEFT))//回避
 	{
 		ChangeState(CPlayerStateAvoid::Create());
 	}
