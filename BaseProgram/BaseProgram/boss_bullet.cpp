@@ -75,7 +75,7 @@ HRESULT CBossBullet::Init(void)
 	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_CANNON_BULLET);
 	m_pModel->GetModelInfo()->SetModelStatus(m_pos, m_rot, model);
 
-	m_nLife = 100;
+	m_nLife = 200;
 
 	return S_OK;
 }
@@ -85,6 +85,11 @@ HRESULT CBossBullet::Init(void)
 //=============================================================================
 void CBossBullet::Uninit(void)
 {
+	if (m_pModel != nullptr)
+	{
+		m_pModel->Uninit();
+		m_pModel = nullptr;
+	}
 	CBullet::Uninit();
 }
 
@@ -95,7 +100,11 @@ void CBossBullet::Update(void)
 {
 	// Õ“Ë”»’è
 	Hit();
- 	m_pModel->GetModelInfo()->SetPos(m_pos);
+	if (m_pModel != nullptr)
+	{
+		m_pModel->GetModelInfo()->SetPos(m_pos);
+	}
+ 	
 	CBullet::Update();
 }
 

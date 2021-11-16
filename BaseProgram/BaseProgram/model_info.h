@@ -45,7 +45,7 @@ public:
 	void CreateShadowPtr(void);			// 影の生成
 
 	// Set関数
-	void SetPos(const D3DXVECTOR3 pos)		{ m_pos = pos; }					// 座標
+ 	void SetPos(const D3DXVECTOR3 pos)		{ m_pos = pos; }					// 座標
 	void SetRot(const D3DXVECTOR3 rot)		{ m_rot = rot; }					// 向き設定
 	void SetModel(CXfile::MODEL model)		{ m_model = model; }				// モデル情報の設定
 	void SetMtxWorld(D3DXMATRIX mtxWorld)	{ m_mtxWorld = mtxWorld; }			// マトリクスワールド設定
