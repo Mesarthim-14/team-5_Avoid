@@ -200,7 +200,7 @@
     <ClCompile Include="mode_base.cpp" />
     <ClCompile Include="motion.cpp" />
     <ClCompile Include="mouse.cpp" />
-    <ClCompile Include="move_scaffold.cpp" />
+    <ClCompile Include="particle_info.cpp" />    <ClCompile Include="move_scaffold.cpp" />
     <ClCompile Include="parallax_mapping2.cpp" />
     <ClCompile Include="pause.cpp" />
     <ClCompile Include="plane.cpp" />
@@ -309,7 +309,7 @@
     <ClInclude Include="mode_base.h" />
     <ClInclude Include="motion.h" />
     <ClInclude Include="mouse.h" />
-    <ClInclude Include="move_scaffold.h" />
+    <ClInclude Include="particle_info.h" />    <ClInclude Include="move_scaffold.h" />
     <ClInclude Include="parallax_mapping2.h" />
     <ClInclude Include="pause.h" />
     <ClInclude Include="plane.h" />
