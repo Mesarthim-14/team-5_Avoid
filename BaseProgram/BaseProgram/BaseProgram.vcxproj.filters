@@ -453,6 +453,9 @@
     <ClCompile Include="particle_info.cpp">
       <Filter>06_Effect\particle</Filter>
     </ClCompile>
+    <ClCompile Include="particlepop.cpp">
+      <Filter>06_Effect\particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision.h">
@@ -771,6 +774,9 @@
       <Filter>03_Mode\pause</Filter>
     </ClInclude>
     <ClInclude Include="particle_info.h">
+      <Filter>06_Effect\particle</Filter>
+    </ClInclude>
+    <ClInclude Include="particlepop.h">
       <Filter>06_Effect\particle</Filter>
     </ClInclude>
   </ItemGroup>
