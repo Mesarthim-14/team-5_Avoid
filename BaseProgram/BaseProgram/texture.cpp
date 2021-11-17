@@ -63,6 +63,7 @@ HRESULT CTexture::SetTextureName(void)
 	m_aTexFileName[TEXTURE_TYPE_NUM_NORMAL] =
 	{
 		{ "data/Texture/test.jpg" },				// ƒeƒXƒg
+		{ "data/Texture/star.png" },
 		{ "data/Texture/Gauge.png" },
 		{ "data/Texture/Gauge_Frame.png" },
 		{ "data/Texture/E-key.png" },				// E-KEY
