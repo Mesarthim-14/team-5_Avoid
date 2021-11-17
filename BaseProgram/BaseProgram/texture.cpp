@@ -66,7 +66,8 @@ HRESULT CTexture::SetTextureName(void)
 		{ "data/Texture/star.png" },
 		{ "data/Texture/Gauge.png" },
 		{ "data/Texture/Gauge_Frame.png" },
-		{ "data/Texture/E-key.png" },				// E-KEY
+		{ "data/Texture/E-key.png"},
+		{ "data/Texture/E-key.png" },				// 仮のパーティクル
 	};
 
 	// 分割テクスチャ

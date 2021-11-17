@@ -18,7 +18,7 @@
 
 const char * CSkinmeshModel::m_aParam[MODEL_MAX] =
 {
-	"data/Model/Hierarchy/player/slime_50.x",
+	"data/Model/Hierarchy/player/slime_10.x",
 	"data/Model/Hierarchy/player/slime_50.x",
 	"data/Model/Hierarchy/player/slime_100.x",
 	"data/Model/Hierarchy/enemy/boss/takohead.x",
