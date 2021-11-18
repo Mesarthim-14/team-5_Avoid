@@ -16,6 +16,7 @@
 #include "skinmesh_model.h"
 #include "animation_skinmesh.h"
 #include "camera.h"
+#include "particlepop.h"
 
 //=====================================================================
 // コンストラクタ
@@ -151,6 +152,10 @@ void CPlayerState::MoveByKeyboard(CPlayer* &pPlayer)
 		Inertia.z = +cosf((fAngle + D3DXToRadian(45.0f)))*fSpeed;
 		rotDest.y = atan2f(Inertia.x, Inertia.z) + D3DXToRadian(180.0f);
 		m_bMove[0] = true;
+	}
+	if (CLibrary::KeyboardPress(DIK_Z))
+	{
+		CParticlePop::Create(pos);
 	}
 
 	// 座標設定
