@@ -19,9 +19,8 @@ float CParticlePop::m_fSize = 0.0f;
 //=====================================================================
 // ƒ}ƒNƒ’è‹`
 //=====================================================================
-#define POS			(ZeroVector3)
 #define SIZE		(D3DXVECTOR3(m_fSize, m_fSize, m_fSize))
-#define ANGLE		(4.0f)
+#define ANGLE		(3.0f)
 #define SPEED		(10.0f)
 #define RANDOM		(3.14f)
 #define LIFE		(90)
@@ -47,14 +46,14 @@ CParticlePop::~CParticlePop()
 //=====================================================================
 // ¶¬ˆ—
 //=====================================================================
-CParticlePop * CParticlePop::Create(void)
+CParticlePop * CParticlePop::Create(D3DXVECTOR3 pos)
 {
 	CParticlePop * pParticlePop = new CParticlePop;
 
 	if (pParticlePop)
 	{
-		m_fSize = CLibrary::Random(20.0f, 60.0f);
-		pParticlePop->SetSceneInfo(POS, SIZE);
+		m_fSize = CLibrary::Random(100.0f, 150.0f);
+		pParticlePop->SetSceneInfo(pos, SIZE);
 
 		pParticlePop->Init();
 		return pParticlePop;
