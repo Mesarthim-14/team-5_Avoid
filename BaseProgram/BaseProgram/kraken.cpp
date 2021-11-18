@@ -13,8 +13,8 @@
 #include "skinmesh_model.h"
 #include "boss_bullet.h"
 
+#define POS						(D3DXVECTOR3(-16686.5f, 0.0f, -2596.4f))
 #define BULLET_INTERVAL         (120)									// たま発射間隔
-
 
 //=============================================================================
 // コンストラクタ
@@ -52,6 +52,9 @@ CKraken * CKraken::Create()
 //=============================================================================
 HRESULT CKraken::Init()
 {
+	// モデル情報設定
+	SetCharacterInfo(POS, ZeroVector3);
+
 	CEnemy::Init();
 
 	// モデルの生成
@@ -100,7 +103,7 @@ void CKraken::ShotBullet(void)
 	m_nBulletCount++;
 	if (m_nBulletCount == BULLET_INTERVAL)
 	{
-		CBossBullet::Create(ZeroVector3, ZeroVector3, D3DXVECTOR3(50.0f, 0.0f, 0.0f));
+		CBossBullet::Create(POS, ZeroVector3, D3DXVECTOR3(50.0f, 0.0f, 0.0f));
 		m_nBulletCount = 0;
 	}
 }

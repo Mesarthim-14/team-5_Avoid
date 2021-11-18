@@ -232,6 +232,8 @@
     <ClCompile Include="slope.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="state.cpp" />
+    <ClCompile Include="state_camera.cpp" />
+    <ClCompile Include="state_camera_normal.cpp" />
     <ClCompile Include="state_player.cpp" />
     <ClCompile Include="state_player_avoid.cpp" />
     <ClCompile Include="state_player_jump.cpp" />
@@ -343,6 +345,8 @@
     <ClInclude Include="slope.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="state.h" />
+    <ClInclude Include="state_camera.h" />
+    <ClInclude Include="state_camera_normal.h" />
     <ClInclude Include="state_player.h" />
     <ClInclude Include="state_player_avoid.h" />
     <ClInclude Include="state_player_jump.h" />

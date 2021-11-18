@@ -39,7 +39,6 @@ CCamera::CCamera()
 	m_fMove = 0.0f;
 	m_fHorizontal = 0.0f;
 	m_fVartical = 0.0f;
-	m_bMouseCountrol = false;
 }
 
 //=============================================================================
@@ -52,7 +51,7 @@ CCamera::~CCamera()
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CCamera::Init(void)
+HRESULT CCamera::Init()
 {
 
 	return S_OK;
@@ -61,7 +60,7 @@ HRESULT CCamera::Init(void)
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CCamera::Uninit(void)
+void CCamera::Uninit()
 {
 
 }
@@ -69,24 +68,15 @@ void CCamera::Uninit(void)
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CCamera::Update(void)
+void CCamera::Update()
 {
-	if (m_bMouseCountrol)
-	{
-		// マウス状態のカメラ移動
-		this->MouseUpdate();
-	}
-	else
-	{
-		// 通常状態のカメラ移動
-		this->NomalUpdate();
-	}
+
 }
 
 //=============================================================================
 //カメラクラスのセット処理
 //=============================================================================
-void CCamera::SetCamera(void)
+void CCamera::SetCamera()
 {
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
@@ -121,7 +111,7 @@ void CCamera::SetCamera(void)
 //=============================================================================
 // imguiの設定
 //=============================================================================
-void CCamera::ShowInfo(void)
+void CCamera::ShowInfo()
 {
 	ImGui::Begin("DebugInfo");
 
@@ -132,9 +122,6 @@ void CCamera::ShowInfo(void)
 		if (ImGui::TreeNode("Camera"))
 		{
 			ImGui::SliderFloat("Horizontal", &m_fHorizontal, D3DXToRadian(-180), D3DXToRadian(180));
-
-			ImGui::Checkbox("isMouseControl", &m_bMouseCountrol);
-
 			ImGui::TreePop();
 		}
 	}

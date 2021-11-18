@@ -13,6 +13,11 @@
 #include "camera.h"
 
 //=============================================================================
+// 前方宣言
+//=============================================================================
+class CCameraState;
+
+//=============================================================================
 // カメラクラス
 //=============================================================================
 class CCameraGame : public CCamera
@@ -21,17 +26,15 @@ public:
 	CCameraGame();					// コンストラクタ
 	~CCameraGame();					// デストラクタ
 
-	HRESULT Init(void);					// 初期化処理
-	static CCameraGame*Create(void);	// クリエイト
+	HRESULT Init();					// 初期化処理
+	void Update();					// 更新処理
+	static CCameraGame*Create();	// クリエイト
 
 private:
-	// private関数
-	void NomalUpdate(void) override;
-	// private関数
-	void MouseUpdate(void) override;
-	void Tracking(const float &fDistance, float &fVartical,
-		float &fHorizontal, const D3DXVECTOR3 &PlayerPos, const D3DXVECTOR3 &PlayerRot);	// 追従
-	void KeyBoardMove(const float &fDistance, float &fVartical,
-		float &fHorizontal, D3DXVECTOR3 PlayerPos);											// キーボードの動き
+	void StateUpdate();				// 状態の更新処理
+
+	// メンバ変数
+	CCameraState* m_pCurrentState;	// 現在の状態ポインタ
+	CCameraState* m_pNextState;		// 次の状態ポインタ
 };
 #endif 

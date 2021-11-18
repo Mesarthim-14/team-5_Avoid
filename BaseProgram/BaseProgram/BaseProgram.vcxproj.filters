@@ -142,6 +142,9 @@
     <Filter Include="08_Object\EnemyObject">
       <UniqueIdentifier>{d187ac1d-2400-4b01-8b57-d82df842dcad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="10_State\CameraState">
+      <UniqueIdentifier>{27359d3e-f4fb-40b0-a1d1-bba9b9be8d0a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="collision.cpp">
@@ -457,7 +460,16 @@
       <Filter>08_Object\EnemyObject</Filter>
     </ClCompile>
     <ClCompile Include="particlepop.cpp">
-      <Filter>06_Effect\particle</Filter>
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="particle_info.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="state_camera.cpp">
+      <Filter>10_State\CameraState</Filter>
+    </ClCompile>
+    <ClCompile Include="state_camera_normal.cpp">
+      <Filter>10_State\CameraState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -783,7 +795,16 @@
       <Filter>08_Object\EnemyObject</Filter>
     </ClInclude>
     <ClInclude Include="particlepop.h">
-      <Filter>06_Effect\particle</Filter>
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="particle_info.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="state_camera.h">
+      <Filter>10_State\CameraState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_camera_normal.h">
+      <Filter>10_State\CameraState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
