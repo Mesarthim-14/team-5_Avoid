@@ -55,7 +55,7 @@ CCharacter::~CCharacter()
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CCharacter::Init(void)
+HRESULT CCharacter::Init()
 {
 
 	return S_OK;
@@ -211,7 +211,7 @@ void CCharacter::ModelCreate(const CXfile::HIERARCHY_XFILE_NUM &FileNum)
 //=============================================================================
 // モデルアニメーション
 //=============================================================================
-void CCharacter::ModelAnimeUpdate(void)
+void CCharacter::ModelAnimeUpdate()
 {
 	// モーションの更新処理
 	if (m_pMotion)
@@ -224,7 +224,7 @@ void CCharacter::ModelAnimeUpdate(void)
 //=============================================================================
 // 重力の処理
 //=============================================================================
-void CCharacter::Gravity(void)
+void CCharacter::Gravity()
 {
 	if (!m_bLanding && m_bGravity)
 	{
@@ -248,7 +248,7 @@ void CCharacter::Gravity(void)
 //=============================================================================
 // 着地の処理
 //=============================================================================
-void CCharacter::Landing(float fHeight)
+void CCharacter::Landing(const float &fHeight)
 {
 	m_move.y = 0.0f;
 	m_pos.y = fHeight;
@@ -263,7 +263,7 @@ void CCharacter::Landing(float fHeight)
 //=============================================================================
 // モーションの設定
 //=============================================================================
-void CCharacter::SetMotion(int nMotionState)
+void CCharacter::SetMotion(const int &nMotionState)
 {
 	// nullcheck
 	if (m_pMotion)
@@ -276,7 +276,7 @@ void CCharacter::SetMotion(int nMotionState)
 //=============================================================================
 // 影の回転を反映させるか
 //=============================================================================
-void CCharacter::SetShadowRotCalculation(void)
+void CCharacter::SetShadowRotCalculation()
 {
 	// モデルの描画
 	for (auto &model : m_apModelAnime)

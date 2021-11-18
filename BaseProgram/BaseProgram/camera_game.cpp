@@ -124,3 +124,11 @@ void CCameraGame::StateUpdate()
 		m_pCurrentState->Update();
 	}
 }
+
+//=============================================================================
+// ó‘Ô‚Ì•ÏX
+//=============================================================================
+void CCameraGame::ChangeState(CCameraState* pState)
+{
+	m_pNextState = pState;
+}

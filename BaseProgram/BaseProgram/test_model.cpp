@@ -1,4 +1,4 @@
-//=============================================================================CTestModel
+//=============================================================================
 //
 // テストモデルクラス [test_model.cpp]
 // Author : Konishi Yuuto
@@ -42,7 +42,7 @@ CTestModel::~CTestModel()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CTestModel * CTestModel::Create(void)
+CTestModel * CTestModel::Create()
 {
 	// メモリ確保
 	CTestModel *pTestModel = new CTestModel(PRIORITY_TEST_MODEL);
@@ -62,14 +62,12 @@ CTestModel * CTestModel::Create(void)
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CTestModel::Init(void)
+HRESULT CTestModel::Init()
 {
-	//SetScale(D3DXVECTOR3(100.0f, 100.0f, 100.0f));
 	// 初期化処理
 	CModel::Init();
 
 	CXfile *pXfile = GET_XFILE_PTR;
-	//BindModel(pXfile->GetXfile(CXfile::XFILE_NUM_TEST_BLOCK));
 	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MAP);
 	GetModelInfo()->SetModelStatus(TEST_POS, TEST_ROT, model);
 
@@ -79,7 +77,7 @@ HRESULT CTestModel::Init(void)
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CTestModel::Uninit(void)
+void CTestModel::Uninit()
 {
 	CModel::Uninit();
 }
@@ -87,7 +85,7 @@ void CTestModel::Uninit(void)
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CTestModel::Update(void)
+void CTestModel::Update()
 {
 	CModel::Update();
 
@@ -98,7 +96,7 @@ void CTestModel::Update(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CTestModel::Draw(void)
+void CTestModel::Draw()
 {
 	CModel::Draw();
 }
@@ -106,7 +104,7 @@ void CTestModel::Draw(void)
 //=============================================================================
 // 衝突判定
 //=============================================================================
-void CTestModel::Hit(void)
+void CTestModel::Hit()
 {
 	CPlayer* pPlayer = nullptr;
 	pPlayer = (CPlayer*)GetTop(PRIORITY_CHARACTER);

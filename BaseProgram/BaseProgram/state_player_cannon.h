@@ -1,8 +1,8 @@
-#ifndef _STATE_PLAYER_NORMAL_H_
-#define _STATE_PLAYER_NORMAL_H_
+#ifndef _STATE_PLAYER_CANNON_H_
+#define _STATE_PLAYER_CANNON_H_
 //=====================================================================
 //
-//	通常状態管理クラス [state_player_normal.h]
+//	大砲時状態管理クラス [state_player_cannon.h]
 //	Author : Konishi Yuuto
 //
 //=====================================================================
@@ -20,18 +20,17 @@ class CPlayer;
 //=====================================================================
 // クラス定義
 //=====================================================================
-class CPlayerStateNormal : public CPlayerState
+class CPlayerStateCannon : public CPlayerState
 {
 public:
-	CPlayerStateNormal();					// コンストラクタ
-	~CPlayerStateNormal();					// デストラクタ
-	static CPlayerStateNormal* Create();	// インスタンス生成
+	CPlayerStateCannon();		// コンストラクタ
+	~CPlayerStateCannon();		// デストラクタ
 
-	void Init();						// 初期化処理
-	void Update()override;				// 更新処理
+	static CPlayerStateCannon* Create();	// インスタンス生成
+	void Init();							// 初期化処理
+	void Update()override;					// 更新処理
+	void TrackingCannon(CPlayer* &pPlayer);	// 大砲の後ろへ追従
 private:
-	void Jump(CPlayer* &pPlayer);		// ジャンプ処理
-	void Avoidance(CPlayer* &pPlayer);	// 回避
-	
+	int m_nStunCount;
 };
 #endif

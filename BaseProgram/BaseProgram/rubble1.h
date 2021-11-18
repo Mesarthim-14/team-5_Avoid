@@ -23,9 +23,9 @@ public:
 
 	static CRubble1 *Create();	// インスタンス生成
 	HRESULT Init();				// 初期化処理
-	void Uninit(void);									// 初期化処理
-	void Update(void);									// 更新処理
-	void Draw(void);									// 描画
+	void Uninit();									// 初期化処理
+	void Update();									// 更新処理
+	void Draw();									// 描画
 
 private:
 };

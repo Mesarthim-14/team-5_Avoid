@@ -23,7 +23,7 @@ public:
 
 	static CMarlinModel *Create(const D3DXVECTOR3 pos);	// インスタンス生成
 	HRESULT Init(const D3DXVECTOR3 &pos);				// 初期化処理
-	void Draw(void);									// 描画
+	void Draw();										// 描画
 
 	void SetPos(const D3DXVECTOR3 &pos);
 private:

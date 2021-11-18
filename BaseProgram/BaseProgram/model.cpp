@@ -40,7 +40,7 @@ CModel::~CModel()
 //=============================================================================
 // クリエイト処理
 //=============================================================================
-CModel * CModel::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
+CModel * CModel::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
 	//モデルクラスのポインタ変数
 	CModel *pModel = new CModel(PRIORITY_MODEL);
@@ -59,14 +59,14 @@ CModel * CModel::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 //=============================================================================
 // プレイヤーとの距離の当たり判定
 //=============================================================================
-bool CModel::PlayerDisCollision(const float & fDistanse)
+bool CModel::PlayerDisCollision(const float &fDistanse)
 {
 	// 座標の取得
 	D3DXVECTOR3 PPos = CManager::GetInstance()->GetPlayer()->GetPos();
 	D3DXVECTOR3 ThisPos = GetModelInfo()->GetPos();
 
 	// 距離の取得
-	float fDistance = CLibrary::DistanceCal(PPos, ThisPos);
+	float fDistance = CLibrary::CalDistance(PPos, ThisPos);
 
 	// 距離を測る
 	if (fDistance <= fDistanse)
@@ -80,7 +80,7 @@ bool CModel::PlayerDisCollision(const float & fDistanse)
 //=============================================================================
 //モデルクラスの初期化処理
 //=============================================================================
-HRESULT CModel::Init(void)
+HRESULT CModel::Init()
 {
 	// 情報の生成
 	CreateInfoPtr();
@@ -91,7 +91,7 @@ HRESULT CModel::Init(void)
 //=============================================================================
 //モデルクラスの終了処理
 //=============================================================================
-void CModel::Uninit(void)
+void CModel::Uninit()
 {
 	// 影の終了処理
 	HasPtrDelete();
@@ -103,7 +103,7 @@ void CModel::Uninit(void)
 //=============================================================================
 // モデルクラスの更新処理
 //=============================================================================
-void CModel::Update(void)
+void CModel::Update()
 {
 	// 寿命を減らす
 	m_nLife--;
@@ -115,7 +115,7 @@ void CModel::Update(void)
 //=============================================================================
 // モデルクラスの描画処理
 //=============================================================================
-void CModel::Draw(void)
+void CModel::Draw()
 {
 	//デバイス情報の取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
@@ -183,7 +183,7 @@ void CModel::Draw(void)
 //=============================================================================
 // モデル情報の設定
 //=============================================================================
-void CModel::HasPtrDelete(void)
+void CModel::HasPtrDelete()
 {
 	if (m_pModelInfo)
 	{
@@ -195,7 +195,7 @@ void CModel::HasPtrDelete(void)
 //=============================================================================
 // 情報のポインタ生成
 //=============================================================================
-void CModel::CreateInfoPtr(void)
+void CModel::CreateInfoPtr()
 {
 	if (!m_pModelInfo)
 	{
@@ -206,7 +206,7 @@ void CModel::CreateInfoPtr(void)
 //=============================================================================
 // 座標の情報取得
 //=============================================================================
-D3DXVECTOR3 CModel::GetPos()
+D3DXVECTOR3 CModel::GetPos()const
 {
 	return GetModelInfo()->GetPos();
 }
@@ -214,7 +214,7 @@ D3DXVECTOR3 CModel::GetPos()
 //=============================================================================
 // 角度の情報取得
 //=============================================================================
-D3DXVECTOR3 CModel::GetRot()
+D3DXVECTOR3 CModel::GetRot()const
 {
 	return GetModelInfo()->GetRot();
 }

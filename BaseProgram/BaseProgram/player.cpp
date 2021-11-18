@@ -25,7 +25,6 @@
 #include "animation_skinmesh.h"
 #include "check_point.h"
 #include "gimmick_factory.h"
-#include "game_mode.h"
 #include "state_player.h"
 #include "state_player_avoid.h"
 #include "state_player_jump.h"
@@ -172,9 +171,6 @@ void CPlayer::Update(void)
 	// 状態更新
 	UpdateState();
 
-	// プレイヤー処理
-	PlayerControl();
-
 	// 更新
 	CCharacter::Update();
 
@@ -241,32 +237,6 @@ void CPlayer::UpdateState(void)
 	{
 		// 更新処理
 		m_pCurrentState->Update();
-	}
-}
-
-//=============================================================================
-// プレイヤーの処理
-// Author : Konishi Yuuto
-//=============================================================================
-void CPlayer::PlayerControl(void)
-{
-	// アクション
-	Action();
-}
-
-//=============================================================================
-// アクション処理
-// Author : Hayashikawa Sarina
-//=============================================================================
-void CPlayer::Action(void)
-{
-	// ジャンプ
-	Jump();
-
-	if (m_SlimeState != SLIME_LITTLESIZE)
-	{
-		// 回避
-		Avoidance();
 	}
 }
 
@@ -345,33 +315,6 @@ void CPlayer::ChangeModel(void)
 }
 
 //=============================================================================
-// ジャンプ
-// Author : Hayashikawa Sarina
-//=============================================================================
-void CPlayer::Jump(void)
-{
-	// ためジャンプ
-	if (CLibrary::KeyboardTrigger(DIK_SPACE))
-	{
-		// 状態の設定
-		ChangeState(CPlayerStateJump::Create());
-	}
-}
-
-//=============================================================================
-// 回避
-// Author : Hayashikawa Sarina
-//=============================================================================
-void CPlayer::Avoidance(void)
-{
-	CMouse *pMouse = CManager::GetInstance()->GetMouse();	// キーボード更新
-	if (GetLanding() == true && pMouse->GetButtonTrigger(CMouse::MOUSE_LEFT))//回避
-	{
-		ChangeState(CPlayerStateAvoid::Create());
-	}
-}
-
-//=============================================================================
 // Imgui 情報
 // Author : Konishi Yuuto
 //=============================================================================
@@ -445,7 +388,7 @@ void CPlayer::ShowInfo(void)
 // データロード
 // Author : Konishi Yuuto
 //=============================================================================
-HRESULT CPlayer::LoadInfo(void)
+HRESULT CPlayer::LoadInfo()
 {
 	// ファイルデータ取得
 	picojson::value& v = CLibrary::JsonLoadFile("data/Text/json/test.json");
@@ -463,7 +406,7 @@ HRESULT CPlayer::LoadInfo(void)
 // データセーブ
 // Author : Konishi Yuuto
 //=============================================================================
-void CPlayer::SaveInfo(void)
+void CPlayer::SaveInfo()
 {
 	string FileName = "data/Text/json/test.json";
 
@@ -478,7 +421,7 @@ void CPlayer::SaveInfo(void)
 // ライフ減少
 // Author : Hayashikawa Sarina
 //=============================================================================
-void CPlayer::SubLife(int nDamage)
+void CPlayer::SubLife(const int &nDamage)
 {
 	if (m_nHP > 0)
 	{

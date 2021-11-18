@@ -29,11 +29,12 @@ public:
 	CGimmickFactory();		// コンストラクタ
 	~CGimmickFactory();		// デストラクタ
 
-	static CGimmickFactory *Create();						// インスタンス生成
-	HRESULT Init();											// 初期化処理
-	void Uninit();											// 終了処理
-	void Update();											// 更新処理
-	CCheckPoint *GetCheckPoint() { return m_pCheckPoint; }	// チェックポイント
+	static CGimmickFactory *Create();											// インスタンス生成
+	HRESULT Init();																// 初期化処理
+	void Uninit();																// 終了処理
+	void Update();																// 更新処理
+	CCheckPoint *GetCheckPoint()const { return m_pCheckPoint; }					// チェックポイント
+	inline CCannonManager* GetCannonManager()const { return m_pCannonManager; }	// 大砲管理クラス
 
 private:
 	// private関数

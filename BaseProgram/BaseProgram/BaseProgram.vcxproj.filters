@@ -145,6 +145,9 @@
     <Filter Include="10_State\CameraState">
       <UniqueIdentifier>{27359d3e-f4fb-40b0-a1d1-bba9b9be8d0a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="11_Production">
+      <UniqueIdentifier>{c8d76e28-e95a-4d06-b779-b602b8f31316}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="collision.cpp">
@@ -426,9 +429,6 @@
     <ClCompile Include="swirl_scaffold.cpp">
       <Filter>08_Object\Gimmick\Swirl</Filter>
     </ClCompile>
-    <ClCompile Include="game_mode.cpp">
-      <Filter>03_Mode\Game</Filter>
-    </ClCompile>
     <ClCompile Include="state.cpp">
       <Filter>10_State</Filter>
     </ClCompile>
@@ -469,6 +469,15 @@
       <Filter>10_State\CameraState</Filter>
     </ClCompile>
     <ClCompile Include="state_camera_normal.cpp">
+      <Filter>10_State\CameraState</Filter>
+    </ClCompile>
+    <ClCompile Include="production_cannon.cpp">
+      <Filter>11_Production</Filter>
+    </ClCompile>
+    <ClCompile Include="state_player_cannon.cpp">
+      <Filter>10_State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="state_camera_cannon.cpp">
       <Filter>10_State\CameraState</Filter>
     </ClCompile>
   </ItemGroup>
@@ -761,9 +770,6 @@
     <ClInclude Include="swirl_scaffold.h">
       <Filter>08_Object\Gimmick\Swirl</Filter>
     </ClInclude>
-    <ClInclude Include="game_mode.h">
-      <Filter>03_Mode\Game</Filter>
-    </ClInclude>
     <ClInclude Include="state.h">
       <Filter>10_State</Filter>
     </ClInclude>
@@ -804,6 +810,15 @@
       <Filter>10_State\CameraState</Filter>
     </ClInclude>
     <ClInclude Include="state_camera_normal.h">
+      <Filter>10_State\CameraState</Filter>
+    </ClInclude>
+    <ClInclude Include="production_cannon.h">
+      <Filter>11_Production</Filter>
+    </ClInclude>
+    <ClInclude Include="state_player_cannon.h">
+      <Filter>10_State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_camera_cannon.h">
       <Filter>10_State\CameraState</Filter>
     </ClInclude>
   </ItemGroup>

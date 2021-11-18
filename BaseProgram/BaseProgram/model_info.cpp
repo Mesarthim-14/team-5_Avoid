@@ -22,7 +22,7 @@ list<CModelInfo*> CModelInfo::m_ModelInfoList[MODEL_TYPE_MAX] = {};
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CModelInfo::CModelInfo(MODEL_TYPE type)
+CModelInfo::CModelInfo(const MODEL_TYPE &type)
 {
 	//各メンバ変数のクリア
 	memset(&m_model, 0, sizeof(m_model));
@@ -48,7 +48,7 @@ CModelInfo::~CModelInfo()
 //=============================================================================
 // クリエイト処理
 //=============================================================================
-CModelInfo * CModelInfo::Create(MODEL_TYPE type)
+CModelInfo * CModelInfo::Create(const MODEL_TYPE &type)
 {
 	//階層モデルクラスのポインタ変数
 	CModelInfo *pModelInfo = new CModelInfo(type);
@@ -68,7 +68,7 @@ CModelInfo * CModelInfo::Create(MODEL_TYPE type)
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CModelInfo::Init(void)
+HRESULT CModelInfo::Init()
 {
 
 	return S_OK;
@@ -77,7 +77,7 @@ HRESULT CModelInfo::Init(void)
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CModelInfo::Uninit(void)
+void CModelInfo::Uninit()
 {
 	// ポインタの開放
 	HasPtrDelete();
@@ -99,14 +99,14 @@ void CModelInfo::Uninit(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CModelInfo::Draw(D3DXVECTOR3 rot)
+void CModelInfo::Draw(const D3DXVECTOR3 &rot)
 {
 }
 
 //=============================================================================
 // 影の描画
 //=============================================================================
-void CModelInfo::ShadowDraw(D3DXVECTOR3 rot)
+void CModelInfo::ShadowDraw(const D3DXVECTOR3 &rot)
 {
 	if (m_pShadow)
 	{
@@ -134,7 +134,7 @@ void CModelInfo::CreateShadowPtr(void)
 //=============================================================================
 // 影の情報の設定
 //=============================================================================
-D3DXMATRIX CModelInfo::SetShadowInfo(D3DXVECTOR3 rot, D3DXMATRIX pParent)
+D3DXMATRIX CModelInfo::SetShadowInfo(const D3DXVECTOR3 &rot, const D3DXMATRIX &pParent)
 {
 	D3DXMATRIX mtxRot, mtxTrans;
 	D3DXMATRIX mtxWorld;                            // ワールドマトリックス
@@ -156,7 +156,7 @@ D3DXMATRIX CModelInfo::SetShadowInfo(D3DXVECTOR3 rot, D3DXMATRIX pParent)
 //=============================================================================
 // 保持ポインタの開放処理
 //=============================================================================
-void CModelInfo::HasPtrDelete(void)
+void CModelInfo::HasPtrDelete()
 {
 	if (m_pShadow)
 	{
@@ -170,7 +170,7 @@ void CModelInfo::HasPtrDelete(void)
 //=============================================================================
 // モデルの情報設定
 //=============================================================================
-void CModelInfo::SetModelStatus(D3DXVECTOR3 pos, D3DXVECTOR3 rot, CXfile::MODEL model)
+void CModelInfo::SetModelStatus(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot, const CXfile::MODEL &model)
 {
 	m_pos = pos;
 	m_rot = rot;
@@ -180,7 +180,7 @@ void CModelInfo::SetModelStatus(D3DXVECTOR3 pos, D3DXVECTOR3 rot, CXfile::MODEL 
 //=============================================================================
 // ワールドマトリクス座標
 //=============================================================================
-D3DXVECTOR3 CModelInfo::GetMtxPos(void)
+D3DXVECTOR3 CModelInfo::GetMtxPos()
 {
 	return D3DXVECTOR3(m_mtxWorld._41, m_mtxWorld._42, m_mtxWorld._43);
 }

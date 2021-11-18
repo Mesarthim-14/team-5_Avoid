@@ -38,7 +38,7 @@ CTexture::~CTexture()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CTexture * CTexture::Create(void)
+CTexture * CTexture::Create()
 {
 	// メモリ確保
 	CTexture *pTexture = new CTexture;
@@ -93,7 +93,7 @@ HRESULT CTexture::SetTextureName(void)
 //=============================================================================
 // 全てのテクスチャロード
 //=============================================================================
-void CTexture::LoadAll(void)
+void CTexture::LoadAll()
 {
 	// 通常テクスチャ
 	NormalTexLoad();
@@ -111,7 +111,7 @@ void CTexture::LoadAll(void)
 //=============================================================================
 // 全てのテクスチャアンロード
 //=============================================================================
-void CTexture::UnLoadAll(void)
+void CTexture::UnLoadAll()
 {
 	// 通常テクスチャ
 	NormalTexUnLoad();
@@ -129,7 +129,7 @@ void CTexture::UnLoadAll(void)
 //=============================================================================
 // テクスチャロード
 //=============================================================================
-HRESULT CTexture::NormalTexLoad(void)
+HRESULT CTexture::NormalTexLoad()
 {
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
@@ -147,7 +147,7 @@ HRESULT CTexture::NormalTexLoad(void)
 //=============================================================================
 // テクスチャアンロード
 //=============================================================================
-void CTexture::NormalTexUnLoad(void)
+void CTexture::NormalTexUnLoad()
 {
 	for (int nCount = 0; nCount < TEXTURE_NUM_MAX; nCount++)
 	{
@@ -162,7 +162,7 @@ void CTexture::NormalTexUnLoad(void)
 //=============================================================================
 // 分割テクスチャのロード
 //=============================================================================
-HRESULT CTexture::SeparateTexLoad(void)
+HRESULT CTexture::SeparateTexLoad()
 {
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
@@ -179,7 +179,7 @@ HRESULT CTexture::SeparateTexLoad(void)
 //=============================================================================
 // 分割テクスチャのアンロード
 //=============================================================================
-void CTexture::SeparateTexUnLoad(void)
+void CTexture::SeparateTexUnLoad()
 {
 	// テクスチャの解放
 	for (int nCount = 0; nCount < SEPARATE_TEX_MAX; nCount++)
@@ -195,7 +195,7 @@ void CTexture::SeparateTexUnLoad(void)
 //=============================================================================
 // テクスチャ情報
 //=============================================================================
-LPDIRECT3DTEXTURE9 CTexture::GetTexture(const TEXTURE_TYPE Tex_Num)
+LPDIRECT3DTEXTURE9 CTexture::GetTexture(const TEXTURE_TYPE &Tex_Num)
 {
 	if (Tex_Num < TEXTURE_NUM_MAX)
 	{
@@ -211,7 +211,7 @@ LPDIRECT3DTEXTURE9 CTexture::GetTexture(const TEXTURE_TYPE Tex_Num)
 //=============================================================================
 // 分割テクスチャ情報
 //=============================================================================
-LPDIRECT3DTEXTURE9 CTexture::GetSeparateTexture(const SEPARATE_TEX_TYPE SepaTex_Type)
+LPDIRECT3DTEXTURE9 CTexture::GetSeparateTexture(const SEPARATE_TEX_TYPE &SepaTex_Type)
 {
 	// 配列より小さかったら
 	if (SepaTex_Type < SEPARATE_TEX_MAX)
@@ -230,7 +230,7 @@ LPDIRECT3DTEXTURE9 CTexture::GetSeparateTexture(const SEPARATE_TEX_TYPE SepaTex_
 //=============================================================================
 // 分割テクスチャの情報
 //=============================================================================
-INT_VERTEX_2D CTexture::GetSparateTexInfo(const SEPARATE_TEX_TYPE SepaTex_Type)
+INT_VERTEX_2D CTexture::GetSparateTexInfo(const SEPARATE_TEX_TYPE &SepaTex_Type)
 {
 	// 配列より小さかったら
 	if (SepaTex_Type < SEPARATE_TEX_MAX)
@@ -245,7 +245,7 @@ INT_VERTEX_2D CTexture::GetSparateTexInfo(const SEPARATE_TEX_TYPE SepaTex_Type)
 //=============================================================================
 // 分割テクスチャのループフラグ
 //=============================================================================
-bool CTexture::GetSparateTexLoop(const SEPARATE_TEX_TYPE SepaTex_Type)
+bool CTexture::GetSparateTexLoop(const SEPARATE_TEX_TYPE &SepaTex_Type)
 {
 	// 配列より小さかったら
 	if (SepaTex_Type < SEPARATE_TEX_MAX)
@@ -260,7 +260,7 @@ bool CTexture::GetSparateTexLoop(const SEPARATE_TEX_TYPE SepaTex_Type)
 //=============================================================================
 // ボリュームテクスチャロード
 //=============================================================================
-HRESULT CTexture::VolumeTexLoad(void)
+HRESULT CTexture::VolumeTexLoad()
 {
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
@@ -278,7 +278,7 @@ HRESULT CTexture::VolumeTexLoad(void)
 //=============================================================================
 // ボリュームテクスチャアンロード
 //=============================================================================
-void CTexture::VolumeTexUnLoad(void)
+void CTexture::VolumeTexUnLoad()
 {
 	for (int nCount = 0; nCount < VOLUME_TEX_MAX; nCount++)
 	{
@@ -293,7 +293,7 @@ void CTexture::VolumeTexUnLoad(void)
 //=============================================================================
 // ボリュームテクスチャの情報
 //=============================================================================
-LPDIRECT3DVOLUMETEXTURE9 CTexture::GetVolumeTexture(const VOLUME_TEX_TYPE Tex_Type)
+LPDIRECT3DVOLUMETEXTURE9 CTexture::GetVolumeTexture(const VOLUME_TEX_TYPE &Tex_Type)
 {
 	if (Tex_Type < VOLUME_TEX_MAX)
 	{
@@ -309,7 +309,7 @@ LPDIRECT3DVOLUMETEXTURE9 CTexture::GetVolumeTexture(const VOLUME_TEX_TYPE Tex_Ty
 //=============================================================================
 // キューブテクスチャロード
 //=============================================================================
-HRESULT CTexture::CubeTexLoad(void)
+HRESULT CTexture::CubeTexLoad()
 {
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
@@ -327,7 +327,7 @@ HRESULT CTexture::CubeTexLoad(void)
 //=============================================================================
 // キューブテクスチャアンロード
 //=============================================================================
-void CTexture::CubeTexUnLoad(void)
+void CTexture::CubeTexUnLoad()
 {
 	for (int nCount = 0; nCount < CUBE_TEX_MAX; nCount++)
 	{
@@ -342,7 +342,7 @@ void CTexture::CubeTexUnLoad(void)
 //=============================================================================
 // キューブテクスチャの情報
 //=============================================================================
-LPDIRECT3DCUBETEXTURE9 CTexture::GetCubeTexture(const CUBE_TEX_TYPE Tex_Type)
+LPDIRECT3DCUBETEXTURE9 CTexture::GetCubeTexture(const CUBE_TEX_TYPE &Tex_Type)
 {
 	if (Tex_Type < CUBE_TEX_MAX)
 	{

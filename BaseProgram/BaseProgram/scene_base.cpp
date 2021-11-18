@@ -49,7 +49,7 @@ CSceneBase::~CSceneBase()
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CSceneBase::Uninit(void)
+void CSceneBase::Uninit()
 {
 	Release();
 }
@@ -57,7 +57,7 @@ void CSceneBase::Uninit(void)
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CSceneBase::Update(void)
+void CSceneBase::Update()
 {
 	// テクスチャアニメーションの更新処理
 	if (m_pTextureAnimation)
@@ -78,7 +78,7 @@ void CSceneBase::Update(void)
 //=============================================================================
 // シーン情報の設定
 //=============================================================================
-void CSceneBase::SetSceneInfo(const D3DXVECTOR3 pos, const D3DXVECTOR3 size)
+void CSceneBase::SetSceneInfo(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size)
 {
 	m_pos = pos;
 	m_size = size;

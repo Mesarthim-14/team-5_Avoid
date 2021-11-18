@@ -35,7 +35,7 @@
 // 生成処理関数
 // Author : Konishi Yuuto
 //=============================================================================
-CTestCharacter * CTestCharacter::Create(D3DXVECTOR3 pos)
+CTestCharacter * CTestCharacter::Create(const D3DXVECTOR3 &pos)
 {
 	CTestCharacter *pPlayer = new CTestCharacter;
 
@@ -74,7 +74,7 @@ CTestCharacter::~CTestCharacter()
 // 初期化処理関数
 // Author : Konishi Yuuto
 //=============================================================================
-HRESULT CTestCharacter::Init(void)
+HRESULT CTestCharacter::Init()
 {
 	// CXfile取得
 	CXfile *pXfile = CManager::GetInstance()->GetResourceManager()->GetXfileClass();
@@ -104,7 +104,7 @@ HRESULT CTestCharacter::Init(void)
 // 終了処理関数
 // Author : Konishi Yuuto
 //=============================================================================
-void CTestCharacter::Uninit(void)
+void CTestCharacter::Uninit()
 {
 	CCharacter::Uninit();
 }
@@ -113,7 +113,7 @@ void CTestCharacter::Uninit(void)
 // 更新関数処理関数
 // Author : Konishi Yuuto
 //=============================================================================
-void CTestCharacter::Update(void)
+void CTestCharacter::Update()
 {
 
 }
@@ -122,7 +122,7 @@ void CTestCharacter::Update(void)
 // 描画処理関数
 // Author : Konishi Yuuto
 //=============================================================================
-void CTestCharacter::Draw(void)
+void CTestCharacter::Draw()
 {
 	// 描画
 	CCharacter::Draw();
@@ -132,7 +132,7 @@ void CTestCharacter::Draw(void)
 // 状態更新
 // Author : Konishi Yuuto
 //=============================================================================
-void CTestCharacter::UpdateState(void)
+void CTestCharacter::UpdateState()
 {
 
 }
@@ -141,12 +141,12 @@ void CTestCharacter::UpdateState(void)
 // 移動処理
 // Author : Konishi Yuuto
 //=============================================================================
-void CTestCharacter::Move(void)
+void CTestCharacter::Move()
 {
 
 }
 
-HRESULT CTestCharacter::JsonLoad(void)
+HRESULT CTestCharacter::JsonLoad()
 {
  // JSONデータの読み込み。
     ifstream ifs("data/Text/json/test.json", ios::in);
@@ -188,7 +188,7 @@ HRESULT CTestCharacter::JsonLoad(void)
 	return S_OK;
 }
 
-void CTestCharacter::JsonWrite(void)
+void CTestCharacter::JsonWrite()
 {
 }
 

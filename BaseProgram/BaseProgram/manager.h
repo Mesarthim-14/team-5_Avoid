@@ -55,42 +55,39 @@ public:
 		MODE_TYPE_MAX,
 	};
 
-
 	~CManager();	// デストラクタ
 
 	HRESULT Init(HINSTANCE hInstance, HWND hWnd, bool bWindow);		// 初期化処理
-	void Uninit(void);												// 終了処理
-	void Update(void);												// 更新処理
-	void Draw(void);												// 描画処理
+	void Uninit();												// 終了処理
+	void Update();												// 更新処理
+	void Draw();												// 描画処理
 
 	// Set関数
-
-	void SetMode(MODE_TYPE mode);							// モードの設定
+	void SetMode(const MODE_TYPE &mode);							// モードの設定
 
 	// Get関数
-
-	MODE_TYPE GetMode(void);															// モードの情報
-	CModeBase *GetModePtr(void);														// ゲームの情報
-	CRenderer *GetRenderer(void)				{ return m_pRenderer.get(); }			// レンダラー情報
-	CInputKeyboard *GetKeyboard(void)			{ return m_pInput.get(); }				// キーボード情報
-	CMouse *GetMouse(void)						{ return m_pInputMouse.get(); }			// マウス情報
-	CFade *GetFade(void)						{ return m_pFade.get(); }				// フェード情報
-	CInputJoypad *GetJoypad(void)				{ return m_pJoypad.get(); }				// ジョイパッドコントローラの情報
-	CScene *GetScene(void)						{ return m_pScene.get(); }				// シーン情報
-	CResourceManager *GetResourceManager(void)	{ return m_pResourceManager.get(); }	// リソースマネージャのポインタ
-	CCamera *GetCamera(void)					{ return m_pCamera.get(); }				// カメラのポインタ
-	CLight *GetLight(void)						{ return m_pLight.get(); }				// ライトのポインタ
-	CPlayer *GetPlayer(void);															// プレイヤーの取得
-	CPause *GetPause(void) { return m_pPause; }					// ポーズの取得処理
-	static void SetActivePause(bool bPause) { m_bPause = bPause; }					// ポーズのセット
-	static bool GetActivePause(void) { return m_bPause; }					// フェードの取得処理
-
-	static CManager* GetInstance();		// インスタンス情報
+	static CManager* GetInstance();															// インスタンス情報
+	CModeBase *GetModePtr();																// ゲームの情報
+	inline MODE_TYPE GetMode()const							{ return m_mode; }					// モードの情報
+	inline CRenderer *GetRenderer()const					{ return m_pRenderer.get(); }		// レンダラー情報
+	inline CInputKeyboard *GetKeyboard()const				{ return m_pInput.get(); }			// キーボード情報
+	inline CMouse *GetMouse()const							{ return m_pInputMouse.get(); }		// マウス情報
+	inline CFade *GetFade()const							{ return m_pFade.get(); }			// フェード情報
+	inline CInputJoypad *GetJoypad()const					{ return m_pJoypad.get(); }			// ジョイパッドコントローラの情報
+	inline CScene *GetScene()const							{ return m_pScene.get(); }			// シーン情報
+	inline CResourceManager *GetResourceManager()const		{ return m_pResourceManager.get(); }	// リソースマネージャのポインタ
+	inline CCamera *GetCamera()const						{ return m_pCamera.get(); }			// カメラのポインタ
+	inline CLight *GetLight()const							{ return m_pLight.get(); }			// ライトのポインタ
+	inline CPause *GetPause()const							{ return m_pPause; }				// ポーズの取得処理
+	inline static void SetActivePause(const bool &bPause)	{ m_bPause = bPause; }				// ポーズのセット
+	inline static bool GetActivePause()						{ return m_bPause; }					// フェードの取得処理
+	CGame* GetGame()const;
+	CPlayer* GetPlayer()const;																// プレイヤーの取得
 
 private:
 	// private関数
-	void LoadAll(void);										// 全てのロード処理
-	void UnLoadAll(void);									// 全てのアンロード処理
+	void LoadAll();										// 全てのロード処理
+	void UnLoadAll();									// 全てのアンロード処理
 
 	// メンバ変数
 	unique_ptr<CRenderer> m_pRenderer;					// レンダラークラスのポインタ
@@ -105,9 +102,10 @@ private:
 	unique_ptr<CLight> m_pLight;						// ライトのポインタ
 	MODE_TYPE m_mode;									// モード
 	CPause *m_pPause;									// ポーズ
+
 	// シングルトン
-	CManager();		// コンストラクタ
-	static CManager* m_pManager;
+	CManager();						// コンストラクタ
+	static CManager* m_pManager;	// 自身のポインタ
 
 	static bool m_bPause;									// ポーズフラグ
 };

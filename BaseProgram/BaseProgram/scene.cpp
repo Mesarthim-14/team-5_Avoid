@@ -79,7 +79,7 @@ CScene::~CScene()
 //=============================================================================
 // 全ての更新処理
 //=============================================================================
-void CScene::UpdateAll(void)
+void CScene::UpdateAll()
 {
 	//ポーズしているか　bool pause = m_pause   ->>  pause =true ->> if (type == OBJTYPE_PAUSE)
 	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
@@ -137,7 +137,7 @@ void CScene::UpdateAll(void)
 //=============================================================================
 // 全ての描画処理
 //=============================================================================
-void CScene::DrawAll(void)
+void CScene::DrawAll()
 {
 	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 	{
@@ -168,7 +168,7 @@ void CScene::DrawAll(void)
 //=============================================================================
 // 全ての終了処理
 //=============================================================================
-void CScene::ReleaseAll(void)
+void CScene::ReleaseAll()
 {
 	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 	{
@@ -228,7 +228,7 @@ void CScene::Release()
 //=============================================================================
 // 死亡フラグを持ったやつのリリース
 //=============================================================================
-void CScene::DeathRelease(void)
+void CScene::DeathRelease()
 {
 	// 位置をずらす
 	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
@@ -265,7 +265,7 @@ void CScene::DeathRelease(void)
 //=============================================================================
 // 先頭情報の取得処理
 //=============================================================================
-CScene * CScene::GetTop(const int nNum)
+CScene * CScene::GetTop(const int &nNum)
 {
 	return m_pTop[nNum];
 }
@@ -273,7 +273,7 @@ CScene * CScene::GetTop(const int nNum)
 //=============================================================================
 // 次のシーン情報
 //=============================================================================
-CScene * CScene::GetNext(void)
+CScene * CScene::GetNext()
 {
 	return m_pNext;
 }
@@ -281,7 +281,7 @@ CScene * CScene::GetNext(void)
 //=============================================================================
 // ポーズ情報の取得
 //=============================================================================
-void CScene::SetPause(const bool Pause)
+void CScene::SetPause(const bool &Pause)
 {
 	m_bPause = Pause;
 }

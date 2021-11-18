@@ -17,11 +17,13 @@
 #include "xfile.h"
 #include "model_info.h"
 #include "player.h"
+#include "kraken.h"
+#include "library.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define SPEED	(50.0f)
+#define SPEED	(100.0f)
 #define POS_FIX (1000.0f)
 #define POS_FIX_Y (700.0f)
 
@@ -97,9 +99,9 @@ void CCannonBullet::SetBulletInfo(D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 		pos.y + POS_FIX_Y,
 		pos.z + (cos(rot.y)*POS_FIX));
 
-	// 移動量設定
-	D3DXVECTOR3 move = D3DXVECTOR3(
-		sinf(rot.y) * SPEED,
-		0.0f, cosf(rot.y) * SPEED);
-	SetMove(move);
+	// Follow
+	// ボスのポインタ
+	CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();
+	D3DXVECTOR3 Ppos = pKraken->GetPos();	// 座標取得
+	SetMove(CLibrary::FollowMoveXZ(pos, Ppos, SPEED));
 }

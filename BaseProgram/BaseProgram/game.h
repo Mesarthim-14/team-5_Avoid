@@ -17,7 +17,7 @@
 //=======================================================================================
 class CPlayer;
 class CGimmickFactory;
-class CGameMode;
+class CKraken;
 
 //=======================================================================================
 // ゲームクラス
@@ -33,8 +33,8 @@ public:
 	void Update();																// 更新処理
 	void Draw();																// 描画処理
 	static float GetGravity()					{ return m_fGravity; };			//重力
-	CGimmickFactory* GetGimmickFactory()		{ return m_pGimmickFactory; }	// ギミックの情報
-	CGameMode* GetGameMode()					{ return m_pGameMode; }
+	CGimmickFactory* GetGimmickFactory()const	{ return m_pGimmickFactory; }	// ギミックの情報
+	CKraken* GetKraken()const					{ return m_pKraken; }			// クラーケン
 
 private:
 	// private関数
@@ -42,14 +42,13 @@ private:
 	void CreateEnemy();					// 敵の生成
 	void CreateMap();					// マップの生成
 	void ShowInfo();					//情報表示
-	void CreateMode();					// ゲームモードクラス生成
 
 	// メンバ変数
 	CPlayer *m_pPlayer;						// プレイヤーのポインタ
+	CKraken *m_pKraken;						// クラーケンのポインタ
 	bool m_bGameEnd;						// ゲームのエンドフラグ
 	LPD3DXFONT m_pFont;						// デバック用フォント
 	static float m_fGravity;				// 重力
 	CGimmickFactory *m_pGimmickFactory;		// ギミック生成
-	CGameMode *m_pGameMode;					// ゲームモード
 };
 #endif

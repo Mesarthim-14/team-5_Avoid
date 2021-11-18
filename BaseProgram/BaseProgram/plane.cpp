@@ -16,7 +16,7 @@
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CPlane::Draw(void)
+void CPlane::Draw()
 {
 	// デバイス情報取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
