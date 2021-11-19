@@ -38,7 +38,7 @@ CXfile::CXfile()
 	// Xファイルネームを取得
 	m_aXfileName =
 	{
-		{ "data/Model/Normal/block.x" },			// テストブロック
+		{ "data/Model/Normal/block.x" },		// テストブロック
 		{ "data/Model/Normal/map.x" },			// マップ
 	};
 

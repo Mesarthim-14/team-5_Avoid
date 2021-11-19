@@ -23,6 +23,7 @@
 #include "model.h"
 #include "skinmesh_model.h"
 #include "animation_skinmesh.h"
+#include "collisionModel.h"
 
 //=============================================================================
 // マクロ定義
@@ -30,7 +31,7 @@
 //=============================================================================
 #define PLAYER_SPEED			(10.0f)									// プレイヤーの移動量
 #define PLAYER_ROT_SPEED		(0.1f)									// キャラクターの回転する速度
-#define SIZE					(D3DXVECTOR3 (1200.0f,1000.0f,1200.0f))	// サイズ
+#define SIZE					(D3DXVECTOR3 (250.0f,500.0f,250.0f))	// サイズ
 #define PLAYER_INERTIA			(0.08f)		// 慣性の大きさ
 #define PLAYER_LITTLESIZE_VALUE (10)									// 最小サイズモデルの値
 #define PLAYER_MIDLLESIZE_VALUE (50)									// 中サイズモデルの値
@@ -89,6 +90,8 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	}
 	m_fJumpTimeCount = 0;
 	m_fJumpCheck = false;
+
+	m_pCollisionModel = nullptr;
 }
 
 //=============================================================================
@@ -138,9 +141,16 @@ HRESULT CPlayer::Init(void)
 
 	// 初期化
 	m_rotDest = GetRot();			// 向き
-	SetSize(SIZE);					// サイズ設定
+	//SetSize(SIZE);					// サイズ設定
 	SetType(CHARACTER_TYPE_PLAYER);	// プレイヤー
 	LoadInfo();
+
+	//当たり判定モデルの生成
+	if (m_pCollisionModel == nullptr)
+	{
+		m_pCollisionModel = CCollisionModel::Create(GetPos(), SIZE, GetRot(), CCollisionModel::TYPE_BOX);
+	}
+
 	return S_OK;
 }
 
@@ -224,6 +234,12 @@ void CPlayer::PlayerControl(void)
 	Move();
 	// アクション
 	Action();
+
+	//当たり判定の位置の設定
+	if (m_pCollisionModel != nullptr)
+	{
+		m_pCollisionModel->SetPos(GetPos());
+	}
 }
 
 //=============================================================================
@@ -426,6 +442,12 @@ void CPlayer::UpdateRot(void)
 
 	// 角度の設定
 	SetRot(rot);
+
+	//当たり判定の角度の設定
+	if (m_pCollisionModel != nullptr)
+	{
+		m_pCollisionModel->SetRot(rot);
+	}
 }
 
 //=============================================================================

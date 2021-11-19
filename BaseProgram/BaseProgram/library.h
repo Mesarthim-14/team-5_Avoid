@@ -22,15 +22,18 @@
 class CLibrary
 {
 public:
-	static string split(string str, char del, int nNum);											// 文字列を分割し、取り出す関数
-	static void ConfigMatrix(D3DXMATRIX *pMtx, D3DXVECTOR3 const &rPos, D3DXVECTOR3 const &rRot);	// マトリクスの設定
-	static void RotFix(float &fRot);																// 角度の修正
-	static void RotFixVector3(D3DXVECTOR3 &rot);													// 角度の修正
-	static int Random(const int nNum);																// ランダム変数
-	static int Random(const int nMin, const int nMax);												// ランダム変数
-	static float Random(const float fNum);															// ランダム変数
-	static float Random(const float fMin, const float fMax);										// ランダム変数
-	
+	static string split(string str, char del, int nNum);														// 文字列を分割し、取り出す関数
+	static void ConfigMatrix(D3DXMATRIX *pMtx, D3DXVECTOR3 const &rPos, D3DXVECTOR3 const &rRot);				// マトリクスの設定
+	static void RotFix(float &fRot);																			// 角度の修正
+	static void RotFixVector3(D3DXVECTOR3 &rot);																// 角度の修正
+	static int Random(const int nNum);																			// ランダム変数
+	static int Random(const int nMin, const int nMax);															// ランダム変数
+	static float Random(const float fNum);																		// ランダム変数
+	static float Random(const float fMin, const float fMax);													// ランダム変数
+	static void Rotate3D(D3DXVECTOR3 &PointPos, const D3DXVECTOR3 &rot);										// 点の三次元回転処理
+	static float LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 = 0);	// 分離軸に投影された軸成分から投影線分長を算出
+	static D3DXVECTOR3 MultiplyVector3(const D3DXVECTOR3 &vector1, const D3DXVECTOR3 &vector2);					// vector3同士の乗算
+
 	// ジェイソンのファイルロード
 	static picojson::value JsonLoadFile(const string &FileName);
 

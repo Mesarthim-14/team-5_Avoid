@@ -14,6 +14,11 @@
 #include "json.h"
 #include "skinmesh_model.h"
 
+//=========================================================================
+// 前方宣言
+//=========================================================================
+class CCollisionModel;
+
 //=============================================================================
 // プレイヤークラス
 //=============================================================================
@@ -33,6 +38,8 @@ public:
 	HRESULT LoadInfo(void);		// データロード
 	void SaveInfo(void);		// データセーブ
 	void SubLife(int nDamage);	// ダメージ
+
+	CCollisionModel* GetCollision(void) { return m_pCollisionModel; }	//当たり判定モデルポインタの取得
 
 private:
 	// private関数
@@ -83,5 +90,7 @@ private:
 	CSkinmeshModel * m_pSkinmeshModel[SLIME_STATE_MAX]; //スキンメッシュモデルポインタ
 	float m_fJumpTimeCount;		// ジャンプ時間カウント
 	bool m_fJumpCheck;			// ジャンプし始めたか
+
+	CCollisionModel* m_pCollisionModel;	//当たり判定モデルのポインタ
 };
 #endif

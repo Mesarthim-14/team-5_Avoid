@@ -76,11 +76,11 @@
     <Filter Include="03_Mode\pause">
       <UniqueIdentifier>{0d451309-488e-4534-acd7-dd6ee910099d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00_Important\Collision">
+      <UniqueIdentifier>{6a00bc61-02b5-44ca-8e25-9c672929f8d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="collision.cpp">
-      <Filter>00_Important</Filter>
-    </ClCompile>
     <ClCompile Include="fade.cpp">
       <Filter>00_Important</Filter>
     </ClCompile>
@@ -249,11 +249,14 @@
     <ClCompile Include="pause.cpp">
       <Filter>03_Mode\pause</Filter>
     </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>00_Important\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionModel.cpp">
+      <Filter>00_Important\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="collision.h">
-      <Filter>00_Important</Filter>
-    </ClInclude>
     <ClInclude Include="fade.h">
       <Filter>00_Important</Filter>
     </ClInclude>
@@ -430,6 +433,12 @@
     </ClInclude>
     <ClInclude Include="pause.h">
       <Filter>03_Mode\pause</Filter>
+    </ClInclude>
+    <ClInclude Include="collision.h">
+      <Filter>00_Important\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionModel.h">
+      <Filter>00_Important\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -47,7 +47,7 @@ public:
 	{
 		XFILE_NUM_NONE = -1,	// 初期値
 		XFILE_NUM_TEST_BLOCK,	// テストブロック
-		XFILE_NUM_MAP,
+		XFILE_NUM_MAP,			//マップ
 		XFILE_NUM_MAX
 	};
 

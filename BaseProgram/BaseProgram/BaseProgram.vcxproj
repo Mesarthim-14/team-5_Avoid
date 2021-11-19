@@ -151,6 +151,7 @@
     <ClCompile Include="camera_title.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="collisionModel.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gauge.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="camera_title.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="collisionModel.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gauge.h" />

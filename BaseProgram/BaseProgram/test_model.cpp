@@ -17,6 +17,8 @@
 #include "xfile.h"
 #include "model_info.h"
 #include "player.h"
+#include "collisionModel.h"
+#include "collision.h"
 
 //=============================================================================
 // マクロ定義
@@ -29,7 +31,7 @@
 //=============================================================================
 CTestModel::CTestModel(PRIORITY Priority) : CModel(Priority)
 {
-
+	m_pCollisionModel = nullptr;
 }
 
 //=============================================================================
@@ -73,6 +75,12 @@ HRESULT CTestModel::Init(void)
 	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MAP);
 	GetModelInfo()->SetModelStatus(TEST_POS, TEST_ROT, model);
 
+	//当たり判定モデルの生成
+	if (m_pCollisionModel == nullptr)
+	{
+		m_pCollisionModel = CCollisionModel::Create(GetModelInfo()->GetPos(), D3DXVECTOR3(5000.0f, 100.0f, 4200.0f), TEST_ROT, CCollisionModel::TYPE_BOX);
+	}
+
 	return S_OK;
 }
 
@@ -113,33 +121,14 @@ void CTestModel::Hit(void)
 
 	if (pPlayer != nullptr)
 	{
-		D3DXVECTOR3 RayDir = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
-		BOOL bHit = FALSE;
-		FLOAT fDistance = 0.0f;
-
-		for (int nCount = 0; nCount < (int)GetModelInfo()->GetMesh()->GetNumFaces(); nCount++)
+		if (m_pCollisionModel && pPlayer->GetCollision())
 		{
-			//下方向
-			D3DXIntersect(
-				GetModelInfo()->GetMesh(),
-				&pPlayer->GetPos(),
-				&RayDir,
-				&bHit,
-				nullptr,
-				nullptr,
-				nullptr,
-				&fDistance,
-				nullptr,
-				nullptr);
-
-			if (bHit && fDistance < 80.0f)
+			if (CCollision::ColOBBs(m_pCollisionModel->GetOBB(), pPlayer->GetCollision()->GetOBB()))
 			{
 				// 着地の処理
-				pPlayer->Landing(pPlayer->GetPos().y + fDistance);
-
-				break;
+				pPlayer->Landing(pPlayer->GetPos().y);
 			}
-			else if (!bHit)
+			else
 			{
 				pPlayer->SetLanding(false);
 			}

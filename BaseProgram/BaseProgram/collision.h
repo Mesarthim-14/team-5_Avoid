@@ -12,6 +12,7 @@
 //=============================================================================
 #include "main.h"
 #include "model.h"
+#include "collisionModel.h"
 
 //=============================================================================
 // “–‚½‚è”»’èƒNƒ‰ƒX
@@ -35,6 +36,7 @@ public:
 		SURFACE_BACK
 		
 	};
+	static bool ColOBBs(const CCollisionModel::OBB &obb1, const CCollisionModel::OBB &obb2);
 	static bool CollisionRectangleAndRectangle(const D3DXVECTOR3 pos1, const D3DXVECTOR3 pos2, const D3DXVECTOR3 size1, const D3DXVECTOR3 size2);
 	static bool CollisionCircularAndCircular(const D3DXVECTOR3 pos1, const D3DXVECTOR3 pos2, const float radius1, const float radius2);
 	static bool CollisionRectangleAndCircular(const D3DXVECTOR3 RectanglePos, const D3DXVECTOR3 CircularPos, const D3DXVECTOR3 RectangleSize, const float CircularRadius, const float RectangleRadian);
