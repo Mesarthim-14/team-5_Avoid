@@ -114,20 +114,20 @@ void CTestModel::Draw()
 //=============================================================================
 void CTestModel::Hit()
 {
-	CPlayer* pPlayer = nullptr;
-	pPlayer = (CPlayer*)GetTop(PRIORITY_CHARACTER);
+	CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
 
-	if (pPlayer != nullptr)
+	if (!pPlayer)
 	{
-		if (m_pCollisionModel && pPlayer->GetCollision())
+		if (m_pCollisionModel && pPlayer->GetCollisionPtr())
 		{
-			if (CCollision::ColOBBs(m_pCollisionModel->GetOBB(), pPlayer->GetCollision()->GetOBB()))
+			if (CCollision::ColOBBs(m_pCollisionModel->GetOBB(), pPlayer->GetCollisionPtr()->GetOBB()))
 			{
 				// ’…’n‚Ìˆ—
 				pPlayer->Landing(pPlayer->GetPos().y);
 			}
 			else
 			{
+                // ’…’nˆ—
 				pPlayer->SetLanding(false);
 			}
 		}

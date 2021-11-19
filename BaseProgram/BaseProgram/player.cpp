@@ -37,7 +37,9 @@
 //=============================================================================
 #define PLAYER_SPEED			(10.0f)									// プレイヤーの移動量
 #define PLAYER_ROT_SPEED		(0.1f)									// キャラクターの回転する速度
-
+#define PLAYER_COLLISION_SIZE	(D3DXVECTOR3(300.0f,600.0f,300.0f))		//プレイヤーの当たり判定の大きさ
+#define PLAYER_COLLISION_SIZE	(D3DXVECTOR3(300.0f,600.0f,300.0f))		//プレイヤーの当たり判定の大きさ
+#define PLAYER_COLLISION_SIZE	(D3DXVECTOR3(300.0f,600.0f,300.0f))		//プレイヤーの当たり判定の大きさ
 
 #define PLAYER_INERTIA			(0.08f)									// 慣性の大きさ
 #define PLAYER_LITTLESIZE_VALUE (10)									// 最小サイズモデルの値
@@ -109,20 +111,6 @@ CPlayer::~CPlayer()
 //=============================================================================
 HRESULT CPlayer::Init(void)
 {
-	// CXfile取得
-
-	CXfile *pXfile = CManager::GetInstance()->GetResourceManager()->GetXfileClass();
-
-	// nullcheck
-	if (pXfile)
-	{
-
-		//	SetUseShadow();									// 影の使用
-		//ModelCreate(CXfile::HIERARCHY_XFILE_NUM_TEST);	// モデルの生成
-
-		//	SetShadowRotCalculation();						// 影の向き
-	}
-
 	// モデル生成
 	CreateModel();
 
@@ -145,7 +133,7 @@ HRESULT CPlayer::Init(void)
 	//当たり判定モデルの生成
 	if (m_pCollisionModel == nullptr)
 	{
-		m_pCollisionModel = CCollisionModel::Create(GetPos(), SIZE, GetRot(), CCollisionModel::TYPE_BOX);
+		m_pCollisionModel = CCollisionModel::Create(GetPos(), PLAYER_COLLISION_SIZE, GetRot(), CCollisionModel::TYPE_BOX);
 	}
 
 	return S_OK;
@@ -171,18 +159,23 @@ void CPlayer::Uninit(void)
 //=============================================================================
 void CPlayer::Update(void)
 {
+	{
+		// 位置取得
+		D3DXVECTOR3 pos = GetPos();
 
-
-	// 位置取得
-	D3DXVECTOR3 pos = GetPos();
-
-	// 古い位置設定
-	SetPosOld(pos);
+		// 古い位置設定
+		SetPosOld(pos);
+	}
 
 	// 状態更新
 	UpdateState();
 
+	CCharacter::Update();
 
+	if (m_pCollisionModel)
+	{
+		m_pCollisionModel->SetPos(GetPos());
+	}
 
 	// リスポーン
 	ReSporn();
@@ -193,6 +186,8 @@ void CPlayer::Update(void)
 
 	// 更新処理
 	UpdateRot();
+
+	ShowInfo();
 }
 
 //=============================================================================
@@ -209,7 +204,6 @@ void CPlayer::Draw(void)
 // 現在のスキンメッシュポインタ
 // Author : Konishi Yuuto
 //=============================================================================
-
 CSkinmeshModel *CPlayer::GetCurrentSkinMeshPtr()
 {
 
@@ -229,45 +223,35 @@ CSkinmeshModel *CPlayer::GetCurrentSkinMeshPtr()
 }
 
 //=============================================================================
-
 // 状態の変更
 // Author : Konishi Yuuto
 //=============================================================================
-
 void CPlayer::ChangeState(CPlayerState *pPlayerState)
 {
 
 	m_pNextState = pPlayerState;
 }
 
-
-
+//=============================================================================
 // 状態更新
 // Author : Konishi Yuuto
 //=============================================================================
-
 void CPlayer::UpdateState(void)
 {
-
 	if (m_pNextState)
 	{
-	
 		delete m_pCurrentState;
 		m_pCurrentState = nullptr;
-
 
 		m_pCurrentState = m_pNextState;
 		m_pNextState = nullptr;
 	}
 
-
 	if (m_pCurrentState)
 	{
-
 		// 更新処理
 		m_pCurrentState->Update();
 	}
-
 }
 
 //=============================================================================
@@ -350,7 +334,7 @@ void CPlayer::ChangeModel(void)
 	}
 }
 
-
+//=============================================================================
 // Imgui 情報
 // Author : Konishi Yuuto
 //=============================================================================
@@ -427,7 +411,6 @@ void CPlayer::ShowInfo(void)
 // データロード
 // Author : Konishi Yuuto
 //=============================================================================
-
 HRESULT CPlayer::LoadInfo()
 {
 	// ファイルデータ取得
@@ -439,7 +422,6 @@ HRESULT CPlayer::LoadInfo()
 	CLibrary::JsonGetState(v, "Player", "ROTATION_SPEED", m_fRotationSpeed);
 	CLibrary::JsonGetState(v, "Player", "ANGLE_SPEED", m_fAngleSpeed);
 
-
 	return S_OK;
 }
 
@@ -447,7 +429,6 @@ HRESULT CPlayer::LoadInfo()
 // データセーブ
 // Author : Konishi Yuuto
 //=============================================================================
-
 void CPlayer::SaveInfo()
 {
 	string FileName = "data/Text/json/test.json";

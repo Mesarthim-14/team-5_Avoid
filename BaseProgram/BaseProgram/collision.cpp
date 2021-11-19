@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // 当たり判定処理 [collision.cpp]
-// Author : Konishi Yuuto
+// Author : Suzuki Mahiro
 //
 //=============================================================================
 
@@ -197,8 +197,8 @@ bool CCollision::ColOBBs(const CCollisionModel::OBB &obb1, const CCollisionModel
 //=============================================================================
 //当たり判定(矩形と矩形)
 //=============================================================================
-bool CCollision::CollisionRectangleAndRectangle(const D3DXVECTOR3 pos1, 
-	const D3DXVECTOR3 pos2, const D3DXVECTOR3 size1, const D3DXVECTOR3 size2)
+bool CCollision::CollisionRectangleAndRectangle(const D3DXVECTOR3 &pos1,
+	const D3DXVECTOR3 &pos2, const D3DXVECTOR3 &size1, const D3DXVECTOR3 &size2)
 {
 	bool bCollision = false;
 
@@ -218,8 +218,8 @@ bool CCollision::CollisionRectangleAndRectangle(const D3DXVECTOR3 pos1,
 //=============================================================================
 //当たり判定(円形と円形)
 //=============================================================================
-bool CCollision::CollisionCircularAndCircular(const D3DXVECTOR3 pos1, 
-	const D3DXVECTOR3 pos2, const float radius1, const float radius2)
+bool CCollision::CollisionCircularAndCircular(const D3DXVECTOR3 &pos1,
+	const D3DXVECTOR3 &pos2, const float &radius1, const float &radius2)
 {
 	bool bCollision = false;
 
@@ -236,8 +236,8 @@ bool CCollision::CollisionCircularAndCircular(const D3DXVECTOR3 pos1,
 //=============================================================================
 //当たり判定(矩形と円形)
 //=============================================================================
-bool CCollision::CollisionRectangleAndCircular(const D3DXVECTOR3 RectanglePos, const D3DXVECTOR3 CircularPos, 
-	const D3DXVECTOR3 RectangleSize, const float CircularRadius, const float RectangleRadian)
+bool CCollision::CollisionRectangleAndCircular(const D3DXVECTOR3 &RectanglePos, const D3DXVECTOR3 &CircularPos,
+	const D3DXVECTOR3 &RectangleSize, const float &CircularRadius, const float &RectangleRadian)
 {
 	//矩形の角度を０にした時の円形の座標を求める
 	D3DXVECTOR3 NewCircularPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);

@@ -148,8 +148,11 @@
     <Filter Include="11_Production">
       <UniqueIdentifier>{c8d76e28-e95a-4d06-b779-b602b8f31316}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00_Important\Collision">
-      <UniqueIdentifier>{6a00bc61-02b5-44ca-8e25-9c672929f8d7}</UniqueIdentifier>
+    <Filter Include="06_Effect\Particle">
+      <UniqueIdentifier>{25c215ec-f0ca-4301-8d88-9000724620c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="12_Collision">
+      <UniqueIdentifier>{ceb8d960-e110-4f35-afd1-db44ed5e0ac7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -479,6 +482,12 @@
     </ClCompile>
     <ClCompile Include="state_camera_cannon.cpp">
       <Filter>10_State\CameraState</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>12_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionModel.cpp">
+      <Filter>12_Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -817,6 +826,12 @@
     </ClInclude>
     <ClInclude Include="state_camera_cannon.h">
       <Filter>10_State\CameraState</Filter>
+    </ClInclude>
+    <ClInclude Include="collision.h">
+      <Filter>12_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionModel.h">
+      <Filter>12_Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

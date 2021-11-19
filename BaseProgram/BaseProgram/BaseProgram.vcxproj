@@ -162,8 +162,8 @@
     <ClCompile Include="check_flag.cpp" />
     <ClCompile Include="check_point.cpp" />
     <ClCompile Include="collision.cpp" />
-    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="collisionModel.cpp" />
+    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="fresnel_lambert.cpp" />
     <ClCompile Include="game.cpp" />
@@ -275,8 +275,8 @@
     <ClInclude Include="check_flag.h" />
     <ClInclude Include="check_point.h" />
     <ClInclude Include="collision.h" />
-    <ClInclude Include="enemy.h" />
     <ClInclude Include="collisionModel.h" />
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="fresnel_lambert.h" />
     <ClInclude Include="game.h" />

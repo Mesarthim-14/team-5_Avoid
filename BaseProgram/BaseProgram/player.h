@@ -38,7 +38,6 @@ public:
 		ACTION_MAX
 	}ACTION_STATE;//行動状態
 
-
 	enum STATE_PLAYER
 	{
 		STATE_PLAYER_NONE = -1,		// 初期値
@@ -49,8 +48,6 @@ public:
 		STATE_PLAYER_KNOCK_BACK,	// ノックバック
 		STATE_PLAYER_MAX,			// 最大値
 	};
-
-
 
 	typedef enum
 	{
@@ -84,12 +81,13 @@ public:
 	inline void SetAngle(const float& fAngle)							{ m_fAngle = fAngle; }			// アングル
 
 	// Get関数
-	inline int GetLife()const				{ return m_nHP; }			// HPの情報
-	inline float GetAngle()const			{ return m_fAngle; }		// アングル
-	inline D3DXVECTOR3 GetRotDest()const	{ return m_rotDest; }		// 目的
-	inline D3DXVECTOR3 GetInertia()const	{ return m_Inertia; }		// 慣性の情報
-	inline float GetInertiaNum()const		{ return m_fInertiaNum; }	// 慣性の値
-	inline SLIME_STATE GetSlimeState()const { return m_SlimeState; }	// スライムの状態
+	inline int GetLife()const					    { return m_nHP; }			    // HPの情報
+	inline float GetAngle()const				    { return m_fAngle; }		    // アングル
+	inline D3DXVECTOR3 GetRotDest()const		    { return m_rotDest; }		    // 目的
+	inline D3DXVECTOR3 GetInertia()const		    { return m_Inertia; }		    // 慣性の情報
+	inline float GetInertiaNum()const			    { return m_fInertiaNum; }	    // 慣性の値
+	inline SLIME_STATE GetSlimeState()const		    { return m_SlimeState; }	    // スライムの状態
+	inline CCollisionModel* GetCollisionPtr()const  { return m_pCollisionModel; }   //当たり判定ポインタ
 
 private:
 	// private関数
