@@ -103,7 +103,7 @@ CPlayer::~CPlayer()
 // 初期化処理関数
 // Author : Konishi Yuuto
 //=============================================================================
-HRESULT CPlayer::Init(void)
+HRESULT CPlayer::Init()
 {
 	// CXfile取得
 	CXfile *pXfile = CManager::GetInstance()->GetResourceManager()->GetXfileClass();
@@ -142,7 +142,7 @@ HRESULT CPlayer::Init(void)
 // 終了処理関数
 // Author : Konishi Yuuto
 //=============================================================================
-void CPlayer::Uninit(void)
+void CPlayer::Uninit()
 {
 #ifdef _DEBUG
 	//情報保存
@@ -155,7 +155,7 @@ void CPlayer::Uninit(void)
 // 更新関数処理関数
 // Author : Konishi Yuuto
 //=============================================================================
-void CPlayer::Update(void)
+void CPlayer::Update()
 {
 #ifdef _DEBUG
 	//情報確認
@@ -189,7 +189,7 @@ void CPlayer::Update(void)
 // 描画処理関数
 // Author : Konishi Yuuto
 //=============================================================================
-void CPlayer::Draw(void)
+void CPlayer::Draw()
 {
 	// 描画
 	CCharacter::Draw();
@@ -222,7 +222,7 @@ void CPlayer::ChangeState(CPlayerState *pPlayerState)
 // 状態更新
 // Author : Konishi Yuuto
 //=============================================================================
-void CPlayer::UpdateState(void)
+void CPlayer::UpdateState()
 {
 	if (m_pNextState)
 	{
@@ -244,7 +244,7 @@ void CPlayer::UpdateState(void)
 // 更新処理
 // Author : Konishi Yuuto
 //=============================================================================
-void CPlayer::UpdateRot(void)
+void CPlayer::UpdateRot()
 {
 	// 角度の取得
 	D3DXVECTOR3 rot = GetRot();
@@ -273,7 +273,7 @@ void CPlayer::UpdateRot(void)
 // スライムモデルチェンジ
 // Author : Hayashikawa Sarina
 //=============================================================================
-void CPlayer::ChangeModel(void)
+void CPlayer::ChangeModel()
 {
 	SLIME_STATE OldState = m_SlimeState; //前回の状態を保存
 
@@ -318,7 +318,7 @@ void CPlayer::ChangeModel(void)
 // Imgui 情報
 // Author : Konishi Yuuto
 //=============================================================================
-void CPlayer::ShowInfo(void)
+void CPlayer::ShowInfo()
 {
 #ifdef _DEBUG
 

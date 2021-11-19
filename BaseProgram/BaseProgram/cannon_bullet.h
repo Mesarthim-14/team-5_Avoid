@@ -25,7 +25,11 @@ public:
 	HRESULT Init(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &CannonRot);					// 初期化処理
 	void Update();																				// 更新処理
 private:
+	void CalDistance();														// 距離計算
 	void SetBulletInfo(D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);			// 弾の情報を設定
+
+	float m_fDistanceToKraken;	// 距離
+	D3DXVECTOR3 m_KrakenPos;	// クラーケンの座標
 };
 
 #endif

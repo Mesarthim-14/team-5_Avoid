@@ -111,7 +111,10 @@ void CCannonManager::Update()
 
 	if (m_pProduction)
 	{
+		// 更新処理
 		m_pProduction->Update();
+
+		// 終了予定なら削除
 		if (m_pProduction->GetEnd())
 		{
 			delete m_pProduction;
@@ -164,7 +167,6 @@ void CCannonManager::CannonCollision()
 
 			// ボタンの判定
 			InputJudge();
-
 			return;
 		}
 	}
@@ -193,14 +195,8 @@ void CCannonManager::CreateBullet()
 	// 演出へ以降
 	SetProductionMode();
 
-	// 弾の生成
-//	CCannonBullet::Create(
-//		m_apCannon.at(m_nTargetCannon)->GetPos(),
-//		m_apCannon.at(m_nTargetCannon)->GetRot());
-
 	// 使用状態にする
 	m_apCannon.at(m_nTargetCannon)->SetUseFlag();
-
 }
 
 //=============================================================================

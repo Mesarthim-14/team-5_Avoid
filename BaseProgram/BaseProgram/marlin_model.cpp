@@ -68,7 +68,7 @@ HRESULT CMarlinModel::Init(const D3DXVECTOR3 &pos)
 	CModel::Init();
 
 	CXfile *pXfile = GET_XFILE_PTR;
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MAP);
+	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ENEMY_BOX);
 	GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
 	return S_OK;

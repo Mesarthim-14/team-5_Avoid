@@ -107,7 +107,7 @@ private:
 	CManager();						// コンストラクタ
 	static CManager* m_pManager;	// 自身のポインタ
 
-	static bool m_bPause;									// ポーズフラグ
+	static bool m_bPause;			// ポーズフラグ
 };
 
 #endif

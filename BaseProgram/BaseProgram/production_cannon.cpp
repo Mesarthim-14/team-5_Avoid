@@ -30,8 +30,8 @@
 //=======================================================================================
 // マクロ定義
 //=======================================================================================
-#define SHOT_BULLET_TIME	(60)
-#define END_TIME	(240)
+#define SHOT_BULLET_TIME	(60)	// 弾を打つ時間
+#define END_TIME			(240)	// 終了時間
 
 //=======================================================================================
 // コンストラクタ
@@ -78,11 +78,13 @@ HRESULT CProductionCannon::Init()
 
 	if (!m_pPlayerState)
 	{
+		// プレイヤーの状態生成
 		m_pPlayerState = CPlayerStateCannon::Create();
 		pPlayer->ChangeState(m_pPlayerState);
 	}
 	if (!m_pCameraState)
 	{
+		// カメラの状態生成
 		m_pCameraState = CCameraStateCannon::Create();
 		pCamera->ChangeState(m_pCameraState);
 	}
@@ -97,15 +99,14 @@ void CProductionCannon::Update()
 {
 	m_nCounter++;
 
+	// 弾の発射
 	if (m_nCounter == SHOT_BULLET_TIME)
 	{
 		CCannon* pCannon = CManager::GetInstance()->GetGame()->GetGimmickFactory()->GetCannonManager()->GetCurrentCannon();
-		// 弾の生成
-		CCannonBullet::Create(
-			pCannon->GetPos(),
-			pCannon->GetRot());
+		CCannonBullet::Create(pCannon->GetPos(), pCannon->GetRot());
 	}
 
+	// 終了フラグ
 	if (m_nCounter >= END_TIME)
 	{
 		m_pPlayerState = nullptr;

@@ -14,7 +14,7 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define ATTACK_INTER	(300)									// 攻撃間隔
+#define ATTACK_INTER	(150)									// 攻撃間隔
 #define ATTACK_STR		(20)									// 攻撃力
 #define ATTACK_POWER	(2.0f)									// 吹っ飛ばし力
 #define SPEED			(130.0f)								// スピード
@@ -38,12 +38,12 @@ CMarlin::~CMarlin()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CMarlin * CMarlin::Create()
+CMarlin * CMarlin::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
 	CMarlin *pMarlin = new CMarlin;
 	if (pMarlin)
 	{
-		pMarlin->Init();
+		pMarlin->Init(pos, rot);
 		return pMarlin;
 	}
 
@@ -53,11 +53,11 @@ CMarlin * CMarlin::Create()
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CMarlin::Init()
+HRESULT CMarlin::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
 	CWimpEnemy::Init();
 	SetAttackInfo(ATTACK_INTER, ATTACK_STR, ATTACK_POWER);
-	SetCharacterInfo(ZeroVector3, ZeroVector3);
+	SetCharacterInfo(pos, rot);
 	SetSpeed(SPEED);
 
 	CreateModel();

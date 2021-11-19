@@ -17,7 +17,7 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define ATTACK_INTER		(300)									// 攻撃間隔
+#define ATTACK_INTER		(150)									// 攻撃間隔
 #define ATTACK_STR			(20)									// 攻撃力
 #define ATTACK_POWER		(2.0f)									// 吹っ飛ばし力
 #define SPEED				(30.0f)									// スピード
@@ -49,13 +49,13 @@ CGhost::~CGhost()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CGhost * CGhost::Create()
+CGhost * CGhost::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
 	// メモリ確保
 	CGhost *pGhost = new CGhost;
 	if (pGhost)
 	{
-		pGhost->Init();
+		pGhost->Init(pos, rot);
 		return pGhost;
 	}
 
@@ -65,11 +65,11 @@ CGhost * CGhost::Create()
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CGhost::Init()
+HRESULT CGhost::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
 	CWimpEnemy::Init();
 	SetAttackInfo(ATTACK_INTER, ATTACK_STR, ATTACK_POWER);
-	SetCharacterInfo(POS, ZeroVector3);
+	SetCharacterInfo(pos, rot);
 	SetSpeed(SPEED);
 
 	CreateModel();

@@ -26,6 +26,7 @@
 #include "check_point.h"
 #include "water_fresnel.h"
 #include "shark.h"
+#include "marlin.h"
 #include "ghost.h"
 #include "gimmick_factory.h"
 #include "kraken.h"
@@ -150,8 +151,20 @@ void CGame::CreatePlayer()
 //=======================================================================================
 void CGame::CreateEnemy()
 {
-//	CShark::Create();
-	CGhost::Create();
+	CShark::Create(D3DXVECTOR3(-13534.7f, 0.0f, -24998.2f), ZeroVector3);
+    CShark::Create(D3DXVECTOR3(-29145.5f, 0.0f, -14420.8f), ZeroVector3);
+    CShark::Create(D3DXVECTOR3(-30498.5f, 0.0f, -8135.1f), ZeroVector3);
+    CShark::Create(D3DXVECTOR3(-38483.3f, 0.0f, -5445.3f), ZeroVector3);
+    CShark::Create(D3DXVECTOR3(-47151.3f, 0.0f, -544.6f), ZeroVector3);
+
+    CMarlin::Create(D3DXVECTOR3(-23991.0f, 0.0f, -21278.3f), ZeroVector3);
+    CMarlin::Create(D3DXVECTOR3(-42865.0f, 0.0f, -17226.5f), ZeroVector3);
+    CMarlin::Create(D3DXVECTOR3(-42473.7f, 0.0f, 1648.0f), ZeroVector3);
+
+    CGhost::Create(D3DXVECTOR3(-36078.3f, 200.0f, -25948.0f), ZeroVector3);
+    CGhost::Create(D3DXVECTOR3(-38673.9f, 2586.1f, 1478.9f), ZeroVector3);
+
+    //CGhost::Create();
 	
 	// ÉNÉâÅ[ÉPÉì
 	if (!m_pKraken)

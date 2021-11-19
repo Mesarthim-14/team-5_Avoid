@@ -14,7 +14,7 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define ATTACK_INTER	(300)									// 攻撃間隔
+#define ATTACK_INTER	(150)									// 攻撃間隔
 #define ATTACK_STR		(20)									// 攻撃力
 #define ATTACK_POWER	(2.0f)									// 吹っ飛ばし力
 #define SPEED			(130.0f)								// スピード
@@ -38,32 +38,34 @@ CShark::~CShark()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CShark * CShark::Create()
+CShark * CShark::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-	CShark *pShark = new CShark;
-	if (pShark)
-	{
-		pShark->Init();
-		return pShark;
-	}
+    // メモリ確保
+    CShark *pShark = new CShark;
+    if (pShark)
+    {
+        // 初期化処理
+        pShark->Init(pos, rot);
+        return pShark;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CShark::Init()
+HRESULT CShark::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-	CWimpEnemy::Init();
-	SetAttackInfo(ATTACK_INTER, ATTACK_STR, ATTACK_POWER);
-	SetCharacterInfo(POS, ZeroVector3);
-	SetSpeed(SPEED);
+    CWimpEnemy::Init();
+    SetAttackInfo(ATTACK_INTER, ATTACK_STR, ATTACK_POWER);
+    SetCharacterInfo(pos, rot);
+    SetSpeed(SPEED);
 
-	// モデル生成
-	CreateModel();
+    // モデル生成
+    CreateModel();
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================

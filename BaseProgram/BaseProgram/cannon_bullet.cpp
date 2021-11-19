@@ -23,16 +23,19 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define SPEED	(100.0f)
-#define POS_FIX (1000.0f)
-#define POS_FIX_Y (700.0f)
+#define SPEED		(100.0f)
+#define SPEED_Y		(50.0f)
+#define POS_FIX		(1000.0f)
+#define POS_FIX_Y	(700.0f)
+#define GRAVITY_NUM	(0.65f)
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CCannonBullet::CCannonBullet(PRIORITY Priority) : CModel(Priority)
 {
-
+	m_fDistanceToKraken = 0.0f;
+	m_KrakenPos = ZeroVector3;
 }
 
 //=============================================================================
@@ -87,6 +90,21 @@ HRESULT CCannonBullet::Init(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &Can
 void CCannonBullet::Update()
 {
 	CModel::Update();
+	
+	// 距離計算
+	CalDistance();
+}
+
+//=============================================================================
+// 距離の計算
+//=============================================================================
+void CCannonBullet::CalDistance()
+{
+	float fCurDistance = CLibrary::CalDistance(GetPos(), m_KrakenPos);
+	if (fCurDistance * 0.5f <= m_fDistanceToKraken)
+	{
+		GetMove().y -= GRAVITY_NUM;
+	}
 }
 
 //=============================================================================
@@ -94,14 +112,16 @@ void CCannonBullet::Update()
 //=============================================================================
 void CCannonBullet::SetBulletInfo(D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
+	// 大砲の中心が違うので、座標をずらす
 	pos = D3DXVECTOR3(
 		pos.x + (sinf(rot.y)*POS_FIX),
 		pos.y + POS_FIX_Y,
 		pos.z + (cos(rot.y)*POS_FIX));
 
-	// Follow
-	// ボスのポインタ
-	CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();
-	D3DXVECTOR3 Ppos = pKraken->GetPos();	// 座標取得
-	SetMove(CLibrary::FollowMoveXZ(pos, Ppos, SPEED));
+	CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();	// ボスのポインタ
+	m_KrakenPos = pKraken->GetPos();									// 座標取得
+	m_fDistanceToKraken = CLibrary::CalDistance(pos, m_KrakenPos);		// 距離の取得
+	D3DXVECTOR3 move = CLibrary::FollowMoveXZ(pos, m_KrakenPos, SPEED);	// XZの移動量
+	move.y = SPEED_Y;													// 高さ追加
+	SetMove(move);														// 移動量設定
 }

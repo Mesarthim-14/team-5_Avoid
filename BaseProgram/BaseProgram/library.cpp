@@ -279,7 +279,7 @@ float CLibrary::CalAngleXZ(const D3DXVECTOR3 & This, const D3DXVECTOR3 & Target)
 //=============================================================================
 // XZ(ïΩñ )ÇÃí«è]
 //=============================================================================
-D3DXVECTOR3 CLibrary::FollowMoveXZ(const D3DXVECTOR3 & This, const D3DXVECTOR3 & Target, const float & fSpeed)
+D3DXVECTOR3 CLibrary::FollowMoveXZ(const D3DXVECTOR3 &This, const D3DXVECTOR3 &Target, const float &fSpeed)
 {
 	float fAngle = CLibrary::CalAngleXZ(This, Target);	// äpìxÇåàÇﬂÇÈ
 
