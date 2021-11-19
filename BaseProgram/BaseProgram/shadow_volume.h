@@ -23,10 +23,10 @@ public:
 
 	static CShadowVolume *Create(const LPD3DXMESH pSrcMesh);					// インスタンス生成
 	HRESULT Init(const LPD3DXMESH pSrcMesh);									// 初期化生成処理
-	void Uninit(void);															// 終了処理
-	void Draw(void);															// 描画処理
-	HRESULT CreateShadow(const D3DXVECTOR3 rot, const D3DXVECTOR3 ShipRot);		// 影の生成
-	HRESULT CreateShadow(const D3DXVECTOR3 ShipRot);							// 影の生成
+	void Uninit();															// 終了処理
+	void Draw();															// 描画処理
+	HRESULT CreateShadow(const D3DXVECTOR3 &rot, const D3DXVECTOR3 &ShipRot);	// 影の生成
+	HRESULT CreateShadow(const D3DXVECTOR3 &ShipRot);							// 影の生成
 
 private:
 	// メッシュ情報の構造体
@@ -41,7 +41,7 @@ private:
 
 	// メンバ変数
 	D3DXVECTOR3 m_LightPos;				// ライトの座標
-	DWORD       m_dwNumVertices;		// 頂点数
+	DWORD m_dwNumVertices;				// 頂点数
 	D3DXVECTOR3 m_pVertice[32000];		// 頂点の配列
 	LPD3DXMESH m_pSrcMesh;				// メッシュ情報
 	MESHVERTEX *m_MeshVertices;			// メッシュの情報

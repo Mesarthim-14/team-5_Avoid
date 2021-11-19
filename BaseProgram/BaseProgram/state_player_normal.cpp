@@ -14,6 +14,9 @@
 #include "manager.h"
 #include "game.h"
 #include "camera.h"
+#include "mouse.h"
+#include "state_player_avoid.h"
+#include "state_player_jump.h"
 
 //=====================================================================
 // コンストラクタ
@@ -70,4 +73,35 @@ void CPlayerStateNormal::Update()
 
 	// キーボード移動処理
 	MoveByKeyboard(pPlayer);
+	Jump(pPlayer);
+	Avoidance(pPlayer);
+}
+
+//=====================================================================
+// ジャンプ処理
+//=====================================================================
+void CPlayerStateNormal::Jump(CPlayer* &pPlayer)
+{
+	// ためジャンプ
+	if (CLibrary::KeyboardTrigger(DIK_SPACE))
+	{
+		// 状態の設定
+		pPlayer->ChangeState(CPlayerStateJump::Create());
+	}
+
+}
+
+//=====================================================================
+// 回避処理
+//=====================================================================
+void CPlayerStateNormal::Avoidance(CPlayer* &pPlayer)
+{
+	CMouse *pMouse = CManager::GetInstance()->GetMouse();	// マウス
+	if (pPlayer->GetLanding() == true && pMouse->GetButtonTrigger(CMouse::MOUSE_LEFT))//回避
+	{
+		if (pPlayer->GetSlimeState() != CPlayer::SLIME_LITTLESIZE)
+		{
+			pPlayer->ChangeState(CPlayerStateAvoid::Create());
+		}
+	}
 }

@@ -22,9 +22,9 @@ public:
 	~CPolygon();		// デストラクタ
 
 	HRESULT Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size);	// 初期化処理
-	void Uninit(void);												// 終了処理
-	void Update(void);												// 更新処理
-	void Draw(void);												// 描画処理
+	void Uninit();													// 終了処理
+	void Update();													// 更新処理
+	void Draw();													// 描画処理
 	void SetColor(const D3DXCOLOR &color);							// 色の設定
 
 	static CPolygon *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size);		// インスタンス生成

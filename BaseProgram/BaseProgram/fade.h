@@ -37,14 +37,14 @@ public:
 	CFade();									// コンストラクタ
 	~CFade();									// デストラクタ
 
-	HRESULT Init(void);							// 初期化処理
-	void Uninit(void);							// 終了処理
-	void Update(void);							// 更新処理　
-	void Draw(void);							// 描画処理
+	HRESULT Init();							// 初期化処理
+	void Uninit();							// 終了処理
+	void Update();							// 更新処理　
+	void Draw();							// 描画処理
 	void SetFade(CManager::MODE_TYPE mode);		// フェード設定
 
 	// Get関数
-	FADE_MODE GetFade(void);					// フェード情報
+	FADE_MODE GetFade();					// フェード情報
 
 private:
 	D3DXCOLOR m_colorFade;						//フェード色

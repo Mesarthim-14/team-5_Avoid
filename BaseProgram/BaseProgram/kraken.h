@@ -26,10 +26,11 @@ public:
 	CKraken(PRIORITY Priority = PRIORITY_CHARACTER);	// コンストラクタ
 	~CKraken();											// デストラクタ
 
-	static CKraken *Create();									// インスタンス生成
+	static CKraken *Create();							// インスタンス生成
 	HRESULT Init();										// 初期化処理
 	void Uninit();										// 終了処理
 	void Update();										// 更新処理
+
 private:
 	// private関数
 	void Attack();						// 攻撃

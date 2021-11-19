@@ -188,7 +188,7 @@ void CLibrary::RotFixVector3(D3DXVECTOR3 & rot)
 //=============================================================================
 // ランダムの値を返す (指定した+-の範囲を出力)
 //=============================================================================
-int CLibrary::Random(const int nNum)
+int CLibrary::Random(const int &nNum)
 {
 	random_device rnd;
 	mt19937 mt(rnd());
@@ -200,7 +200,7 @@ int CLibrary::Random(const int nNum)
 //=============================================================================
 // ランダムの値を返す (指定した二つの範囲を出力)
 //=============================================================================
-int CLibrary::Random(const int nMin, const int nMax)
+int CLibrary::Random(const int &nMin, const int &nMax)
 {
 	random_device rnd;
 	mt19937 mt(rnd());
@@ -212,7 +212,7 @@ int CLibrary::Random(const int nMin, const int nMax)
 //=============================================================================
 // ランダムの値を返す (指定した+-の範囲を出力)
 //=============================================================================
-float CLibrary::Random(const float fNum)
+float CLibrary::Random(const float &fNum)
 {
 	random_device rnd;
 	mt19937 mt(rnd());
@@ -224,7 +224,7 @@ float CLibrary::Random(const float fNum)
 //=============================================================================
 // ランダムの値を返す (指定した二つの範囲を出力)
 //=============================================================================
-float CLibrary::Random(const float fMin, const float fMax)
+float CLibrary::Random(const float &fMin, const float &fMax)
 {
 	random_device rnd;
 	mt19937 mt(rnd());
@@ -233,10 +233,55 @@ float CLibrary::Random(const float fMin, const float fMax)
 	return (float)rand(mt);
 }
 
+//*****************************************************************************
+// 点の三次元回転処理
+//*****************************************************************************
+void CLibrary::Rotate3D(D3DXVECTOR3 &PointPos, const D3DXVECTOR3 &rot)
+{
+	//X軸回転
+	PointPos = D3DXVECTOR3(
+		PointPos.x,
+		PointPos.y * cosf(rot.x) + PointPos.z * -sinf(rot.x),
+		PointPos.y * sinf(rot.x) + PointPos.z * cosf(rot.x));
+
+	//Y軸回転
+	PointPos = D3DXVECTOR3(
+		PointPos.x * cosf(rot.y) + PointPos.z * sinf(rot.y),
+		PointPos.y,
+		PointPos.x * -sinf(rot.y) + PointPos.z * cosf(rot.y));
+
+	//Z軸回転
+	PointPos = D3DXVECTOR3(
+		PointPos.x * cosf(rot.z) + PointPos.y * -sinf(rot.z),
+		PointPos.x * sinf(rot.z) + PointPos.y * cosf(rot.z),
+		PointPos.z);
+}
+
+//*****************************************************************************
+// 分離軸に投影された軸成分から投影線分長を算出
+//*****************************************************************************
+float CLibrary::LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3)
+{
+	// 3つの内積の絶対値の和で投影線分長を計算
+	// 分離軸Sepは標準化されていること
+	float r1 = (float)fabs(D3DXVec3Dot(Sep, e1));
+	float r2 = (float)fabs(D3DXVec3Dot(Sep, e2));
+	float r3 = (float)(e3 ? (fabs(D3DXVec3Dot(Sep, e3))) : 0);
+	return r1 + r2 + r3;
+}
+
+//*****************************************************************************
+// vector3同士の乗算
+//*****************************************************************************
+D3DXVECTOR3 CLibrary::MultiplyVector3(const D3DXVECTOR3 &vector1, const D3DXVECTOR3 &vector2)
+{
+	return D3DXVECTOR3(vector1.x * vector2.x, vector1.y * vector2.y, vector1.z * vector2.z);
+}
+
 //=============================================================================
 // 二点の距離を計算
 //=============================================================================
-float CLibrary::DistanceCal(const D3DXVECTOR3 & pos1, const D3DXVECTOR3 & pos2)
+float CLibrary::CalDistance(const D3DXVECTOR3 & pos1, const D3DXVECTOR3 & pos2)
 {
 	return D3DXVec3Length(&(pos1 - pos2));
 }
@@ -266,6 +311,24 @@ BOOL CLibrary::KeyboardRelease(const int &nKey)
 {
 	CInputKeyboard *pKeyboard = CManager::GetInstance()->GetKeyboard();
 	return pKeyboard->GetRelease(nKey);
+}
+
+//=============================================================================
+// XZ(平面)の角度を求める
+//=============================================================================
+float CLibrary::CalAngleXZ(const D3DXVECTOR3 & This, const D3DXVECTOR3 & Target)
+{
+	return atan2f((This.x - Target.x), (This.z - Target.z));
+}
+
+//=============================================================================
+// XZ(平面)の追従
+//=============================================================================
+D3DXVECTOR3 CLibrary::FollowMoveXZ(const D3DXVECTOR3 & This, const D3DXVECTOR3 & Target, const float & fSpeed)
+{
+	float fAngle = CLibrary::CalAngleXZ(This, Target);	// 角度を決める
+
+	return D3DXVECTOR3(sinf(fAngle)*-fSpeed, 0.0f, cosf(fAngle)*-fSpeed);
 }
 
 //=============================================================================

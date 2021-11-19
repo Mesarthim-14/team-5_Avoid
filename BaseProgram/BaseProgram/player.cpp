@@ -23,9 +23,9 @@
 #include "model.h"
 #include "skinmesh_model.h"
 #include "animation_skinmesh.h"
+#include "collisionModel.h"
 #include "check_point.h"
 #include "gimmick_factory.h"
-#include "game_mode.h"
 #include "state_player.h"
 #include "state_player_avoid.h"
 #include "state_player_jump.h"
@@ -37,12 +37,15 @@
 //=============================================================================
 #define PLAYER_SPEED			(10.0f)									// プレイヤーの移動量
 #define PLAYER_ROT_SPEED		(0.1f)									// キャラクターの回転する速度
-#define SIZE					(D3DXVECTOR3 (1200.0f,1000.0f,1200.0f))	// サイズ
+#define PLAYER_COLLISION_SIZE	(D3DXVECTOR3(300.0f,600.0f,300.0f))		//プレイヤーの当たり判定の大きさ
+#define PLAYER_COLLISION_SIZE	(D3DXVECTOR3(300.0f,600.0f,300.0f))		//プレイヤーの当たり判定の大きさ
+#define PLAYER_COLLISION_SIZE	(D3DXVECTOR3(300.0f,600.0f,300.0f))		//プレイヤーの当たり判定の大きさ
+
 #define PLAYER_INERTIA			(0.08f)									// 慣性の大きさ
 #define PLAYER_LITTLESIZE_VALUE (10)									// 最小サイズモデルの値
 #define PLAYER_MIDLLESIZE_VALUE (50)									// 中サイズモデルの値
 #define PLAYER_LARGESIZE_VALUE  (100)									// 最大サイズモデルの値
-#define CHARGEJUMP_COUNT_MAX	(10)									// タメ判定用カウント
+
 #define RESPORN_POS_Y			(-3000.0f)								// リスポーンの値
 
 //=============================================================================
@@ -90,6 +93,8 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	memset(m_nMaxAction, 0, sizeof(m_nMaxAction));
 	m_pCurrentState = nullptr;
 	m_pNextState = nullptr;
+
+	m_pCollisionModel = nullptr;
 }
 
 //=============================================================================
@@ -106,17 +111,6 @@ CPlayer::~CPlayer()
 //=============================================================================
 HRESULT CPlayer::Init(void)
 {
-	// CXfile取得
-	CXfile *pXfile = CManager::GetInstance()->GetResourceManager()->GetXfileClass();
-
-	// nullcheck
-	if (pXfile)
-	{
-		//	SetUseShadow();									// 影の使用
-		//ModelCreate(CXfile::HIERARCHY_XFILE_NUM_TEST);	// モデルの生成
-		//	SetShadowRotCalculation();						// 影の向き
-	}
-
 	// モデル生成
 	CreateModel();
 
@@ -125,7 +119,7 @@ HRESULT CPlayer::Init(void)
 
 	// 初期化
 	m_rotDest = GetRot();			// 向き
-	SetSize(SIZE);					// サイズ設定
+
 	SetType(CHARACTER_TYPE_PLAYER);	// プレイヤー
 
 	if (!m_pCurrentState)
@@ -135,6 +129,12 @@ HRESULT CPlayer::Init(void)
 	}
 
 	LoadInfo();
+
+	//当たり判定モデルの生成
+	if (m_pCollisionModel == nullptr)
+	{
+		m_pCollisionModel = CCollisionModel::Create(GetPos(), PLAYER_COLLISION_SIZE, GetRot(), CCollisionModel::TYPE_BOX);
+	}
 
 	return S_OK;
 }
@@ -147,6 +147,7 @@ void CPlayer::Uninit(void)
 {
 #ifdef _DEBUG
 	//情報保存
+
 //	SaveInfo();
 #endif // !_DEBUG
 	CCharacter::Uninit();
@@ -158,25 +159,23 @@ void CPlayer::Uninit(void)
 //=============================================================================
 void CPlayer::Update(void)
 {
-#ifdef _DEBUG
-	//情報確認
-	ShowInfo();
-#endif // !_DEBUG
+	{
+		// 位置取得
+		D3DXVECTOR3 pos = GetPos();
 
-	// 位置取得
-	D3DXVECTOR3 pos = GetPos();
-
-	// 古い位置設定
-	SetPosOld(pos);
+		// 古い位置設定
+		SetPosOld(pos);
+	}
 
 	// 状態更新
 	UpdateState();
 
-	// プレイヤー処理
-	PlayerControl();
-
-	// 更新
 	CCharacter::Update();
+
+	if (m_pCollisionModel)
+	{
+		m_pCollisionModel->SetPos(GetPos());
+	}
 
 	// リスポーン
 	ReSporn();
@@ -187,6 +186,8 @@ void CPlayer::Update(void)
 
 	// 更新処理
 	UpdateRot();
+
+	ShowInfo();
 }
 
 //=============================================================================
@@ -205,12 +206,20 @@ void CPlayer::Draw(void)
 //=============================================================================
 CSkinmeshModel *CPlayer::GetCurrentSkinMeshPtr()
 {
+
 	if (m_pSkinmeshModel[m_SlimeState])
 	{
 		return m_pSkinmeshModel[m_SlimeState];
 	}
 
+
 	return nullptr;
+
+	//当たり判定の位置の設定
+	if (m_pCollisionModel != nullptr)
+	{
+		m_pCollisionModel->SetPos(GetPos());
+	}
 }
 
 //=============================================================================
@@ -219,6 +228,7 @@ CSkinmeshModel *CPlayer::GetCurrentSkinMeshPtr()
 //=============================================================================
 void CPlayer::ChangeState(CPlayerState *pPlayerState)
 {
+
 	m_pNextState = pPlayerState;
 }
 
@@ -241,32 +251,6 @@ void CPlayer::UpdateState(void)
 	{
 		// 更新処理
 		m_pCurrentState->Update();
-	}
-}
-
-//=============================================================================
-// プレイヤーの処理
-// Author : Konishi Yuuto
-//=============================================================================
-void CPlayer::PlayerControl(void)
-{
-	// アクション
-	Action();
-}
-
-//=============================================================================
-// アクション処理
-// Author : Hayashikawa Sarina
-//=============================================================================
-void CPlayer::Action(void)
-{
-	// ジャンプ
-	Jump();
-
-	if (m_SlimeState != SLIME_LITTLESIZE)
-	{
-		// 回避
-		Avoidance();
 	}
 }
 
@@ -297,6 +281,12 @@ void CPlayer::UpdateRot(void)
 
 	// 角度の設定
 	SetRot(rot);
+
+	//当たり判定の角度の設定
+	if (m_pCollisionModel != nullptr)
+	{
+		m_pCollisionModel->SetRot(rot);
+	}
 }
 
 //=============================================================================
@@ -345,33 +335,6 @@ void CPlayer::ChangeModel(void)
 }
 
 //=============================================================================
-// ジャンプ
-// Author : Hayashikawa Sarina
-//=============================================================================
-void CPlayer::Jump(void)
-{
-	// ためジャンプ
-	if (CLibrary::KeyboardTrigger(DIK_SPACE))
-	{
-		// 状態の設定
-		ChangeState(CPlayerStateJump::Create());
-	}
-}
-
-//=============================================================================
-// 回避
-// Author : Hayashikawa Sarina
-//=============================================================================
-void CPlayer::Avoidance(void)
-{
-	CMouse *pMouse = CManager::GetInstance()->GetMouse();	// キーボード更新
-	if (GetLanding() == true && pMouse->GetButtonTrigger(CMouse::MOUSE_LEFT))//回避
-	{
-		ChangeState(CPlayerStateAvoid::Create());
-	}
-}
-
-//=============================================================================
 // Imgui 情報
 // Author : Konishi Yuuto
 //=============================================================================
@@ -384,6 +347,7 @@ void CPlayer::ShowInfo(void)
 
 	if (ImGui::CollapsingHeader("PlayerInfo"))
 	{
+
 		LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	// デバイスの取得
 
 		if (ImGui::TreeNode("Player"))
@@ -406,6 +370,7 @@ void CPlayer::ShowInfo(void)
 			// 状態
 			ImGui::Text("SLIME_SIZE : %d", m_SlimeState);
 
+
 			// 移動量
 			float fSpeed = GetSpeed();
 			ImGui::SliderFloat("Speed", &fSpeed, 0.0f, 50.0f);
@@ -413,6 +378,7 @@ void CPlayer::ShowInfo(void)
 
 			// ライフの値
 			ImGui::SliderInt("HP", &m_nHP, 0, 100);
+
 
 			// 慣性の値
 			ImGui::SliderFloat("InertiaNum", &m_fInertiaNum, 0.0f, 0.5f);
@@ -445,7 +411,7 @@ void CPlayer::ShowInfo(void)
 // データロード
 // Author : Konishi Yuuto
 //=============================================================================
-HRESULT CPlayer::LoadInfo(void)
+HRESULT CPlayer::LoadInfo()
 {
 	// ファイルデータ取得
 	picojson::value& v = CLibrary::JsonLoadFile("data/Text/json/test.json");
@@ -463,7 +429,7 @@ HRESULT CPlayer::LoadInfo(void)
 // データセーブ
 // Author : Konishi Yuuto
 //=============================================================================
-void CPlayer::SaveInfo(void)
+void CPlayer::SaveInfo()
 {
 	string FileName = "data/Text/json/test.json";
 
@@ -472,13 +438,15 @@ void CPlayer::SaveInfo(void)
 	CLibrary::JsonSetState(FileName, "Player", "INERTIA_NUM", m_fInertiaNum);		// 慣性
 	CLibrary::JsonSetState(FileName, "Player", "ROTATION_SPEED", m_fRotationSpeed);	// 回転の速度
 	CLibrary::JsonSetState(FileName, "Player", "ANGLE_SPEED", m_fAngleSpeed);	// 回転遅さの速度
+
 }
 
 //=============================================================================
 // ライフ減少
 // Author : Hayashikawa Sarina
 //=============================================================================
-void CPlayer::SubLife(int nDamage)
+
+void CPlayer::SubLife(const int &nDamage)
 {
 	if (m_nHP > 0)
 	{

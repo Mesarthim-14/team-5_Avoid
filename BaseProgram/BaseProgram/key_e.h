@@ -21,9 +21,9 @@ public:
 	CKeyE(PRIORITY);			// コンストラクタ
 	~CKeyE();					// デストラクタ
 
-	static CKeyE *Create();								// インスタンス生成
-	HRESULT Init();										// 初期化処理
-	void Draw();										// 描画処理
+	static CKeyE *Create();												// インスタンス生成
+	HRESULT Init();														// 初期化処理
+	void Draw();														// 描画処理
 	inline void SetDrawFlag(const bool &bFlag) { m_isDraw = bFlag; }	// Drawの切り替え関数
 private:
 	bool m_isDraw;

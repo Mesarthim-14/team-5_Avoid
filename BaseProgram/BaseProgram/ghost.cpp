@@ -142,7 +142,7 @@ void CGhost::Move()
 		if (Follow())
 		{
 			// ˆê’è‚Ì‹——£‚É‹ß‚Ã‚¢‚½‚ç
-			if (CLibrary::DistanceCal(
+			if (CLibrary::CalDistance(
 				CManager::GetInstance()->GetPlayer()->GetPos(), GetPos()) <= FOLLOW_END_DISTANCE)
 			{
 				m_bFollow = false;

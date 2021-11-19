@@ -26,7 +26,7 @@ public:
 	void Update();															// 更新処理
 	bool Collision();														// 当たり判定
 
-	void SetUseFlag() { m_bUse = true; }		// 使用している状態にする
+	inline void SetUseFlag() { m_bUse = true; }		// 使用している状態にする
 
 private:
 	bool m_bUse;	// 使用したかどうか

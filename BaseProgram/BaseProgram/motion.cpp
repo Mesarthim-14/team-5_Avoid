@@ -41,7 +41,7 @@ CMotion::~CMotion()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CMotion * CMotion::Create(string cFileName)
+CMotion * CMotion::Create(const string &cFileName)
 {
 	// インスタンス生成
 	CMotion *pMotion = new CMotion;
@@ -61,7 +61,7 @@ CMotion * CMotion::Create(string cFileName)
 //=============================================================================
 // モーションの更新処理
 //=============================================================================
-void CMotion::UpdateMotion(const int nMaxParts, const vector<CModelAnime*> apModelAnime)
+void CMotion::UpdateMotion(const int &nMaxParts, const vector<CModelAnime*> apModelAnime)
 {
 	//現在キーが最大キー数未満の場合
 	if (m_nKey < m_Motion[m_nMotionState].nNumKey)
@@ -168,7 +168,7 @@ void CMotion::UpdateMotion(const int nMaxParts, const vector<CModelAnime*> apMod
 //=============================================================================
 // モーションファイル読み込み
 //=============================================================================
-HRESULT CMotion::ReadMotionFile(string cFileName)
+HRESULT CMotion::ReadMotionFile(const string &cFileName)
 {
 	FILE *pFile = nullptr;		//FILEポインタ
 	char aHeadData[1024];
@@ -298,7 +298,7 @@ HRESULT CMotion::ReadMotionFile(string cFileName)
 //=============================================================================
 // モーションの設定
 //=============================================================================
-void CMotion::SetMotion(const int nMotion, const int nMaxParts, const vector<CModelAnime*> apModelAnime)
+void CMotion::SetMotion(const int &nMotion, const int &nMaxParts, const vector<CModelAnime*> apModelAnime)
 {
 	// 元のモーションと違ったら
 	if (m_nMotionState != nMotion)

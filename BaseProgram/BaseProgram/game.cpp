@@ -28,7 +28,6 @@
 #include "shark.h"
 #include "ghost.h"
 #include "gimmick_factory.h"
-#include "game_mode.h"
 #include "kraken.h"
 
 float CGame::m_fGravity = 1.5f;
@@ -41,7 +40,7 @@ CGame::CGame()
 	m_bGameEnd = false;
 	m_pFont = nullptr;
 	m_pGimmickFactory = nullptr;
-	m_pGameMode = nullptr;
+	m_pKraken = nullptr;
 }
 
 //=======================================================================================
@@ -56,11 +55,8 @@ CGame::~CGame()
 //=======================================================================================
 // 初期化処理
 //=======================================================================================
-HRESULT CGame::Init(void)
+HRESULT CGame::Init()
 {
-	// モード生成
-	CreateMode();
-
 	// プレイヤーの生成
 	CreatePlayer();
 	CreateEnemy();
@@ -72,13 +68,18 @@ HRESULT CGame::Init(void)
 //=======================================================================================
 // 終了処理
 //=======================================================================================
-void CGame::Uninit(void)
+void CGame::Uninit()
 {
 	// プレイヤーの終了処理
 	if (m_pPlayer)
 	{
 		m_pPlayer->Uninit();
 		m_pPlayer = nullptr;
+	}
+	if (m_pKraken)
+	{
+		m_pKraken->Uninit();
+		m_pKraken = nullptr;
 	}
 
 	// デバッグ情報表示用フォントの破棄
@@ -93,25 +94,16 @@ void CGame::Uninit(void)
 		delete m_pGimmickFactory;
 		m_pGimmickFactory = nullptr;
 	}
-	if (m_pGameMode)
-	{
-		delete m_pGameMode;
-		m_pGameMode = nullptr;
-	}
 }
 
 //=======================================================================================
 // 更新処理
 //=======================================================================================
-void CGame::Update(void)
+void CGame::Update()
 {
 	if (m_pGimmickFactory)
 	{
 		m_pGimmickFactory->Update();
-	}
-	if (m_pGameMode)
-	{
-		m_pGameMode->Update();
 	}
 
 #ifdef _DEBUG
@@ -132,7 +124,7 @@ void CGame::Update(void)
 //=======================================================================================
 // 描画処理
 //=======================================================================================
-void CGame::Draw(void)
+void CGame::Draw()
 {
 
 }
@@ -140,7 +132,7 @@ void CGame::Draw(void)
 //=======================================================================================
 // プレイヤーの生成
 //=======================================================================================
-void CGame::CreatePlayer(void)
+void CGame::CreatePlayer()
 {
 	// プレイヤーの生成
 	if (!m_pPlayer)
@@ -160,7 +152,12 @@ void CGame::CreateEnemy()
 {
 //	CShark::Create();
 	CGhost::Create();
-	CKraken::Create();
+	
+	// クラーケン
+	if (!m_pKraken)
+	{
+		m_pKraken = CKraken::Create();
+	}
 }
 
 //=======================================================================================
@@ -179,7 +176,7 @@ void CGame::CreateMap()
 //=======================================================================================
 // 情報表示
 //=======================================================================================
-void CGame::ShowInfo(void)
+void CGame::ShowInfo()
 {
 #ifdef _DEBUG
 
@@ -193,20 +190,9 @@ void CGame::ShowInfo(void)
 		// 重力の値
 		ImGui::SliderFloat("Gravity", &m_fGravity, 0.0f, 50.0f);
 
-	//	ImGui::TreePop();
+		//	ImGui::TreePop();
 	}
 
 	ImGui::End();
 #endif // !_DEBUG
-}
-
-//=======================================================================================
-// ゲームモードクラス生成
-//=======================================================================================
-void CGame::CreateMode()
-{
-	if (!m_pGameMode)
-	{
-		m_pGameMode = CGameMode::Create();
-	}
 }

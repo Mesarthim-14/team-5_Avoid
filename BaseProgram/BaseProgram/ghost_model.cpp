@@ -77,7 +77,7 @@ HRESULT CGhostModel::Init(const D3DXVECTOR3 &pos)
 //=============================================================================
 // ï`âÊèàóù
 //=============================================================================
-void CGhostModel::Draw(void)
+void CGhostModel::Draw()
 {
 	CModel::Draw();
 }

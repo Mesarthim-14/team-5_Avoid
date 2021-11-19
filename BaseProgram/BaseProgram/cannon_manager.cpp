@@ -23,11 +23,12 @@
 #include "keyboard.h"
 #include "input.h"
 #include "cannon_bullet.h"
-#include "game_mode.h"
+#include "player.h"
+#include "camera_game.h"
 
-//=============================================================================
-// マクロ定義
-//=============================================================================
+#include "production_cannon.h"
+#include "state_camera_cannon.h"
+#include "state_player_cannon.h"
 
 //=============================================================================
 // コンストラクタ
@@ -38,6 +39,7 @@ CCannonManager::CCannonManager()
 	m_nAttackNum = 0;
 	m_pKeyE = nullptr;
 	m_nTargetCannon = 0;
+	m_pProduction = nullptr;
 }
 
 //=============================================================================
@@ -106,6 +108,16 @@ void CCannonManager::Update()
 {
 	// 大砲の当たり判定
 	CannonCollision();
+
+	if (m_pProduction)
+	{
+		m_pProduction->Update();
+		if (m_pProduction->GetEnd())
+		{
+			delete m_pProduction;
+			m_pProduction = nullptr;
+		}
+	}
 }
 
 //=============================================================================
@@ -178,26 +190,27 @@ void CCannonManager::InputJudge()
 //=============================================================================
 void CCannonManager::CreateBullet()
 {
+	// 演出へ以降
+	SetProductionMode();
+
 	// 弾の生成
-	CCannonBullet::Create(
-		m_apCannon.at(m_nTargetCannon)->GetPos(),
-		m_apCannon.at(m_nTargetCannon)->GetRot());
+//	CCannonBullet::Create(
+//		m_apCannon.at(m_nTargetCannon)->GetPos(),
+//		m_apCannon.at(m_nTargetCannon)->GetRot());
 
 	// 使用状態にする
 	m_apCannon.at(m_nTargetCannon)->SetUseFlag();
 
-	ChangeGameMode();
 }
 
 //=============================================================================
-// ゲームモードのチェンジ
+// 演出の設定
 //=============================================================================
-void CCannonManager::ChangeGameMode()
+void CCannonManager::SetProductionMode()
 {
-	CGame *pGame = (CGame*)CManager::GetInstance()->GetModePtr();
-	if (pGame)
+	// 大砲の演出
+	if (!m_pProduction)
 	{
-		// 大砲状態に以降
-		pGame->GetGameMode()->SetMode(CGameMode::GAME_MOVE_CANNON);
+		m_pProduction = CProductionCannon::Create();
 	}
 }

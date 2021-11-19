@@ -77,7 +77,7 @@ HRESULT CMarlinModel::Init(const D3DXVECTOR3 &pos)
 //=============================================================================
 // ï`âÊèàóù
 //=============================================================================
-void CMarlinModel::Draw(void)
+void CMarlinModel::Draw()
 {
 	CModel::Draw();
 }

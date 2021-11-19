@@ -162,11 +162,11 @@
     <ClCompile Include="check_flag.cpp" />
     <ClCompile Include="check_point.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="collisionModel.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="fresnel_lambert.cpp" />
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="game_mode.cpp" />
     <ClCompile Include="gauge.cpp" />
     <ClCompile Include="gaugebar.cpp" />
     <ClCompile Include="ghost.cpp" />
@@ -210,6 +210,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="player_editor.cpp" />
     <ClCompile Include="polygon.cpp" />
+    <ClCompile Include="production_cannon.cpp" />
     <ClCompile Include="reflect.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="resource_manager.cpp" />
@@ -234,9 +235,11 @@
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="state.cpp" />
     <ClCompile Include="state_camera.cpp" />
+    <ClCompile Include="state_camera_cannon.cpp" />
     <ClCompile Include="state_camera_normal.cpp" />
     <ClCompile Include="state_player.cpp" />
     <ClCompile Include="state_player_avoid.cpp" />
+    <ClCompile Include="state_player_cannon.cpp" />
     <ClCompile Include="state_player_jump.cpp" />
     <ClCompile Include="state_player_knockback.cpp" />
     <ClCompile Include="state_player_normal.cpp" />
@@ -273,11 +276,11 @@
     <ClInclude Include="check_flag.h" />
     <ClInclude Include="check_point.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="collisionModel.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="fresnel_lambert.h" />
     <ClInclude Include="game.h" />
-    <ClInclude Include="game_mode.h" />
     <ClInclude Include="gauge.h" />
     <ClInclude Include="gaugebar.h" />
     <ClInclude Include="ghost.h" />
@@ -324,6 +327,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="player_editor.h" />
     <ClInclude Include="polygon.h" />
+    <ClInclude Include="production_cannon.h" />
     <ClInclude Include="reflect.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="resource_manager.h" />
@@ -348,9 +352,11 @@
     <ClInclude Include="sound.h" />
     <ClInclude Include="state.h" />
     <ClInclude Include="state_camera.h" />
+    <ClInclude Include="state_camera_cannon.h" />
     <ClInclude Include="state_camera_normal.h" />
     <ClInclude Include="state_player.h" />
     <ClInclude Include="state_player_avoid.h" />
+    <ClInclude Include="state_player_cannon.h" />
     <ClInclude Include="state_player_jump.h" />
     <ClInclude Include="state_player_knockback.h" />
     <ClInclude Include="state_player_normal.h" />

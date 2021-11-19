@@ -86,7 +86,7 @@ CScene2D * CScene2D::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size, con
 //=======================================================================================
 // ポリゴンの初期化
 //=======================================================================================
-HRESULT CScene2D::Init(void)
+HRESULT CScene2D::Init()
 {
 	// 頂点の生成
 	CreateVertex();
@@ -97,7 +97,7 @@ HRESULT CScene2D::Init(void)
 //=======================================================================================
 // ポリゴンの終了処理
 //=======================================================================================
-void CScene2D::Uninit(void)
+void CScene2D::Uninit()
 {
 	// 終了処理
 	CSceneBase::Uninit();
@@ -106,7 +106,7 @@ void CScene2D::Uninit(void)
 //=======================================================================================
 // ポリゴンの更新処理
 //=======================================================================================
-void CScene2D::Update(void)
+void CScene2D::Update()
 {
 	// 更新処理
 	CSceneBase::Update();
@@ -120,7 +120,7 @@ void CScene2D::Update(void)
 //=======================================================================================
 // ポリゴンの描画処理
 //=======================================================================================
-void CScene2D::Draw(void)
+void CScene2D::Draw()
 {
 	// Rendererクラスからデバイスを取得
 	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
@@ -182,7 +182,7 @@ void CScene2D::SetColor(const D3DXCOLOR &col)
 //=============================================
 // 頂点の生成関数
 //=============================================
-void CScene2D::CreateVertex(void)
+void CScene2D::CreateVertex()
 {
 	// Rendererクラスからデバイスを取得
 	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
@@ -240,7 +240,7 @@ void CScene2D::CreateVertex(void)
 //=============================================
 // 頂点の設定
 //=============================================
-void CScene2D::SetVertexPos(void)
+void CScene2D::SetVertexPos()
 {
 	// Rendererクラスからデバイスを取得
 	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
@@ -271,7 +271,7 @@ void CScene2D::SetVertexPos(void)
 //=============================================
 // アニメーション情報取得
 //=============================================
-void CScene2D::InitAnimation(int nPatternNum, int nSpeed, int nLoop)
+void CScene2D::InitAnimation(const int &nPatternNum, const int &nSpeed, const int &nLoop)
 {
 	// 頂点情報を設定
 	VERTEX_2D *pVtx = nullptr;
@@ -305,7 +305,7 @@ void CScene2D::InitAnimation(int nPatternNum, int nSpeed, int nLoop)
 //=============================================
 // アニメーション更新関数
 //=============================================
-void CScene2D::UpdateAnimation(void)
+void CScene2D::UpdateAnimation()
 {
 	// テクスチャポインタ取得
 	CTextureAnimation *pTextureAnimation = GetTextureAnimationPtr();
@@ -329,7 +329,7 @@ void CScene2D::UpdateAnimation(void)
 //=============================================
 // テクスチャのスクロール情報を取得
 //=============================================
-void CScene2D::InitScroll(int nSpeed, float fDivision)
+void CScene2D::InitScroll(const int &nSpeed, const float &fDivision)
 {
 	// 頂点情報を設定
 	VERTEX_2D *pVtx = nullptr;
@@ -357,7 +357,7 @@ void CScene2D::InitScroll(int nSpeed, float fDivision)
 //=============================================
 // テクスチャのスクロール情報を更新
 //=============================================
-void CScene2D::UpdateScroll(void)
+void CScene2D::UpdateScroll()
 {
 	// テクスチャポインタ取得
 	CTextureAnimation *pTextureAnimation = GetTextureAnimationPtr();
@@ -388,7 +388,7 @@ void CScene2D::UpdateScroll(void)
 //======================================================
 // 拡大関数
 //======================================================
-void CScene2D::ScaleUp(float fScaleUp)
+void CScene2D::ScaleUp(const float &fScaleUp)
 {
 	// 情報取得
 	D3DXVECTOR3 pos = GetPos();		// 座標
@@ -464,7 +464,7 @@ void CScene2D::SetScale(const float &fScale)
 //====================================================================
 // ポリゴンの点滅
 //====================================================================
-void CScene2D::FlashPolygon(int nFlashFlame)
+void CScene2D::FlashPolygon(const int &nFlashFlame)
 {
 	// 頂点情報を設定
 	VERTEX_2D *pVtx = nullptr;
@@ -518,7 +518,7 @@ void CScene2D::FlashPolygon(int nFlashFlame)
 //====================================================================
 // フェードアウト
 //====================================================================
-void CScene2D::FadeOut(float fSpeed)
+void CScene2D::FadeOut(const float &fSpeed)
 {
 	// 頂点情報を設定
 	VERTEX_2D *pVtx = nullptr;

@@ -21,19 +21,19 @@ public:
 	CMeshField(PRIORITY = PRIORITY_0);	// コンストラクタ
 	~CMeshField();						// デストラクタ
 
-	virtual HRESULT Init(void);			// 初期化処理
-	virtual void Update(void);			// 更新処理
-	virtual void Draw(void);			// 描画処理
-	static CMeshField*Create(void);		// メッシュフィールド
+	virtual HRESULT Init();			// 初期化処理
+	virtual void Update();			// 更新処理
+	virtual void Draw();			// 描画処理
+	static CMeshField*Create();		// メッシュフィールド
 
 protected:
 	void SetInfo(const D3DXVECTOR3 &size, const INT_VERTEX_2D &PieceNum);			// 情報の設定
 
 private:
 	// private関数
-	void CreateVerterx(void);										// 頂点の生成
-	void InitAnimation(int nPatternNum, int nSpeed, int nLoop) {}	// アニメーション情報初期化
-	void UpdateAnimation(void) {}									// アニメーション更新
+	void CreateVerterx();																// 頂点の生成
+	void InitAnimation(const int &nPatternNum, const int &nSpeed, const int &nLoop) {}	// アニメーション情報初期化
+	void UpdateAnimation() {}															// アニメーション更新
 };
 
 #endif

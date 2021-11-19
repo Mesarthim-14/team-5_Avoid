@@ -36,7 +36,7 @@ CShadowPolygon::~CShadowPolygon()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CShadowPolygon * CShadowPolygon::Create(void)
+CShadowPolygon * CShadowPolygon::Create()
 {
 	// メモリ確保
 	CShadowPolygon *pPolygon = new CShadowPolygon(PRIORITY_SHADOW);
@@ -56,7 +56,7 @@ CShadowPolygon * CShadowPolygon::Create(void)
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CShadowPolygon::Init(void)
+HRESULT CShadowPolygon::Init()
 {
 	// シーンの情報設定
 	SetSceneInfo(SHADOW_POS, SHADOW_SIZE);
@@ -73,7 +73,7 @@ HRESULT CShadowPolygon::Init(void)
 //=============================================================================
 // 影の描画
 //=============================================================================
-void CShadowPolygon::Draw(void)
+void CShadowPolygon::Draw()
 {
 	// ステンシルテスト
 	CShadow::SetShadowStencilTest();

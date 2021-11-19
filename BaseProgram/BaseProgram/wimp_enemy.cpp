@@ -106,7 +106,7 @@ bool CWimpEnemy::Follow()
 		Vector *= fSpeed;
 		//Ž©‹@‚ðŽæ“¾‚·‚é
 		float fAngle = atan2f((Epos.x - Ppos.x), (Epos.z - Ppos.z));	// Šp“x
-		float fDistance = CLibrary::DistanceCal(Ppos, Epos);
+		float fDistance = CLibrary::CalDistance(Ppos, Epos);
 		if (fDistance <= PERCEPTION_DISTANCE)
 		{
 			// “§–¾‚È“G‚ÌˆÚ“®

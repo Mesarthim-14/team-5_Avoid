@@ -45,7 +45,7 @@ CMoveScaffold::~CMoveScaffold()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CMoveScaffold * CMoveScaffold::Create(void)
+CMoveScaffold * CMoveScaffold::Create()
 {
 	// メモリ確保
 	CMoveScaffold *pTestModel = new CMoveScaffold(PRIORITY_TEST_MODEL);
@@ -65,7 +65,7 @@ CMoveScaffold * CMoveScaffold::Create(void)
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CMoveScaffold::Init(void)
+HRESULT CMoveScaffold::Init()
 {
 	// 初期化処理
 	CModel::Init();
@@ -80,7 +80,7 @@ HRESULT CMoveScaffold::Init(void)
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CMoveScaffold::Uninit(void)
+void CMoveScaffold::Uninit()
 {
 	CModel::Uninit();
 }
@@ -88,7 +88,7 @@ void CMoveScaffold::Uninit(void)
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CMoveScaffold::Update(void)
+void CMoveScaffold::Update()
 {
 	// 移動処理
 	Move();
@@ -99,7 +99,7 @@ void CMoveScaffold::Update(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CMoveScaffold::Draw(void)
+void CMoveScaffold::Draw()
 {
 	CModel::Draw();
 }

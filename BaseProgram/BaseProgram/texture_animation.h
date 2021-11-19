@@ -21,24 +21,24 @@ public:
 	CTextureAnimation();	// コンストラクタ
 	~CTextureAnimation();	// デストラクタ
 
-	static CTextureAnimation *Create(D3DXVECTOR2 m_tex[NUM_VERTEX]);						// インスタンス生成
-	void Update(void);																		// 更新処理
+	static CTextureAnimation *Create(const D3DXVECTOR2 m_tex[NUM_VERTEX]);						// インスタンス生成
+	void Update();																		// 更新処理
 
-	void InitAnimationInfo(const int nPatternNum, const int nSpeed, const int nLoop);		// アニメーションの情報設定
-	void InitScroll(const int nSpeed, const float fDivision);								// スクロール情報の設定
-	void UpdateAnimation(void);																// アニメーションの更新
-	void UpdateScroll(void);																// スクロールの更新
+	void InitAnimationInfo(const int &nPatternNum, const int &nSpeed, const int &nLoop);		// アニメーションの情報設定
+	void InitScroll(const int &nSpeed, const float &fDivision);								// スクロール情報の設定
+	void UpdateAnimation();																// アニメーションの更新
+	void UpdateScroll();																// スクロールの更新
 	
 	// Set関数
-	void SetCountAnim(const int nCountAnim)			{ m_nCountAnim = nCountAnim; }				// アニメーションのカウンタ設定
-	void SetCountPattern(const int nCountPattern)	{ m_nCountAnimPattern = nCountPattern; }	// アニメーションパターンのカウント
-	void SetScrollCounter(const int nScrollCounter)	{ m_nScrollCounter = nScrollCounter; }		// スクロールの情報
-	void SetUpdateFlag(const bool bFlag)			{ m_bUpdate = bFlag; }						// 更新のフラグ設定
+	inline void SetCountAnim(const int &nCountAnim)			{ m_nCountAnim = nCountAnim; }				// アニメーションのカウンタ設定
+	inline void SetCountPattern(const int &nCountPattern)	{ m_nCountAnimPattern = nCountPattern; }	// アニメーションパターンのカウント
+	inline void SetScrollCounter(const int &nScrollCounter)	{ m_nScrollCounter = nScrollCounter; }		// スクロールの情報
+	inline void SetUpdateFlag(const bool &bFlag)			{ m_bUpdate = bFlag; }						// 更新のフラグ設定
 
 	// Get関数
-	D3DXVECTOR2 GetTex(int nCount)	{ return m_tex[nCount]; }	// テクスチャ座標の情報
-	bool GetEnd(void)				{ return m_bEnd; }			// 終了フラグ
-	bool GetUpdate(void)			{ return m_bUpdate; }		// 更新されたかのフラグ
+	D3DXVECTOR2 GetTex(const int &nCount)	{ return m_tex[nCount]; }	// テクスチャ座標の情報
+	bool GetEnd()const						{ return m_bEnd; }			// 終了フラグ
+	bool GetUpdate()const					{ return m_bUpdate; }		// 更新されたかのフラグ
 
 private:
 	D3DXVECTOR2 m_tex[NUM_VERTEX];		// 頂点数分のテクスチャ情報

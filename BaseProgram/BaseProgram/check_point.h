@@ -26,10 +26,10 @@ public:
 	CCheckPoint();		// コンストラクタ
 	~CCheckPoint();		// デストラクタ
 
-	static CCheckPoint *Create();						// インスタンス生成
-	HRESULT Init();										// 初期化処理
-	void Uninit();										// 終了処理
-	void Update();										// 更新処理
+	static CCheckPoint *Create();							// インスタンス生成
+	HRESULT Init();											// 初期化処理
+	void Uninit();											// 終了処理
+	void Update();											// 更新処理
 	D3DXVECTOR3 GetPointPos()		{ return m_PointPos; }	// チェックポイントの座標
 	inline int GetPointNum()const	{ return m_nPointNum; }	// チェックポイントの値
 private:

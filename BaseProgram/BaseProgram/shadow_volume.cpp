@@ -84,7 +84,7 @@ HRESULT CShadowVolume::Init(LPD3DXMESH pSrcMesh)
 //=============================================================================
 // èIóπèàóù
 //=============================================================================
-void CShadowVolume::Uninit(void)
+void CShadowVolume::Uninit()
 {
 	// nullcheck
 	if (m_pEdges)
@@ -97,7 +97,7 @@ void CShadowVolume::Uninit(void)
 //=============================================================================
 // ï`âÊèàóù
 //=============================================================================
-void CShadowVolume::Draw(void)
+void CShadowVolume::Draw()
 {
 	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
 
@@ -137,7 +137,7 @@ void CShadowVolume::AddEdge(WORD * pEdges, DWORD & dwNumEdges, WORD v0, WORD v1)
 //=============================================================================
 // âeÇÃê∂ê¨
 //=============================================================================
-HRESULT CShadowVolume::CreateShadow(D3DXVECTOR3 rot, D3DXVECTOR3 ShipRot)
+HRESULT CShadowVolume::CreateShadow(const D3DXVECTOR3 &rot, const D3DXVECTOR3 &ShipRot)
 {
 	// nullcheck
 	if (m_pEdges == nullptr)
@@ -198,7 +198,7 @@ HRESULT CShadowVolume::CreateShadow(D3DXVECTOR3 rot, D3DXVECTOR3 ShipRot)
 //=============================================================================
 // âeÇÃê∂ê¨
 //=============================================================================
-HRESULT CShadowVolume::CreateShadow(D3DXVECTOR3 ShipRot)
+HRESULT CShadowVolume::CreateShadow(const D3DXVECTOR3 &ShipRot)
 {
 	// nullcheck
 	if (m_pEdges == nullptr)

@@ -22,14 +22,14 @@ public:
 	~CRenderer();	// デストラクタ
 
 	HRESULT Init(HWND hWnd, bool bWindow);		// 初期化処理
-	void Uninit(void);							// 終了処理
-	void Update(void);							// 更新処理
-	void Draw(void);							// 描画処理
+	void Uninit();							// 終了処理
+	void Update();							// 更新処理
+	void Draw();							// 描画処理
 
-	void SetDispImGuiInfo(bool ImGuiInfo)	{ m_bDispImGuiInfo = ImGuiInfo; };			// Imgui表示非表示設定
-	bool CheckShowImGuiInfo(void)			{ return m_bDispImGuiInfo; };				// Imgui情報表示してるか確認
+	inline void SetDispImGuiInfo(const bool &ImGuiInfo)	{ m_bDispImGuiInfo = ImGuiInfo; };			// Imgui表示非表示設定
+	bool CheckShowImGuiInfo()							{ return m_bDispImGuiInfo; };				// Imgui情報表示してるか確認
 
-	LPDIRECT3DDEVICE9 GetDevice(void);			// デバイス情報
+	LPDIRECT3DDEVICE9 GetDevice();			// デバイス情報
 
 private:
 	LPDIRECT3DDEVICE9 m_pD3DDevice;				// Deviceオブジェクト(描画に必要)

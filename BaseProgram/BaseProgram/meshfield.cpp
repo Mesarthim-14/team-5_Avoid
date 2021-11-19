@@ -31,7 +31,7 @@ CMeshField::~CMeshField()
 //=============================================================================
 // ポリゴン生成
 //=============================================================================
-CMeshField * CMeshField::Create(void)
+CMeshField * CMeshField::Create()
 {
 	// メモリ確保
 	CMeshField *pMeshField = new CMeshField;
@@ -51,7 +51,7 @@ CMeshField * CMeshField::Create(void)
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CMeshField::Init(void)
+HRESULT CMeshField::Init()
 {
 	// 頂点の設定
 	CreateVerterx();
@@ -61,7 +61,7 @@ HRESULT CMeshField::Init(void)
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CMeshField::Update(void)
+void CMeshField::Update()
 {
 
 }
@@ -69,7 +69,7 @@ void CMeshField::Update(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CMeshField::Draw(void)
+void CMeshField::Draw()
 {
 	// 親クラス描画処理
 	CMesh3d::Draw();
@@ -78,7 +78,7 @@ void CMeshField::Draw(void)
 //=============================================================================
 // 頂点の生成
 //=============================================================================
-void CMeshField::CreateVerterx(void)
+void CMeshField::CreateVerterx()
 {
 	// Rendererクラスからデバイスを取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
