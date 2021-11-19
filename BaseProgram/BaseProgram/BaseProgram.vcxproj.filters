@@ -471,6 +471,9 @@
     <ClCompile Include="state_camera_normal.cpp">
       <Filter>10_State\CameraState</Filter>
     </ClCompile>
+    <ClCompile Include="particleaura.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision.h">
@@ -805,6 +808,9 @@
     </ClInclude>
     <ClInclude Include="state_camera_normal.h">
       <Filter>10_State\CameraState</Filter>
+    </ClInclude>
+    <ClInclude Include="particleaura.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
