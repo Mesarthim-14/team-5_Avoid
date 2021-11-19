@@ -1,7 +1,7 @@
 //=====================================================================
 //
-//	EキーのUI処理[key_e.h]
-//	Author : Konishi Yuuto
+//    EキーのUI処理[key_e.h]
+//    Author : Konishi Yuuto
 //
 //=====================================================================
 
@@ -17,15 +17,15 @@
 //=====================================================================
 // マクロ定義
 //=====================================================================
-#define POS		(D3DXVECTOR3(800.0f,400.0f,0.0f))
-#define SIZE	(D3DXVECTOR3(70.0f,70.0f,0.0f))
+#define POS     (D3DXVECTOR3(800.0f,400.0f,0.0f))
+#define SIZE    (D3DXVECTOR3(70.0f,70.0f,0.0f))
 
 //=====================================================================
 // コンストラクタ
 //=====================================================================
 CKeyE::CKeyE(PRIORITY priority):CScene2D(priority)
 {
-	m_isDraw = false;
+    m_isDraw = false;
 }
 
 //=====================================================================
@@ -41,16 +41,16 @@ CKeyE::~CKeyE()
 //=====================================================================
 CKeyE * CKeyE::Create()
 {
-	CKeyE * pKeyE = new CKeyE(PRIORITY_UI);
+    CKeyE * pKeyE = new CKeyE(PRIORITY_UI);
 
-	if (pKeyE)
-	{
-		pKeyE->SetSceneInfo(POS, SIZE);
-		pKeyE->Init();
+    if (pKeyE)
+    {
+        pKeyE->SetSceneInfo(POS, SIZE);
+        pKeyE->Init();
 
-		return pKeyE;
-	}
-	return nullptr;
+        return pKeyE;
+    }
+    return nullptr;
 }
 
 //=====================================================================
@@ -58,14 +58,14 @@ CKeyE * CKeyE::Create()
 //=====================================================================
 HRESULT CKeyE::Init()
 {
-	// テクスチャの設定
-	CTexture *pTexture = GET_TEXTURE_PTR;
-	BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_E_KEY));
+    // テクスチャの設定
+    CTexture *pTexture = GET_TEXTURE_PTR;
+    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_E_KEY));
 
-	// 初期化処理
-	CScene2D::Init();
+    // 初期化処理
+    CScene2D::Init();
 
-	return S_OK;
+    return S_OK;
 }
 
 //=====================================================================
@@ -73,8 +73,8 @@ HRESULT CKeyE::Init()
 //=====================================================================
 void CKeyE::Draw()
 {
-	if (m_isDraw)
-	{
-		CScene2D::Draw();
-	}
+    if (m_isDraw)
+    {
+        CScene2D::Draw();
+    }
 }

@@ -2,8 +2,8 @@
 #define _STATE_PLAYER_NORMAL_H_
 //=====================================================================
 //
-//	通常状態管理クラス [state_player_normal.h]
-//	Author : Konishi Yuuto
+//    通常状態管理クラス [state_player_normal.h]
+//    Author : Konishi Yuuto
 //
 //=====================================================================
 
@@ -23,15 +23,15 @@ class CPlayer;
 class CPlayerStateNormal : public CPlayerState
 {
 public:
-	CPlayerStateNormal();					// コンストラクタ
-	~CPlayerStateNormal();					// デストラクタ
-	static CPlayerStateNormal* Create();	// インスタンス生成
+    CPlayerStateNormal();                   // コンストラクタ
+    ~CPlayerStateNormal();                  // デストラクタ
+    static CPlayerStateNormal* Create();    // インスタンス生成
 
-	void Init();						// 初期化処理
-	void Update()override;				// 更新処理
+    void Init();            // 初期化処理
+    void Update()override;  // 更新処理
 private:
-	void Jump(CPlayer* &pPlayer);		// ジャンプ処理
-	void Avoidance(CPlayer* &pPlayer);	// 回避
-	
+    void Jump(CPlayer* &pPlayer);       // ジャンプ処理
+    void Avoidance(CPlayer* &pPlayer);  // 回避
+    
 };
 #endif

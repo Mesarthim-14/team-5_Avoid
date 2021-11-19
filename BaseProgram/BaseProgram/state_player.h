@@ -2,8 +2,8 @@
 #define _STATE_PLAYER_H_
 //=====================================================================
 //
-//	状態管理クラス [state_player.h]
-//	Author : Konishi Yuuto
+//    状態管理クラス [state_player.h]
+//    Author : Konishi Yuuto
 //
 //=====================================================================
 
@@ -23,15 +23,15 @@ class CPlayer;
 class CPlayerState : public CState
 {
 public:
-	CPlayerState();				// コンストラクタ
-	~CPlayerState();			// デストラクタ
+    CPlayerState();     // コンストラクタ
+    ~CPlayerState();    // デストラクタ
 
 protected:
-	virtual void SetAnimation(const UINT &animID, const FLOAT &time);	// アニメーション設定
-	void MoveByKeyboard(CPlayer* &pPlayer);								// 入力処理
+    virtual void SetAnimation(const UINT &animID, const FLOAT &time);   // アニメーション設定
+    void MoveByKeyboard(CPlayer* &pPlayer);                             // 入力処理
 
 private:
-	 float m_fAngleSpeed;					// 目標向きまで向かうスピード 
-	 bool m_bMove[2];							// 移動のフラグ
+     float m_fAngleSpeed;   // 目標向きまで向かうスピード 
+     bool m_bMove[2];       // 移動のフラグ
 };
 #endif

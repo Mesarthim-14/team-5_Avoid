@@ -2,8 +2,8 @@
 #define _GAUGE_H_
 //=====================================================================
 //
-//	ゲージ処理[gauge.h]
-//	Author : toshiki
+//    ゲージ処理[gauge.h]
+//    Author : toshiki
 //
 //=====================================================================
 
@@ -18,29 +18,29 @@
 class CGauge : public CScene2D
 {
 public:
-	CGauge();
-	~CGauge();
-	//========================
-	// メンバ関数
-	//========================
-	static CGauge * Create(void);
-	HRESULT Init(void);
-	void Uninit(void);
-	void Update(void);
-	void Draw(void);
+    CGauge();
+    ~CGauge();
+    //========================
+    // メンバ関数
+    //========================
+    static CGauge * Create();
+    HRESULT Init();
+    void Uninit();
+    void Update();
+    void Draw();
 
-	void SetDown(float down) { m_fDown = down; }
-	float GetDown(void) { return m_fDown; }
+    void SetDown(float down)    { m_fDown = down; }
+    float GetDown()             { return m_fDown; }
 
 private:
-	void SetVertexGauge(void);		// ゲージ減算処理
-	void SetDownUp(void);			// テスト減る処理
+    void SetVertexGauge();  // ゲージ減算処理
+    void SetDownUp();       // テスト減る処理
 
-	//========================
-	// メンバ変数
-	//========================
-	float m_fDown;		// ゲージ量
-	float m_fSave;		// 減る量
+    //========================
+    // メンバ変数
+    //========================
+    float m_fDown;        // ゲージ量
+    float m_fSave;        // 減る量
 };
 
 

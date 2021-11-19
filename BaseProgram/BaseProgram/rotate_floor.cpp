@@ -22,9 +22,9 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_POS		(D3DXVECTOR3(-34328.4f, 0.0f, -6081.8f))
-#define TEST_ROT		(D3DXVECTOR3(0.0f, D3DXToRadian(0.0f), 0.0f))
-#define ROTATE_NUM		(D3DXToRadian(2.0f))							// 回転の値
+#define TEST_POS    (D3DXVECTOR3(-34328.4f, 0.0f, -6081.8f))
+#define TEST_ROT    (D3DXVECTOR3(0.0f, D3DXToRadian(0.0f), 0.0f))
+#define ROTATE_NUM  (D3DXToRadian(2.0f))                            // 回転の値
 
 //=============================================================================
 // コンストラクタ
@@ -38,19 +38,19 @@ CRotateFloor::CRotateFloor(PRIORITY Priority) : CModel(Priority)
 //=============================================================================
 CRotateFloor * CRotateFloor::Create(const D3DXVECTOR3 &pos)
 {
-	// メモリ確保
-	CRotateFloor *pTestModel = new CRotateFloor(PRIORITY_TEST_MODEL);
+    // メモリ確保
+    CRotateFloor *pTestModel = new CRotateFloor(PRIORITY_TEST_MODEL);
 
-	// !nullcheck
-	if (pTestModel)
-	{
-		// 初期化処理
-		pTestModel->Init(pos);
+    // !nullcheck
+    if (pTestModel)
+    {
+        // 初期化処理
+        pTestModel->Init(pos);
 
-		return pTestModel;
-	}
+        return pTestModel;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -58,12 +58,12 @@ CRotateFloor * CRotateFloor::Create(const D3DXVECTOR3 &pos)
 //=============================================================================
 HRESULT CRotateFloor::Init(const D3DXVECTOR3 &pos)
 {
-	// 初期化処理
-	CModel::Init();
+    // 初期化処理
+    CModel::Init();
 
-	CXfile *pXfile = GET_XFILE_PTR;
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ROTATE_FLOOR);
-	GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
+    CXfile *pXfile = GET_XFILE_PTR;
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ROTATE_FLOOR);
+    GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
-	return S_OK;
+    return S_OK;
 }

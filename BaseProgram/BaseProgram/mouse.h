@@ -13,26 +13,26 @@
 class CMouse : public CInput
 {
 public:
-	CMouse();
-	~CMouse();
+    CMouse();
+    ~CMouse();
 
-	typedef enum
-	{
-		MOUSE_LEFT = 0,
-		MOUSE_RIGHT,
-		MOUSE_CENTER,
-		MOUSE_MAX
-	} MOUSE;
+    typedef enum
+    {
+        MOUSE_LEFT = 0,
+        MOUSE_RIGHT,
+        MOUSE_CENTER,
+        MOUSE_MAX
+    } MOUSE;
 
-	HRESULT Init(HINSTANCE hInstance, HWND hWnd);
-	void Uninit(void);
-	void Update(void);
+    HRESULT Init(HINSTANCE hInstance, HWND hWnd);
+    void Uninit(void);
+    void Update(void);
 
-	bool GetKeyPress(int nkey);
-	bool GetButtonTrigger(int nkey);
+    bool GetKeyPress(int nkey);
+    bool GetButtonTrigger(int nkey);
 
 private:
-	DIMOUSESTATE2 m_State;
+    DIMOUSESTATE2 m_State;
 };
 
 #endif

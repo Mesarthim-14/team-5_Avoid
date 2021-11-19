@@ -25,25 +25,25 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define FIX_POS_Y		(150.0f)	// 高さの修正
+#define FIX_POS_Y   (150.0f)    // 高さの修正
 
 //=============================================================================
 // インスタンス生成
 //=============================================================================
 CRotateGimmick * CRotateGimmick::Create(const D3DXVECTOR3 &pos)
 {
-	// メモリ確保
-	CRotateGimmick *pRotateGimmick = new CRotateGimmick;
+    // メモリ確保
+    CRotateGimmick *pRotateGimmick = new CRotateGimmick;
 
-	// !nullcheck
-	if (pRotateGimmick)
-	{
-		// 初期化処理
-		pRotateGimmick->CreateGimmick(pos);
-		return pRotateGimmick;
-	}
+    // !nullcheck
+    if (pRotateGimmick)
+    {
+        // 初期化処理
+        pRotateGimmick->CreateGimmick(pos);
+        return pRotateGimmick;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -51,6 +51,6 @@ CRotateGimmick * CRotateGimmick::Create(const D3DXVECTOR3 &pos)
 //=============================================================================
 void CRotateGimmick::CreateGimmick(const D3DXVECTOR3 &pos)
 {
-	CRotateFloor::Create(pos);
-	CRotateBody::Create(D3DXVECTOR3(pos.x, pos.y + FIX_POS_Y, pos.z));
+    CRotateFloor::Create(pos);
+    CRotateBody::Create(D3DXVECTOR3(pos.x, pos.y + FIX_POS_Y, pos.z));
 }

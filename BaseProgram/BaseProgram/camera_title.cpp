@@ -17,17 +17,17 @@
 //=============================================================================
 CCameraTitle * CCameraTitle::Create()
 {
-	// ƒƒ‚ƒŠŠm•Û
-	CCameraTitle *pCamera = new CCameraTitle;
+    // ƒƒ‚ƒŠŠm•Û
+    CCameraTitle *pCamera = new CCameraTitle;
 
-	if (pCamera)
-	{
-		// ‰Šú‰»ˆ—
-		pCamera->Init();
-		return pCamera;
-	}
-
-	return nullptr;
+    if (pCamera)
+    {
+        // ‰Šú‰»ˆ—
+        pCamera->Init();
+        return pCamera;
+    }
+    
+    return nullptr;
 }
 
 //=============================================================================
@@ -50,5 +50,5 @@ CCameraTitle::~CCameraTitle()
 //=============================================================================
 HRESULT CCameraTitle::Init()
 {
-	return S_OK;
+    return S_OK;
 }

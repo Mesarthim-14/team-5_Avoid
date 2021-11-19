@@ -23,14 +23,14 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define HEEL_NUM		(20)	// 回復の値
+#define HEEL_NUM        (20)    // 回復の値
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CHeel::CHeel()
 {
-	m_apHeelPoint.clear();
+    m_apHeelPoint.clear();
 }
 
 //=============================================================================
@@ -43,63 +43,63 @@ CHeel::~CHeel()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CHeel * CHeel::Create(void)
+CHeel * CHeel::Create()
 {
-	// メモリ確保
-	CHeel *pCheckPoint = new CHeel;
+    // メモリ確保
+    CHeel *pCheckPoint = new CHeel;
 
-	// !nullcheck
-	if (pCheckPoint)
-	{
-		// 初期化処理
-		pCheckPoint->Init();
-		return pCheckPoint;
-	}
+    // !nullcheck
+    if (pCheckPoint)
+    {
+        // 初期化処理
+        pCheckPoint->Init();
+        return pCheckPoint;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CHeel::Init(void)
+HRESULT CHeel::Init()
 {
-	// 旗の生成
-	CreateHeelPoint();
+    // 旗の生成
+    CreateHeelPoint();
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CHeel::Uninit(void)
+void CHeel::Uninit()
 {
-	if (m_apHeelPoint.size() > 0)
-	{
-		// 終了処理
-		for (auto &HeelPoint : m_apHeelPoint)
-		{
-			HeelPoint->Uninit();
-		}
-		m_apHeelPoint.clear();
-	}
+    if (m_apHeelPoint.size() > 0)
+    {
+        // 終了処理
+        for (auto &HeelPoint : m_apHeelPoint)
+        {
+            HeelPoint->Uninit();
+        }
+        m_apHeelPoint.clear();
+    }
 }
 
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CHeel::Update(void)
+void CHeel::Update()
 {
-	for (auto &HeelPoint : m_apHeelPoint)
-	{
-		// 当たり判定
-		if (HeelPoint->Collision())
-		{
-			// 回復
-			CManager::GetInstance()->GetPlayer()->SubLife(HEEL_NUM);
-		}
-	}
+    for (auto &HeelPoint : m_apHeelPoint)
+    {
+        // 当たり判定
+        if (HeelPoint->Collision())
+        {
+            // 回復
+            CManager::GetInstance()->GetPlayer()->SubLife(HEEL_NUM);
+        }
+    }
 }
 
 //=============================================================================
@@ -107,11 +107,11 @@ void CHeel::Update(void)
 //=============================================================================
 void CHeel::CreateHeelPoint()
 {
-	// 旗の生成
-	m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-1546.4f, 100.0f, -0.0f)));
-	m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-4587.7f, 87.3f, -12224.9f)));
-	m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-19864.6f, 1030.4f, -18272.0f)));
-	m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-34715.7f, 981.2f, -13988.7f)));
-	m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-32146.7f, 1006.5f, 5995.2f)));
-	m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-23408.0f, 107.3f, 15867.4f)));
+    // 旗の生成
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-1546.4f, 100.0f, -0.0f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-4587.7f, 87.3f, -12224.9f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-19864.6f, 1030.4f, -18272.0f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-34715.7f, 981.2f, -13988.7f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-32146.7f, 1006.5f, 5995.2f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-23408.0f, 107.3f, 15867.4f)));
 }

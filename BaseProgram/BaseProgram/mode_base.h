@@ -18,12 +18,12 @@
 class CModeBase
 {
 public:
-	CModeBase() {}				// コンストラクタ
-	virtual ~CModeBase() {};	// デストラクタ
+    CModeBase() {}              // コンストラクタ
+    virtual ~CModeBase() {};    // デストラクタ
 
-	virtual HRESULT Init() = 0;		// 初期化
-	virtual void Update() = 0;		// 更新
-	virtual void Draw() = 0;		// 描画
+    virtual HRESULT Init() = 0; // 初期化
+    virtual void Update() = 0;  // 更新
+    virtual void Draw() = 0;    // 描画
 
 private:
 };

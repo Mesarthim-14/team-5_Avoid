@@ -18,11 +18,11 @@
 class CBridge : public CModel
 {
 public:
-	CBridge(PRIORITY = PRIORITY_TEST_MODEL);	// コンストラクタ
-	~CBridge();									// デストラクタ
+    CBridge(PRIORITY = PRIORITY_TEST_MODEL);    // コンストラクタ
+    ~CBridge();                                 // デストラクタ
 
-	static CBridge *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);	// インスタンス生成
-	HRESULT Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);			// 初期化処理
+    static CBridge *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot); // インスタンス生成
+    HRESULT Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);           // 初期化処理
 
 private:
 };

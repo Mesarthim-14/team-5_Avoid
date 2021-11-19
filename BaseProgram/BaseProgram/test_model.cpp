@@ -23,15 +23,15 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_POS		(ZeroVector3)
-#define TEST_ROT		(ZeroVector3)
+#define TEST_POS        (ZeroVector3)
+#define TEST_ROT        (ZeroVector3)
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CTestModel::CTestModel(PRIORITY Priority) : CModel(Priority)
 {
-	m_pCollisionModel = nullptr;
+    m_pCollisionModel = nullptr;
 }
 
 //=============================================================================
@@ -46,19 +46,19 @@ CTestModel::~CTestModel()
 //=============================================================================
 CTestModel * CTestModel::Create()
 {
-	// メモリ確保
-	CTestModel *pTestModel = new CTestModel(PRIORITY_TEST_MODEL);
+    // メモリ確保
+    CTestModel *pTestModel = new CTestModel(PRIORITY_TEST_MODEL);
 
-	// !nullcheck
-	if (pTestModel)
-	{
-		// 初期化処理
-		pTestModel->Init();
+    // !nullcheck
+    if (pTestModel)
+    {
+        // 初期化処理
+        pTestModel->Init();
 
-		return pTestModel;
-	}
+        return pTestModel;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -66,20 +66,20 @@ CTestModel * CTestModel::Create()
 //=============================================================================
 HRESULT CTestModel::Init()
 {
-	// 初期化処理
-	CModel::Init();
+    // 初期化処理
+    CModel::Init();
 
-	CXfile *pXfile = GET_XFILE_PTR;
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MAP);
-	GetModelInfo()->SetModelStatus(TEST_POS, TEST_ROT, model);
+    CXfile *pXfile = GET_XFILE_PTR;
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MAP);
+    GetModelInfo()->SetModelStatus(TEST_POS, TEST_ROT, model);
 
-	//当たり判定モデルの生成
-	if (m_pCollisionModel == nullptr)
-	{
-		m_pCollisionModel = CCollisionModel::Create(GetModelInfo()->GetPos(), D3DXVECTOR3(5000.0f, 100.0f, 4200.0f), TEST_ROT, CCollisionModel::TYPE_BOX);
-	}
+    //当たり判定モデルの生成
+    if (!m_pCollisionModel)
+    {
+        m_pCollisionModel = CCollisionModel::Create(GetModelInfo()->GetPos(), D3DXVECTOR3(5000.0f, 100.0f, 4200.0f), TEST_ROT, CCollisionModel::TYPE_BOX);
+    }
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -87,7 +87,7 @@ HRESULT CTestModel::Init()
 //=============================================================================
 void CTestModel::Uninit()
 {
-	CModel::Uninit();
+    CModel::Uninit();
 }
 
 //=============================================================================
@@ -95,10 +95,10 @@ void CTestModel::Uninit()
 //=============================================================================
 void CTestModel::Update()
 {
-	CModel::Update();
+    CModel::Update();
 
-	// 衝突判定
-	Hit();
+    // 衝突判定
+    Hit();
 }
 
 //=============================================================================
@@ -106,7 +106,7 @@ void CTestModel::Update()
 //=============================================================================
 void CTestModel::Draw()
 {
-	CModel::Draw();
+    CModel::Draw();
 }
 
 //=============================================================================
@@ -114,22 +114,68 @@ void CTestModel::Draw()
 //=============================================================================
 void CTestModel::Hit()
 {
-	CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    CPlayer* pPlayer = nullptr;
+    pPlayer = (CPlayer*)GetTop(PRIORITY_CHARACTER);
 
-	if (pPlayer)
-	{
-		if (m_pCollisionModel && pPlayer->GetCollisionPtr())
-		{
-			if (CCollision::ColOBBs(m_pCollisionModel->GetOBB(), pPlayer->GetCollisionPtr()->GetOBB()))
-			{
-				// 着地の処理
-				pPlayer->Landing(pPlayer->GetPos().y);
-			}
-			else
-			{
+    if (pPlayer)
+    {
+        D3DXVECTOR3 RayDir = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+        BOOL bHit = FALSE;
+        FLOAT fDistance = 0.0f;
+
+        for (int nCount = 0; nCount < (int)GetModelInfo()->GetMesh()->GetNumFaces(); nCount++)
+        {
+            //下方向
+            D3DXIntersect(
+                GetModelInfo()->GetMesh(),
+                &pPlayer->GetPos(),
+                &RayDir,
+                &bHit,
+                nullptr,
+                nullptr,
+                nullptr,
+                &fDistance,
+                nullptr,
+                nullptr);
+
+            if (bHit && fDistance < 80.0f)
+            {
+                // 着地の処理
+                pPlayer->Landing(pPlayer->GetPos().y + fDistance);
+
+                break;
+            }
+            else if (!bHit)
+            {
+                pPlayer->SetLanding(false);
+            }
+        }
+    }
+
+}
+
+//=============================================================================
+// OBB衝突判定
+//=============================================================================
+void CTestModel::OBBs()
+{
+    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+
+    if (pPlayer)
+    {
+        if (m_pCollisionModel && pPlayer->GetCollisionPtr())
+        {
+            if (CCollision::ColOBBs(m_pCollisionModel->GetOBB(), pPlayer->GetCollisionPtr()->GetOBB()))
+            {
+                // 着地の処理
+                pPlayer->Landing(pPlayer->GetPos().y);
+            }
+            else
+            {
                 // 着地処理
-				pPlayer->SetLanding(false);
-			}
-		}
-	}
+                pPlayer->SetLanding(false);
+            }
+        }
+    }
+
 }

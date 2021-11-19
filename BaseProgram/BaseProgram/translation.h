@@ -2,8 +2,8 @@
 #define _TRANSLATION_H_
 //=====================================================================
 //
-//	‘€ìà–¾•\¦ˆ—[gauge.h]
-//	Author : toshiki
+// ‘€ìà–¾•\¦ˆ—[gauge.h]
+// Author : toshiki
 //
 //=====================================================================
 
@@ -18,14 +18,14 @@
 class CTranslation : public CScene2D
 {
 public:
-	CTranslation();
-	~CTranslation();
+    CTranslation();
+    ~CTranslation();
 
-	static CTranslation * Create(void);
-	HRESULT Init(void);
-	void Uninit(void);
-	void Update(void);
-	void Draw(void);
+    static CTranslation * Create();
+    HRESULT Init();
+    void Uninit();
+    void Update();
+    void Draw();
 
 private:
 };

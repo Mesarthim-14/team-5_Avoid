@@ -1,7 +1,7 @@
 //=====================================================================
 //
-//	気絶状態管理クラス [state_player_knockback.h]
-//	Author : Konishi Yuuto
+//    気絶状態管理クラス [state_player_knockback.h]
+//    Author : Konishi Yuuto
 //
 //=====================================================================
 
@@ -18,15 +18,11 @@
 #include "state_player_normal.h"
 
 //=====================================================================
-// マクロ定義
-//=====================================================================
-
-//=====================================================================
 // コンストラクタ
 //=====================================================================
 CPlayerStateKnockback::CPlayerStateKnockback()
 {
-	m_nStanCount = 0;
+    m_nStanCount = 0;
 }
 
 //=====================================================================
@@ -42,15 +38,15 @@ CPlayerStateKnockback::~CPlayerStateKnockback()
 //=====================================================================
 CPlayerStateKnockback * CPlayerStateKnockback::Create()
 {
-	// メモリ確保
-	CPlayerStateKnockback *pStateJump = new CPlayerStateKnockback;
-	if (pStateJump)
-	{
-		// 初期化処理
-		pStateJump->Init();
-		return pStateJump;
-	}
-	return nullptr;
+    // メモリ確保
+    CPlayerStateKnockback *pStateJump = new CPlayerStateKnockback;
+    if (pStateJump)
+    {
+        // 初期化処理
+        pStateJump->Init();
+        return pStateJump;
+    }
+    return nullptr;
 }
 
 //=====================================================================
@@ -58,9 +54,8 @@ CPlayerStateKnockback * CPlayerStateKnockback::Create()
 //=====================================================================
 void CPlayerStateKnockback::Init()
 {
-	// アニメーション設定
-	SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_IDOL), 60);
-	//	Update();
+    // アニメーション設定
+    SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_IDOL), 60);
 }
 
 //=====================================================================
@@ -68,20 +63,11 @@ void CPlayerStateKnockback::Init()
 //=====================================================================
 void CPlayerStateKnockback::Update()
 {
-	CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
-	if (!pPlayer)
-	{
-		return;
-	}
+    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    if (!pPlayer)
+    {
+        return;
+    }
 
-	D3DXVECTOR3 move = pPlayer->GetMove();
-
-	//プレイヤーのポスと障害物のポスから吹っ飛ぶ向きを計算
-//	float fKnockBackRot = atan2f((pos.x - GetPos().x), (pos.z - GetPos().z));
-
-//	move.y += m_fAvoidValueY;
-//	move.x += sinf(fKnockBackRot) * m_fAvoidValueXZ;
-//	move.z += cosf(fKnockBackRot) * m_fAvoidValueXZ;
-//	pPlayer->SetMove(move);
-//	pPlayer->SetLanding(false);
+    D3DXVECTOR3 move = pPlayer->GetMove();
 }

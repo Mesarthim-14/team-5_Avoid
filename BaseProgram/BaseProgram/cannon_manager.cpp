@@ -25,7 +25,6 @@
 #include "cannon_bullet.h"
 #include "player.h"
 #include "camera_game.h"
-
 #include "production_cannon.h"
 #include "state_camera_cannon.h"
 #include "state_player_cannon.h"
@@ -35,11 +34,11 @@
 //=============================================================================
 CCannonManager::CCannonManager()
 {
-	m_apCannon.clear();
-	m_nAttackNum = 0;
-	m_pKeyE = nullptr;
-	m_nTargetCannon = 0;
-	m_pProduction = nullptr;
+    m_apCannon.clear();
+    m_nAttackNum = 0;
+    m_pKeyE = nullptr;
+    m_nTargetCannon = 0;
+    m_pProduction = nullptr;
 }
 
 //=============================================================================
@@ -54,18 +53,18 @@ CCannonManager::~CCannonManager()
 //=============================================================================
 CCannonManager * CCannonManager::Create()
 {
-	// メモリ確保
-	CCannonManager *pCheckPoint = new CCannonManager;
+    // メモリ確保
+    CCannonManager *pCheckPoint = new CCannonManager;
 
-	// !nullcheck
-	if (pCheckPoint)
-	{
-		// 初期化処理
-		pCheckPoint->Init();
-		return pCheckPoint;
-	}
+    // !nullcheck
+    if (pCheckPoint)
+    {
+        // 初期化処理
+        pCheckPoint->Init();
+        return pCheckPoint;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -73,10 +72,10 @@ CCannonManager * CCannonManager::Create()
 //=============================================================================
 HRESULT CCannonManager::Init()
 {
-	CreateCannon();	// 旗の生成
-	CreateUi();		// UIの生成
+    CreateCannon();    // 旗の生成
+    CreateUi();        // UIの生成
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -84,21 +83,21 @@ HRESULT CCannonManager::Init()
 //=============================================================================
 void CCannonManager::Uninit()
 {
-	if (m_apCannon.size() > 0)
-	{
-		for (auto &pCannon : m_apCannon)
-		{
-			// 終了処理
-			pCannon->Uninit();
-		}
+    if (m_apCannon.size() > 0)
+    {
+        for (auto &pCannon : m_apCannon)
+        {
+            // 終了処理
+            pCannon->Uninit();
+        }
 
-		m_apCannon.clear();
-	}
-	if (m_pKeyE)
-	{
-		m_pKeyE->Uninit();
-		m_pKeyE = nullptr;
-	}
+        m_apCannon.clear();
+    }
+    if (m_pKeyE)
+    {
+        m_pKeyE->Uninit();
+        m_pKeyE = nullptr;
+    }
 }
 
 //=============================================================================
@@ -106,21 +105,21 @@ void CCannonManager::Uninit()
 //=============================================================================
 void CCannonManager::Update()
 {
-	// 大砲の当たり判定
-	CannonCollision();
+    // 大砲の当たり判定
+    CannonCollision();
 
-	if (m_pProduction)
-	{
-		// 更新処理
-		m_pProduction->Update();
+    if (m_pProduction)
+    {
+        // 更新処理
+        m_pProduction->Update();
 
-		// 終了予定なら削除
-		if (m_pProduction->GetEnd())
-		{
-			delete m_pProduction;
-			m_pProduction = nullptr;
-		}
-	}
+        // 終了予定なら削除
+        if (m_pProduction->GetEnd())
+        {
+            delete m_pProduction;
+            m_pProduction = nullptr;
+        }
+    }
 }
 
 //=============================================================================
@@ -128,11 +127,11 @@ void CCannonManager::Update()
 //=============================================================================
 void CCannonManager::CreateCannon()
 {
-	m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(-1129.6f, -154.2f, -9119.3f), D3DXVECTOR3(0.0f, D3DXToRadian(-60.0f), 0.0f)));
-	m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(-17666.1f, 993.9f, -18578.5f), D3DXVECTOR3(0.0f, D3DXToRadian(-0.0f), 0.0f)));
-	m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(-32181.7f, 969.4f, -1487.3f), D3DXVECTOR3(0.0f, D3DXToRadian(100.0f), 0.0f)));
-	m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(-15764.1f, 140.4f, 10833.7f), D3DXVECTOR3(0.0f, D3DXToRadian(190.0f), 0.0f)));
-	m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(-5933.0f, 89.4f, 10833.7f), D3DXVECTOR3(0.0f, D3DXToRadian(220.0f), 0.0f)));
+    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(-1129.6f, -154.2f, -9119.3f), D3DXVECTOR3(0.0f, D3DXToRadian(-60.0f), 0.0f)));
+    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(-17666.1f, 993.9f, -18578.5f), D3DXVECTOR3(0.0f, D3DXToRadian(-0.0f), 0.0f)));
+    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(-32181.7f, 969.4f, -1487.3f), D3DXVECTOR3(0.0f, D3DXToRadian(100.0f), 0.0f)));
+    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(-15764.1f, 140.4f, 10833.7f), D3DXVECTOR3(0.0f, D3DXToRadian(190.0f), 0.0f)));
+    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(-5933.0f, 89.4f, 10833.7f), D3DXVECTOR3(0.0f, D3DXToRadian(220.0f), 0.0f)));
 }
 
 //=============================================================================
@@ -140,11 +139,11 @@ void CCannonManager::CreateCannon()
 //=============================================================================
 void CCannonManager::CreateUi()
 {
-	// インスタンス生成
-	if (!m_pKeyE)
-	{
-		m_pKeyE = CKeyE::Create();
-	}
+    // インスタンス生成
+    if (!m_pKeyE)
+    {
+        m_pKeyE = CKeyE::Create();
+    }
 }
 
 //=============================================================================
@@ -152,27 +151,27 @@ void CCannonManager::CreateUi()
 //=============================================================================
 void CCannonManager::CannonCollision()
 {
-	// 大砲の数
-	size_t size = m_apCannon.size();
-	for (size_t nCount = 0; nCount < size; nCount++)
-	{
-		// 大砲の当たり判定
-		if (m_apCannon.at(nCount)->Collision())
-		{
-			// 対象の番号を取得
-			m_nTargetCannon = nCount;
+    // 大砲の数
+    size_t size = m_apCannon.size();
+    for (size_t nCount = 0; nCount < size; nCount++)
+    {
+        // 大砲の当たり判定
+        if (m_apCannon.at(nCount)->Collision())
+        {
+            // 対象の番号を取得
+            m_nTargetCannon = nCount;
 
-			// Eキー表示
-			m_pKeyE->SetDrawFlag(true);
+            // Eキー表示
+            m_pKeyE->SetDrawFlag(true);
 
-			// ボタンの判定
-			InputJudge();
-			return;
-		}
-	}
+            // ボタンの判定
+            InputJudge();
+            return;
+        }
+    }
 
-	// Eキー非表示
-	m_pKeyE->SetDrawFlag(false);
+    // Eキー非表示
+    m_pKeyE->SetDrawFlag(false);
 }
 
 //=============================================================================
@@ -180,11 +179,11 @@ void CCannonManager::CannonCollision()
 //=============================================================================
 void CCannonManager::InputJudge()
 {
-	// 発射ボタンが押されたら
-	if (CLibrary::KeyboardTrigger(DIK_E))
-	{
-		CreateBullet();
-	}
+    // 発射ボタンが押されたら
+    if (CLibrary::KeyboardTrigger(DIK_E))
+    {
+        CreateBullet();
+    }
 }
 
 //=============================================================================
@@ -192,11 +191,11 @@ void CCannonManager::InputJudge()
 //=============================================================================
 void CCannonManager::CreateBullet()
 {
-	// 演出へ以降
-	SetProductionMode();
+    // 演出へ以降
+    SetProductionMode();
 
-	// 使用状態にする
-	m_apCannon.at(m_nTargetCannon)->SetUseFlag();
+    // 使用状態にする
+    m_apCannon.at(m_nTargetCannon)->SetUseFlag();
 }
 
 //=============================================================================
@@ -204,9 +203,9 @@ void CCannonManager::CreateBullet()
 //=============================================================================
 void CCannonManager::SetProductionMode()
 {
-	// 大砲の演出
-	if (!m_pProduction)
-	{
-		m_pProduction = CProductionCannon::Create();
-	}
+    // 大砲の演出
+    if (!m_pProduction)
+    {
+        m_pProduction = CProductionCannon::Create();
+    }
 }

@@ -2,8 +2,8 @@
 #define _STATE_H_
 //=====================================================================
 //
-//	状態管理クラス処理[state.h]
-//	Author : Konishi Yuuto
+// 状態管理クラス処理[state.h]
+// Author : Konishi Yuuto
 //
 //=====================================================================
 
@@ -18,7 +18,7 @@
 class CState
 {
 public:
-	virtual void Init() = 0;	// 初期化処理
-	virtual void Update() = 0;	// 更新処理
+    virtual void Init() = 0;    // 初期化処理
+    virtual void Update() = 0;  // 更新処理
 };
 #endif

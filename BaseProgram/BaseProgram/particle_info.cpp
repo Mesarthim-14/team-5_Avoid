@@ -1,7 +1,7 @@
 //=====================================================================
 //
-//	パーティクル基礎処理[particle_info.h]
-//	Author : toshiki
+//    パーティクル基礎処理[particle_info.h]
+//    Author : toshiki
 //
 //=====================================================================
 
@@ -18,9 +18,9 @@
 //=====================================================================
 CParticleInfo::CParticleInfo()
 {
-	m_move = ZeroVector3;
-	m_nLife = 0;
-	m_bGravitySet = false;
+    m_move = ZeroVector3;
+    m_nLife = 0;
+    m_bGravitySet = false;
 }
 
 //=====================================================================
@@ -36,66 +36,66 @@ CParticleInfo::~CParticleInfo()
 // 初期化処理
 // Author : toshiki
 //=====================================================================
-HRESULT CParticleInfo::Init(void)
+HRESULT CParticleInfo::Init()
 {
-	CBillboard::Init();
-	return S_OK;
+    CBillboard::Init();
+    return S_OK;
 }
 
 //=====================================================================
 // 更新処理
 // Author : toshiki
 //=====================================================================
-void CParticleInfo::Update(void)
+void CParticleInfo::Update()
 {
-	// 座標情報を取得
-	D3DXVECTOR3 pos = GetPos();
-	// 体力情報を取得
-	m_nLife = GetLife();
-	// 移動量を加算
-	pos += m_move;
-	// 重力をつけるかつけないかの判別
-	if (m_bGravitySet)
-	{
-		Gravity();
-	}
-	//	ライフが０になったら消す
-	m_nLife--;
-	if (m_nLife <= 0)
-	{
-		Uninit();
-	}
-	// 加算した情報を設定
-	SetPos(pos);
+    // 座標情報を取得
+    D3DXVECTOR3 pos = GetPos();
+    // 体力情報を取得
+    m_nLife = GetLife();
+    // 移動量を加算
+    pos += m_move;
+    // 重力をつけるかつけないかの判別
+    if (m_bGravitySet)
+    {
+        Gravity();
+    }
+    //    ライフが０になったら消す
+    m_nLife--;
+    if (m_nLife <= 0)
+    {
+        Uninit();
+    }
+    // 加算した情報を設定
+    SetPos(pos);
 }
 
 //=====================================================================
 // 終了処理
 // Author : toshiki
 //=====================================================================
-void CParticleInfo::Uninit(void)
+void CParticleInfo::Uninit()
 {
-	CBillboard::Uninit();
+    CBillboard::Uninit();
 }
 
 //=====================================================================
 // 描画処理
 // Author : toshiki
 //=====================================================================
-void CParticleInfo::Draw(void)
+void CParticleInfo::Draw()
 {
-	CBillboard::Draw();
+    CBillboard::Draw();
 }
 
 //=====================================================================
 // 重力
 // Author : toshiki
 //=====================================================================
-void CParticleInfo::Gravity(void)
+void CParticleInfo::Gravity()
 {
-	// 座標情報を取得
-	D3DXVECTOR3 pos = GetPos();
-	m_move.y -= 0.1f;
-	// 移動量を加算
-	pos.y += m_move.y;
+    // 座標情報を取得
+    D3DXVECTOR3 pos = GetPos();
+    m_move.y -= 0.1f;
+    // 移動量を加算
+    pos.y += m_move.y;
 }

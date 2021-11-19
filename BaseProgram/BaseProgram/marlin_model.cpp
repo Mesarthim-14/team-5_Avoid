@@ -21,8 +21,8 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_POS		(ZeroVector3)
-#define TEST_ROT		(ZeroVector3)
+#define TEST_POS        (ZeroVector3)
+#define TEST_ROT        (ZeroVector3)
 
 //=============================================================================
 // コンストラクタ
@@ -45,18 +45,18 @@ CMarlinModel::~CMarlinModel()
 //=============================================================================
 CMarlinModel * CMarlinModel::Create(const D3DXVECTOR3 pos)
 {
-	// メモリ確保
-	CMarlinModel *pMarlinModel = new CMarlinModel(PRIORITY_TEST_MODEL);
+    // メモリ確保
+    CMarlinModel *pMarlinModel = new CMarlinModel(PRIORITY_TEST_MODEL);
 
-	// !nullcheck
-	if (pMarlinModel)
-	{
-		// 初期化処理
-		pMarlinModel->Init(pos);
-		return pMarlinModel;
-	}
+    // !nullcheck
+    if (pMarlinModel)
+    {
+        // 初期化処理
+        pMarlinModel->Init(pos);
+        return pMarlinModel;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -64,14 +64,14 @@ CMarlinModel * CMarlinModel::Create(const D3DXVECTOR3 pos)
 //=============================================================================
 HRESULT CMarlinModel::Init(const D3DXVECTOR3 &pos)
 {
-	// 初期化処理
-	CModel::Init();
+    // 初期化処理
+    CModel::Init();
 
-	CXfile *pXfile = GET_XFILE_PTR;
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ENEMY_BOX);
-	GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
+    CXfile *pXfile = GET_XFILE_PTR;
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ENEMY_BOX);
+    GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -79,7 +79,7 @@ HRESULT CMarlinModel::Init(const D3DXVECTOR3 &pos)
 //=============================================================================
 void CMarlinModel::Draw()
 {
-	CModel::Draw();
+    CModel::Draw();
 }
 
 //=============================================================================
@@ -87,5 +87,5 @@ void CMarlinModel::Draw()
 //=============================================================================
 void CMarlinModel::SetPos(const D3DXVECTOR3 &pos)
 {
-	GetModelInfo()->SetPos(pos);
+    GetModelInfo()->SetPos(pos);
 }

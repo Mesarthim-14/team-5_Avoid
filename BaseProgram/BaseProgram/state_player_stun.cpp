@@ -1,7 +1,7 @@
 //=====================================================================
 //
-//	気絶状態管理クラス [state_player_stun.h]
-//	Author : Konishi Yuuto
+//    気絶状態管理クラス [state_player_stun.h]
+//    Author : Konishi Yuuto
 //
 //=====================================================================
 
@@ -20,14 +20,14 @@
 //=====================================================================
 // マクロ定義
 //=====================================================================
-#define MAX_STAN_COUNT (120)												// 復帰までのカウント
+#define MAX_STAN_COUNT (120)    // 復帰までのカウント
 
 //=====================================================================
 // コンストラクタ
 //=====================================================================
 CPlayerStateStun::CPlayerStateStun()
 {
-	m_nStunCount = 0;
+    m_nStunCount = 0;
 }
 
 //=====================================================================
@@ -43,15 +43,15 @@ CPlayerStateStun::~CPlayerStateStun()
 //=====================================================================
 CPlayerStateStun * CPlayerStateStun::Create()
 {
-	// メモリ確保
-	CPlayerStateStun *pStateJump = new CPlayerStateStun;
-	if (pStateJump)
-	{
-		// 初期化処理
-		pStateJump->Init();
-		return pStateJump;
-	}
-	return nullptr;
+    // メモリ確保
+    CPlayerStateStun *pStateJump = new CPlayerStateStun;
+    if (pStateJump)
+    {
+        // 初期化処理
+        pStateJump->Init();
+        return pStateJump;
+    }
+    return nullptr;
 }
 
 //=====================================================================
@@ -59,9 +59,8 @@ CPlayerStateStun * CPlayerStateStun::Create()
 //=====================================================================
 void CPlayerStateStun::Init()
 {
-	// アニメーション設定
-	SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_IDOL), 60);
-	//	Update();
+    // アニメーション設定
+    SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_IDOL), 60);
 }
 
 //=====================================================================
@@ -69,47 +68,47 @@ void CPlayerStateStun::Init()
 //=====================================================================
 void CPlayerStateStun::Update()
 {
-	CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
-	if (!pPlayer)
-	{
-		return;
-	}
+    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    if (!pPlayer)
+    {
+        return;
+    }
 
-	m_nStunCount++;
-	// 慣性
-	D3DXVECTOR3 move = pPlayer->GetMove();
-	if (abs(move.x) > 0.0f)//滑らせる
-	{
-		if (move.x > 0.0f)
-		{
-			move.x -= 2.0f;
-		}
-		if (move.x < 0.0f)
-		{
-			move.x += 2.0f;
-		}
-	}
-	if (abs(move.z) > 0.0f)
-	{
-		if (move.z > 0.0f)
-		{
-			move.z -= 2.0f;
-		}
-		if (move.z < 0.0f)
-		{
-			move.z += 2.0f;
-		}
-	}
+    m_nStunCount++;
+    // 慣性
+    D3DXVECTOR3 move = pPlayer->GetMove();
+    if (abs(move.x) > 0.0f)//滑らせる
+    {
+        if (move.x > 0.0f)
+        {
+            move.x -= 2.0f;
+        }
+        if (move.x < 0.0f)
+        {
+            move.x += 2.0f;
+        }
+    }
+    if (abs(move.z) > 0.0f)
+    {
+        if (move.z > 0.0f)
+        {
+            move.z -= 2.0f;
+        }
+        if (move.z < 0.0f)
+        {
+            move.z += 2.0f;
+        }
+    }
 
-	// 移動量設定
-	move += (pPlayer->GetInertia() - move) * pPlayer->GetInertiaNum();
-	pPlayer->SetMove(move);
+    // 移動量設定
+    move += (pPlayer->GetInertia() - move) * pPlayer->GetInertiaNum();
+    pPlayer->SetMove(move);
 
-	// 一定時間でスタン解除
-	if (m_nStunCount >= MAX_STAN_COUNT)
-	{
-		m_nStunCount = 0;
-		pPlayer->ChangeState(CPlayerStateNormal::Create());// スタン状態解除（起き上がり）
-	}
+    // 一定時間でスタン解除
+    if (m_nStunCount >= MAX_STAN_COUNT)
+    {
+        m_nStunCount = 0;
+        pPlayer->ChangeState(CPlayerStateNormal::Create());// スタン状態解除（起き上がり）
+    }
 
 }

@@ -23,19 +23,19 @@ class CCameraState;
 class CCameraGame : public CCamera
 {
 public:
-	CCameraGame();					// コンストラクタ
-	~CCameraGame();					// デストラクタ
-
-	HRESULT Init();									// 初期化処理
-	void Update();									// 更新処理
-	static CCameraGame*Create();					// クリエイト
-	void ChangeState(CCameraState* pState);			// 状態の変更
+    CCameraGame();                          // コンストラクタ
+    ~CCameraGame();                         // デストラクタ
+    
+    HRESULT Init();                         // 初期化処理
+    void Update();                          // 更新処理
+    static CCameraGame*Create();            // クリエイト
+    void ChangeState(CCameraState* pState); // 状態の変更
 
 private:
-	void StateUpdate();				// 状態の更新処理
+	void StateUpdate();                     // 状態の更新処理
 
 	// メンバ変数
-	CCameraState* m_pCurrentState;	// 現在の状態ポインタ
-	CCameraState* m_pNextState;		// 次の状態ポインタ
+	CCameraState* m_pCurrentState;  // 現在の状態ポインタ
+	CCameraState* m_pNextState;     // 次の状態ポインタ
 };
 #endif 

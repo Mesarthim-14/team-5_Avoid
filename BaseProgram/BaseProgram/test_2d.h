@@ -22,14 +22,14 @@
 class CTest2d : public CScene2D
 {
 public:
-	CTest2d(PRIORITY = PRIORITY_0);	// コンストラクタ
-	~CTest2d();							// デストラクタ
+    CTest2d(PRIORITY = PRIORITY_0); // コンストラクタ
+    ~CTest2d();                     // デストラクタ
 
-	static CTest2d *Create();		// インスタンス生成
-	HRESULT Init();					// 初期化処理
-	void Uninit();					// 初期化処理
-	void Update();					// 更新処理
-	void Draw();					// 描画
+    static CTest2d *Create();   // インスタンス生成
+    HRESULT Init();             // 初期化処理
+    void Uninit();              // 初期化処理
+    void Update();              // 更新処理
+    void Draw();                // 描画
 private:
 };
 

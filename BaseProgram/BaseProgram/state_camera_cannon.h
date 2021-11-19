@@ -2,8 +2,8 @@
 #define _STATE_CAMERA_CANNON_H_
 //=====================================================================
 //
-//	大砲時カメラ状態管理クラス [state_camera_cannon.h]
-//	Author : Konishi Yuuto
+//    大砲時カメラ状態管理クラス [state_camera_cannon.h]
+//    Author : Konishi Yuuto
 //
 //=====================================================================
 
@@ -23,14 +23,14 @@ class CCamera;
 class CCameraStateCannon : public CCameraState
 {
 public:
-	CCameraStateCannon();					// コンストラクタ
-	~CCameraStateCannon();					// デストラクタ
-	static CCameraStateCannon* Create();	// インスタンス生成
+    CCameraStateCannon();                   // コンストラクタ
+    ~CCameraStateCannon();                  // デストラクタ
+    static CCameraStateCannon* Create();    // インスタンス生成
 
-	void Init();			// 初期化処理
-	void Update()override;	// 更新処理
+    void Init();            // 初期化処理
+    void Update()override;  // 更新処理
 
 private:
-	void TrackingCannon(CCamera* &pCamera);	// 大砲の方へ向く
+    void TrackingCannon(CCamera* &pCamera);    // 大砲の方へ向く
 };
 #endif

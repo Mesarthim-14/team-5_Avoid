@@ -23,19 +23,19 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define SPEED		(100.0f)
-#define SPEED_Y		(50.0f)
-#define POS_FIX		(1000.0f)
-#define POS_FIX_Y	(700.0f)
-#define GRAVITY_NUM	(0.65f)
+#define SPEED       (100.0f)
+#define SPEED_Y     (50.0f)
+#define POS_FIX     (1000.0f)
+#define POS_FIX_Y   (700.0f)
+#define GRAVITY_NUM (0.65f)
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CCannonBullet::CCannonBullet(PRIORITY Priority) : CModel(Priority)
 {
-	m_fDistanceToKraken = 0.0f;
-	m_KrakenPos = ZeroVector3;
+    m_fDistanceToKraken = 0.0f;
+    m_KrakenPos = ZeroVector3;
 }
 
 //=============================================================================
@@ -50,18 +50,18 @@ CCannonBullet::~CCannonBullet()
 //=============================================================================
 CCannonBullet * CCannonBullet::Create(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &CannonRot)
 {
-	// メモリ確保
-	CCannonBullet *pCannonBullet = new CCannonBullet(PRIORITY_TEST_MODEL);
+    // メモリ確保
+    CCannonBullet *pCannonBullet = new CCannonBullet(PRIORITY_TEST_MODEL);
 
-	// !nullcheck
-	if (pCannonBullet)
-	{
-		// 初期化処理
-		pCannonBullet->Init(CannonPos, CannonRot);
-		return pCannonBullet;
-	}
+    // !nullcheck
+    if (pCannonBullet)
+    {
+        // 初期化処理
+        pCannonBullet->Init(CannonPos, CannonRot);
+        return pCannonBullet;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -69,19 +69,19 @@ CCannonBullet * CCannonBullet::Create(const D3DXVECTOR3 &CannonPos, const D3DXVE
 //=============================================================================
 HRESULT CCannonBullet::Init(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &CannonRot)
 {
-	D3DXVECTOR3 pos = CannonPos;
+    D3DXVECTOR3 pos = CannonPos;
 
-	// バレットの情報設定
-	SetBulletInfo(pos, CannonRot);
+    // バレットの情報設定
+    SetBulletInfo(pos, CannonRot);
 
-	// 初期化処理
-	CModel::Init();
+    // 初期化処理
+    CModel::Init();
 
-	CXfile *pXfile = GET_XFILE_PTR;
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_CANNON_BULLET);
-	GetModelInfo()->SetModelStatus(pos, ZeroVector3, model);
+    CXfile *pXfile = GET_XFILE_PTR;
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_CANNON_BULLET);
+    GetModelInfo()->SetModelStatus(pos, ZeroVector3, model);
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -89,10 +89,10 @@ HRESULT CCannonBullet::Init(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &Can
 //=============================================================================
 void CCannonBullet::Update()
 {
-	CModel::Update();
-	
-	// 距離計算
-	CalDistance();
+    CModel::Update();
+    
+    // 距離計算
+    CalDistance();
 }
 
 //=============================================================================
@@ -100,11 +100,11 @@ void CCannonBullet::Update()
 //=============================================================================
 void CCannonBullet::CalDistance()
 {
-	float fCurDistance = CLibrary::CalDistance(GetPos(), m_KrakenPos);
-	if (fCurDistance * 0.5f <= m_fDistanceToKraken)
-	{
-		GetMove().y -= GRAVITY_NUM;
-	}
+    float fCurDistance = CLibrary::CalDistance(GetPos(), m_KrakenPos);
+    if (fCurDistance * 0.5f <= m_fDistanceToKraken)
+    {
+        GetMove().y -= GRAVITY_NUM;
+    }
 }
 
 //=============================================================================
@@ -112,16 +112,16 @@ void CCannonBullet::CalDistance()
 //=============================================================================
 void CCannonBullet::SetBulletInfo(D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-	// 大砲の中心が違うので、座標をずらす
-	pos = D3DXVECTOR3(
-		pos.x + (sinf(rot.y)*POS_FIX),
-		pos.y + POS_FIX_Y,
-		pos.z + (cos(rot.y)*POS_FIX));
+    // 大砲の中心が違うので、座標をずらす
+    pos = D3DXVECTOR3(
+        pos.x + (sinf(rot.y)*POS_FIX),
+        pos.y + POS_FIX_Y,
+        pos.z + (cos(rot.y)*POS_FIX));
 
-	CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();	// ボスのポインタ
-	m_KrakenPos = pKraken->GetPos();									// 座標取得
-	m_fDistanceToKraken = CLibrary::CalDistance(pos, m_KrakenPos);		// 距離の取得
-	D3DXVECTOR3 move = CLibrary::FollowMoveXZ(pos, m_KrakenPos, SPEED);	// XZの移動量
-	move.y = SPEED_Y;													// 高さ追加
-	SetMove(move);														// 移動量設定
+    CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();    // ボスのポインタ
+    m_KrakenPos = pKraken->GetPos();                                    // 座標取得
+    m_fDistanceToKraken = CLibrary::CalDistance(pos, m_KrakenPos);        // 距離の取得
+    D3DXVECTOR3 move = CLibrary::FollowMoveXZ(pos, m_KrakenPos, SPEED);    // XZの移動量
+    move.y = SPEED_Y;                                                    // 高さ追加
+    SetMove(move);                                                        // 移動量設定
 }

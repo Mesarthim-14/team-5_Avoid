@@ -22,15 +22,15 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_ROT		(D3DXVECTOR3(0.0f, D3DXToRadian(0.0f), 0.0f))	// 角度
-#define ROTATE_NUM		(D3DXToRadian(1.0f))							// 回転の値
+#define TEST_ROT    (D3DXVECTOR3(0.0f, D3DXToRadian(0.0f), 0.0f))   // 角度
+#define ROTATE_NUM  (D3DXToRadian(1.0f))                            // 回転の値
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CSwirlScaffold::CSwirlScaffold(PRIORITY Priority) : CModel(Priority)
 {
-	m_fRotateNum = ROTATE_NUM;
+    m_fRotateNum = ROTATE_NUM;
 }
 
 //=============================================================================
@@ -45,18 +45,18 @@ CSwirlScaffold::~CSwirlScaffold()
 //=============================================================================
 CSwirlScaffold * CSwirlScaffold::Create(const D3DXVECTOR3 &pos)
 {
-	// メモリ確保
-	CSwirlScaffold *pRotatebody = new CSwirlScaffold(PRIORITY_TEST_MODEL);
+    // メモリ確保
+    CSwirlScaffold *pRotatebody = new CSwirlScaffold(PRIORITY_TEST_MODEL);
 
-	// !nullcheck
-	if (pRotatebody)
-	{
-		// 初期化処理
-		pRotatebody->Init(pos);
-		return pRotatebody;
-	}
+    // !nullcheck
+    if (pRotatebody)
+    {
+        // 初期化処理
+        pRotatebody->Init(pos);
+        return pRotatebody;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -64,14 +64,14 @@ CSwirlScaffold * CSwirlScaffold::Create(const D3DXVECTOR3 &pos)
 //=============================================================================
 HRESULT CSwirlScaffold::Init(const D3DXVECTOR3 &pos)
 {
-	// 初期化処理
-	CModel::Init();
+    // 初期化処理
+    CModel::Init();
 
-	CXfile *pXfile = GET_XFILE_PTR;
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_SWIRL_SCAFFOLD);
-	GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
+    CXfile *pXfile = GET_XFILE_PTR;
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_SWIRL_SCAFFOLD);
+    GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -79,10 +79,10 @@ HRESULT CSwirlScaffold::Init(const D3DXVECTOR3 &pos)
 //=============================================================================
 void CSwirlScaffold::Update()
 {
-	// 回転させる
-	Rotate();
+    // 回転させる
+    Rotate();
 
-	CModel::Update();
+    CModel::Update();
 }
 
 //=============================================================================
@@ -90,8 +90,8 @@ void CSwirlScaffold::Update()
 //=============================================================================
 void CSwirlScaffold::Rotate()
 {
-	D3DXVECTOR3 rot = GetModelInfo()->GetRot();
-	rot.y += m_fRotateNum;
-	CLibrary::RotFix(rot.y);
-	GetModelInfo()->SetRot(rot);
+    D3DXVECTOR3 rot = GetModelInfo()->GetRot();
+    rot.y += m_fRotateNum;
+    CLibrary::RotFix(rot.y);
+    GetModelInfo()->SetRot(rot);
 }

@@ -18,16 +18,16 @@
 class CBarrelFactory
 {
 public:
-	CBarrelFactory();		// コンストラクタ
-	~CBarrelFactory() {}	// デストラクタ
+    CBarrelFactory();       // コンストラクタ
+    ~CBarrelFactory() {}    // デストラクタ
 
-	static CBarrelFactory *Create();	// インスタンス生成
-	void Update();						// 更新処理
+    static CBarrelFactory *Create();    // インスタンス生成
+    void Update();                      // 更新処理
 
-	void CreateBarrel();				// 樽の生成
+    void CreateBarrel();                // 樽の生成
 private:
-	// private関数
-	int m_nCreateCount;
+    // private関数
+    int m_nCreateCount;
 };
 
 #endif

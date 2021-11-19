@@ -18,14 +18,14 @@
 class CRubble1 : public CModel
 {
 public:
-	CRubble1(PRIORITY = PRIORITY_TEST_MODEL);	// コンストラクタ
-	~CRubble1();								// デストラクタ
+    CRubble1(PRIORITY = PRIORITY_TEST_MODEL);   // コンストラクタ
+    ~CRubble1();                                // デストラクタ
 
-	static CRubble1 *Create();	// インスタンス生成
-	HRESULT Init();				// 初期化処理
-	void Uninit();									// 初期化処理
-	void Update();									// 更新処理
-	void Draw();									// 描画
+    static CRubble1 *Create();  // インスタンス生成
+    HRESULT Init();             // 初期化処理
+    void Uninit();              // 初期化処理
+    void Update();              // 更新処理
+    void Draw();                // 描画
 
 private:
 };

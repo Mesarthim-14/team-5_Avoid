@@ -39,18 +39,18 @@ CBridge::~CBridge()
 //=============================================================================
 CBridge * CBridge::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-	// ƒƒ‚ƒŠŠm•Û
-	CBridge *pTestModel = new CBridge(PRIORITY_TEST_MODEL);
+    // ƒƒ‚ƒŠŠm•Û
+    CBridge *pTestModel = new CBridge(PRIORITY_TEST_MODEL);
 
-	// !nullcheck
-	if (pTestModel)
-	{
-		// ‰Šú‰»ˆ—
-		pTestModel->Init(pos, rot);
-		return pTestModel;
-	}
+    // !nullcheck
+    if (pTestModel)
+    {
+        // ‰Šú‰»ˆ—
+        pTestModel->Init(pos, rot);
+        return pTestModel;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -58,12 +58,12 @@ CBridge * CBridge::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 //=============================================================================
 HRESULT CBridge::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-	// ‰Šú‰»ˆ—
-	CModel::Init();
+    // ‰Šú‰»ˆ—
+    CModel::Init();
 
-	CXfile *pXfile = GET_XFILE_PTR;
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_BRIDGE);
-	GetModelInfo()->SetModelStatus(pos, rot, model);
+    CXfile *pXfile = GET_XFILE_PTR;
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_BRIDGE);
+    GetModelInfo()->SetModelStatus(pos, rot, model);
 
-	return S_OK;
+    return S_OK;
 }

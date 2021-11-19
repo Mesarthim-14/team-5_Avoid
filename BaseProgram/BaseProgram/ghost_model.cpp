@@ -21,8 +21,8 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_POS		(ZeroVector3)
-#define TEST_ROT		(ZeroVector3)
+#define TEST_POS        (ZeroVector3)
+#define TEST_ROT        (ZeroVector3)
 
 //=============================================================================
 // コンストラクタ
@@ -45,18 +45,18 @@ CGhostModel::~CGhostModel()
 //=============================================================================
 CGhostModel * CGhostModel::Create(const D3DXVECTOR3 pos)
 {
-	// メモリ確保
-	CGhostModel *pTestModel = new CGhostModel(PRIORITY_TEST_MODEL);
+    // メモリ確保
+    CGhostModel *pTestModel = new CGhostModel(PRIORITY_TEST_MODEL);
 
-	// !nullcheck
-	if (pTestModel)
-	{
-		// 初期化処理
-		pTestModel->Init(pos);
-		return pTestModel;
-	}
+    // !nullcheck
+    if (pTestModel)
+    {
+        // 初期化処理
+        pTestModel->Init(pos);
+        return pTestModel;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -64,14 +64,14 @@ CGhostModel * CGhostModel::Create(const D3DXVECTOR3 pos)
 //=============================================================================
 HRESULT CGhostModel::Init(const D3DXVECTOR3 &pos)
 {
-	// 初期化処理
-	CModel::Init();
+    // 初期化処理
+    CModel::Init();
 
-	CXfile *pXfile = GET_XFILE_PTR;
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ENEMY_BOX);
-	GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
+    CXfile *pXfile = GET_XFILE_PTR;
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ENEMY_BOX);
+    GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -79,7 +79,7 @@ HRESULT CGhostModel::Init(const D3DXVECTOR3 &pos)
 //=============================================================================
 void CGhostModel::Draw()
 {
-	CModel::Draw();
+    CModel::Draw();
 }
 
 //=============================================================================
@@ -87,5 +87,5 @@ void CGhostModel::Draw()
 //=============================================================================
 void CGhostModel::SetPos(const D3DXVECTOR3 &pos)
 {
-	GetModelInfo()->SetPos(pos);
+    GetModelInfo()->SetPos(pos);
 }

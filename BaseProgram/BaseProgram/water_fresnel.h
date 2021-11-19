@@ -32,12 +32,12 @@ public:
 	CWaterFresnel(PRIORITY = PRIORITY_0);	// コンストラクタ
 	~CWaterFresnel();						// デストラクタ
 
-	static CWaterFresnel *Create(void);	// インスタンス生成
-	HRESULT Init(void);					// 初期化処理
-	void Uninit(void);					// 初期化処理
-	void Update(void);					// 更新処理
-	void Draw(void);					// 描画
-	void ShowInfo();					// ImgUi
+	static CWaterFresnel *Create();	// インスタンス生成
+	HRESULT Init();					// 初期化処理
+	void Uninit();					// 初期化処理
+	void Update();					// 更新処理
+	void Draw();					// 描画
+	void ShowInfo();				// ImgUi
 
 private:
 	CWave *m_pWave;					// 海
@@ -48,6 +48,7 @@ private:
 	CShaderSquare *m_pSquObj;		// 平面オブジェクト
 	CMask *m_pMask;					// マスク
 	CReflect *m_pReflect;			// 反射
+
 	//シーンのレンダリング
 	LPDIRECT3DTEXTURE9    m_pColorTexture;
 	LPDIRECT3DSURFACE9    m_pColorSurface;

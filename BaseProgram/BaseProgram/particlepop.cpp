@@ -1,7 +1,7 @@
 //=====================================================================
 //
-//	パーティクル処理[particlepop.h]
-//	Author : toshiki
+//    パーティクル処理[particlepop.h]
+//    Author : toshiki
 //
 //=====================================================================
 
@@ -21,12 +21,12 @@ float CParticlePop::m_fSize = 0.0f;
 // マクロ定義
 // Author : toshiki
 //=====================================================================
-#define SIZE		(D3DXVECTOR3(m_fSize, m_fSize, m_fSize))
-#define ANGLE		(3.0f)
-#define SPEED		(10.0f)
-#define RANDOM		(3.14f)
-#define LIFE		(90)
-#define COLOR		(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
+#define SIZE        (D3DXVECTOR3(m_fSize, m_fSize, m_fSize))
+#define ANGLE        (3.0f)
+#define SPEED        (10.0f)
+#define RANDOM        (3.14f)
+#define LIFE        (90)
+#define COLOR        (D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
 
 //=====================================================================
 // コンストラクタ
@@ -34,8 +34,8 @@ float CParticlePop::m_fSize = 0.0f;
 //=====================================================================
 CParticlePop::CParticlePop()
 {
-	m_fAngle = 0.0f;
-	m_nLife = 0;
+    m_fAngle = 0.0f;
+    m_nLife = 0;
 }
 
 //=====================================================================
@@ -53,78 +53,78 @@ CParticlePop::~CParticlePop()
 //=====================================================================
 CParticlePop * CParticlePop::Create(D3DXVECTOR3 pos)
 {
-	CParticlePop * pParticlePop = new CParticlePop;
+    CParticlePop * pParticlePop = new CParticlePop;
 
-	if (pParticlePop)
-	{
-		m_fSize = CLibrary::Random(100.0f, 150.0f);
-		pParticlePop->SetSceneInfo(pos, SIZE);
+    if (pParticlePop)
+    {
+        m_fSize = CLibrary::Random(100.0f, 150.0f);
+        pParticlePop->SetSceneInfo(pos, SIZE);
 
-		pParticlePop->Init();
-		return pParticlePop;
-	}
-	return nullptr;
+        pParticlePop->Init();
+        return pParticlePop;
+    }
+    return nullptr;
 }
 
 //=====================================================================
 // 初期化処理
 // Author : toshiki
 //=====================================================================
-HRESULT CParticlePop::Init(void)
+HRESULT CParticlePop::Init()
 {
-	CParticleInfo::Init();
-	SetParticle();
-	return S_OK;
+    CParticleInfo::Init();
+    SetParticle();
+    return S_OK;
 }
 
 //=====================================================================
 // 更新処理
 // Author : toshiki
 //=====================================================================
-void CParticlePop::Update(void)
+void CParticlePop::Update()
 {
-	CParticleInfo::Update();
+    CParticleInfo::Update();
 }
 
 //=====================================================================
 // 終了処理
 // Author : toshiki
 //=====================================================================
-void CParticlePop::Uninit(void)
+void CParticlePop::Uninit()
 {
-	CParticleInfo::Uninit();
+    CParticleInfo::Uninit();
 }
 
 //=====================================================================
 // 描画処理
 // Author : toshiki
 //=====================================================================
-void CParticlePop::Draw(void)
+void CParticlePop::Draw()
 {
-	CParticleInfo::Draw();
+    CParticleInfo::Draw();
 }
 
 //=====================================================================
 // パーティクルの設定
 // Author : toshiki
 //=====================================================================
-void CParticlePop::SetParticle(void)
+void CParticlePop::SetParticle()
 {
-	// テクスチャの設定
-	CTexture *pTexture = GET_TEXTURE_PTR;
-	BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_PARTICLE));
-	// スピードの値を設定
-	m_fSpeed = SPEED;
-	// パーティクルの出る角度の設定
-	m_fAngle = CLibrary::Random(RANDOM);
-	// 重力をつける
-	CParticleInfo::SetGravity(true);
-	// 移動させるための処理
-	D3DXVECTOR3 move = D3DXVECTOR3(sinf(m_fAngle) * m_fSpeed, ANGLE, cosf(m_fAngle) * m_fSpeed);
-	// 移動情報を設定
-	SetMove(move);
-	// 色の設定
-	SetColor(COLOR);
-	// パーティクルが消える時間の設定
-	SetLife(LIFE);
+    // テクスチャの設定
+    CTexture *pTexture = GET_TEXTURE_PTR;
+    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_PARTICLE));
+    // スピードの値を設定
+    m_fSpeed = SPEED;
+    // パーティクルの出る角度の設定
+    m_fAngle = CLibrary::Random(RANDOM);
+    // 重力をつける
+    CParticleInfo::SetGravity(true);
+    // 移動させるための処理
+    D3DXVECTOR3 move = D3DXVECTOR3(sinf(m_fAngle) * m_fSpeed, ANGLE, cosf(m_fAngle) * m_fSpeed);
+    // 移動情報を設定
+    SetMove(move);
+    // 色の設定
+    SetColor(COLOR);
+    // パーティクルが消える時間の設定
+    SetLife(LIFE);
 }

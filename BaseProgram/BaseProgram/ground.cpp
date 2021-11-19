@@ -40,19 +40,19 @@ CGround::~CGround()
 //=============================================================================
 CGround * CGround::Create()
 {
-	// ƒƒ‚ƒŠŠm•Û
-	CGround *pPolygon = new CGround(PRIORITY_UI);
+    // ƒƒ‚ƒŠŠm•Û
+    CGround *pPolygon = new CGround(PRIORITY_UI);
 
-	// !nullcheck
-	if (pPolygon)
-	{
-		// ‰Šú‰»ˆ—
-		pPolygon->Init();
+    // !nullcheck
+    if (pPolygon)
+    {
+        // ‰Šú‰»ˆ—
+        pPolygon->Init();
 
-		return pPolygon;
-	}
+        return pPolygon;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -60,13 +60,13 @@ CGround * CGround::Create()
 //=============================================================================
 HRESULT CGround::Init()
 {
-	// ‰Šú‰»ˆ—
-	SetInfo(SIZE, GROUND_VERTEX_NUM);
-	CMeshField::Init();
-	CTexture *pTexture = GET_TEXTURE_PTR;
-	BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_TEST));
+    // ‰Šú‰»ˆ—
+    SetInfo(SIZE, GROUND_VERTEX_NUM);
+    CMeshField::Init();
+    CTexture *pTexture = GET_TEXTURE_PTR;
+    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_TEST));
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -74,7 +74,7 @@ HRESULT CGround::Init()
 //=============================================================================
 void CGround::Uninit()
 {
-	CMeshField::Uninit();
+    CMeshField::Uninit();
 }
 
 //=============================================================================
@@ -82,7 +82,7 @@ void CGround::Uninit()
 //=============================================================================
 void CGround::Update()
 {
-	CMeshField::Update();
+    CMeshField::Update();
 }
 
 //=============================================================================
@@ -90,5 +90,5 @@ void CGround::Update()
 //=============================================================================
 void CGround::Draw()
 {
-	CMeshField::Draw();
+    CMeshField::Draw();
 }

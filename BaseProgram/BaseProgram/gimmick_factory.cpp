@@ -30,10 +30,10 @@
 //=======================================================================================
 CGimmickFactory::CGimmickFactory()
 {
-	m_pCheckPoint = nullptr;
-	m_pBarrelFactory = nullptr;
-	m_pHeel = nullptr;
-	m_pCannonManager = nullptr;
+    m_pCheckPoint = nullptr;
+    m_pBarrelFactory = nullptr;
+    m_pHeel = nullptr;
+    m_pCannonManager = nullptr;
 }
 
 //=======================================================================================
@@ -48,13 +48,13 @@ CGimmickFactory::~CGimmickFactory()
 //=======================================================================================
 CGimmickFactory * CGimmickFactory::Create()
 {
-	CGimmickFactory *pGimmickFactory = new CGimmickFactory;
-	if (pGimmickFactory)
-	{
-		pGimmickFactory->Init();
-		return pGimmickFactory;
-	}
-	return nullptr;
+    CGimmickFactory *pGimmickFactory = new CGimmickFactory;
+    if (pGimmickFactory)
+    {
+        pGimmickFactory->Init();
+        return pGimmickFactory;
+    }
+    return nullptr;
 }
 
 //=======================================================================================
@@ -62,10 +62,10 @@ CGimmickFactory * CGimmickFactory::Create()
 //=======================================================================================
 HRESULT CGimmickFactory::Init()
 {
-	CreateCheckPoint();
-	CreateGimmick();
+    CreateCheckPoint();
+    CreateGimmick();
 
-	return S_OK;
+    return S_OK;
 }
 
 //=======================================================================================
@@ -73,31 +73,31 @@ HRESULT CGimmickFactory::Init()
 //=======================================================================================
 void CGimmickFactory::Uninit()
 {
-	// チェックポイント
-	if (m_pCheckPoint)
-	{
-		m_pCheckPoint->Uninit();
-		delete m_pCheckPoint;
-		m_pCheckPoint = nullptr;
-	}
-	if (m_pBarrelFactory)
-	{
-		delete m_pBarrelFactory;
-		m_pBarrelFactory = nullptr;
+    // チェックポイント
+    if (m_pCheckPoint)
+    {
+        m_pCheckPoint->Uninit();
+        delete m_pCheckPoint;
+        m_pCheckPoint = nullptr;
+    }
+    if (m_pBarrelFactory)
+    {
+        delete m_pBarrelFactory;
+        m_pBarrelFactory = nullptr;
 
-	}
-	if (m_pHeel)
-	{
-		m_pHeel->Uninit();
-		delete m_pHeel;
-		m_pHeel = nullptr;
-	}
-	if (m_pCannonManager)
-	{
-		m_pCannonManager->Uninit();
-		delete m_pCannonManager;
-		m_pCannonManager = nullptr;
-	}
+    }
+    if (m_pHeel)
+    {
+        m_pHeel->Uninit();
+        delete m_pHeel;
+        m_pHeel = nullptr;
+    }
+    if (m_pCannonManager)
+    {
+        m_pCannonManager->Uninit();
+        delete m_pCannonManager;
+        m_pCannonManager = nullptr;
+    }
 }
 
 //=======================================================================================
@@ -105,23 +105,23 @@ void CGimmickFactory::Uninit()
 //=======================================================================================
 void CGimmickFactory::Update()
 {
-	// チェックポイント
-	if (m_pCheckPoint)
-	{
-		m_pCheckPoint->Update();
-	}
-	if (m_pBarrelFactory)
-	{
-		m_pBarrelFactory->Update();
-	}
-	if (m_pHeel)
-	{
-		m_pHeel->Update();
-	}
-	if (m_pCannonManager)
-	{
-		m_pCannonManager->Update();
-	}
+    // チェックポイント
+    if (m_pCheckPoint)
+    {
+        m_pCheckPoint->Update();
+    }
+    if (m_pBarrelFactory)
+    {
+        m_pBarrelFactory->Update();
+    }
+    if (m_pHeel)
+    {
+        m_pHeel->Update();
+    }
+    if (m_pCannonManager)
+    {
+        m_pCannonManager->Update();
+    }
 }
 
 //=======================================================================================
@@ -129,10 +129,10 @@ void CGimmickFactory::Update()
 //=======================================================================================
 void CGimmickFactory::CreateCheckPoint()
 {
-	if (!m_pCheckPoint)
-	{
-		m_pCheckPoint = CCheckPoint::Create();
-	}
+    if (!m_pCheckPoint)
+    {
+        m_pCheckPoint = CCheckPoint::Create();
+    }
 }
 
 //=======================================================================================
@@ -140,22 +140,22 @@ void CGimmickFactory::CreateCheckPoint()
 //=======================================================================================
 void CGimmickFactory::CreateGimmick()
 {
-	// 動く床
-	CreateMoveScaffold();
-	CreateRotateGimmick();
-	CreateSlope();
-	CreateCannon();
-	CreateBridge();
-	CreateSwirl();
+    // 動く床
+    CreateMoveScaffold();
+    CreateRotateGimmick();
+    CreateSlope();
+    CreateCannon();
+    CreateBridge();
+    CreateSwirl();
 
-	if (!m_pBarrelFactory)
-	{
-		m_pBarrelFactory = CBarrelFactory::Create();
-	}
-	if (!m_pHeel)
-	{
-		m_pHeel = CHeel::Create();
-	}
+    if (!m_pBarrelFactory)
+    {
+        m_pBarrelFactory = CBarrelFactory::Create();
+    }
+    if (!m_pHeel)
+    {
+        m_pHeel = CHeel::Create();
+    }
 }
 
 //=======================================================================================
@@ -163,9 +163,9 @@ void CGimmickFactory::CreateGimmick()
 //=======================================================================================
 void CGimmickFactory::CreateMoveScaffold()
 {
-	CMoveScaffold::Create();
-	CRubble1::Create();
-	CRubble2::Create();
+    CMoveScaffold::Create();
+    CRubble1::Create();
+    CRubble2::Create();
 }
 
 //=======================================================================================
@@ -173,8 +173,8 @@ void CGimmickFactory::CreateMoveScaffold()
 //=======================================================================================
 void CGimmickFactory::CreateRotateGimmick()
 {
-	CRotateGimmick::Create(D3DXVECTOR3(-12126.1f, 810.0f, -16003.8f));
-	CRotateGimmick::Create(D3DXVECTOR3(-31838.1f, 800.0f, -17180.4f));
+    CRotateGimmick::Create(D3DXVECTOR3(-12126.1f, 810.0f, -16003.8f));
+    CRotateGimmick::Create(D3DXVECTOR3(-31838.1f, 800.0f, -17180.4f));
 
 }
 
@@ -183,8 +183,8 @@ void CGimmickFactory::CreateRotateGimmick()
 //=======================================================================================
 void CGimmickFactory::CreateSlope()
 {
-	CSlope::Create(D3DXVECTOR3(-6562.7f, -200.0f, -13120.3f), D3DXVECTOR3(0.0f, D3DXToRadian(-75.0f), 0.0f));
-	CSlope::Create(D3DXVECTOR3(-9662.7f, -200.0f, -23596.1f), D3DXVECTOR3(0.0f, D3DXToRadian(-15.0f), 0.0f));
+    CSlope::Create(D3DXVECTOR3(-6562.7f, -200.0f, -13120.3f), D3DXVECTOR3(0.0f, D3DXToRadian(-75.0f), 0.0f));
+    CSlope::Create(D3DXVECTOR3(-9662.7f, -200.0f, -23596.1f), D3DXVECTOR3(0.0f, D3DXToRadian(-15.0f), 0.0f));
 }
 
 //=======================================================================================
@@ -192,10 +192,10 @@ void CGimmickFactory::CreateSlope()
 //=======================================================================================
 void CGimmickFactory::CreateCannon()
 {
-	if (!m_pCannonManager)
-	{
-		m_pCannonManager = CCannonManager::Create();
-	}
+    if (!m_pCannonManager)
+    {
+        m_pCannonManager = CCannonManager::Create();
+    }
 }
 
 //=======================================================================================
@@ -203,7 +203,7 @@ void CGimmickFactory::CreateCannon()
 //=======================================================================================
 void CGimmickFactory::CreateBridge()
 {
-	CBridge::Create(D3DXVECTOR3(-25423.0f, 1000.0f, -18907.5f), D3DXVECTOR3(0.0f, D3DXToRadian(0.0f), 0.0f));
+    CBridge::Create(D3DXVECTOR3(-25423.0f, 1000.0f, -18907.5f), D3DXVECTOR3(0.0f, D3DXToRadian(0.0f), 0.0f));
 }
 
 //=======================================================================================
@@ -211,5 +211,5 @@ void CGimmickFactory::CreateBridge()
 //=======================================================================================
 void CGimmickFactory::CreateSwirl()
 {
-	CSwirlScaffold::Create(D3DXVECTOR3(-5788.6f, 0.0f, -22500.4f));
+    CSwirlScaffold::Create(D3DXVECTOR3(-5788.6f, 0.0f, -22500.4f));
 }

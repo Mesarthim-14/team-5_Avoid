@@ -2,8 +2,8 @@
 #define _PAUSE_H_
 //=====================================================================
 //
-//	ポーズ処理[pause.h]
-//	Author : toshiki
+//    ポーズ処理[pause.h]
+//    Author : toshiki
 //
 //=====================================================================
 
@@ -23,31 +23,31 @@ class CPolygon;
 class CPause
 {
 public:
-	enum MENU
-	{
-		BACK = 0,
-		RESUME,
-		RESTART,
-		EXIT,
-		MAX
-	};
+    enum MENU
+    {
+        BACK = 0,
+        RESUME,
+        RESTART,
+        EXIT,
+        MAX
+    };
 
-	CPause();
-	~CPause();
+    CPause();
+    ~CPause();
 
-	static CPause * Create(void);
+    static CPause * Create();
 
-	HRESULT Init(void);
-	void Uninit(void);
-	void Update(void);
-	void Draw(void);
+    HRESULT Init();
+    void Uninit();
+    void Update();
+    void Draw();
 
-	bool SetMove(bool move) { m_bMove = move; }
+    inline bool SetMove(const bool &move) { m_bMove = move; }
 
 private:
-	CPolygon * m_pPolygon[MAX];
-	int m_nMenu;
-	bool m_bMove;
+    CPolygon * m_pPolygon[MAX];
+    int m_nMenu;
+    bool m_bMove;
 };
 
 

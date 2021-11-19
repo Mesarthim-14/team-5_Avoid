@@ -2,8 +2,8 @@
 #define _STATE_PLAYER_STUN_H_
 //=====================================================================
 //
-//	ジャンプ状態管理クラス [state_player_stun.h]
-//	Author : Konishi Yuuto
+// ジャンプ状態管理クラス [state_player_stun.h]
+// Author : Konishi Yuuto
 //
 //=====================================================================
 
@@ -18,14 +18,14 @@
 class CPlayerStateStun : public CPlayerState
 {
 public:
-	CPlayerStateStun();		// コンストラクタ
-	~CPlayerStateStun();	// デストラクタ
+    CPlayerStateStun();     // コンストラクタ
+    ~CPlayerStateStun();    // デストラクタ
 
-	static CPlayerStateStun* Create();	// インスタンス生成
-	void Init();						// 初期化処理
-	void Update()override;				// 更新処理
+    static CPlayerStateStun* Create();  // インスタンス生成
+    void Init();                        // 初期化処理
+    void Update()override;              // 更新処理
 
 private:
-	int m_nStunCount;
+    int m_nStunCount;
 };
 #endif

@@ -1,7 +1,7 @@
 //=====================================================================
 //
-//	ゲージ処理[gauge.h]
-//	Author : toshiki
+//    ゲージ処理[gauge.h]
+//    Author : toshiki
 //
 //=====================================================================
 
@@ -17,8 +17,8 @@
 //=====================================================================
 // マクロ定義
 //=====================================================================
-#define POS		(D3DXVECTOR3(640.0f,670.0f,0.0f))
-#define SIZE	(D3DXVECTOR3(400.0f,70.0f,0.0f))
+#define POS     (D3DXVECTOR3(640.0f,670.0f,0.0f))
+#define SIZE    (D3DXVECTOR3(400.0f,70.0f,0.0f))
 
 //=====================================================================
 // コンストラクタ
@@ -39,51 +39,51 @@ CTranslation::~CTranslation()
 //=====================================================================
 // 生成処理
 //=====================================================================
-CTranslation * CTranslation::Create(void)
+CTranslation * CTranslation::Create()
 {
-	CTranslation * pGauge = new CTranslation;
+    CTranslation * pGauge = new CTranslation;
 
-	if (pGauge != nullptr)
-	{
-		pGauge->SetSceneInfo(POS, SIZE);
-		pGauge->Init();
-		return pGauge;
-	}
-	return nullptr;
+    if (pGauge)
+    {
+        pGauge->SetSceneInfo(POS, SIZE);
+        pGauge->Init();
+        return pGauge;
+    }
+    return nullptr;
 }
 
 //=====================================================================
 // 初期化処理
 //=====================================================================
-HRESULT CTranslation::Init(void)
+HRESULT CTranslation::Init()
 {
-	//// テクスチャの設定
-	//CTexture *pTexture = GET_TEXTURE_PTR;
-	//BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_GAUGEBAR));
-	CScene2D::Init();
-	return S_OK;
+    //// テクスチャの設定
+    //CTexture *pTexture = GET_TEXTURE_PTR;
+    //BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_GAUGEBAR));
+    CScene2D::Init();
+    return S_OK;
 }
 
 //=====================================================================
 // 終了処理
 //=====================================================================
-void CTranslation::Uninit(void)
+void CTranslation::Uninit()
 {
-	CScene2D::Uninit();
+    CScene2D::Uninit();
 }
 
 //=====================================================================
 // 更新処理
 //=====================================================================
-void CTranslation::Update(void)
+void CTranslation::Update()
 {
-	CScene2D::Update();
+    CScene2D::Update();
 }
 
 //=====================================================================
 // 描画処理
 //=====================================================================
-void CTranslation::Draw(void)
+void CTranslation::Draw()
 {
-	CScene2D::Draw();
+    CScene2D::Draw();
 }

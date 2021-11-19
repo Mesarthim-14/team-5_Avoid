@@ -18,16 +18,16 @@
 class CSwirlScaffold : public CModel
 {
 public:
-	CSwirlScaffold(PRIORITY = PRIORITY_TEST_MODEL);	// コンストラクタ
-	~CSwirlScaffold();									// デストラクタ
+    CSwirlScaffold(PRIORITY = PRIORITY_TEST_MODEL); // コンストラクタ
+    ~CSwirlScaffold();                              // デストラクタ
 
-	static CSwirlScaffold *Create(const D3DXVECTOR3 &pos);	// インスタンス生成
-	HRESULT Init(const D3DXVECTOR3 &pos);					// 初期化処理
-	void Update();											// 更新処理
+    static CSwirlScaffold *Create(const D3DXVECTOR3 &pos);  // インスタンス生成
+    HRESULT Init(const D3DXVECTOR3 &pos);                   // 初期化処理
+    void Update();                                          // 更新処理
 
 private:
-	void Rotate();						// 回転
-	float m_fRotateNum;
+    void Rotate();  // 回転
+    float m_fRotateNum;
 };
 
 #endif

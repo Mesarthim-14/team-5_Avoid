@@ -21,12 +21,12 @@
 //=============================================================================
 CModelAnime::CModelAnime()
 {
-	//各メンバ変数のクリア
-	m_posAnime = ZeroVector3;
-	m_rotAnime = ZeroVector3;
-	m_pParent = nullptr;
-	m_bRotCalculation = false;
-	m_pModelInfo = nullptr;
+    //各メンバ変数のクリア
+    m_posAnime = ZeroVector3;
+    m_rotAnime = ZeroVector3;
+    m_pParent = nullptr;
+    m_bRotCalculation = false;
+    m_pModelInfo = nullptr;
 }
 
 //=============================================================================
@@ -34,8 +34,8 @@ CModelAnime::CModelAnime()
 //=============================================================================
 CModelAnime::~CModelAnime()
 {
-	// ポインタの開放
-	HasPtrDelete();
+    // ポインタの開放
+    HasPtrDelete();
 }
 
 //=============================================================================
@@ -43,18 +43,18 @@ CModelAnime::~CModelAnime()
 //=============================================================================
 CModelAnime * CModelAnime::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot, const CXfile::MODEL &model)
 {
-	// インスタンス生成
-	CModelAnime *pModelAnime = new CModelAnime;
+    // インスタンス生成
+    CModelAnime *pModelAnime = new CModelAnime;
 
-	// !nullcheck
-	if (pModelAnime)
-	{
-		//初期化処理呼び出し
-		pModelAnime->Init(pos, rot, model);
-		return pModelAnime;
-	}
+    // !nullcheck
+    if (pModelAnime)
+    {
+        //初期化処理呼び出し
+        pModelAnime->Init(pos, rot, model);
+        return pModelAnime;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -62,10 +62,10 @@ CModelAnime * CModelAnime::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot
 //=============================================================================
 HRESULT CModelAnime::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot, const CXfile::MODEL &model)
 {
-	// モデル情報のポインタ作成
-	CreateInfoPtr();
+    // モデル情報のポインタ作成
+    CreateInfoPtr();
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -73,88 +73,88 @@ HRESULT CModelAnime::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot, const 
 //=============================================================================
 void CModelAnime::Draw(const D3DXVECTOR3 &rot)
 {
-	//デバイス情報の取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+    //デバイス情報の取得
+    LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-	D3DXMATRIX mtxParent, mtxWorld;
-	D3DMATERIAL9 matDef;						//現在のマテリアル保持用
-	D3DXMATERIAL*pMat;							//マテリアルデータへのポインタ
-	D3DXVECTOR3 pos = m_pModelInfo->GetPos();
+    D3DXMATRIX mtxParent, mtxWorld;
+    D3DMATERIAL9 matDef;                        //現在のマテリアル保持用
+    D3DXMATERIAL*pMat;                            //マテリアルデータへのポインタ
+    D3DXVECTOR3 pos = m_pModelInfo->GetPos();
 
-	// マトリクス計算
-	CLibrary::ConfigMatrix(&mtxWorld, pos, m_rotAnime);
+    // マトリクス計算
+    CLibrary::ConfigMatrix(&mtxWorld, pos, m_rotAnime);
 
-	//親が存在する場合
-	if (m_pParent)
-	{
-		//親情報を設定
-		mtxParent = m_pParent->GetModelInfo()->GetMtxWorld();
-	}
-	//親が存在しない場合
-	else
-	{
-		//デバイス情報を設定
-		pDevice->GetTransform(D3DTS_WORLD, &mtxParent);
-	}
+    //親が存在する場合
+    if (m_pParent)
+    {
+        //親情報を設定
+        mtxParent = m_pParent->GetModelInfo()->GetMtxWorld();
+    }
+    //親が存在しない場合
+    else
+    {
+        //デバイス情報を設定
+        pDevice->GetTransform(D3DTS_WORLD, &mtxParent);
+    }
 
-	//親のマトリクスと掛け合わせる
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxParent);
+    //親のマトリクスと掛け合わせる
+    D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxParent);
 
-	//ワールドマトリクスの設定
-	pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);
-	m_pModelInfo->SetMtxWorld(mtxWorld);
+    //ワールドマトリクスの設定
+    pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);
+    m_pModelInfo->SetMtxWorld(mtxWorld);
 
-	//現在のマテリアルを取得する
-	pDevice->GetMaterial(&matDef);
+    //現在のマテリアルを取得する
+    pDevice->GetMaterial(&matDef);
 
-	//マテリアルデータへのポインタを取得
-	CXfile::MODEL model = m_pModelInfo->GetModel();
-	pMat = (D3DXMATERIAL*)model.pBuffMat->GetBufferPointer();
-	for (int nCntMat = 0; nCntMat < (int)model.dwNumMat; nCntMat++)
-	{
-		//マテリアルのアンビエントにディフューズカラーを設定
-		pMat[nCntMat].MatD3D.Ambient = pMat[nCntMat].MatD3D.Diffuse;
+    //マテリアルデータへのポインタを取得
+    CXfile::MODEL model = m_pModelInfo->GetModel();
+    pMat = (D3DXMATERIAL*)model.pBuffMat->GetBufferPointer();
+    for (int nCntMat = 0; nCntMat < (int)model.dwNumMat; nCntMat++)
+    {
+        //マテリアルのアンビエントにディフューズカラーを設定
+        pMat[nCntMat].MatD3D.Ambient = pMat[nCntMat].MatD3D.Diffuse;
 
-		//マテリアルの設定
-		pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
+        //マテリアルの設定
+        pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
 
-		if (model.apTexture[nCntMat])
-		{
-			// テクスチャの設定
-			pDevice->SetTexture(0, model.apTexture[nCntMat]);
-		}
-		else
-		{
-			// テクスチャ設定
-			pDevice->SetTexture(0, nullptr);
-		}
+        if (model.apTexture[nCntMat])
+        {
+            // テクスチャの設定
+            pDevice->SetTexture(0, model.apTexture[nCntMat]);
+        }
+        else
+        {
+            // テクスチャ設定
+            pDevice->SetTexture(0, nullptr);
+        }
 
-		//モデルパーツの描画
-		model.pMesh->DrawSubset(nCntMat);
+        //モデルパーツの描画
+        model.pMesh->DrawSubset(nCntMat);
 
-		// 透明度戻す
-		pMat[nCntMat].MatD3D.Diffuse.a = 1.0f;
-	}
+        // 透明度戻す
+        pMat[nCntMat].MatD3D.Diffuse.a = 1.0f;
+    }
 
-	//保持していたマテリアルを戻す
-	pDevice->SetMaterial(&matDef);
+    //保持していたマテリアルを戻す
+    pDevice->SetMaterial(&matDef);
 
-	// 影の設定
-	CShadow *pShadow = m_pModelInfo->GetShadow();
-	if (pShadow)
-	{
-		D3DXVECTOR3 thisRot = m_pModelInfo->GetRot();
+    // 影の設定
+    CShadow *pShadow = m_pModelInfo->GetShadow();
+    if (pShadow)
+    {
+        D3DXVECTOR3 thisRot = m_pModelInfo->GetRot();
 
-		// 影の縦回転の計算が有効かどうか
-		if (m_bRotCalculation)
-		{
-			pShadow->CreateShadow(thisRot, rot, m_pModelInfo->SetShadowInfo(rot, mtxParent));
-		}
-		else
-		{
-			pShadow->CreateShadow(thisRot + rot, mtxWorld);
-		}
-	}
+        // 影の縦回転の計算が有効かどうか
+        if (m_bRotCalculation)
+        {
+            pShadow->CreateShadow(thisRot, rot, m_pModelInfo->SetShadowInfo(rot, mtxParent));
+        }
+        else
+        {
+            pShadow->CreateShadow(thisRot + rot, mtxWorld);
+        }
+    }
 }
 
 //=============================================================================
@@ -162,35 +162,35 @@ void CModelAnime::Draw(const D3DXVECTOR3 &rot)
 //=============================================================================
 void CModelAnime::ShadowDraw(const D3DXVECTOR3 &rot)
 {
-	CShadow *pShadow = m_pModelInfo->GetShadow();
+    CShadow *pShadow = m_pModelInfo->GetShadow();
 
-	if (pShadow)
-	{
-		// 影の描画処理
-		pShadow->VolumeDraw();
-	}
+    if (pShadow)
+    {
+        // 影の描画処理
+        pShadow->VolumeDraw();
+    }
 }
 
 //=============================================================================
 // 情報ポインタ生成
 //=============================================================================
-void CModelAnime::CreateInfoPtr(void)
+void CModelAnime::CreateInfoPtr()
 {
-	if (!m_pModelInfo)
-	{
-		m_pModelInfo = CModelInfo::Create(CModelInfo::MODEL_TYPE_NONE);
-	}
+    if (!m_pModelInfo)
+    {
+        m_pModelInfo = CModelInfo::Create(CModelInfo::MODEL_TYPE_NONE);
+    }
 }
 
 //=============================================================================
 // 保持ポインタの開放処理
 //=============================================================================
-void CModelAnime::HasPtrDelete(void)
+void CModelAnime::HasPtrDelete()
 {
-	if (m_pModelInfo)
-	{
-		// 影の終了処理
-		m_pModelInfo->Uninit();
-		m_pModelInfo = nullptr;
-	}
+    if (m_pModelInfo)
+    {
+        // 影の終了処理
+        m_pModelInfo->Uninit();
+        m_pModelInfo = nullptr;
+    }
 }

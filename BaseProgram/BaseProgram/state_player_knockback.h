@@ -2,8 +2,8 @@
 #define _STATE_PLAYER_KNOCKBACK_H_
 //=====================================================================
 //
-//	ジャンプ状態管理クラス [state_player_knockback.h]
-//	Author : Konishi Yuuto
+// ジャンプ状態管理クラス [state_player_knockback.h]
+// Author : Konishi Yuuto
 //
 //=====================================================================
 
@@ -18,14 +18,14 @@
 class CPlayerStateKnockback : public CPlayerState
 {
 public:
-	CPlayerStateKnockback();		// コンストラクタ
-	~CPlayerStateKnockback();	// デストラクタ
+    CPlayerStateKnockback();    // コンストラクタ
+    ~CPlayerStateKnockback();   // デストラクタ
 
-	static CPlayerStateKnockback* Create();	// インスタンス生成
-	void Init();						// 初期化処理
-	void Update()override;				// 更新処理
+    static CPlayerStateKnockback* Create(); // インスタンス生成
+    void Init();                            // 初期化処理
+    void Update()override;                  // 更新処理
 
 private:
-	int m_nStanCount;
+    int m_nStanCount;
 };
 #endif
