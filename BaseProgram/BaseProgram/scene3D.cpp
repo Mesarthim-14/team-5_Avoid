@@ -37,7 +37,7 @@ CScene3D::~CScene3D()
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CScene3D::Init(void)
+HRESULT CScene3D::Init()
 {
 	// 頂点の生成
 	CreateVertex();
@@ -48,7 +48,7 @@ HRESULT CScene3D::Init(void)
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CScene3D::Uninit(void)
+void CScene3D::Uninit()
 {
 	CSceneBase::Uninit();
 }
@@ -56,7 +56,7 @@ void CScene3D::Uninit(void)
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CScene3D::Update(void)
+void CScene3D::Update()
 {
 	// 移動量加算
 	GetPos() += m_move;
@@ -65,9 +65,9 @@ void CScene3D::Update(void)
 //=============================================================================
 // 頂点の生成
 //=============================================================================
-void CScene3D::CreateVertex(void)
+void CScene3D::CreateVertex()
 {
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();	// デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	// デバイスの取得
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = nullptr;							// 頂点バッファ変数の宣言
 
 	//頂点バッファの生成
@@ -119,7 +119,7 @@ void CScene3D::CreateVertex(void)
 //=============================================================================
 // 座標設定(座標更新用)
 //=============================================================================
-void CScene3D::SetVertexPos(void)
+void CScene3D::SetVertexPos()
 {
 	// 頂点情報を設定
 	VERTEX_3D *pVtx = nullptr;
@@ -144,7 +144,7 @@ void CScene3D::SetVertexPos(void)
 //=============================================================================
 // 色の設定
 //=============================================================================
-void CScene3D::SetColor(D3DXCOLOR col)
+void CScene3D::SetColor(const D3DXCOLOR &col)
 {
 	// 色を変える
 	CSceneBase::SetColor(col);
@@ -169,7 +169,7 @@ void CScene3D::SetColor(D3DXCOLOR col)
 //=============================================
 // アニメーション情報取得
 //=============================================
-void CScene3D::InitAnimation(int nCounterAnim, int nPatternAnim, int nLoop)
+void CScene3D::InitAnimation(const int &nCounterAnim, const int &nPatternAnim, const int &nLoop)
 {
 	// バッファ取得
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();
@@ -203,7 +203,7 @@ void CScene3D::InitAnimation(int nCounterAnim, int nPatternAnim, int nLoop)
 //=============================================
 // アニメーション更新関数
 //=============================================
-void CScene3D::UpdateAnimation(void)
+void CScene3D::UpdateAnimation()
 {
 	// テクスチャポインタ取得
 	CTextureAnimation *pTextureAnimation = GetTextureAnimationPtr();
@@ -234,7 +234,7 @@ void CScene3D::UpdateAnimation(void)
 //======================================================
 // 拡大関数
 //======================================================
-void CScene3D::ScaleUp(float fScaleUp)
+void CScene3D::ScaleUp(const float &fScaleUp)
 {
 	// サイズ取得
 	D3DXVECTOR3 size = GetSize();
@@ -260,7 +260,7 @@ void CScene3D::ScaleUp(float fScaleUp)
 //=============================================================================
 // 透明度の減算
 //=============================================================================
-void CScene3D::SubAlpha(float fAlphaNum)
+void CScene3D::SubAlpha(const float &fAlphaNum)
 {
 	// 色の情報
 	D3DXCOLOR col = GetColor();

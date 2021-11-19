@@ -22,15 +22,15 @@ public:
 	CMotion();		// コンストラクタ
 	~CMotion();		// デストラクタ
 
-	static CMotion *Create(string cFileName);
+	static CMotion *Create(const string &cFileName);
 
-	void SetMotion(const int nMotion, const int nMaxParts, const vector<CModelAnime*> pModelAnime);	// モーションの設定
-	void UpdateMotion(const int nMaxParts, const vector<CModelAnime*> pModelAnime);					// モーションの更新
+	void SetMotion(const int &nMotion, const int &nMaxParts, const vector<CModelAnime*> pModelAnime);	// モーションの設定
+	void UpdateMotion(const int &nMaxParts, const vector<CModelAnime*> pModelAnime);					// モーションの更新
 
 	// Get関数
-	int GetMotionState(void)	{ return m_nMotionState; }		// モーション状態
-	int GetKey(void)			{ return m_nKey; }				// キーの情報
-	int GetCountMotion(void)	{ return m_nCountMotion; }		// モーションのカウント
+	inline int GetMotionState()	{ return m_nMotionState; }		// モーション状態
+	inline int GetKey()			{ return m_nKey; }				// キーの情報
+	inline int GetCountMotion()	{ return m_nCountMotion; }		// モーションのカウント
 
 private:
 	// 各要素のキー情報
@@ -60,7 +60,7 @@ private:
 	};
 
 	// private関数
-	HRESULT ReadMotionFile(string cFileName);										// モーションデータを読み込む
+	HRESULT ReadMotionFile(const string &cFileName);										// モーションデータを読み込む
 
 	// モーション用変数
 	vector<Motion_Info> m_Motion;	// モーション情報

@@ -55,7 +55,7 @@ CCharacter::~CCharacter()
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CCharacter::Init(void)
+HRESULT CCharacter::Init()
 {
 
 	return S_OK;
@@ -113,7 +113,7 @@ void CCharacter::Update()
 void CCharacter::Draw()
 {
 	//デバイス情報の取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	// マトリクスの設定
 	CLibrary::ConfigMatrix(&m_mtxWorld, m_pos, m_rot);
@@ -143,14 +143,13 @@ void CCharacter::Draw()
 	}
 }
 
-
 //=============================================================================
 // モデルの生成
 //=============================================================================
 void CCharacter::ModelCreate(const CXfile::HIERARCHY_XFILE_NUM &FileNum)
 {
 	// XFileのポインタ取得
-	CXfile *pXfile = CManager::GetResourceManager()->GetXfileClass();
+	CXfile *pXfile = CManager::GetInstance()->GetResourceManager()->GetXfileClass();
 
 	// nullcheck
 	if (pXfile)
@@ -212,7 +211,7 @@ void CCharacter::ModelCreate(const CXfile::HIERARCHY_XFILE_NUM &FileNum)
 //=============================================================================
 // モデルアニメーション
 //=============================================================================
-void CCharacter::ModelAnimeUpdate(void)
+void CCharacter::ModelAnimeUpdate()
 {
 	// モーションの更新処理
 	if (m_pMotion)
@@ -225,9 +224,9 @@ void CCharacter::ModelAnimeUpdate(void)
 //=============================================================================
 // 重力の処理
 //=============================================================================
-void CCharacter::Gravity(void)
+void CCharacter::Gravity()
 {
-	if (!m_bLanding)
+	if (!m_bLanding && m_bGravity)
 	{
 		// 重力をかける
 		m_move.y -= CGame::GetGravity();
@@ -249,7 +248,7 @@ void CCharacter::Gravity(void)
 //=============================================================================
 // 着地の処理
 //=============================================================================
-void CCharacter::Landing(float fHeight)
+void CCharacter::Landing(const float &fHeight)
 {
 	m_move.y = 0.0f;
 	m_pos.y = fHeight;
@@ -264,7 +263,7 @@ void CCharacter::Landing(float fHeight)
 //=============================================================================
 // モーションの設定
 //=============================================================================
-void CCharacter::SetMotion(int nMotionState)
+void CCharacter::SetMotion(const int &nMotionState)
 {
 	// nullcheck
 	if (m_pMotion)
@@ -277,7 +276,7 @@ void CCharacter::SetMotion(int nMotionState)
 //=============================================================================
 // 影の回転を反映させるか
 //=============================================================================
-void CCharacter::SetShadowRotCalculation(void)
+void CCharacter::SetShadowRotCalculation()
 {
 	// モデルの描画
 	for (auto &model : m_apModelAnime)

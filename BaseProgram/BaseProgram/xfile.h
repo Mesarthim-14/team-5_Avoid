@@ -45,9 +45,26 @@ public:
 	//=============================================================================
 	enum XFILE_NUM
 	{
-		XFILE_NUM_NONE = -1,	// 初期値
-		XFILE_NUM_TEST_BLOCK,	// テストブロック
-		XFILE_NUM_MAP,			//マップ
+
+		XFILE_NUM_NONE = -1,		// 初期値
+		XFILE_NUM_TEST_BLOCK,		// テストブロック
+		XFILE_NUM_MAP,				// マップ
+		XFILE_NUM_CHECK_FLAG,		// チェックポイントのフラグ
+		XFILE_NUM_PLANE,			// 平面
+		XFILE_NUM_SKY,				// 空
+		XFILE_NUM_ENEMY_BOX,		// box
+		XFILE_NUM_MOVE_SCAFFOLD,	// 進む足場
+		XFILE_NUM_MOVE_RUBBLE1,		// 瓦礫
+		XFILE_NUM_MOVE_RUBBLE2,		// 瓦礫
+		XFILE_NUM_ROTATE_FLOOR,		// 回転床
+		XFILE_NUM_ROTATE_BODY,		// 回転本体
+		XFILE_NUM_CYLINDER,			// 酒樽
+		XFILE_NUM_SLOPE,			// 坂道
+		XFILE_NUM_RECOVER,			// 回復ポイント
+		XFILE_NUM_CANNON,			// 大砲
+		XFILE_NUM_BRIDGE,			// 橋
+		XFILE_NUM_CANNON_BULLET,	// 大砲の弾
+		XFILE_NUM_SWIRL_SCAFFOLD,	// 渦の足場
 		XFILE_NUM_MAX
 	};
 
@@ -64,26 +81,29 @@ public:
 	CXfile();							// コンストラクタ
 	~CXfile();							// デストラクタ
 
-	static CXfile *Create(void);		// インスタンス生成
-	void LoadAll(void);					// 全てのロード
-	void UnLoadAll(void);				// 全てのアンロード
+
+	static CXfile *Create();		// インスタンス生成
+	void LoadAll();					// 全てのロード
+	void UnLoadAll();				// 全てのアンロード
 
 	// Get関数
-	MODEL GetXfile(const XFILE_NUM Tex_Num)										{ return m_aXfile[Tex_Num]; }					// モデルの情報
-	MODELFILE GetModelFile(const int nCount, const HIERARCHY_XFILE_NUM FileNum) { return m_apModelFile[FileNum].at(nCount); }	// モデルパーツの情報
-	int GetModelParts(const HIERARCHY_XFILE_NUM FileNum)						{ return m_nMaxParts[FileNum]; }				// モデルのパーツ数
-	string GetModelFileName(const HIERARCHY_XFILE_NUM FileNum)					{ return m_pFileName[FileNum]; }				// モデルファイルの名前
-	vector<MODEL> GetHierarchyXfile(const HIERARCHY_XFILE_NUM FileNum)			{ return m_apHierarchyModel[FileNum]; }
-	LPDIRECT3DTEXTURE9 *GetXfileTexture(const XFILE_NUM TexNum);
+
+	inline MODEL GetXfile(const XFILE_NUM &Tex_Num)											{ return m_aXfile[Tex_Num]; }					// モデルの情報
+	inline MODELFILE GetModelFile(const int &nCount, const HIERARCHY_XFILE_NUM &FileNum)	{ return m_apModelFile[FileNum].at(nCount); }	// モデルパーツの情報
+	inline int GetModelParts(const HIERARCHY_XFILE_NUM &FileNum)							{ return m_nMaxParts[FileNum]; }				// モデルのパーツ数
+	inline string GetModelFileName(const HIERARCHY_XFILE_NUM &FileNum)						{ return m_pFileName[FileNum]; }				// モデルファイルの名前
+	inline vector<MODEL> GetHierarchyXfile(const HIERARCHY_XFILE_NUM &FileNum)				{ return m_apHierarchyModel[FileNum]; }
+	LPDIRECT3DTEXTURE9 *GetXfileTexture(const XFILE_NUM &TexNum);
 
 private:
 	// private関数
-	HRESULT ModelLoad(void);			// モデルロード
-	void ModelUnLoad(void);				// モデルアンロード
-	HRESULT HierarchyReadFile(void);	// 階層構造のあるモデル読み込み
-	HRESULT HierarchyModelLoad(void);	// 階層構造のモデルロード
-	void HierarchyModelUnLoad(void);	// 階層構造のモデルアンロード
-	void SetHierarchyFileName(void);	// ファイルの名前を設定
+
+	HRESULT ModelLoad();			// モデルロード
+	void ModelUnLoad();				// モデルアンロード
+	HRESULT HierarchyReadFile();	// 階層構造のあるモデル読み込み
+	HRESULT HierarchyModelLoad();	// 階層構造のモデルロード
+	void HierarchyModelUnLoad();	// 階層構造のモデルアンロード
+	void SetHierarchyFileName();	// ファイルの名前を設定
 
 	// メンバ変数
 	MODEL m_aXfile[XFILE_NUM_MAX];						// Xファイル情報の構造体

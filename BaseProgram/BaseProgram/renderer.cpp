@@ -216,7 +216,7 @@ void CRenderer::Update(void)
 #endif	//DEBUG
 
 	// キーボード情報
-	CInputKeyboard *pKeyboard = CManager::GetKeyboard();
+	CInputKeyboard *pKeyboard = CManager::GetInstance()->GetKeyboard();
 	
 	// ポリゴンの表示
 	if (pKeyboard->GetTrigger(DIK_M))
@@ -263,10 +263,10 @@ void CRenderer::Draw(void)
 		D3DXMATRIX matProj, matView, matWorld;
 		D3DXMATRIX trans;
 
-		if (CManager::GetCamera() != nullptr)
+		if (CManager::GetInstance()->GetCamera() != nullptr)
 		{
 			// カメラのポインタ取得
-			CCamera *pCamera = CManager::GetCamera();
+			CCamera *pCamera = CManager::GetInstance()->GetCamera();
 
 			// カメラが使われていたら
 			if (pCamera != nullptr)
@@ -278,7 +278,7 @@ void CRenderer::Draw(void)
 		//オブジェクトクラスの全描画処理呼び出し
 		CScene::DrawAll();
 		
-		CFade *pFade = CManager::GetFade();
+		CFade *pFade = CManager::GetInstance()->GetFade();
 
 		if (pFade != nullptr)
 		{
@@ -286,10 +286,10 @@ void CRenderer::Draw(void)
 			pFade->Draw();
 		}
 
-		if (CManager::GetMode() == CManager::MODE_TYPE_GAME&&CManager::GetActivePause())
+		if (CManager::GetInstance()->GetMode() == CManager::MODE_TYPE_GAME&&CManager::GetActivePause())
 		{// ポーズ状態の時
 		 // ポーズメニューの表示
-			CManager::GetPause()->Draw();
+			CManager::GetInstance()->GetPause()->Draw();
 		}
 #ifdef _DEBUG
 		//ImGuiの情報表示する時

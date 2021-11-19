@@ -25,11 +25,11 @@ public:
 	CTest2d(PRIORITY = PRIORITY_0);	// コンストラクタ
 	~CTest2d();							// デストラクタ
 
-	static CTest2d *Create(void);		// インスタンス生成
-	HRESULT Init(void);					// 初期化処理
-	void Uninit(void);					// 初期化処理
-	void Update(void);					// 更新処理
-	void Draw(void);					// 描画
+	static CTest2d *Create();		// インスタンス生成
+	HRESULT Init();					// 初期化処理
+	void Uninit();					// 初期化処理
+	void Update();					// 更新処理
+	void Draw();					// 描画
 private:
 };
 

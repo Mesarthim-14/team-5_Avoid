@@ -40,7 +40,7 @@ CTextureAnimation::~CTextureAnimation()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CTextureAnimation * CTextureAnimation::Create(D3DXVECTOR2 m_tex[NUM_VERTEX])
+CTextureAnimation * CTextureAnimation::Create(const D3DXVECTOR2 m_tex[NUM_VERTEX])
 {
 	// オブジェクトを生成
 	CTextureAnimation* pTextureAnimation = new CTextureAnimation;
@@ -58,7 +58,7 @@ CTextureAnimation * CTextureAnimation::Create(D3DXVECTOR2 m_tex[NUM_VERTEX])
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CTextureAnimation::Update(void)
+void CTextureAnimation::Update()
 {
 	// テクスチャのアニメーション
 	if (m_nAnimSpeed != 0)
@@ -78,7 +78,7 @@ void CTextureAnimation::Update(void)
 //=============================================================================
 // アニメーション情報の設定
 //=============================================================================
-void CTextureAnimation::InitAnimationInfo(const int nPatternNum, const int nSpeed, const int nLoop)
+void CTextureAnimation::InitAnimationInfo(const int &nPatternNum, const int &nSpeed, const int &nLoop)
 {
 	m_nPatternNum = nPatternNum;
 	m_nAnimSpeed = nSpeed;
@@ -88,7 +88,7 @@ void CTextureAnimation::InitAnimationInfo(const int nPatternNum, const int nSpee
 //=============================================================================
 // スクロール情報の設定
 //=============================================================================
-void CTextureAnimation::InitScroll(const int nSpeed, const float fDivision)
+void CTextureAnimation::InitScroll(const int &nSpeed, const float &fDivision)
 {
 	m_nSpeedTexture = nSpeed;
 	m_fDivisionBaseNum = fDivision;
@@ -97,7 +97,7 @@ void CTextureAnimation::InitScroll(const int nSpeed, const float fDivision)
 //=============================================================================
 // アニメーションの更新
 //=============================================================================
-void CTextureAnimation::UpdateAnimation(void)
+void CTextureAnimation::UpdateAnimation()
 {
 	// 爆発のアニメーションカウントを進めて、パターンを切り替える
 	m_nCountAnim++;
@@ -135,7 +135,7 @@ void CTextureAnimation::UpdateAnimation(void)
 //=============================================================================
 // スクロールの更新
 //=============================================================================
-void CTextureAnimation::UpdateScroll(void)
+void CTextureAnimation::UpdateScroll()
 {
 	// カウンターを進める
 	m_nScrollCounter++;

@@ -23,18 +23,19 @@ public:
 	CTestCharacter(PRIORITY Priority = PRIORITY_CHARACTER);	// コンストラクタ
 	~CTestCharacter();										// デストラクタ
 
-	static CTestCharacter*Create(D3DXVECTOR3 pos);	// クリエイト
+	static CTestCharacter*Create(const D3DXVECTOR3 &pos);	// クリエイト
 
-	HRESULT Init(void);					// 初期化処理
-	void Uninit(void);					// 終了処理
-	void Update(void);					// 更新処理
-	void Draw(void);					// 描画処理
-	void UpdateState(void);				// プレイヤーの状態
-	void Move(void);					// 移動処理
+	HRESULT Init();					// 初期化処理
+	void Uninit();					// 終了処理
+	void Update();					// 更新処理
+	void Draw();					// 描画処理
+	void UpdateState();				// プレイヤーの状態
+	void Move();					// 移動処理
 
 private:
-	HRESULT JsonLoad(void);	
-	void JsonWrite(void);
+	HRESULT JsonLoad();	
+	void JsonWrite();
+	void CreateModel();
 
 	D3DXVECTOR3 m_rotDest;							// 回転(目標値)
 	bool m_bMove;									// 移動のフラグ

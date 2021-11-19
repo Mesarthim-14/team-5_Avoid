@@ -22,18 +22,26 @@
 class CLibrary
 {
 public:
+
 	static string split(string str, char del, int nNum);														// 文字列を分割し、取り出す関数
 	static void ConfigMatrix(D3DXMATRIX *pMtx, D3DXVECTOR3 const &rPos, D3DXVECTOR3 const &rRot);				// マトリクスの設定
 	static void RotFix(float &fRot);																			// 角度の修正
 	static void RotFixVector3(D3DXVECTOR3 &rot);																// 角度の修正
-	static int Random(const int nNum);																			// ランダム変数
-	static int Random(const int nMin, const int nMax);															// ランダム変数
-	static float Random(const float fNum);																		// ランダム変数
-	static float Random(const float fMin, const float fMax);													// ランダム変数
+	static int Random(const int &nNum);																			// ランダム変数
+	static int Random(const int &nMin, const int &nMax);															// ランダム変数
+	static float Random(const float &fNum);																		// ランダム変数
+	static float Random(const float &fMin, const float &fMax);													// ランダム変数
 	static void Rotate3D(D3DXVECTOR3 &PointPos, const D3DXVECTOR3 &rot);										// 点の三次元回転処理
+	static float CalDistance(const D3DXVECTOR3 &pos1, const D3DXVECTOR3 &pos2);									// 二点の距離を計算
 	static float LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 = 0);	// 分離軸に投影された軸成分から投影線分長を算出
 	static D3DXVECTOR3 MultiplyVector3(const D3DXVECTOR3 &vector1, const D3DXVECTOR3 &vector2);					// vector3同士の乗算
 
+	static BOOL KeyboardPress(const int &nKey);																	// キーボードの押し込み判定
+	static BOOL KeyboardTrigger(const int &nKey);																// キーボードの押した判定
+	static BOOL KeyboardRelease(const int &nKey);																// キーボードの離した判定
+	static float CalAngleXZ(const D3DXVECTOR3 &This, const D3DXVECTOR3 &Target);								// XZ(平面)角度のを求める
+	static D3DXVECTOR3 FollowMoveXZ(const D3DXVECTOR3 &This, const D3DXVECTOR3 &Target, const float &fSpeed);	// XZ(平面)の追従
+	
 	// ジェイソンのファイルロード
 	static picojson::value JsonLoadFile(const string &FileName);
 
@@ -61,9 +69,9 @@ public:
 
 	// Imgui
 	static HRESULT InitImgui(HWND hWnd);	//Imgui生成処理
-	static void UninitImgui(void);			//Imgui終了
-	static void ShowDebugInfo(void);		//デバッグ情報表示
-	static void CheckWireMode(void);		//ワイヤーフレーム確認
+	static void UninitImgui();				//Imgui終了
+	static void ShowDebugInfo();			//デバッグ情報表示
+	static void CheckWireMode();			//ワイヤーフレーム確認
 
 private:
 	static bool m_bWireFrame;		// ワイヤーフレーム

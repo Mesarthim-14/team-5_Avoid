@@ -56,10 +56,10 @@ CLight * CLight::Create(void)
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CLight::Init(void)
+HRESULT CLight::Init()
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	//ライトをクリアする
 	SecureZeroMemory(&m_Light, sizeof(D3DLIGHT9));
@@ -96,14 +96,14 @@ HRESULT CLight::Init(void)
 //=============================================================================
 //ライトクラスの終了処理
 //=============================================================================
-void CLight::Uninit(void)
+void CLight::Uninit()
 {
 }
 
 //=============================================================================
 //ライトクラスの更新処理
 //=============================================================================
-void CLight::Update(void)
+void CLight::Update()
 {
 }
 
@@ -114,7 +114,7 @@ void CLight::ShowLightInfo()
 {
 	if (ImGui::CollapsingHeader("LightInfo"))
 	{
-		LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();	// デバイスの取得
+		LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	// デバイスの取得
 
 		if (ImGui::TreeNode("Light0"))
 		{
@@ -127,7 +127,6 @@ void CLight::ShowLightInfo()
 			ImGui::TreePop();
 		}
 	}
-
 }
 
 //=============================================================================
@@ -136,7 +135,7 @@ void CLight::ShowLightInfo()
 void CLight::SetVecDir(D3DXVECTOR3 Dir)
 {
 		//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	 m_vecDir = Dir; 
 

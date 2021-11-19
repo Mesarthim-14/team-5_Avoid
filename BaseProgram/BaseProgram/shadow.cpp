@@ -80,7 +80,7 @@ HRESULT CShadow::Init(const LPD3DXMESH pSrcMesh)
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CShadow::Uninit(void)
+void CShadow::Uninit()
 {
 	if (m_pShadowVolume)
 	{
@@ -94,12 +94,12 @@ void CShadow::Uninit(void)
 //=============================================================================
 // 影の描画処理
 //=============================================================================
-void CShadow::VolumeDraw(void)
+void CShadow::VolumeDraw()
 {
 	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
 
 	// レンダラーポインタ取得
-	CRenderer *pRenderer = CManager::GetRenderer();
+	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
 	//ワールドマトリクスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_ModelMtxWorld);
@@ -129,7 +129,7 @@ void CShadow::VolumeDraw(void)
 //=============================================================================
 // 影の生成処理
 //=============================================================================
-void CShadow::CreateShadow(const D3DXVECTOR3 rot, const D3DXVECTOR3 ShipRot, const D3DXMATRIX ModelMtxWorld)
+void CShadow::CreateShadow(const D3DXVECTOR3 &rot, const D3DXVECTOR3 &ShipRot, const D3DXMATRIX &ModelMtxWorld)
 {
 	// ワールド座標を受け取る
 	m_ModelMtxWorld = ModelMtxWorld;
@@ -144,7 +144,7 @@ void CShadow::CreateShadow(const D3DXVECTOR3 rot, const D3DXVECTOR3 ShipRot, con
 //=============================================================================
 // 影の生成処理
 //=============================================================================
-void CShadow::CreateShadow(const D3DXVECTOR3 rot, const D3DXMATRIX ModelMtxWorld)
+void CShadow::CreateShadow(const D3DXVECTOR3 &rot, const D3DXMATRIX &ModelMtxWorld)
 {
 	// 影の生成
 	if (m_pShadowVolume)
@@ -160,7 +160,7 @@ void CShadow::CreateShadow(const D3DXVECTOR3 rot, const D3DXMATRIX ModelMtxWorld
 // ステンシルの設定
 // Author : Konishi Yuuto
 //=============================================================================
-void CShadow::SetShadowStateStencil(void)
+void CShadow::SetShadowStateStencil()
 {
 	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
 
@@ -195,7 +195,7 @@ void CShadow::SetShadowStateStencil(void)
 // ステンシルテスト設定
 // Author : Konishi Yuuto
 //=============================================================================
-void CShadow::SetShadowStencilTest(void)
+void CShadow::SetShadowStencilTest()
 {
 	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
 
@@ -226,7 +226,7 @@ void CShadow::SetShadowStencilTest(void)
 // ステンシル設定リセット
 // Author : Konishi Yuuto
 //=============================================================================
-void CShadow::ReSetShadowStateStencil(void)
+void CShadow::ReSetShadowStateStencil()
 {
 	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
 
@@ -238,7 +238,7 @@ void CShadow::ReSetShadowStateStencil(void)
 //=============================================================================
 // ポリゴンの終了処理
 //=============================================================================
-void CShadow::PolygonUninit(void)
+void CShadow::PolygonUninit()
 {
 	if (m_pPolygon)
 	{

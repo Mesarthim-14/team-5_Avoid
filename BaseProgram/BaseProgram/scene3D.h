@@ -21,33 +21,33 @@ public:
 	CScene3D(PRIORITY Priority = PRIORITY_EFFECT);	// コンストラクタ
 	virtual ~CScene3D();							// デストラクタ
 	
-	virtual HRESULT Init(void);						// 初期化処理
-	virtual void Uninit(void);						// 終了処理
-	virtual void Update(void);						// 更新処理
-	virtual void Draw(void) = 0;					// 描画処理
+	virtual HRESULT Init();						// 初期化処理
+	virtual void Uninit();						// 終了処理
+	virtual void Update();						// 更新処理
+	virtual void Draw() = 0;					// 描画処理
 
 protected:
-	void SetVertexPos(void);						// 座標の更新
+	void SetVertexPos();						// 座標の更新
 
 	// Set関数
-	void SubAlpha(float fAlphaNum);														// 透明度の減算
-	void InitAnimation(int nPatternNum, int nSpeed, int nLoop);							// アニメーション情報初期化
-	void SetColor(const D3DXCOLOR color);												// カラーの設定
-	void ScaleUp(float fScale);															// 拡大処理
-	void SetMove(const D3DXVECTOR3 move)			{ m_move = move; }					// 移動量
-	void SetAlpha(const bool bAlpha)				{ m_bAlpha = bAlpha; }				// アルファテスト
-	void SetAlphaNum(const int nAlphaNum)			{ m_nAlphaTestNum = nAlphaNum; }	// アルファテストの値
-	void SetBlend(const bool bBlend)				{ m_bBlend = bBlend; }				// 加算合成
-	void SetMtxWorld(const D3DXMATRIX mtxWorld)		{ m_mtxWorld = mtxWorld; }			// ワールドマトリクスの設定
+	void SubAlpha(const float &fAlphaNum);														// 透明度の減算
+	void InitAnimation(const int &nCounterAnim, const int &nPatternAnim, const int &nLoop);			// アニメーション情報初期化
+	void SetColor(const D3DXCOLOR &color);														// カラーの設定
+	void ScaleUp(const float &fScale);															// 拡大処理
+	inline void SetMove(const D3DXVECTOR3 &move)			{ m_move = move; }					// 移動量
+	inline void SetAlpha(const bool &bAlpha)				{ m_bAlpha = bAlpha; }				// アルファテスト
+	inline void SetAlphaNum(const int &nAlphaNum)			{ m_nAlphaTestNum = nAlphaNum; }	// アルファテストの値
+	inline void SetBlend(const bool &bBlend)				{ m_bBlend = bBlend; }				// 加算合成
+	inline void SetMtxWorld(const D3DXMATRIX mtxWorld)		{ m_mtxWorld = mtxWorld; }			// ワールドマトリクスの設定
 
 	// Get関数
-	D3DXMATRIX GetMtxWorld(void)	{ return m_mtxWorld; }				// ワールドマトリクス
-	int GetAlphaTestNum(void)		{ return m_nAlphaTestNum; }			// アルファテストの値
+	inline D3DXMATRIX GetMtxWorld()const	{ return m_mtxWorld; }				// ワールドマトリクス
+	inline int GetAlphaTestNum()const		{ return m_nAlphaTestNum; }			// アルファテストの値
 
 private:
 	// private関数
-	void CreateVertex(void);						// 頂点の設定
-	void UpdateAnimation(void);						// アニメーションの更新
+	void CreateVertex();						// 頂点の設定
+	void UpdateAnimation();						// アニメーションの更新
 
 	// メンバ変数
 	D3DXMATRIX	m_mtxWorld;		// ワールドマトリクス

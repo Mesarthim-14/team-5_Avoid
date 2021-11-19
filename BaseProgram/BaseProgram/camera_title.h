@@ -21,11 +21,8 @@ public:
 	CCameraTitle();			// コンストラクタ
 	~CCameraTitle();		// デストラクタ
 
-	HRESULT Init(void);					// 初期化処理
-	static CCameraTitle*Create(void);	// クリエイト
-
+	HRESULT Init();					// 初期化処理
+	static CCameraTitle*Create();	// クリエイト
 private:
-	void NomalUpdate(void) override;
-	void MouseUpdate(void) override;
 };
 #endif 

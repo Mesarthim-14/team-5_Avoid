@@ -26,13 +26,13 @@ public:
 	CTestModel(PRIORITY = PRIORITY_TEST_MODEL);	// コンストラクタ
 	~CTestModel();								// デストラクタ
 
-	static CTestModel *Create(void);	// インスタンス生成
-	HRESULT Init(void);					// 初期化処理
-	void Uninit(void);					// 初期化処理
-	void Update(void);					// 更新処理
-	void Draw(void);					// 描画
+	static CTestModel *Create();	// インスタンス生成
+	HRESULT Init();					// 初期化処理
+	void Uninit();					// 初期化処理
+	void Update();					// 更新処理
+	void Draw();					// 描画
 
-	void Hit(void);						// 衝突判定
+	void Hit();						// 衝突判定
 
 private:
 	CCollisionModel* m_pCollisionModel;	//当たり判定モデルのポインタ

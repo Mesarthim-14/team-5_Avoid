@@ -41,7 +41,7 @@ CModelAnime::~CModelAnime()
 //=============================================================================
 // クリエイト処理
 //=============================================================================
-CModelAnime * CModelAnime::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, CXfile::MODEL model)
+CModelAnime * CModelAnime::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot, const CXfile::MODEL &model)
 {
 	// インスタンス生成
 	CModelAnime *pModelAnime = new CModelAnime;
@@ -60,7 +60,7 @@ CModelAnime * CModelAnime::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, CXfile::MODE
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CModelAnime::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, CXfile::MODEL model)
+HRESULT CModelAnime::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot, const CXfile::MODEL &model)
 {
 	// モデル情報のポインタ作成
 	CreateInfoPtr();
@@ -71,10 +71,10 @@ HRESULT CModelAnime::Init(D3DXVECTOR3 pos, D3DXVECTOR3 rot, CXfile::MODEL model)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CModelAnime::Draw(D3DXVECTOR3 rot)
+void CModelAnime::Draw(const D3DXVECTOR3 &rot)
 {
 	//デバイス情報の取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	D3DXMATRIX mtxParent, mtxWorld;
 	D3DMATERIAL9 matDef;						//現在のマテリアル保持用
@@ -160,7 +160,7 @@ void CModelAnime::Draw(D3DXVECTOR3 rot)
 //=============================================================================
 // 影の描画
 //=============================================================================
-void CModelAnime::ShadowDraw(D3DXVECTOR3 rot)
+void CModelAnime::ShadowDraw(const D3DXVECTOR3 &rot)
 {
 	CShadow *pShadow = m_pModelInfo->GetShadow();
 

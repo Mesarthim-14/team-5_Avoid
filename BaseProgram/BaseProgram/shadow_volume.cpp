@@ -70,7 +70,7 @@ HRESULT CShadowVolume::Init(LPD3DXMESH pSrcMesh)
 	m_pSrcMesh = pSrcMesh;
 
 	m_dwNumFaces = m_pSrcMesh->GetNumFaces();
-	m_LightPos = CManager::GetLight()->GetPos();					// ライトの座標設定
+	m_LightPos = CManager::GetInstance()->GetLight()->GetPos();					// ライトの座標設定
 
 	// エッジのメモリ確保
 	m_pEdges = new WORD[m_dwNumFaces * 6];
@@ -84,7 +84,7 @@ HRESULT CShadowVolume::Init(LPD3DXMESH pSrcMesh)
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CShadowVolume::Uninit(void)
+void CShadowVolume::Uninit()
 {
 	// nullcheck
 	if (m_pEdges)
@@ -97,7 +97,7 @@ void CShadowVolume::Uninit(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CShadowVolume::Draw(void)
+void CShadowVolume::Draw()
 {
 	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
 
@@ -137,7 +137,7 @@ void CShadowVolume::AddEdge(WORD * pEdges, DWORD & dwNumEdges, WORD v0, WORD v1)
 //=============================================================================
 // 影の生成
 //=============================================================================
-HRESULT CShadowVolume::CreateShadow(D3DXVECTOR3 rot, D3DXVECTOR3 ShipRot)
+HRESULT CShadowVolume::CreateShadow(const D3DXVECTOR3 &rot, const D3DXVECTOR3 &ShipRot)
 {
 	// nullcheck
 	if (m_pEdges == nullptr)
@@ -198,7 +198,7 @@ HRESULT CShadowVolume::CreateShadow(D3DXVECTOR3 rot, D3DXVECTOR3 ShipRot)
 //=============================================================================
 // 影の生成
 //=============================================================================
-HRESULT CShadowVolume::CreateShadow(D3DXVECTOR3 ShipRot)
+HRESULT CShadowVolume::CreateShadow(const D3DXVECTOR3 &ShipRot)
 {
 	// nullcheck
 	if (m_pEdges == nullptr)

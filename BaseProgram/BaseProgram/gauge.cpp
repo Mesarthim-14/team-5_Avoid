@@ -100,7 +100,7 @@ void CGauge::Draw(void)
 void CGauge::SetVertexGauge(void)
 {
 	// Rendererクラスからデバイスを取得
-	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetRenderer()->GetDevice();
+	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff = nullptr;		// バッファ
 
@@ -161,7 +161,7 @@ void CGauge::SetVertexGauge(void)
 //=====================================================================
 void CGauge::SetDownUp(void)
 {
-	CInputKeyboard* pKey = CManager::GetKeyboard();
+	CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
 	if (m_fDown <= MAX_GAUGE)
 	{
 		if (pKey->GetPress(DIK_0))

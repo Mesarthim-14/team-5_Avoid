@@ -27,20 +27,21 @@ class CResourceManager
 public:
 	~CResourceManager();									// デストラクタ
 
-	HRESULT Init(void);										// 初期化処理
-	void LoadAll(void);										// 全てのロード処理
-	void UnLoadAll(void);									// 全てのアンロード
+	HRESULT Init();										// 初期化処理
+	void LoadAll();										// 全てのロード処理
+	void UnLoadAll();									// 全てのアンロード
 
-	static CResourceManager *GetInstance(void);				// インスタンス取得関数
+	static CResourceManager *GetInstance();				// インスタンス取得関数
 
 	// Get関数
-	CTexture *GetTextureClass(void) { return m_pTexture; }	// テクスチャの情報
-	CXfile *GetXfileClass(void)		{ return m_pXFile; }	// テクスチャの情報
-	CSound *GetSoundClass(void)		{ return m_pSound; }	// サウンドの情報
+	inline CTexture *GetTextureClass()const { return m_pTexture; }	// テクスチャの情報
+	inline CXfile *GetXfileClass()const		{ return m_pXFile; }	// テクスチャの情報
+	inline CSound *GetSoundClass()const		{ return m_pSound; }	// サウンドの情報
 
 private:
 	CResourceManager();								// コンストラクタ
 	static CResourceManager *m_pResourceManager;	// 自身のポインタ
+
 	CTexture *m_pTexture;							// テクスチャのポインタ
 	CXfile *m_pXFile;								// Xファイルのポインタ
 	CSound *m_pSound;								// サウンドのポインタ

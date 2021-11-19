@@ -33,24 +33,24 @@ public:
 		MODEL_TYPE_MAX			// 最大値
 	};
 
-	CModelInfo(MODEL_TYPE type);		// コンストラクタ
-	~CModelInfo();		// デストラクタ
+	CModelInfo(const MODEL_TYPE &type);		// コンストラクタ
+	~CModelInfo();						// デストラクタ
 
-	static CModelInfo *Create(MODEL_TYPE type);	// インスタンス生成
+	static CModelInfo *Create(const MODEL_TYPE &type);	// インスタンス生成
 
-	HRESULT Init(void);					// 初期化処理
-	void Uninit(void);					// 終了処理
-	void Draw(D3DXVECTOR3 rot);			// 描画処理
-	void ShadowDraw(D3DXVECTOR3 rot);	// 影の描画
-	void CreateShadowPtr(void);			// 影の生成
+	HRESULT Init();								// 初期化処理
+	void Uninit();								// 終了処理
+	void Draw(const D3DXVECTOR3 &rot);			// 描画処理
+	void ShadowDraw(const D3DXVECTOR3 &rot);	// 影の描画
+	void CreateShadowPtr();					// 影の生成
 
 	// Set関数
-	void SetPos(const D3DXVECTOR3 pos)		{ m_pos = pos; }					// 座標
-	void SetRot(const D3DXVECTOR3 rot)		{ m_rot = rot; }					// 向き設定
-	void SetModel(CXfile::MODEL model)		{ m_model = model; }				// モデル情報の設定
-	void SetMtxWorld(D3DXMATRIX mtxWorld)	{ m_mtxWorld = mtxWorld; }			// マトリクスワールド設定
-	void SetModelStatus(D3DXVECTOR3 pos, D3DXVECTOR3 rot, CXfile::MODEL model);	// モデル情報の設定
-	D3DXMATRIX SetShadowInfo(D3DXVECTOR3 rot, D3DXMATRIX pParent);				// 影の情報の設定
+ 	inline void SetPos(const D3DXVECTOR3 &pos)				{ m_pos = pos; }							// 座標
+	inline void SetRot(const D3DXVECTOR3 &rot)				{ m_rot = rot; }							// 向き設定
+	inline void SetModel(const CXfile::MODEL &model)		{ m_model = model; }						// モデル情報の設定
+	inline void SetMtxWorld(const D3DXMATRIX &mtxWorld)		{ m_mtxWorld = mtxWorld; }					// マトリクスワールド設定
+	void SetModelStatus(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot, const CXfile::MODEL &model);	// モデル情報の設定
+	D3DXMATRIX SetShadowInfo(const D3DXVECTOR3 &rot, const D3DXMATRIX &pParent);										// 影の情報の設定
 
 	// Get情報
 	D3DXVECTOR3 &GetPos(void)			{ return m_pos; }					// 座標情報

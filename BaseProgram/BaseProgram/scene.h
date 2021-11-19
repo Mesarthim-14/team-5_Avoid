@@ -38,25 +38,25 @@ public:
 
 	CScene(PRIORITY Priority);					// コンストラクタ
 	virtual ~CScene();							// デストラクタ
-	static void ReleaseAll(void);				// 全てのオブジェクトをリリース
-	static void UpdateAll(void);				// 全てのオブジェクトを更新
-	static void DrawAll(void);					// 全てのオブジェクトを描画
+	static void ReleaseAll();					// 全てのオブジェクトをリリース
+	static void UpdateAll();					// 全てのオブジェクトを更新
+	static void DrawAll();						// 全てのオブジェクトを描画
 
-	virtual HRESULT Init(void) = 0;				// 初期化処理
-	virtual void Uninit(void) = 0;				// 終了処理
-	virtual void Update(void) = 0;				// 更新処理
-	virtual void Draw(void) = 0;				// 描画処理
+	virtual HRESULT Init() = 0;					// 初期化処理
+	virtual void Uninit() = 0;					// 終了処理
+	virtual void Update() = 0;					// 更新処理
+	virtual void Draw() = 0;					// 描画処理
 
-	CScene *GetNext(void);						// 次の情報を受け取る
-	static CScene *GetTop(const int nCount);	// シーンの情報受け取り
-	static void SetPause(const bool Pause);		// ポーズの情報
+	CScene *GetNext();							// 次の情報を受け取る
+	static CScene *GetTop(const int &nCount);	// シーンの情報受け取り
+	static void SetPause(const bool &Pause);	// ポーズの情報
 
 protected:
-	void Release(void);						// オブジェクトを開放
+	void Release();						// オブジェクトを開放
 
 private:
 	// private関数
-	void DeathRelease(void);				// 死亡フラグのリリース
+	void DeathRelease();				// 死亡フラグのリリース
 
 	// メンバ変数
 	static CScene *m_pTop[PRIORITY_MAX];	// 先頭のオブジェクトへのポインタ

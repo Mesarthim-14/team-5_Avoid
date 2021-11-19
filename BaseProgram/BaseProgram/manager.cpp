@@ -39,18 +39,7 @@
 //=============================================================================
 //静的メンバ変数宣言
 //=============================================================================
-CManager::MODE_TYPE CManager::m_mode = CManager::MODE_TYPE_TITLE;
-unique_ptr<CRenderer> CManager::m_pRenderer = nullptr;
-unique_ptr<CInputKeyboard> CManager::m_pInput = nullptr;
-unique_ptr<CMouse> CManager::m_pInputMouse = nullptr;
-unique_ptr<CFade> CManager::m_pFade = nullptr;
-unique_ptr<CInputJoypad> CManager::m_pJoypad = nullptr;
-unique_ptr<CScene> CManager::m_pScene = nullptr;
-unique_ptr<CResourceManager> CManager::m_pResourceManager = nullptr;
-unique_ptr<CModeBase> CManager::m_pModeBase = nullptr;
-unique_ptr<CLight> CManager::m_pLight = nullptr;
-unique_ptr<CCamera> CManager::m_pCamera = nullptr;
-CPause * CManager::m_pPause = nullptr;
+CManager* CManager::m_pManager = nullptr;
 bool CManager::m_bPause = false;
 
 //=============================================================================
@@ -58,6 +47,18 @@ bool CManager::m_bPause = false;
 //=============================================================================
 CManager::CManager()
 {
+	m_mode = CManager::MODE_TYPE_TITLE;
+	m_pRenderer = nullptr;
+	m_pInput = nullptr;
+	m_pInputMouse = nullptr;
+	m_pFade = nullptr;
+	m_pJoypad = nullptr;
+	m_pScene = nullptr;
+	m_pResourceManager = nullptr;
+	m_pModeBase = nullptr;
+	m_pLight = nullptr;
+	m_pCamera = nullptr;
+	m_pPause = nullptr;
 }
 
 //=============================================================================
@@ -141,7 +142,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CManager::Uninit(void)
+void CManager::Uninit()
 {
 	//ImGui終了
 	CLibrary::UninitImgui();
@@ -218,7 +219,7 @@ void CManager::Uninit(void)
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CManager::Update(void)
+void CManager::Update()
 {
 	CInputKeyboard* pKey = CManager::GetKeyboard();
 	if (m_pInput)
@@ -319,7 +320,7 @@ void CManager::Update(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CManager::Draw(void)
+void CManager::Draw()
 {
 	if (m_pRenderer)
 	{
@@ -337,7 +338,7 @@ void CManager::Draw(void)
 //=============================================================================
 // テクスチャの全ロード処理
 //=============================================================================
-void CManager::LoadAll(void)
+void CManager::LoadAll()
 {
 	// !nullcheck
 	if (m_pResourceManager)
@@ -350,7 +351,7 @@ void CManager::LoadAll(void)
 //=============================================================================
 // テクスチャの全アンロード処理
 //=============================================================================
-void CManager::UnLoadAll(void)
+void CManager::UnLoadAll()
 {
 	// !nullcheck
 	if (m_pResourceManager)
@@ -363,7 +364,7 @@ void CManager::UnLoadAll(void)
 //=============================================================================
 // ゲームモードの設定処理
 //=============================================================================
-void CManager::SetMode(MODE_TYPE mode)
+void CManager::SetMode(const MODE_TYPE &mode)
 {
 	// !nullcheck
 	if (m_pModeBase)
@@ -375,6 +376,7 @@ void CManager::SetMode(MODE_TYPE mode)
 
 	// サウンドの情報
 	CSound *pSound = CManager::GetResourceManager()->GetSoundClass();
+
 	//サウンドストップ
 	pSound->StopAll();
 
@@ -422,17 +424,9 @@ void CManager::SetMode(MODE_TYPE mode)
 }
 
 //=============================================================================
-//ゲームモード情報の取得
-//=============================================================================
-CManager::MODE_TYPE CManager::GetMode(void)
-{
-	return m_mode;
-}
-
-//=============================================================================
 // ゲーム情報
 //=============================================================================
-CModeBase * CManager::GetModePtr(void)
+CModeBase * CManager::GetModePtr()
 {
 	//キャスト
 	CModeBase *pMode = ((CModeBase*)m_pModeBase.get());
@@ -449,7 +443,7 @@ CModeBase * CManager::GetModePtr(void)
 //=============================================================================
 // プレイヤーのポインタ
 //=============================================================================
-CPlayer * CManager::GetPlayer(void)
+CPlayer * CManager::GetPlayer()const 
 {
 	CCharacter *pScene = (CCharacter*)CScene::GetTop(CScene::PRIORITY_CHARACTER);
 
@@ -472,4 +466,31 @@ CPlayer * CManager::GetPlayer(void)
 	}
 
 	return nullptr;
+}
+
+//=============================================================================
+// ゲームモードの取得
+//=============================================================================
+CGame * CManager::GetGame() const
+{
+	if ((CGame*)m_pModeBase.get())
+	{
+		return ((CGame*)m_pModeBase.get());
+	}
+
+	return nullptr;
+}
+
+//=============================================================================
+// インスタンスの取得
+//=============================================================================
+CManager * CManager::GetInstance()
+{
+	if (!m_pManager)
+	{
+		m_pManager = new CManager;
+		return m_pManager;
+	}
+
+	return m_pManager;
 }

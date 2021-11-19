@@ -38,8 +38,26 @@ CXfile::CXfile()
 	// Xファイルネームを取得
 	m_aXfileName =
 	{
+
 		{ "data/Model/Normal/block.x" },		// テストブロック
-		{ "data/Model/Normal/map.x" },			// マップ
+
+		{ "data/Model/Normal/map.x" },				// マップ
+		{ "data/Model/Normal/CheckFlag.x" },		// チェックポイント
+		{ "data/Model/Normal/plane.x" },			// 平面
+		{ "data/Model/Normal/sky.x" },				// 空
+		{ "data/Model/Normal/enemy_box.x" },		// 仮エネミー
+		{ "data/Model/Normal/susumuashiba.x" },		// 進む足場
+		{ "data/Model/Normal/Rubble1.x" },			// 瓦礫
+		{ "data/Model/Normal/Rubble2.x" },			// 瓦礫
+		{ "data/Model/Normal/kaitenyuka_shita.x" },	// 回転床
+		{ "data/Model/Normal/kaitenyuka_ue.x" },	// 回転床
+		{ "data/Model/Normal/Cylinder.x" },			// 酒樽
+		{ "data/Model/Normal/Slope.x" },			// 坂道
+		{ "data/Model/Normal/HeelPoint.x" },		// 回復ポイント
+		{ "data/Model/Normal/Cannon.x" },			// 大砲
+		{ "data/Model/Normal/hashiwatashi.x" },		// 橋
+		{ "data/Model/Normal/CannonBullet.x" },		// 大砲の弾
+		{ "data/Model/Normal/ugokuashiba.x" },		// 渦の足場
 	};
 
 	// 階層構造モデル
@@ -61,7 +79,8 @@ CXfile::~CXfile()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CXfile * CXfile::Create(void)
+
+CXfile * CXfile::Create()
 {
 	// メモリ確保
 	CXfile *pXfile = new CXfile;
@@ -76,10 +95,12 @@ CXfile * CXfile::Create(void)
 //=============================================================================
 // Xファイルロード
 //=============================================================================
-HRESULT CXfile::ModelLoad(void)
+
+HRESULT CXfile::ModelLoad()
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 	size_t size = m_aXfileName.size();
 
 	for (size_t nCount = 0; nCount < size; nCount++)
@@ -122,7 +143,8 @@ HRESULT CXfile::ModelLoad(void)
 //=============================================================================
 // Xファイルアンロード
 //=============================================================================
-void CXfile::ModelUnLoad(void)
+
+void CXfile::ModelUnLoad()
 {
 	for (int nCount = 0; nCount < XFILE_NUM_MAX; nCount++)
 	{
@@ -158,7 +180,8 @@ void CXfile::ModelUnLoad(void)
 //=============================================================================
 // 階層構造のモデルファイル読み込み
 //=============================================================================
-HRESULT CXfile::HierarchyReadFile(void)
+
+HRESULT CXfile::HierarchyReadFile()
 {
 	FILE *pFile = nullptr;		//FILEポインタ
 
@@ -282,10 +305,12 @@ HRESULT CXfile::HierarchyReadFile(void)
 //=============================================================================
 // 階層構造のモデルロード
 //=============================================================================
-HRESULT CXfile::HierarchyModelLoad(void)
+
+HRESULT CXfile::HierarchyModelLoad()
 {
 	//デバイス情報の取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
 	for (int nXFileNumCnt = 0; nXFileNumCnt < HIERARCHY_XFILE_NUM_MAX; nXFileNumCnt++)
 	{
@@ -335,7 +360,8 @@ HRESULT CXfile::HierarchyModelLoad(void)
 //=============================================================================
 // 階層構造のアンモデルロード
 //=============================================================================
-void CXfile::HierarchyModelUnLoad(void)
+
+void CXfile::HierarchyModelUnLoad()
 {
 	for (int nXFileNumCnt = 0; nXFileNumCnt < HIERARCHY_XFILE_NUM_MAX; nXFileNumCnt++)
 	{
@@ -378,7 +404,8 @@ void CXfile::HierarchyModelUnLoad(void)
 //=============================================================================
 // ファイルの名前を設定
 //=============================================================================
-void CXfile::SetHierarchyFileName(void)
+
+void CXfile::SetHierarchyFileName()
 {
 	size_t size = m_aHierarchyXfileName.size();
 	for (size_t nCount = 0; nCount < size; nCount++)
@@ -391,7 +418,8 @@ void CXfile::SetHierarchyFileName(void)
 //=============================================================================
 // 全てのロード
 //=============================================================================
-void CXfile::LoadAll(void)
+
+void CXfile::LoadAll()
 {
 	// モデルロード
 	ModelLoad();
@@ -406,7 +434,8 @@ void CXfile::LoadAll(void)
 //=============================================================================
 // 全てのアンロード
 //=============================================================================
-void CXfile::UnLoadAll(void)
+
+void CXfile::UnLoadAll()
 {
 	ModelUnLoad();
 	HierarchyModelUnLoad();
@@ -415,7 +444,8 @@ void CXfile::UnLoadAll(void)
 //=============================================================================
 // モデルに使用するテクスチャ情報
 //=============================================================================
-LPDIRECT3DTEXTURE9 *CXfile::GetXfileTexture(const XFILE_NUM TexNum)
+
+LPDIRECT3DTEXTURE9 *CXfile::GetXfileTexture(const XFILE_NUM &TexNum)
 {
 	if (TexNum < XFILE_NUM_MAX)
 	{
