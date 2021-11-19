@@ -37,11 +37,11 @@ float CGame::m_fGravity = 1.5f;
 //=======================================================================================
 CGame::CGame()
 {
-	m_pPlayer = nullptr;
-	m_bGameEnd = false;
-	m_pFont = nullptr;
-	m_pGimmickFactory = nullptr;
-	m_pKraken = nullptr;
+    m_pPlayer = nullptr;
+    m_bGameEnd = false;
+    m_pFont = nullptr;
+    m_pGimmickFactory = nullptr;
+    m_pKraken = nullptr;
 }
 
 //=======================================================================================
@@ -49,8 +49,8 @@ CGame::CGame()
 //=======================================================================================
 CGame::~CGame()
 {
-	// 終了処理
-	Uninit();
+    // 終了処理
+    Uninit();
 }
 
 //=======================================================================================
@@ -58,12 +58,12 @@ CGame::~CGame()
 //=======================================================================================
 HRESULT CGame::Init()
 {
-	// プレイヤーの生成
-	CreatePlayer();
-	CreateEnemy();
-	CreateMap();
+    // プレイヤーの生成
+    CreatePlayer();
+    CreateEnemy();
+    CreateMap();
 
-	return S_OK;
+    return S_OK;
 }
 
 //=======================================================================================
@@ -71,30 +71,30 @@ HRESULT CGame::Init()
 //=======================================================================================
 void CGame::Uninit()
 {
-	// プレイヤーの終了処理
-	if (m_pPlayer)
-	{
-		m_pPlayer->Uninit();
-		m_pPlayer = nullptr;
-	}
-	if (m_pKraken)
-	{
-		m_pKraken->Uninit();
-		m_pKraken = nullptr;
-	}
+    // プレイヤーの終了処理
+    if (m_pPlayer)
+    {
+        m_pPlayer->Uninit();
+        m_pPlayer = nullptr;
+    }
+    if (m_pKraken)
+    {
+        m_pKraken->Uninit();
+        m_pKraken = nullptr;
+    }
 
-	// デバッグ情報表示用フォントの破棄
-	if (m_pFont)
-	{
-		m_pFont->Release();
-		m_pFont = nullptr;
-	}
-	if (m_pGimmickFactory)
-	{
-		m_pGimmickFactory->Uninit();
-		delete m_pGimmickFactory;
-		m_pGimmickFactory = nullptr;
-	}
+    // デバッグ情報表示用フォントの破棄
+    if (m_pFont)
+    {
+        m_pFont->Release();
+        m_pFont = nullptr;
+    }
+    if (m_pGimmickFactory)
+    {
+        m_pGimmickFactory->Uninit();
+        delete m_pGimmickFactory;
+        m_pGimmickFactory = nullptr;
+    }
 }
 
 //=======================================================================================
@@ -102,23 +102,23 @@ void CGame::Uninit()
 //=======================================================================================
 void CGame::Update()
 {
-	if (m_pGimmickFactory)
-	{
-		m_pGimmickFactory->Update();
-	}
+    if (m_pGimmickFactory)
+    {
+        m_pGimmickFactory->Update();
+    }
 
 #ifdef _DEBUG
-	CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
-	CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
+    CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
+    CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
 
-	// タイトルに戻る
-	if (pKey->GetTrigger(DIK_TAB) && mode == CFade::FADE_MODE_NONE)
-	{
-		CFade *pFade = CManager::GetInstance()->GetFade();
-		pFade->SetFade(CManager::MODE_TYPE_TITLE);
-	}
+    // タイトルに戻る
+    if (pKey->GetTrigger(DIK_TAB) && mode == CFade::FADE_MODE_NONE)
+    {
+        CFade *pFade = CManager::GetInstance()->GetFade();
+        pFade->SetFade(CManager::MODE_TYPE_TITLE);
+    }
 
-	ShowInfo();
+    ShowInfo();
 #endif // !_DEBUG
 }
 
@@ -135,15 +135,11 @@ void CGame::Draw()
 //=======================================================================================
 void CGame::CreatePlayer()
 {
-	// プレイヤーの生成
-	if (!m_pPlayer)
-	{
-		m_pPlayer = CPlayer::Create(ZeroVector3, ZeroVector3);
-	}
-
-//	CTestCharacter::Create(D3DXVECTOR3(1000.0f, 0.0f, 0.0f));
-//	CTestCharacter::Create(ZeroVector3);
-//	CTestCharacter::Create(D3DXVECTOR3(-1000.0f, 0.0f, 0.0f));
+    // プレイヤーの生成
+    if (!m_pPlayer)
+    {
+        m_pPlayer = CPlayer::Create(ZeroVector3, ZeroVector3);
+    }
 }
 
 //=======================================================================================
@@ -151,7 +147,7 @@ void CGame::CreatePlayer()
 //=======================================================================================
 void CGame::CreateEnemy()
 {
-	CShark::Create(D3DXVECTOR3(-13534.7f, 0.0f, -24998.2f), ZeroVector3);
+    CShark::Create(D3DXVECTOR3(-13534.7f, 0.0f, -24998.2f), ZeroVector3);
     CShark::Create(D3DXVECTOR3(-29145.5f, 0.0f, -14420.8f), ZeroVector3);
     CShark::Create(D3DXVECTOR3(-30498.5f, 0.0f, -8135.1f), ZeroVector3);
     CShark::Create(D3DXVECTOR3(-38483.3f, 0.0f, -5445.3f), ZeroVector3);
@@ -164,13 +160,11 @@ void CGame::CreateEnemy()
     CGhost::Create(D3DXVECTOR3(-36078.3f, 200.0f, -25948.0f), ZeroVector3);
     CGhost::Create(D3DXVECTOR3(-38673.9f, 2586.1f, 1478.9f), ZeroVector3);
 
-    //CGhost::Create();
-	
-	// クラーケン
-	if (!m_pKraken)
-	{
-		m_pKraken = CKraken::Create();
-	}
+    // クラーケン
+    if (!m_pKraken)
+    {
+        m_pKraken = CKraken::Create();
+    }
 }
 
 //=======================================================================================
@@ -178,12 +172,12 @@ void CGame::CreateEnemy()
 //=======================================================================================
 void CGame::CreateMap()
 {
-	CTestModel::Create();
-	CWaterFresnel::Create();
-	if (!m_pGimmickFactory)
-	{
-		m_pGimmickFactory = CGimmickFactory::Create();
-	}
+    CTestModel::Create();
+    CWaterFresnel::Create();
+    if (!m_pGimmickFactory)
+    {
+        m_pGimmickFactory = CGimmickFactory::Create();
+    }
 }
 
 //=======================================================================================
@@ -193,19 +187,19 @@ void CGame::ShowInfo()
 {
 #ifdef _DEBUG
 
-	//レンダラーで管理してるやつの情報
-	ImGui::Begin("DebugInfo");
+    //レンダラーで管理してるやつの情報
+    ImGui::Begin("DebugInfo");
 
-	if (ImGui::CollapsingHeader("WorldInfo"))
-	{
-		LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	// デバイスの取得
+    if (ImGui::CollapsingHeader("WorldInfo"))
+    {
+        LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();    // デバイスの取得
 
-		// 重力の値
-		ImGui::SliderFloat("Gravity", &m_fGravity, 0.0f, 50.0f);
+        // 重力の値
+        ImGui::SliderFloat("Gravity", &m_fGravity, 0.0f, 50.0f);
 
-		//	ImGui::TreePop();
-	}
+        //    ImGui::TreePop();
+    }
 
-	ImGui::End();
+    ImGui::End();
 #endif // !_DEBUG
 }

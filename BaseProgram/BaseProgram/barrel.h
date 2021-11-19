@@ -18,16 +18,16 @@
 class CBarrel : public CModel
 {
 public:
-	CBarrel(PRIORITY = PRIORITY_TEST_MODEL);	// コンストラクタ
-	~CBarrel();								// デストラクタ
+    CBarrel(PRIORITY = PRIORITY_TEST_MODEL);    // コンストラクタ
+    ~CBarrel();                                 // デストラクタ
 
-	static CBarrel *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);		// インスタンス生成
-	HRESULT Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);				// 初期化処理
-	void Update();																// 更新処理
+    static CBarrel *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot); // インスタンス生成
+    HRESULT Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);           // 初期化処理
+    void Update();                                                          // 更新処理
 private:
-	void Rotate();
+    void Rotate();
 
-	float m_fRotateNum;
+    float m_fRotateNum;
 };
 
 #endif

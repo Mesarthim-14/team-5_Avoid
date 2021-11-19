@@ -1,7 +1,7 @@
 //=====================================================================
 //
-//	ゲージ処理[gauge.h]
-//	Author : toshiki
+//    ゲージ処理[gauge.h]
+//    Author : toshiki
 //
 //=====================================================================
 
@@ -17,8 +17,8 @@
 //=====================================================================
 // マクロ定義
 //=====================================================================
-#define POS		(D3DXVECTOR3(80.0f,350.0f,0.0f))
-#define SIZE	(D3DXVECTOR3(150.0f,450.0f,0.0f))
+#define POS     (D3DXVECTOR3(80.0f,350.0f,0.0f))
+#define SIZE    (D3DXVECTOR3(150.0f,450.0f,0.0f))
 
 //=====================================================================
 // コンストラクタ
@@ -39,51 +39,51 @@ CGaugebar::~CGaugebar()
 //=====================================================================
 // 生成処理
 //=====================================================================
-CGaugebar * CGaugebar::Create(void)
+CGaugebar * CGaugebar::Create()
 {
-	CGaugebar * pGauge = new CGaugebar;
+    CGaugebar * pGauge = new CGaugebar;
 
-	if (pGauge != nullptr)
-	{
-		pGauge->SetSceneInfo(POS, SIZE);
-		pGauge->Init();
-		return pGauge;
-	}
-	return nullptr;
+    if (pGauge)
+    {
+        pGauge->SetSceneInfo(POS, SIZE);
+        pGauge->Init();
+        return pGauge;
+    }
+    return nullptr;
 }
 
 //=====================================================================
 // 初期化処理
 //=====================================================================
-HRESULT CGaugebar::Init(void)
+HRESULT CGaugebar::Init()
 {
-	// テクスチャの設定
-	CTexture *pTexture = GET_TEXTURE_PTR;
-	BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_GAUGEBAR));
-	CScene2D::Init();
-	return S_OK;
+    // テクスチャの設定
+    CTexture *pTexture = GET_TEXTURE_PTR;
+    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_GAUGEBAR));
+    CScene2D::Init();
+    return S_OK;
 }
 
 //=====================================================================
 // 終了処理
 //=====================================================================
-void CGaugebar::Uninit(void)
+void CGaugebar::Uninit()
 {
-	CScene2D::Uninit();
+    CScene2D::Uninit();
 }
 
 //=====================================================================
 // 更新処理
 //=====================================================================
-void CGaugebar::Update(void)
+void CGaugebar::Update()
 {
-	CScene2D::Update();
+    CScene2D::Update();
 }
 
 //=====================================================================
 // 描画処理
 //=====================================================================
-void CGaugebar::Draw(void)
+void CGaugebar::Draw()
 {
-	CScene2D::Draw();
+    CScene2D::Draw();
 }

@@ -21,8 +21,8 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_POS		(D3DXVECTOR3(-10040.0f, 514.8f, -15282.6f))
-#define TEST_ROT		(D3DXVECTOR3(0.0f, D3DXToRadian(-75.0f), 0.0f))
+#define TEST_POS        (D3DXVECTOR3(-10040.0f, 514.8f, -15282.6f))
+#define TEST_ROT        (D3DXVECTOR3(0.0f, D3DXToRadian(-75.0f), 0.0f))
 
 //=============================================================================
 // コンストラクタ
@@ -44,18 +44,18 @@ CSlope::~CSlope()
 //=============================================================================
 CSlope * CSlope::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-	// メモリ確保
-	CSlope *pTestModel = new CSlope(PRIORITY_TEST_MODEL);
+    // メモリ確保
+    CSlope *pTestModel = new CSlope(PRIORITY_TEST_MODEL);
 
-	// !nullcheck
-	if (pTestModel)
-	{
-		// 初期化処理
-		pTestModel->Init(pos, rot);
-		return pTestModel;
-	}
+    // !nullcheck
+    if (pTestModel)
+    {
+        // 初期化処理
+        pTestModel->Init(pos, rot);
+        return pTestModel;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -63,12 +63,12 @@ CSlope * CSlope::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 //=============================================================================
 HRESULT CSlope::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-	// 初期化処理
-	CModel::Init();
+    // 初期化処理
+    CModel::Init();
 
-	CXfile *pXfile = GET_XFILE_PTR;
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_SLOPE);
-	GetModelInfo()->SetModelStatus(pos, rot, model);
+    CXfile *pXfile = GET_XFILE_PTR;
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_SLOPE);
+    GetModelInfo()->SetModelStatus(pos, rot, model);
 
-	return S_OK;
+    return S_OK;
 }

@@ -17,25 +17,25 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define ATTACK_INTER		(150)									// 攻撃間隔
-#define ATTACK_STR			(20)									// 攻撃力
-#define ATTACK_POWER		(2.0f)									// 吹っ飛ばし力
-#define SPEED				(30.0f)									// スピード
-#define RISE_SPEED			(15.0f)									// 上昇速度
-#define POS					(D3DXVECTOR3(-3500.0f, -200.0f, 0.0f))	// 座標
-#define FOLLOW_END_DISTANCE	(800.0f)								// 追従を切る
-#define RISE_TIME			(120)									// 終了までの時間
-#define END_TIME			(250)									// 終了までの時間
+#define ATTACK_INTER        (150)                                   // 攻撃間隔
+#define ATTACK_STR          (20)                                    // 攻撃力
+#define ATTACK_POWER        (2.0f)                                  // 吹っ飛ばし力
+#define SPEED               (30.0f)                                 // スピード
+#define RISE_SPEED          (15.0f)                                 // 上昇速度
+#define POS                 (D3DXVECTOR3(-3500.0f, -200.0f, 0.0f))  // 座標
+#define FOLLOW_END_DISTANCE (800.0f)                                // 追従を切る
+#define RISE_TIME           (120)                                   // 終了までの時間
+#define END_TIME            (250)                                   // 終了までの時間
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CGhost::CGhost(PRIORITY Priority) : CWimpEnemy(Priority)
 {
-	m_pGhostModel = nullptr;
-	m_bFollow = false;
-	m_bEnd = false;
-	m_nEndCount = 0;
+    m_pGhostModel = nullptr;
+    m_bFollow = false;
+    m_bEnd = false;
+    m_nEndCount = 0;
 }
 
 //=============================================================================
@@ -51,15 +51,15 @@ CGhost::~CGhost()
 //=============================================================================
 CGhost * CGhost::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-	// メモリ確保
-	CGhost *pGhost = new CGhost;
-	if (pGhost)
-	{
-		pGhost->Init(pos, rot);
-		return pGhost;
-	}
+    // メモリ確保
+    CGhost *pGhost = new CGhost;
+    if (pGhost)
+    {
+        pGhost->Init(pos, rot);
+        return pGhost;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -67,14 +67,14 @@ CGhost * CGhost::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 //=============================================================================
 HRESULT CGhost::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-	CWimpEnemy::Init();
-	SetAttackInfo(ATTACK_INTER, ATTACK_STR, ATTACK_POWER);
-	SetCharacterInfo(pos, rot);
-	SetSpeed(SPEED);
+    CWimpEnemy::Init();
+    SetAttackInfo(ATTACK_INTER, ATTACK_STR, ATTACK_POWER);
+    SetCharacterInfo(pos, rot);
+    SetSpeed(SPEED);
 
-	CreateModel();
+    CreateModel();
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -82,12 +82,12 @@ HRESULT CGhost::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 //=============================================================================
 void CGhost::Uninit()
 {
-	// モデル更新処理
-	if (m_pGhostModel)
-	{
-		m_pGhostModel->Uninit();
-	}
-	CWimpEnemy::Uninit();
+    // モデル更新処理
+    if (m_pGhostModel)
+    {
+        m_pGhostModel->Uninit();
+    }
+    CWimpEnemy::Uninit();
 }
 
 //=============================================================================
@@ -95,16 +95,16 @@ void CGhost::Uninit()
 //=============================================================================
 void CGhost::Update()
 {
-	CWimpEnemy::Update();
+    CWimpEnemy::Update();
 
-	// モデル更新処理
-	if (m_pGhostModel)
-	{
-		m_pGhostModel->SetPos(GetPos());
-	}
+    // モデル更新処理
+    if (m_pGhostModel)
+    {
+        m_pGhostModel->SetPos(GetPos());
+    }
 
-	// 移動処理
-	Move();
+    // 移動処理
+    Move();
 }
 
 //=============================================================================
@@ -112,11 +112,11 @@ void CGhost::Update()
 //=============================================================================
 void CGhost::CreateModel()
 {
-	// モデル生成
-	if (!m_pGhostModel)
-	{
-		m_pGhostModel = CGhostModel::Create(GetPos());
-	}
+    // モデル生成
+    if (!m_pGhostModel)
+    {
+        m_pGhostModel = CGhostModel::Create(GetPos());
+    }
 }
 
 //=============================================================================
@@ -124,10 +124,10 @@ void CGhost::CreateModel()
 //=============================================================================
 void CGhost::Attack()
 {
-	if (!m_bFollow && !m_bEnd)
-	{
-		m_bFollow = true;
-	}
+    if (!m_bFollow && !m_bEnd)
+    {
+        m_bFollow = true;
+    }
 }
 
 //=============================================================================
@@ -135,37 +135,37 @@ void CGhost::Attack()
 //=============================================================================
 void CGhost::Move()
 {
-	// 追従フラグ
-	if (m_bFollow)
-	{
-		// 追従
-		if (Follow())
-		{
-			// 一定の距離に近づいたら
-			if (CLibrary::CalDistance(
-				CManager::GetInstance()->GetPlayer()->GetPos(), GetPos()) <= FOLLOW_END_DISTANCE)
-			{
-				m_bFollow = false;
-				m_bEnd = true;
-			}
-		}
-	}
+    // 追従フラグ
+    if (m_bFollow)
+    {
+        // 追従
+        if (Follow())
+        {
+            // 一定の距離に近づいたら
+            if (CLibrary::CalDistance(
+                CManager::GetInstance()->GetPlayer()->GetPos(), GetPos()) <= FOLLOW_END_DISTANCE)
+            {
+                m_bFollow = false;
+                m_bEnd = true;
+            }
+        }
+    }
 
-	if (m_bEnd)
-	{
-		m_nEndCount++;
-		if (m_nEndCount >= RISE_TIME)
-		{
-			// 上昇
-			Rise();
-			if (m_nEndCount >= END_TIME)
-			{
-				// 消える
-				Uninit();
-				return;
-			}
-		}
-	}
+    if (m_bEnd)
+    {
+        m_nEndCount++;
+        if (m_nEndCount >= RISE_TIME)
+        {
+            // 上昇
+            Rise();
+            if (m_nEndCount >= END_TIME)
+            {
+                // 消える
+                Uninit();
+                return;
+            }
+        }
+    }
 }
 
 //=============================================================================
@@ -173,7 +173,7 @@ void CGhost::Move()
 //=============================================================================
 void CGhost::Rise()
 {
-	D3DXVECTOR3 move = ZeroVector3;
-	move.y = RISE_SPEED;
-	SetMove(move);
+    D3DXVECTOR3 move = ZeroVector3;
+    move.y = RISE_SPEED;
+    SetMove(move);
 }

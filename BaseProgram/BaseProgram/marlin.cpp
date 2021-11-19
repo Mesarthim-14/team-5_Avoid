@@ -14,18 +14,18 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define ATTACK_INTER	(150)									// 攻撃間隔
-#define ATTACK_STR		(20)									// 攻撃力
-#define ATTACK_POWER	(2.0f)									// 吹っ飛ばし力
-#define SPEED			(130.0f)								// スピード
-#define POS				(D3DXVECTOR3(-3500.0f, -200.0f, 0.0f))	// 座標
+#define ATTACK_INTER    (150)                                   // 攻撃間隔
+#define ATTACK_STR      (20)                                    // 攻撃力
+#define ATTACK_POWER    (2.0f)                                  // 吹っ飛ばし力
+#define SPEED           (130.0f)                                // スピード
+#define POS             (D3DXVECTOR3(-3500.0f, -200.0f, 0.0f))  // 座標
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CMarlin::CMarlin(PRIORITY Priority) : CWimpEnemy(Priority)
 {
-	m_pMarlinModel = nullptr;
+    m_pMarlinModel = nullptr;
 }
 
 //=============================================================================
@@ -40,14 +40,14 @@ CMarlin::~CMarlin()
 //=============================================================================
 CMarlin * CMarlin::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-	CMarlin *pMarlin = new CMarlin;
-	if (pMarlin)
-	{
-		pMarlin->Init(pos, rot);
-		return pMarlin;
-	}
+    CMarlin *pMarlin = new CMarlin;
+    if (pMarlin)
+    {
+        pMarlin->Init(pos, rot);
+        return pMarlin;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -55,14 +55,14 @@ CMarlin * CMarlin::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 //=============================================================================
 HRESULT CMarlin::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-	CWimpEnemy::Init();
-	SetAttackInfo(ATTACK_INTER, ATTACK_STR, ATTACK_POWER);
-	SetCharacterInfo(pos, rot);
-	SetSpeed(SPEED);
+    CWimpEnemy::Init();
+    SetAttackInfo(ATTACK_INTER, ATTACK_STR, ATTACK_POWER);
+    SetCharacterInfo(pos, rot);
+    SetSpeed(SPEED);
 
-	CreateModel();
+    CreateModel();
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -70,13 +70,13 @@ HRESULT CMarlin::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 //=============================================================================
 void CMarlin::Uninit()
 {
-	// モデル更新処理
-	if (m_pMarlinModel)
-	{
-		m_pMarlinModel->Uninit();
-	}
+    // モデル更新処理
+    if (m_pMarlinModel)
+    {
+        m_pMarlinModel->Uninit();
+    }
 
-	CWimpEnemy::Uninit();
+    CWimpEnemy::Uninit();
 }
 
 //=============================================================================
@@ -84,13 +84,13 @@ void CMarlin::Uninit()
 //=============================================================================
 void CMarlin::Update()
 {
-	CWimpEnemy::Update();
+    CWimpEnemy::Update();
 
-	// モデル更新処理
-	if (m_pMarlinModel)
-	{
-		m_pMarlinModel->SetPos(GetPos());
-	}
+    // モデル更新処理
+    if (m_pMarlinModel)
+    {
+        m_pMarlinModel->SetPos(GetPos());
+    }
 }
 
 //=============================================================================
@@ -98,11 +98,11 @@ void CMarlin::Update()
 //=============================================================================
 void CMarlin::CreateModel()
 {
-	// モデル生成
-	if (!m_pMarlinModel)
-	{
-		m_pMarlinModel = CMarlinModel::Create(GetPos());
-	}
+    // モデル生成
+    if (!m_pMarlinModel)
+    {
+        m_pMarlinModel = CMarlinModel::Create(GetPos());
+    }
 }
 
 //=============================================================================
@@ -110,6 +110,6 @@ void CMarlin::CreateModel()
 //=============================================================================
 void CMarlin::Attack()
 {
-	// 追従攻撃
-	Rush();
+    // 追従攻撃
+    Rush();
 }

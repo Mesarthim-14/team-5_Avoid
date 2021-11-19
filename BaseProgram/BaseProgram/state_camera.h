@@ -2,8 +2,8 @@
 #define _STATE_CAMERA_H_
 //=====================================================================
 //
-//	カメラ状態管理クラス [state_camera.h]
-//	Author : Konishi Yuuto
+// カメラ状態管理クラス [state_camera.h]
+// Author : Konishi Yuuto
 //
 //=====================================================================
 
@@ -18,8 +18,8 @@
 class CCameraState : public CState
 {
 public:
-	CCameraState();				// コンストラクタ
-	~CCameraState();			// デストラクタ
+    CCameraState();     // コンストラクタ
+    ~CCameraState();    // デストラクタ
 
 private:
 

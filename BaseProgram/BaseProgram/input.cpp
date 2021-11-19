@@ -13,14 +13,14 @@
 //=============================================================================
 //静的メンバ変数宣言
 //=============================================================================
-LPDIRECTINPUT8 CInput::m_pInput = NULL;	//DirectInputオブジェクトのポインタ
+LPDIRECTINPUT8 CInput::m_pInput = NULL;    //DirectInputオブジェクトのポインタ
 
 //=============================================================================
 //入力処理クラスのコンストラクタ
 //=============================================================================
 CInput::CInput()
 {
-	m_pDevice = NULL;
+    m_pDevice = NULL;
 }
 
 //=============================================================================
@@ -35,16 +35,16 @@ CInput::~CInput()
 //=============================================================================
 HRESULT CInput::Init(HINSTANCE hInstance, HWND hWnd)
 {
-	if (m_pInput == NULL)
-	{
-		//DirectInputオブジェクトの作成
-		if (FAILED(DirectInput8Create(hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&m_pInput, NULL)))
-		{
-			return E_FAIL;
-		}
-	}
+    if (m_pInput == NULL)
+    {
+        //DirectInputオブジェクトの作成
+        if (FAILED(DirectInput8Create(hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&m_pInput, NULL)))
+        {
+            return E_FAIL;
+        }
+    }
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -52,25 +52,25 @@ HRESULT CInput::Init(HINSTANCE hInstance, HWND hWnd)
 //=============================================================================
 void CInput::Uninit(void)
 {
-	//入力デバイスの開放
-	if (m_pDevice != NULL)
-	{
-		//入力デバイスへのアクセス権開放（入力制御終了）
-		m_pDevice->Unacquire();	//デバイス制御の停止
-		
-		//メモリの削除
-		m_pDevice->Release();
-		//メモリのクリア
-		m_pDevice = NULL;
-	}
+    //入力デバイスの開放
+    if (m_pDevice != NULL)
+    {
+        //入力デバイスへのアクセス権開放（入力制御終了）
+        m_pDevice->Unacquire();    //デバイス制御の停止
+        
+        //メモリの削除
+        m_pDevice->Release();
+        //メモリのクリア
+        m_pDevice = NULL;
+    }
 
-	//DirectInputオブジェクトの開放
-	if (m_pInput != NULL)
-	{
-		//メモリの削除
-		m_pInput->Release();
+    //DirectInputオブジェクトの開放
+    if (m_pInput != NULL)
+    {
+        //メモリの削除
+        m_pInput->Release();
 
-		//メモリのクリア
-		m_pInput = NULL;
-	}
+        //メモリのクリア
+        m_pInput = NULL;
+    }
 }

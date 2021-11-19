@@ -21,8 +21,8 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_POS		(ZeroVector3)
-#define TEST_ROT		(ZeroVector3)
+#define TEST_POS        (ZeroVector3)
+#define TEST_ROT        (ZeroVector3)
 
 //=============================================================================
 // コンストラクタ
@@ -45,18 +45,18 @@ CSharkModel::~CSharkModel()
 //=============================================================================
 CSharkModel * CSharkModel::Create(const D3DXVECTOR3 pos)
 {
-	// メモリ確保
-	CSharkModel *pTestModel = new CSharkModel(PRIORITY_TEST_MODEL);
+    // メモリ確保
+    CSharkModel *pTestModel = new CSharkModel(PRIORITY_TEST_MODEL);
 
-	// !nullcheck
-	if (pTestModel)
-	{
-		// 初期化処理
-		pTestModel->Init(pos);
-		return pTestModel;
-	}
+    // !nullcheck
+    if (pTestModel)
+    {
+        // 初期化処理
+        pTestModel->Init(pos);
+        return pTestModel;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -64,14 +64,14 @@ CSharkModel * CSharkModel::Create(const D3DXVECTOR3 pos)
 //=============================================================================
 HRESULT CSharkModel::Init(const D3DXVECTOR3 &pos)
 {
-	// 初期化処理
-	CModel::Init();
+    // 初期化処理
+    CModel::Init();
 
-	CXfile *pXfile = GET_XFILE_PTR;
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ENEMY_BOX);
-	GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
+    CXfile *pXfile = GET_XFILE_PTR;
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ENEMY_BOX);
+    GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -79,7 +79,7 @@ HRESULT CSharkModel::Init(const D3DXVECTOR3 &pos)
 //=============================================================================
 void CSharkModel::Update()
 {
-	CModel::Update();
+    CModel::Update();
 }
 
 //=============================================================================
@@ -87,7 +87,7 @@ void CSharkModel::Update()
 //=============================================================================
 void CSharkModel::Draw()
 {
-	CModel::Draw();
+    CModel::Draw();
 }
 
 //=============================================================================
@@ -95,5 +95,5 @@ void CSharkModel::Draw()
 //=============================================================================
 void CSharkModel::SetPos(const D3DXVECTOR3 &pos)
 {
-	GetModelInfo()->SetPos(pos);
+    GetModelInfo()->SetPos(pos);
 }

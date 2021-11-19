@@ -14,18 +14,18 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define ATTACK_INTER	(150)									// 攻撃間隔
-#define ATTACK_STR		(20)									// 攻撃力
-#define ATTACK_POWER	(2.0f)									// 吹っ飛ばし力
-#define SPEED			(130.0f)								// スピード
-#define POS				(D3DXVECTOR3(-3500.0f, -200.0f, 0.0f))	// 座標
+#define ATTACK_INTER    (150)                                   // 攻撃間隔
+#define ATTACK_STR      (20)                                    // 攻撃力
+#define ATTACK_POWER    (2.0f)                                  // 吹っ飛ばし力
+#define SPEED           (130.0f)                                // スピード
+#define POS             (D3DXVECTOR3(-3500.0f, -200.0f, 0.0f))  // 座標
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CShark::CShark(PRIORITY Priority) : CWimpEnemy(Priority)
 {
-	m_pSharkModel = nullptr;
+    m_pSharkModel = nullptr;
 }
 
 //=============================================================================
@@ -73,12 +73,12 @@ HRESULT CShark::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 //=============================================================================
 void CShark::Uninit()
 {
-	// モデル更新処理
-	if (m_pSharkModel)
-	{
-		m_pSharkModel->Uninit();
-	}
-	CWimpEnemy::Uninit();
+    // モデル更新処理
+    if (m_pSharkModel)
+    {
+        m_pSharkModel->Uninit();
+    }
+    CWimpEnemy::Uninit();
 }
 
 //=============================================================================
@@ -86,13 +86,13 @@ void CShark::Uninit()
 //=============================================================================
 void CShark::Update()
 {
-	CWimpEnemy::Update();
+    CWimpEnemy::Update();
 
-	// モデル更新処理
-	if (m_pSharkModel)
-	{
-		m_pSharkModel->SetPos(GetPos());
-	}
+    // モデル更新処理
+    if (m_pSharkModel)
+    {
+        m_pSharkModel->SetPos(GetPos());
+    }
 }
 
 //=============================================================================
@@ -100,11 +100,11 @@ void CShark::Update()
 //=============================================================================
 void CShark::CreateModel()
 {
-	// モデル生成
-	if (!m_pSharkModel)
-	{
-		m_pSharkModel = CSharkModel::Create(GetPos());
-	}
+    // モデル生成
+    if (!m_pSharkModel)
+    {
+        m_pSharkModel = CSharkModel::Create(GetPos());
+    }
 }
 
 //=============================================================================
@@ -112,6 +112,6 @@ void CShark::CreateModel()
 //=============================================================================
 void CShark::Attack()
 {
-	// 追従攻撃
-	Rush();
+    // 追従攻撃
+    Rush();
 }

@@ -18,12 +18,12 @@
 class CRotateGimmick
 {
 public:
-	CRotateGimmick() {}			// コンストラクタ
-	~CRotateGimmick() {}		// デストラクタ
-	static CRotateGimmick *Create(const D3DXVECTOR3 &pos);	// インスタンス生成
+    CRotateGimmick() {}     // コンストラクタ
+    ~CRotateGimmick() {}    // デストラクタ
+    static CRotateGimmick *Create(const D3DXVECTOR3 &pos);    // インスタンス生成
 
 private:
-	void CreateGimmick(const D3DXVECTOR3 &pos);
+    void CreateGimmick(const D3DXVECTOR3 &pos);
 };
 
 #endif

@@ -27,9 +27,9 @@
 //=======================================================================================
 CPlayerEditor::CPlayerEditor()
 {
-	m_pPlayer = nullptr;
-	m_bGameEnd = false;
-	m_pFont = nullptr;
+    m_pPlayer = nullptr;
+    m_bGameEnd = false;
+    m_pFont = nullptr;
 }
 
 //=======================================================================================
@@ -37,78 +37,78 @@ CPlayerEditor::CPlayerEditor()
 //=======================================================================================
 CPlayerEditor::~CPlayerEditor()
 {
-	// 終了処理
-	Uninit();
+    // 終了処理
+    Uninit();
 }
 
 //=======================================================================================
 // 初期化処理
 //=======================================================================================
-HRESULT CPlayerEditor::Init(void)
+HRESULT CPlayerEditor::Init()
 {
-	// プレイヤーの生成
-	PlayerCreate();
-	CGround::Create();
+    // プレイヤーの生成
+    PlayerCreate();
+    CGround::Create();
 
-	return S_OK;
+    return S_OK;
 }
 
 //=======================================================================================
 // 終了処理
 //=======================================================================================
-void CPlayerEditor::Uninit(void)
+void CPlayerEditor::Uninit()
 {
-	// プレイヤーの終了処理
-	if (m_pPlayer)
-	{
-		m_pPlayer->Uninit();
-		m_pPlayer = nullptr;
-	}
+    // プレイヤーの終了処理
+    if (m_pPlayer)
+    {
+        m_pPlayer->Uninit();
+        m_pPlayer = nullptr;
+    }
 
-	// デバッグ情報表示用フォントの破棄
-	if (m_pFont)
-	{
-		m_pFont->Release();
-		m_pFont = nullptr;
-	}
+    // デバッグ情報表示用フォントの破棄
+    if (m_pFont)
+    {
+        m_pFont->Release();
+        m_pFont = nullptr;
+    }
 }
 
 //=======================================================================================
 // 更新処理
 //=======================================================================================
-void CPlayerEditor::Update(void)
+void CPlayerEditor::Update()
 {
-	// プレイヤーの終了処理
-	if (m_pPlayer)
-	{
-		m_pPlayer->ShowInfo();
-	}
+    // プレイヤーの終了処理
+    if (m_pPlayer)
+    {
+        m_pPlayer->ShowInfo();
+    }
 
-	CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
-	CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
+    CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
+    CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
 
-	// コントローラのstartを押したときか、エンターキーを押したとき
-	if (pKey->GetTrigger(DIK_7))
-	{
-		// プレイヤーの情報をSave
-		if (m_pPlayer)
-		{
-			m_pPlayer->SaveInfo();
-		}
-	}
+    // コントローラのstartを押したときか、エンターキーを押したとき
+    if (pKey->GetTrigger(DIK_7))
+    {
+        // プレイヤーの情報をSave
+        if (m_pPlayer)
+        {
+            m_pPlayer->SaveInfo();
+        }
+    }
 
-	// コントローラのstartを押したときか、エンターキーを押したとき
-	if (pKey->GetTrigger(DIK_TAB) && mode == CFade::FADE_MODE_NONE)
-	{
-		CFade *pFade = CManager::GetInstance()->GetFade();
-		pFade->SetFade(CManager::MODE_TYPE_TITLE);
-	}
+    // コントローラのstartを押したときか、エンターキーを押したとき
+    if (pKey->GetTrigger(DIK_TAB) && mode == CFade::FADE_MODE_NONE)
+    {
+        CFade *pFade = CManager::GetInstance()->GetFade();
+        pFade->SetFade(CManager::MODE_TYPE_TITLE);
+    }
 }
 
 //=======================================================================================
 // 描画処理
 //=======================================================================================
-void CPlayerEditor::Draw(void)
+void CPlayerEditor::Draw()
 {
 
 }
@@ -116,11 +116,11 @@ void CPlayerEditor::Draw(void)
 //=======================================================================================
 // プレイヤーの生成
 //=======================================================================================
-void CPlayerEditor::PlayerCreate(void)
+void CPlayerEditor::PlayerCreate()
 {
-	// プレイヤーの生成
-	if (!m_pPlayer)
-	{
-		m_pPlayer = CPlayer::Create(ZeroVector3, ZeroVector3);
-	}
+    // プレイヤーの生成
+    if (!m_pPlayer)
+    {
+        m_pPlayer = CPlayer::Create(ZeroVector3, ZeroVector3);
+    }
 }

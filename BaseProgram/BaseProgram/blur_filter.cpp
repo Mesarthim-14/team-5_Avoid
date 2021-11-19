@@ -15,8 +15,8 @@
 //=============================================================================
 CBlurFilter::CBlurFilter(LPDIRECT3DDEVICE9 pd3dDevice, D3DPRESENT_PARAMETERS* pd3dParameters) : CShaderSquare(pd3dDevice, pd3dParameters)
 {
-	m_pd3dDevice = pd3dDevice;
-	m_pEffect = nullptr;
+    m_pd3dDevice = pd3dDevice;
+    m_pEffect = nullptr;
 }
 
 //=============================================================================
@@ -24,8 +24,8 @@ CBlurFilter::CBlurFilter(LPDIRECT3DDEVICE9 pd3dDevice, D3DPRESENT_PARAMETERS* pd
 //=============================================================================
 CBlurFilter::CBlurFilter(LPDIRECT3DDEVICE9 pd3dDevice, UINT Width, UINT Height) : CShaderSquare(pd3dDevice, Width, Height)
 {
-	m_pd3dDevice = pd3dDevice;
-	m_pEffect = nullptr;
+    m_pd3dDevice = pd3dDevice;
+    m_pEffect = nullptr;
 }
 
 //=============================================================================
@@ -33,11 +33,11 @@ CBlurFilter::CBlurFilter(LPDIRECT3DDEVICE9 pd3dDevice, UINT Width, UINT Height) 
 //=============================================================================
 CBlurFilter::~CBlurFilter()
 {
-	if (m_pEffect)
-	{
-		m_pEffect->Release();
-		m_pEffect = nullptr;
-	}
+    if (m_pEffect)
+    {
+        m_pEffect->Release();
+        m_pEffect = nullptr;
+    }
 }
 
 //=============================================================================
@@ -45,8 +45,8 @@ CBlurFilter::~CBlurFilter()
 //=============================================================================
 void CBlurFilter::Uninit()
 {
-	if (m_pEffect)
-		m_pEffect->OnLostDevice();
+    if (m_pEffect)
+        m_pEffect->OnLostDevice();
 }
 
 //=============================================================================
@@ -54,10 +54,10 @@ void CBlurFilter::Uninit()
 //=============================================================================
 void CBlurFilter::Restore()
 {
-	if (m_pEffect)
-	{
-		m_pEffect->OnResetDevice();
-	}
+    if (m_pEffect)
+    {
+        m_pEffect->OnResetDevice();
+    }
 }
 
 //=============================================================================
@@ -65,42 +65,42 @@ void CBlurFilter::Restore()
 //=============================================================================
 HRESULT CBlurFilter::Load()
 {
-	D3DCAPS9 caps;
-	HRESULT hr;
+    D3DCAPS9 caps;
+    HRESULT hr;
 
-	m_pd3dDevice->GetDeviceCaps(&caps);
-	if (caps.VertexShaderVersion >= D3DVS_VERSION(1, 1) && caps.PixelShaderVersion >= D3DPS_VERSION(2, 0))
-	{
-		hr = CShaderSquare::Load();
-		if (FAILED(hr))
-			return -1;
+    m_pd3dDevice->GetDeviceCaps(&caps);
+    if (caps.VertexShaderVersion >= D3DVS_VERSION(1, 1) && caps.PixelShaderVersion >= D3DPS_VERSION(2, 0))
+    {
+        hr = CShaderSquare::Load();
+        if (FAILED(hr))
+            return -1;
 
-		//シェーダーの初期化
-		LPD3DXBUFFER pErr = nullptr;
-		hr = D3DXCreateEffectFromFile(m_pd3dDevice, "data/Text/Shader/BlurFilter.fx", nullptr, nullptr, 0, nullptr, &m_pEffect, &pErr);
-		if (FAILED(hr))
-			return -2;
+        //シェーダーの初期化
+        LPD3DXBUFFER pErr = nullptr;
+        hr = D3DXCreateEffectFromFile(m_pd3dDevice, "data/Text/Shader/BlurFilter.fx", nullptr, nullptr, 0, nullptr, &m_pEffect, &pErr);
+        if (FAILED(hr))
+            return -2;
 
-		m_pTechnique = m_pEffect->GetTechniqueByName("TShader");
-		m_pTU = m_pEffect->GetParameterByName(nullptr, "m_TU");
-		m_pTV = m_pEffect->GetParameterByName(nullptr, "m_TV");
+        m_pTechnique = m_pEffect->GetTechniqueByName("TShader");
+        m_pTU = m_pEffect->GetParameterByName(nullptr, "m_TU");
+        m_pTV = m_pEffect->GetParameterByName(nullptr, "m_TV");
 
-		//１テクセルの大きさをセット
-		float TU = 1.0f / CShaderSquare::GetWidth();
-		float TV = 1.0f / CShaderSquare::GetHeight();
+        //１テクセルの大きさをセット
+        float TU = 1.0f / CShaderSquare::GetWidth();
+        float TV = 1.0f / CShaderSquare::GetHeight();
 
-		m_pEffect->SetFloat(m_pTU, TU);
-		m_pEffect->SetFloat(m_pTV, TV);
+        m_pEffect->SetFloat(m_pTU, TU);
+        m_pEffect->SetFloat(m_pTV, TV);
 
-		m_pEffect->SetTechnique(m_pTechnique);
-	}
+        m_pEffect->SetTechnique(m_pTechnique);
+    }
 
-	else
-	{
-		return -3;
-	}
+    else
+    {
+        return -3;
+    }
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -108,11 +108,11 @@ HRESULT CBlurFilter::Load()
 //=============================================================================
 void CBlurFilter::SetTexel(float TU, float TV)
 {
-	if (m_pEffect)
-	{
-		m_pEffect->SetFloat(m_pTU, TU);
-		m_pEffect->SetFloat(m_pTV, TV);
-	}
+    if (m_pEffect)
+    {
+        m_pEffect->SetFloat(m_pTU, TU);
+        m_pEffect->SetFloat(m_pTV, TV);
+    }
 }
 
 //=============================================================================
@@ -120,16 +120,16 @@ void CBlurFilter::SetTexel(float TU, float TV)
 //=============================================================================
 void CBlurFilter::Render(UINT Pass)
 {
-	if (m_pEffect)
-	{
-		m_pEffect->Begin(nullptr, 0);
-		m_pEffect->BeginPass(Pass);
+    if (m_pEffect)
+    {
+        m_pEffect->Begin(nullptr, 0);
+        m_pEffect->BeginPass(Pass);
 
-		CShaderSquare::Draw();   //2Dスプライトのレンダリング
+        CShaderSquare::Draw();   //2Dスプライトのレンダリング
 
-		m_pEffect->EndPass();
-		m_pEffect->End();
-	}
+        m_pEffect->EndPass();
+        m_pEffect->End();
+    }
 }
 
 //=============================================================================
@@ -137,8 +137,8 @@ void CBlurFilter::Render(UINT Pass)
 //=============================================================================
 BOOL CBlurFilter::IsOK()
 {
-	if (m_pEffect == nullptr)
-		return FALSE;
+    if (m_pEffect == nullptr)
+        return FALSE;
 
-	return TRUE;
+    return TRUE;
 }

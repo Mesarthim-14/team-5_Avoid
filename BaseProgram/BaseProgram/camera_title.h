@@ -18,11 +18,11 @@
 class CCameraTitle : public CCamera
 {
 public:
-	CCameraTitle();			// コンストラクタ
-	~CCameraTitle();		// デストラクタ
+    CCameraTitle();         // コンストラクタ
+    ~CCameraTitle();        // デストラクタ
 
-	HRESULT Init();					// 初期化処理
-	static CCameraTitle*Create();	// クリエイト
+    HRESULT Init();                 // 初期化処理
+    static CCameraTitle*Create();   // クリエイト
 private:
 };
 #endif 

@@ -21,14 +21,14 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define CAN_PUSH_DISTANCE	(500.0f)
+#define CAN_PUSH_DISTANCE    (500.0f)
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CCannon::CCannon(PRIORITY Priority) : CModel(Priority)
 {
-	m_bUse = false;
+    m_bUse = false;
 }
 
 //=============================================================================
@@ -43,18 +43,18 @@ CCannon::~CCannon()
 //=============================================================================
 CCannon * CCannon::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-	// メモリ確保
-	CCannon *pTestModel = new CCannon(PRIORITY_TEST_MODEL);
+    // メモリ確保
+    CCannon *pTestModel = new CCannon(PRIORITY_TEST_MODEL);
 
-	// !nullcheck
-	if (pTestModel)
-	{
-		// 初期化処理
-		pTestModel->Init(pos, rot);
-		return pTestModel;
-	}
+    // !nullcheck
+    if (pTestModel)
+    {
+        // 初期化処理
+        pTestModel->Init(pos, rot);
+        return pTestModel;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -62,22 +62,22 @@ CCannon * CCannon::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 //=============================================================================
 HRESULT CCannon::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-	// 初期化処理
-	CModel::Init();
+    // 初期化処理
+    CModel::Init();
 
-	CXfile *pXfile = GET_XFILE_PTR;
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_CANNON);
-	GetModelInfo()->SetModelStatus(pos, rot, model);
+    CXfile *pXfile = GET_XFILE_PTR;
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_CANNON);
+    GetModelInfo()->SetModelStatus(pos, rot, model);
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CCannon::Update(void)
+void CCannon::Update()
 {
-	CModel::Update();
+    CModel::Update();
 }
 
 //=============================================================================
@@ -85,9 +85,9 @@ void CCannon::Update(void)
 //=============================================================================
 bool CCannon::Collision()
 {
-	if (!m_bUse)
-	{
-		return PlayerDisCollision(CAN_PUSH_DISTANCE);
-	}
-	return false;
+    if (!m_bUse)
+    {
+        return PlayerDisCollision(CAN_PUSH_DISTANCE);
+    }
+    return false;
 }

@@ -22,16 +22,16 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_POS		(D3DXVECTOR3(-34328.4f, 200.0f, -6081.8f))
-#define TEST_ROT		(D3DXVECTOR3(0.0f, D3DXToRadian(0.0f), 0.0f))
-#define ROTATE_NUM		(D3DXToRadian(2.0f))							// 回転の値
+#define TEST_POS    (D3DXVECTOR3(-34328.4f, 200.0f, -6081.8f))
+#define TEST_ROT    (D3DXVECTOR3(0.0f, D3DXToRadian(0.0f), 0.0f))
+#define ROTATE_NUM  (D3DXToRadian(2.0f))                            // 回転の値
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CRotateBody::CRotateBody(PRIORITY Priority) : CModel(Priority)
 {
-	m_fRotateNum = ROTATE_NUM;
+    m_fRotateNum = ROTATE_NUM;
 }
 
 //=============================================================================
@@ -46,18 +46,18 @@ CRotateBody::~CRotateBody()
 //=============================================================================
 CRotateBody * CRotateBody::Create(const D3DXVECTOR3 &pos)
 {
-	// メモリ確保
-	CRotateBody *pRotatebody = new CRotateBody(PRIORITY_TEST_MODEL);
+    // メモリ確保
+    CRotateBody *pRotatebody = new CRotateBody(PRIORITY_TEST_MODEL);
 
-	// !nullcheck
-	if (pRotatebody)
-	{
-		// 初期化処理
-		pRotatebody->Init(pos);
-		return pRotatebody;
-	}
+    // !nullcheck
+    if (pRotatebody)
+    {
+        // 初期化処理
+        pRotatebody->Init(pos);
+        return pRotatebody;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -65,14 +65,14 @@ CRotateBody * CRotateBody::Create(const D3DXVECTOR3 &pos)
 //=============================================================================
 HRESULT CRotateBody::Init(const D3DXVECTOR3 &pos)
 {
-	// 初期化処理
-	CModel::Init();
+    // 初期化処理
+    CModel::Init();
 
-	CXfile *pXfile = GET_XFILE_PTR;
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ROTATE_BODY);
-	GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
+    CXfile *pXfile = GET_XFILE_PTR;
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ROTATE_BODY);
+    GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -80,10 +80,10 @@ HRESULT CRotateBody::Init(const D3DXVECTOR3 &pos)
 //=============================================================================
 void CRotateBody::Update()
 {
-	// 回転させる
-	Rotate();
+    // 回転させる
+    Rotate();
 
-	CModel::Update();
+    CModel::Update();
 }
 
 //=============================================================================
@@ -91,8 +91,8 @@ void CRotateBody::Update()
 //=============================================================================
 void CRotateBody::Rotate()
 {
-	D3DXVECTOR3 rot = GetModelInfo()->GetRot();
-	rot.y += m_fRotateNum;
-	CLibrary::RotFix(rot.y);
-	GetModelInfo()->SetRot(rot);
+    D3DXVECTOR3 rot = GetModelInfo()->GetRot();
+    rot.y += m_fRotateNum;
+    CLibrary::RotFix(rot.y);
+    GetModelInfo()->SetRot(rot);
 }

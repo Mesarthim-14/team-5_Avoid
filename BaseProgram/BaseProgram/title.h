@@ -27,15 +27,15 @@ class CScene2D;
 class CTitle : public CModeBase
 {
 public:
-	CTitle();					// コンストラクタ
-	~CTitle();					// デストラクタ
+    CTitle();           // コンストラクタ
+    ~CTitle();          // デストラクタ
 
-	HRESULT Init();			// 初期化処理
-	void Uninit();			// 終了処理
-	void Update();			// 更新処理
-	void Draw();			// 描画処理
+    HRESULT Init();     // 初期化処理
+    void Uninit();      // 終了処理
+    void Update();      // 更新処理
+    void Draw();        // 描画処理
 
 private:
-	vector<CScene2D*> m_pObject2D;	// 2Dオブジェクト
+    vector<CScene2D*> m_pObject2D;    // 2Dオブジェクト
 };
 #endif

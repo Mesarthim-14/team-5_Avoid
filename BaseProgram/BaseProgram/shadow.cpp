@@ -27,8 +27,8 @@ CShadowPolygon *CShadow::m_pPolygon = nullptr;
 //=============================================================================
 CShadow::CShadow()
 {
-	m_pShadowVolume = nullptr;
-	D3DXMatrixIdentity(&m_ModelMtxWorld);
+    m_pShadowVolume = nullptr;
+    D3DXMatrixIdentity(&m_ModelMtxWorld);
 }
 
 //=============================================================================
@@ -43,17 +43,17 @@ CShadow::~CShadow()
 //=============================================================================
 CShadow * CShadow::Create(const LPD3DXMESH pSrcMesh)
 {
-	// メモリ確保
-	CShadow *pShadow = new CShadow;
+    // メモリ確保
+    CShadow *pShadow = new CShadow;
 
-	// !nullcheck
-	if (pShadow)
-	{
-		// 初期化処理
-		pShadow->Init(pSrcMesh);
-	}
+    // !nullcheck
+    if (pShadow)
+    {
+        // 初期化処理
+        pShadow->Init(pSrcMesh);
+    }
 
-	return pShadow;
+    return pShadow;
 }
 
 //=============================================================================
@@ -61,20 +61,20 @@ CShadow * CShadow::Create(const LPD3DXMESH pSrcMesh)
 //=============================================================================
 HRESULT CShadow::Init(const LPD3DXMESH pSrcMesh)
 {
-	// nullcheck
-	if (!m_pShadowVolume)
-	{
-		// 影の生成
-		m_pShadowVolume = CShadowVolume::Create(pSrcMesh);
-	}
+    // nullcheck
+    if (!m_pShadowVolume)
+    {
+        // 影の生成
+        m_pShadowVolume = CShadowVolume::Create(pSrcMesh);
+    }
 
-	// nullcheck
-	if (!m_pPolygon)
-	{
-		m_pPolygon = CShadowPolygon::Create();
-	}
+    // nullcheck
+    if (!m_pPolygon)
+    {
+        m_pPolygon = CShadowPolygon::Create();
+    }
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -82,13 +82,13 @@ HRESULT CShadow::Init(const LPD3DXMESH pSrcMesh)
 //=============================================================================
 void CShadow::Uninit()
 {
-	if (m_pShadowVolume)
-	{
-		// シャドウボリューム終了処理
-		m_pShadowVolume->Uninit();
-		delete m_pShadowVolume;
-		m_pShadowVolume = nullptr;
-	}
+    if (m_pShadowVolume)
+    {
+        // シャドウボリューム終了処理
+        m_pShadowVolume->Uninit();
+        delete m_pShadowVolume;
+        m_pShadowVolume = nullptr;
+    }
 }
 
 //=============================================================================
@@ -96,34 +96,34 @@ void CShadow::Uninit()
 //=============================================================================
 void CShadow::VolumeDraw()
 {
-	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
+    LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
 
-	// レンダラーポインタ取得
-	CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
+    // レンダラーポインタ取得
+    CRenderer *pRenderer = CManager::GetInstance()->GetRenderer();
 
-	//ワールドマトリクスの設定
-	pDevice->SetTransform(D3DTS_WORLD, &m_ModelMtxWorld);
+    //ワールドマトリクスの設定
+    pDevice->SetTransform(D3DTS_WORLD, &m_ModelMtxWorld);
 
-	// シャドウの描画
-	if (m_pShadowVolume)
-	{
-		// ステンシル設定
-		SetShadowStateStencil();
+    // シャドウの描画
+    if (m_pShadowVolume)
+    {
+        // ステンシル設定
+        SetShadowStateStencil();
 
-		// シャドウボリュームの描画
-		m_pShadowVolume->Draw();
+        // シャドウボリュームの描画
+        m_pShadowVolume->Draw();
 
-		// 状態を元に戻す
-		// ステンシルテストは常に合格にする
-		pDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
-	//	pDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
-		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-		pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+        // 状態を元に戻す
+        // ステンシルテストは常に合格にする
+        pDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
+    //    pDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
+        pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+        pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 
-		// レンダリングターゲットに書き込みはしない
-		pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
-		pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-	}
+        // レンダリングターゲットに書き込みはしない
+        pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
+        pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+    }
 }
 
 //=============================================================================
@@ -131,14 +131,14 @@ void CShadow::VolumeDraw()
 //=============================================================================
 void CShadow::CreateShadow(const D3DXVECTOR3 &rot, const D3DXVECTOR3 &ShipRot, const D3DXMATRIX &ModelMtxWorld)
 {
-	// ワールド座標を受け取る
-	m_ModelMtxWorld = ModelMtxWorld;
+    // ワールド座標を受け取る
+    m_ModelMtxWorld = ModelMtxWorld;
 
-	// 影の生成
-	if (m_pShadowVolume)
-	{
-		m_pShadowVolume->CreateShadow(rot, ShipRot);
-	}
+    // 影の生成
+    if (m_pShadowVolume)
+    {
+        m_pShadowVolume->CreateShadow(rot, ShipRot);
+    }
 }
 
 //=============================================================================
@@ -146,14 +146,14 @@ void CShadow::CreateShadow(const D3DXVECTOR3 &rot, const D3DXVECTOR3 &ShipRot, c
 //=============================================================================
 void CShadow::CreateShadow(const D3DXVECTOR3 &rot, const D3DXMATRIX &ModelMtxWorld)
 {
-	// 影の生成
-	if (m_pShadowVolume)
-	{
-		m_pShadowVolume->CreateShadow(rot);
-	}
+    // 影の生成
+    if (m_pShadowVolume)
+    {
+        m_pShadowVolume->CreateShadow(rot);
+    }
 
-	// ワールド座標を受け取る
-	m_ModelMtxWorld = ModelMtxWorld;
+    // ワールド座標を受け取る
+    m_ModelMtxWorld = ModelMtxWorld;
 }
 
 //=============================================================================
@@ -162,33 +162,33 @@ void CShadow::CreateShadow(const D3DXVECTOR3 &rot, const D3DXMATRIX &ModelMtxWor
 //=============================================================================
 void CShadow::SetShadowStateStencil()
 {
-	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
+    LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
 
 
-	//------------------------------------------------------------
-	// パス1:影ボリュームの描画
-	//------------------------------------------------------------
-	// 深度バッファに書き込みはしない
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+    //------------------------------------------------------------
+    // パス1:影ボリュームの描画
+    //------------------------------------------------------------
+    // 深度バッファに書き込みはしない
+    pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-	// レンダリングターゲットに書き込みはしない
-	pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, FALSE);
+    // レンダリングターゲットに書き込みはしない
+    pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, FALSE);
 
-	// 両面描く
-	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+    // 両面描く
+    pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	// 両面ステンシルを使用する
-	pDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
-	pDevice->SetRenderState(D3DRS_TWOSIDEDSTENCILMODE, TRUE);
+    // 両面ステンシルを使用する
+    pDevice->SetRenderState(D3DRS_STENCILENABLE, TRUE);
+    pDevice->SetRenderState(D3DRS_TWOSIDEDSTENCILMODE, TRUE);
 
-	// ステンシルテストは常に合格にする
-	pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
+    // ステンシルテストは常に合格にする
+    pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
 
-	// 表面は深度テストに合格したらステンシルバッファの内容を+1する
-	pDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCR);
+    // 表面は深度テストに合格したらステンシルバッファの内容を+1する
+    pDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCR);
 
-	// 裏面は深度テストに合格したらステンシルバッファの内容を-1する
-	pDevice->SetRenderState(D3DRS_CCW_STENCILPASS, D3DSTENCILOP_DECR);
+    // 裏面は深度テストに合格したらステンシルバッファの内容を-1する
+    pDevice->SetRenderState(D3DRS_CCW_STENCILPASS, D3DSTENCILOP_DECR);
 }
 
 //=============================================================================
@@ -197,29 +197,29 @@ void CShadow::SetShadowStateStencil()
 //=============================================================================
 void CShadow::SetShadowStencilTest()
 {
-	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
+    LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
 
-	pDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
+    pDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
 
-	// 状態を元に戻す
-	pDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
-	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
+    // 状態を元に戻す
+    pDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
+    pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+    pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+    pDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
 
-	//--------------------------------------------------------------
-	// パス2:影の描画
-	//--------------------------------------------------------------
-	// アルファブレンディングは線型に掛ける
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+    //--------------------------------------------------------------
+    // パス2:影の描画
+    //--------------------------------------------------------------
+    // アルファブレンディングは線型に掛ける
+    pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
-	// ステンシルバッファの値が1以上の時に書き込む
-	pDevice->SetRenderState(D3DRS_STENCILREF, 0x01);
-	pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_LESSEQUAL);
+    // ステンシルバッファの値が1以上の時に書き込む
+    pDevice->SetRenderState(D3DRS_STENCILREF, 0x01);
+    pDevice->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_LESSEQUAL);
 
-	// 透過あり
-	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+    // 透過あり
+    pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+    pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 }
 
 //=============================================================================
@@ -228,11 +228,11 @@ void CShadow::SetShadowStencilTest()
 //=============================================================================
 void CShadow::ReSetShadowStateStencil()
 {
-	LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
+    LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
 
-	// 状態を元に戻す
-	pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-	pDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
+    // 状態を元に戻す
+    pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+    pDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
 }
 
 //=============================================================================
@@ -240,10 +240,10 @@ void CShadow::ReSetShadowStateStencil()
 //=============================================================================
 void CShadow::PolygonUninit()
 {
-	if (m_pPolygon)
-	{
-		// ポリゴン終了処理
-		m_pPolygon->Uninit();
-		m_pPolygon = nullptr;
-	}
+    if (m_pPolygon)
+    {
+        // ポリゴン終了処理
+        m_pPolygon->Uninit();
+        m_pPolygon = nullptr;
+    }
 }

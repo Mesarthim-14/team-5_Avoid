@@ -18,14 +18,14 @@
 class CMarlinModel : public CModel
 {
 public:
-	CMarlinModel(PRIORITY = PRIORITY_TEST_MODEL);	// コンストラクタ
-	~CMarlinModel();									// デストラクタ
+    CMarlinModel(PRIORITY = PRIORITY_TEST_MODEL);   // コンストラクタ
+    ~CMarlinModel();                                // デストラクタ
 
-	static CMarlinModel *Create(const D3DXVECTOR3 pos);	// インスタンス生成
-	HRESULT Init(const D3DXVECTOR3 &pos);				// 初期化処理
-	void Draw();										// 描画
+    static CMarlinModel *Create(const D3DXVECTOR3 pos); // インスタンス生成
+    HRESULT Init(const D3DXVECTOR3 &pos);               // 初期化処理
+    void Draw();                                        // 描画
 
-	void SetPos(const D3DXVECTOR3 &pos);
+    void SetPos(const D3DXVECTOR3 &pos);
 private:
 };
 

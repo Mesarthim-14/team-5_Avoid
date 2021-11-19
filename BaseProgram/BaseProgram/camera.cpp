@@ -20,25 +20,21 @@
 #include "library.h"
 
 //=============================================================================
-// マクロ定義
-//=============================================================================
-
-//=============================================================================
 // コンストラクタ
 //=============================================================================
 CCamera::CCamera()
 {
-	//各メンバ変数のクリア
-	m_posV = ZeroVector3;
-	m_posVDest = ZeroVector3;
-	m_posR = ZeroVector3;
-	m_posRDest = ZeroVector3;
-	m_posU = ZeroVector3;
-	m_rot = ZeroVector3;
-	m_fDistance = 0.0f;
-	m_fMove = 0.0f;
-	m_fHorizontal = 0.0f;
-	m_fVartical = 0.0f;
+    //各メンバ変数のクリア
+    m_posV = ZeroVector3;
+    m_posVDest = ZeroVector3;
+    m_posR = ZeroVector3;
+    m_posRDest = ZeroVector3;
+    m_posU = ZeroVector3;
+    m_rot = ZeroVector3;
+    m_fDistance = 0.0f;
+    m_fMove = 0.0f;
+    m_fHorizontal = 0.0f;
+    m_fVartical = 0.0f;
 }
 
 //=============================================================================
@@ -54,7 +50,7 @@ CCamera::~CCamera()
 HRESULT CCamera::Init()
 {
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -78,34 +74,34 @@ void CCamera::Update()
 //=============================================================================
 void CCamera::SetCamera()
 {
-	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+    //デバイスの取得
+    LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-	//ビューマトリックスの初期化
-	D3DXMatrixIdentity(&m_mtxView);
+    //ビューマトリックスの初期化
+    D3DXMatrixIdentity(&m_mtxView);
 
-	//ビューマトリックスの作成
-	D3DXMatrixLookAtLH(&m_mtxView,
-		&m_posV,
-		&m_posR,
-		&m_posU);
+    //ビューマトリックスの作成
+    D3DXMatrixLookAtLH(&m_mtxView,
+        &m_posV,
+        &m_posR,
+        &m_posU);
 
-	//ビューマトリックスの設定
-	pDevice->SetTransform(D3DTS_VIEW, &m_mtxView);
+    //ビューマトリックスの設定
+    pDevice->SetTransform(D3DTS_VIEW, &m_mtxView);
 
-	//プロジェクションマトリックスの初期化
-	D3DXMatrixIdentity(&m_mtxProjection);
+    //プロジェクションマトリックスの初期化
+    D3DXMatrixIdentity(&m_mtxProjection);
 
-	//プロジェクションマトリックスの作成
-	D3DXMatrixPerspectiveFovLH(&m_mtxProjection,
-		D3DXToRadian(45.0f),
-		(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,
-		10.0f,
-		500000.0f);
+    //プロジェクションマトリックスの作成
+    D3DXMatrixPerspectiveFovLH(&m_mtxProjection,
+        D3DXToRadian(45.0f),
+        (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,
+        10.0f,
+        500000.0f);
 
-	//プロジェクションマトリックスの設定
-	pDevice->SetTransform(D3DTS_PROJECTION,
-		&m_mtxProjection);
+    //プロジェクションマトリックスの設定
+    pDevice->SetTransform(D3DTS_PROJECTION,
+        &m_mtxProjection);
 }
 
 //=============================================================================
@@ -113,18 +109,18 @@ void CCamera::SetCamera()
 //=============================================================================
 void CCamera::ShowInfo()
 {
-	ImGui::Begin("DebugInfo");
+    ImGui::Begin("DebugInfo");
 
-	if (ImGui::CollapsingHeader("CameraInfo"))
-	{
-		LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	// デバイスの取得
+    if (ImGui::CollapsingHeader("CameraInfo"))
+    {
+        LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();	// デバイスの取得
+        
+        if (ImGui::TreeNode("Camera"))
+        {
+            ImGui::SliderFloat("Horizontal", &m_fHorizontal, D3DXToRadian(-180), D3DXToRadian(180));
+            ImGui::TreePop();
+        }
+    }
 
-		if (ImGui::TreeNode("Camera"))
-		{
-			ImGui::SliderFloat("Horizontal", &m_fHorizontal, D3DXToRadian(-180), D3DXToRadian(180));
-			ImGui::TreePop();
-		}
-	}
-
-	ImGui::End();
+    ImGui::End();
 }

@@ -2,8 +2,8 @@
 #define _GAUGEBAR_H_
 //=====================================================================
 //
-//	ゲージ処理[gauge.h]
-//	Author : toshiki
+//    ゲージ処理[gauge.h]
+//    Author : toshiki
 //
 //=====================================================================
 
@@ -18,14 +18,14 @@
 class CGaugebar : public CScene2D
 {
 public:
-	CGaugebar();
-	~CGaugebar();
+    CGaugebar();
+    ~CGaugebar();
 
-	static CGaugebar * Create(void);
-	HRESULT Init(void);
-	void Uninit(void);
-	void Update(void);
-	void Draw(void);
+    static CGaugebar * Create();
+    HRESULT Init();
+    void Uninit();
+    void Update();
+    void Draw();
 
 private:
 };

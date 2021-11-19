@@ -22,14 +22,14 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define CREATE_INTER	(120)		// 生成の間隔
+#define CREATE_INTER    (120)   // 生成の間隔
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CBarrelFactory::CBarrelFactory()
 {
-	m_nCreateCount = 0;
+    m_nCreateCount = 0;
 }
 
 //=============================================================================
@@ -37,17 +37,17 @@ CBarrelFactory::CBarrelFactory()
 //=============================================================================
 CBarrelFactory * CBarrelFactory::Create()
 {
-	// メモリ確保
-	CBarrelFactory *pBarrelFactory = new CBarrelFactory;
+    // メモリ確保
+    CBarrelFactory *pBarrelFactory = new CBarrelFactory;
 
-	// !nullcheck
-	if (pBarrelFactory)
-	{
-		// 初期化処理
-		return pBarrelFactory;
-	}
+    // !nullcheck
+    if (pBarrelFactory)
+    {
+        // 初期化処理
+        return pBarrelFactory;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -55,8 +55,8 @@ CBarrelFactory * CBarrelFactory::Create()
 //=============================================================================
 void CBarrelFactory::Update()
 {
-	// 樽生成
-	CreateBarrel();
+    // 樽生成
+    CreateBarrel();
 }
 
 //=============================================================================
@@ -64,11 +64,11 @@ void CBarrelFactory::Update()
 //=============================================================================
 void CBarrelFactory::CreateBarrel()
 {
-	m_nCreateCount++;
+    m_nCreateCount++;
 
-	if (m_nCreateCount >= CREATE_INTER)
-	{
-		m_nCreateCount = 0;
-	//	CBarrel::Create(D3DXVECTOR3(-10040.0f, 1014.8f, -15282.6f), D3DXVECTOR3(0.0f, D3DXToRadian(-25.0f), 0.0f));
-	}
+    if (m_nCreateCount >= CREATE_INTER)
+    {
+        m_nCreateCount = 0;
+    //    CBarrel::Create(D3DXVECTOR3(-10040.0f, 1014.8f, -15282.6f), D3DXVECTOR3(0.0f, D3DXToRadian(-25.0f), 0.0f));
+    }
 }

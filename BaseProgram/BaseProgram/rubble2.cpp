@@ -21,8 +21,8 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_POS		(D3DXVECTOR3(-26654.3f, 0.0f, 10574.6f))
-#define TEST_ROT		(D3DXVECTOR3(0.0f, D3DXToRadian(-45.0f), 0.0f))
+#define TEST_POS    (D3DXVECTOR3(-26654.3f, 0.0f, 10574.6f))
+#define TEST_ROT    (D3DXVECTOR3(0.0f, D3DXToRadian(-45.0f), 0.0f))
 
 //=============================================================================
 // コンストラクタ
@@ -44,19 +44,19 @@ CRubble2::~CRubble2()
 //=============================================================================
 CRubble2 * CRubble2::Create()
 {
-	// メモリ確保
-	CRubble2 *pTestModel = new CRubble2(PRIORITY_TEST_MODEL);
+    // メモリ確保
+    CRubble2 *pTestModel = new CRubble2(PRIORITY_TEST_MODEL);
 
-	// !nullcheck
-	if (pTestModel)
-	{
-		// 初期化処理
-		pTestModel->Init();
+    // !nullcheck
+    if (pTestModel)
+    {
+        // 初期化処理
+        pTestModel->Init();
 
-		return pTestModel;
-	}
+        return pTestModel;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -64,14 +64,14 @@ CRubble2 * CRubble2::Create()
 //=============================================================================
 HRESULT CRubble2::Init()
 {
-	// 初期化処理
-	CModel::Init();
+    // 初期化処理
+    CModel::Init();
 
-	CXfile *pXfile = GET_XFILE_PTR;
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MOVE_RUBBLE2);
-	GetModelInfo()->SetModelStatus(TEST_POS, TEST_ROT, model);
+    CXfile *pXfile = GET_XFILE_PTR;
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MOVE_RUBBLE2);
+    GetModelInfo()->SetModelStatus(TEST_POS, TEST_ROT, model);
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -79,7 +79,7 @@ HRESULT CRubble2::Init()
 //=============================================================================
 void CRubble2::Uninit()
 {
-	CModel::Uninit();
+    CModel::Uninit();
 }
 
 //=============================================================================
@@ -87,7 +87,7 @@ void CRubble2::Uninit()
 //=============================================================================
 void CRubble2::Update()
 {
-	CModel::Update();
+    CModel::Update();
 }
 
 //=============================================================================
@@ -95,5 +95,5 @@ void CRubble2::Update()
 //=============================================================================
 void CRubble2::Draw()
 {
-	CModel::Draw();
+    CModel::Draw();
 }

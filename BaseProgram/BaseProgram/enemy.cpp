@@ -15,10 +15,10 @@
 //=============================================================================
 CEnemy::CEnemy(PRIORITY Priority)
 {
-	m_nAttackInter = 0;
-	m_nAttackCount = 0;
-	m_nSTR = 0;
-	m_fPower = 0.0f;
+    m_nAttackInter = 0;
+    m_nAttackCount = 0;
+    m_nSTR = 0;
+    m_fPower = 0.0f;
 }
 
 //=============================================================================
@@ -33,9 +33,9 @@ CEnemy::~CEnemy()
 //=============================================================================
 HRESULT CEnemy::Init()
 {
-	CCharacter::Init();
+    CCharacter::Init();
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -43,14 +43,14 @@ HRESULT CEnemy::Init()
 //=============================================================================
 void CEnemy::Update()
 {
-	CCharacter::Update();
+    CCharacter::Update();
 
-	m_nAttackCount++;
-	if (m_nAttackCount >= m_nAttackInter)
-	{
-		Attack();
-		m_nAttackCount = 0;
-	}
+    m_nAttackCount++;
+    if (m_nAttackCount >= m_nAttackInter)
+    {
+        Attack();
+        m_nAttackCount = 0;
+    }
 }
 
 //=============================================================================
@@ -58,9 +58,9 @@ void CEnemy::Update()
 //=============================================================================
 void CEnemy::SetAttackInfo(const int &nInter, const int &nSTR, const float &fPower)
 {
-	m_nAttackInter = nInter;
-	m_nSTR = nSTR;
-	m_fPower = fPower;
+    m_nAttackInter = nInter;
+    m_nSTR = nSTR;
+    m_fPower = fPower;
 }
 
 //=============================================================================

@@ -18,9 +18,9 @@
 class CPlane :public CScene3D
 {
 public:
-	CPlane(PRIORITY Priority = PRIORITY_0) {}	// コンストラクタ
-	virtual ~CPlane() {}						// デストラクタ
-	virtual void Draw();					// 描画処理
+    CPlane(PRIORITY Priority = PRIORITY_0) {}   // コンストラクタ
+    virtual ~CPlane() {}                        // デストラクタ
+    virtual void Draw();                        // 描画処理
 
 private:
 

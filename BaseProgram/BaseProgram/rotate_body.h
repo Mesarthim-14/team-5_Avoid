@@ -18,16 +18,16 @@
 class CRotateBody : public CModel
 {
 public:
-	CRotateBody(PRIORITY = PRIORITY_TEST_MODEL);	// コンストラクタ
-	~CRotateBody();									// デストラクタ
+    CRotateBody(PRIORITY = PRIORITY_TEST_MODEL);    // コンストラクタ
+    ~CRotateBody();                                 // デストラクタ
 
-	static CRotateBody *Create(const D3DXVECTOR3 &pos);	// インスタンス生成
-	HRESULT Init(const D3DXVECTOR3 &pos);				// 初期化処理
-	void Update();										// 更新処理
+    static CRotateBody *Create(const D3DXVECTOR3 &pos); // インスタンス生成
+    HRESULT Init(const D3DXVECTOR3 &pos);               // 初期化処理
+    void Update();                                      // 更新処理
 
 private:
-	void Rotate();						// 回転
-	float m_fRotateNum;
+    void Rotate();          // 回転
+    float m_fRotateNum;
 };
 
 #endif

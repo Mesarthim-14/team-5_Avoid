@@ -1,7 +1,7 @@
 //=====================================================================
 //
-//	通常状態管理クラス [state_player_normal.h]
-//	Author : Konishi Yuuto
+//    通常状態管理クラス [state_player_normal.h]
+//    Author : Konishi Yuuto
 //
 //=====================================================================
 
@@ -39,15 +39,15 @@ CPlayerStateNormal::~CPlayerStateNormal()
 //=====================================================================
 CPlayerStateNormal * CPlayerStateNormal::Create()
 {
-	// メモリ確保
-	CPlayerStateNormal *pStateNormal = new CPlayerStateNormal;
-	if (pStateNormal)
-	{
-		// 初期化処理
-		pStateNormal->Init();
-		return pStateNormal;
-	}
-	return nullptr;
+    // メモリ確保
+    CPlayerStateNormal *pStateNormal = new CPlayerStateNormal;
+    if (pStateNormal)
+    {
+        // 初期化処理
+        pStateNormal->Init();
+        return pStateNormal;
+    }
+    return nullptr;
 }
 
 //=====================================================================
@@ -55,8 +55,8 @@ CPlayerStateNormal * CPlayerStateNormal::Create()
 //=====================================================================
 void CPlayerStateNormal::Init()
 {
-	// アニメーション設定
-	SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_IDOL), 60);
+    // アニメーション設定
+    SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_IDOL), 60);
 }
 
 //=====================================================================
@@ -64,17 +64,17 @@ void CPlayerStateNormal::Init()
 //=====================================================================
 void CPlayerStateNormal::Update()
 {
-	// メモリ確保
-	CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
-	if (!pPlayer)
-	{
-		return;
-	}
+    // メモリ確保
+    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    if (!pPlayer)
+    {
+        return;
+    }
 
-	// キーボード移動処理
-	MoveByKeyboard(pPlayer);
-	Jump(pPlayer);
-	Avoidance(pPlayer);
+    // キーボード移動処理
+    MoveByKeyboard(pPlayer);
+    Jump(pPlayer);
+    Avoidance(pPlayer);
 }
 
 //=====================================================================
@@ -82,12 +82,12 @@ void CPlayerStateNormal::Update()
 //=====================================================================
 void CPlayerStateNormal::Jump(CPlayer* &pPlayer)
 {
-	// ためジャンプ
-	if (CLibrary::KeyboardTrigger(DIK_SPACE))
-	{
-		// 状態の設定
-		pPlayer->ChangeState(CPlayerStateJump::Create());
-	}
+    // ためジャンプ
+    if (CLibrary::KeyboardTrigger(DIK_SPACE))
+    {
+        // 状態の設定
+        pPlayer->ChangeState(CPlayerStateJump::Create());
+    }
 
 }
 
@@ -96,12 +96,12 @@ void CPlayerStateNormal::Jump(CPlayer* &pPlayer)
 //=====================================================================
 void CPlayerStateNormal::Avoidance(CPlayer* &pPlayer)
 {
-	CMouse *pMouse = CManager::GetInstance()->GetMouse();	// マウス
-	if (pPlayer->GetLanding() == true && pMouse->GetButtonTrigger(CMouse::MOUSE_LEFT))//回避
-	{
-		if (pPlayer->GetSlimeState() != CPlayer::SLIME_LITTLESIZE)
-		{
-			pPlayer->ChangeState(CPlayerStateAvoid::Create());
-		}
-	}
+    CMouse *pMouse = CManager::GetInstance()->GetMouse();   // マウス
+    if (pPlayer->GetLanding() == true && pMouse->GetButtonTrigger(CMouse::MOUSE_LEFT))//回避
+    {
+        if (pPlayer->GetSlimeState() != CPlayer::SLIME_LITTLESIZE)
+        {
+            pPlayer->ChangeState(CPlayerStateAvoid::Create());
+        }
+    }
 }

@@ -18,13 +18,13 @@
 class CHeelPoint : public CModel
 {
 public:
-	CHeelPoint(PRIORITY = PRIORITY_TEST_MODEL);			// コンストラクタ
-	~CHeelPoint();										// デストラクタ
+    CHeelPoint(PRIORITY = PRIORITY_TEST_MODEL); // コンストラクタ
+    ~CHeelPoint();                              // デストラクタ
 
-	static CHeelPoint *Create(const D3DXVECTOR3 &pos);	// インスタンス生成
-	HRESULT Init(const D3DXVECTOR3 &pos);				// 初期化処理
-	bool Collision();									// 当たり判定
-	D3DXVECTOR3 GetPos();								// 座標の取得
+    static CHeelPoint *Create(const D3DXVECTOR3 &pos);  // インスタンス生成
+    HRESULT Init(const D3DXVECTOR3 &pos);               // 初期化処理
+    bool Collision();                                   // 当たり判定
+    D3DXVECTOR3 GetPos();                               // 座標の取得
 private:
 
 };

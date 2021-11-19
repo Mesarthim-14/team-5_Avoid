@@ -24,17 +24,17 @@ list<CModelInfo*> CModelInfo::m_ModelInfoList[MODEL_TYPE_MAX] = {};
 //=============================================================================
 CModelInfo::CModelInfo(const MODEL_TYPE &type)
 {
-	//各メンバ変数のクリア
-	memset(&m_model, 0, sizeof(m_model));
-	m_pos = ZeroVector3;
-	m_rot = ZeroVector3;
-	ZeroMemory(m_OldMtxWorld, sizeof(m_OldMtxWorld));
-	ZeroMemory(m_mtxWorld, sizeof(m_mtxWorld));
-	m_pShadow = nullptr;
-	m_type = type;
+    //各メンバ変数のクリア
+    memset(&m_model, 0, sizeof(m_model));
+    m_pos = ZeroVector3;
+    m_rot = ZeroVector3;
+    ZeroMemory(m_OldMtxWorld, sizeof(m_OldMtxWorld));
+    ZeroMemory(m_mtxWorld, sizeof(m_mtxWorld));
+    m_pShadow = nullptr;
+    m_type = type;
 
-	// リストへ追加
-	m_ModelInfoList[type].push_back(this);
+    // リストへ追加
+    m_ModelInfoList[type].push_back(this);
 }
 
 //=============================================================================
@@ -50,19 +50,19 @@ CModelInfo::~CModelInfo()
 //=============================================================================
 CModelInfo * CModelInfo::Create(const MODEL_TYPE &type)
 {
-	//階層モデルクラスのポインタ変数
-	CModelInfo *pModelInfo = new CModelInfo(type);
+    //階層モデルクラスのポインタ変数
+    CModelInfo *pModelInfo = new CModelInfo(type);
 
-	// nullcheck
-	if (pModelInfo)
-	{
-		//初期化処理呼び出し
-		pModelInfo->Init();
+    // nullcheck
+    if (pModelInfo)
+    {
+        //初期化処理呼び出し
+        pModelInfo->Init();
 
-		return pModelInfo;
-	}
+        return pModelInfo;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -71,7 +71,7 @@ CModelInfo * CModelInfo::Create(const MODEL_TYPE &type)
 HRESULT CModelInfo::Init()
 {
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -79,21 +79,21 @@ HRESULT CModelInfo::Init()
 //=============================================================================
 void CModelInfo::Uninit()
 {
-	// ポインタの開放
-	HasPtrDelete();
-	int nCount = 0;
+    // ポインタの開放
+    HasPtrDelete();
+    int nCount = 0;
 
-	// 自身と
-	for (auto &itr = m_ModelInfoList[m_type].begin(); itr != m_ModelInfoList[m_type].end(); ++itr)
-	{
-		if (*itr == this)
-		{
-			itr = m_ModelInfoList[m_type].erase(itr);
-			break;
-		}
-	}
+    // 自身と
+    for (auto &itr = m_ModelInfoList[m_type].begin(); itr != m_ModelInfoList[m_type].end(); ++itr)
+    {
+        if (*itr == this)
+        {
+            itr = m_ModelInfoList[m_type].erase(itr);
+            break;
+        }
+    }
 
-	delete this;
+    delete this;
 }
 
 //=============================================================================
@@ -108,27 +108,27 @@ void CModelInfo::Draw(const D3DXVECTOR3 &rot)
 //=============================================================================
 void CModelInfo::ShadowDraw(const D3DXVECTOR3 &rot)
 {
-	if (m_pShadow)
-	{
-		// 影の描画処理
-		m_pShadow->VolumeDraw();
-	}
+    if (m_pShadow)
+    {
+        // 影の描画処理
+        m_pShadow->VolumeDraw();
+    }
 }
 
 //=============================================================================
 // 影のポインタ生成
 //=============================================================================
-void CModelInfo::CreateShadowPtr(void)
+void CModelInfo::CreateShadowPtr()
 {
-	if (m_bUseShadow)
-	{
-		// nullcheck
-		if (!m_pShadow)
-		{
-			// 影の生成
-			m_pShadow = CShadow::Create(m_model.pMesh);
-		}
-	}
+    if (m_bUseShadow)
+    {
+        // nullcheck
+        if (!m_pShadow)
+        {
+            // 影の生成
+            m_pShadow = CShadow::Create(m_model.pMesh);
+        }
+    }
 }
 
 //=============================================================================
@@ -136,21 +136,21 @@ void CModelInfo::CreateShadowPtr(void)
 //=============================================================================
 D3DXMATRIX CModelInfo::SetShadowInfo(const D3DXVECTOR3 &rot, const D3DXMATRIX &pParent)
 {
-	D3DXMATRIX mtxRot, mtxTrans;
-	D3DXMATRIX mtxWorld;                            // ワールドマトリックス
-	D3DXMatrixIdentity(&mtxWorld);
+    D3DXMATRIX mtxRot, mtxTrans;
+    D3DXMATRIX mtxWorld;                            // ワールドマトリックス
+    D3DXMatrixIdentity(&mtxWorld);
 
-	//向きを反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, 0.0f, 0.0f, 0.0f);
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
+    //向きを反映
+    D3DXMatrixRotationYawPitchRoll(&mtxRot, 0.0f, 0.0f, 0.0f);
+    D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
 
-	//位置を反映
-	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);
+    //位置を反映
+    D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
+    D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);
 
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &pParent);
+    D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &pParent);
 
-	return mtxWorld;
+    return mtxWorld;
 }
 
 //=============================================================================
@@ -158,13 +158,13 @@ D3DXMATRIX CModelInfo::SetShadowInfo(const D3DXVECTOR3 &rot, const D3DXMATRIX &p
 //=============================================================================
 void CModelInfo::HasPtrDelete()
 {
-	if (m_pShadow)
-	{
-		// 影の終了処理
-		m_pShadow->Uninit();
-		delete m_pShadow;
-		m_pShadow = nullptr;
-	}
+    if (m_pShadow)
+    {
+        // 影の終了処理
+        m_pShadow->Uninit();
+        delete m_pShadow;
+        m_pShadow = nullptr;
+    }
 }
 
 //=============================================================================
@@ -172,9 +172,9 @@ void CModelInfo::HasPtrDelete()
 //=============================================================================
 void CModelInfo::SetModelStatus(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot, const CXfile::MODEL &model)
 {
-	m_pos = pos;
-	m_rot = rot;
-	m_model = model;
+    m_pos = pos;
+    m_rot = rot;
+    m_model = model;
 }
 
 //=============================================================================
@@ -182,5 +182,5 @@ void CModelInfo::SetModelStatus(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot, 
 //=============================================================================
 D3DXVECTOR3 CModelInfo::GetMtxPos()
 {
-	return D3DXVECTOR3(m_mtxWorld._41, m_mtxWorld._42, m_mtxWorld._43);
+    return D3DXVECTOR3(m_mtxWorld._41, m_mtxWorld._42, m_mtxWorld._43);
 }

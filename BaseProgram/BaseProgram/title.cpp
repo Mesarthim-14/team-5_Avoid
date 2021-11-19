@@ -26,7 +26,7 @@
 //=============================================================================
 CTitle::CTitle()
 {
-	m_pObject2D.clear();
+    m_pObject2D.clear();
 }
 
 //=============================================================================
@@ -34,8 +34,8 @@ CTitle::CTitle()
 //=============================================================================
 CTitle::~CTitle()
 {
-	// 終了処理
-	Uninit();
+    // 終了処理
+    Uninit();
 }
 
 //=============================================================================
@@ -44,7 +44,7 @@ CTitle::~CTitle()
 HRESULT CTitle::Init()
 {
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -52,14 +52,14 @@ HRESULT CTitle::Init()
 //=============================================================================
 void CTitle::Uninit()
 {
-	for (auto &object : m_pObject2D)
-	{
-		// 終了処理
-		object->Uninit();
-	}
+    for (auto &object : m_pObject2D)
+    {
+        // 終了処理
+        object->Uninit();
+    }
 
-	// オブジェクト削除
-	m_pObject2D.clear();
+    // オブジェクト削除
+    m_pObject2D.clear();
 }
 
 //=============================================================================
@@ -68,23 +68,23 @@ void CTitle::Uninit()
 void CTitle::Update()
 {
 
-	CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
-	CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
+    CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
+    CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
 
-	// コントローラのstartを押したときか、エンターキーを押したとき
-	if (CManager::GetInstance()->GetJoypad()->GetJoystickTrigger(CInputJoypad::JOY_BUTTON_START, 0) && mode == CFade::FADE_MODE_NONE
-		|| pKey->GetTrigger(DIK_RETURN) && mode == CFade::FADE_MODE_NONE)
-	{
-		CFade *pFade = CManager::GetInstance()->GetFade();
-		pFade->SetFade(CManager::MODE_TYPE_GAME);
-	}
+    // コントローラのstartを押したときか、エンターキーを押したとき
+    if (CManager::GetInstance()->GetJoypad()->GetJoystickTrigger(CInputJoypad::JOY_BUTTON_START, 0) && mode == CFade::FADE_MODE_NONE
+        || pKey->GetTrigger(DIK_RETURN) && mode == CFade::FADE_MODE_NONE)
+    {
+        CFade *pFade = CManager::GetInstance()->GetFade();
+        pFade->SetFade(CManager::MODE_TYPE_GAME);
+    }
 
-	// エディットモード
-	if (pKey->GetTrigger(DIK_1) && mode == CFade::FADE_MODE_NONE)
-	{
-		CFade *pFade = CManager::GetInstance()->GetFade();
-		pFade->SetFade(CManager::MODE_TYPE_PLAYER_EDITOR);
-	}
+    // エディットモード
+    if (pKey->GetTrigger(DIK_1) && mode == CFade::FADE_MODE_NONE)
+    {
+        CFade *pFade = CManager::GetInstance()->GetFade();
+        pFade->SetFade(CManager::MODE_TYPE_PLAYER_EDITOR);
+    }
 
 }
 

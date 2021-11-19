@@ -22,8 +22,8 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_ROT		(ZeroVector3)
-#define CHECK_DISTANCE	(1000.0f)
+#define TEST_ROT        (ZeroVector3)
+#define CHECK_DISTANCE  (1000.0f)
 
 //=============================================================================
 // コンストラクタ
@@ -45,19 +45,19 @@ CHeelPoint::~CHeelPoint()
 //=============================================================================
 CHeelPoint * CHeelPoint::Create(const D3DXVECTOR3 &pos)
 {
-	// メモリ確保
-	CHeelPoint *pTestModel = new CHeelPoint(PRIORITY_TEST_MODEL);
+    // メモリ確保
+    CHeelPoint *pTestModel = new CHeelPoint(PRIORITY_TEST_MODEL);
 
-	// !nullcheck
-	if (pTestModel)
-	{
-		// 初期化処理
-		pTestModel->Init(pos);
+    // !nullcheck
+    if (pTestModel)
+    {
+        // 初期化処理
+        pTestModel->Init(pos);
 
-		return pTestModel;
-	}
+        return pTestModel;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -65,14 +65,14 @@ CHeelPoint * CHeelPoint::Create(const D3DXVECTOR3 &pos)
 //=============================================================================
 HRESULT CHeelPoint::Init(const D3DXVECTOR3 &pos)
 {
-	// 初期化処理
-	CModel::Init();
+    // 初期化処理
+    CModel::Init();
 
-	CXfile *pXfile = GET_XFILE_PTR;
-	CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_RECOVER);
-	GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
+    CXfile *pXfile = GET_XFILE_PTR;
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_RECOVER);
+    GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -80,7 +80,7 @@ HRESULT CHeelPoint::Init(const D3DXVECTOR3 &pos)
 //=============================================================================
 bool CHeelPoint::Collision()
 {
-	return PlayerDisCollision(CHECK_DISTANCE);
+    return PlayerDisCollision(CHECK_DISTANCE);
 }
 
 //=============================================================================
@@ -88,5 +88,5 @@ bool CHeelPoint::Collision()
 //=============================================================================
 D3DXVECTOR3 CHeelPoint::GetPos()
 {
-	return GetModelInfo()->GetPos();
+    return GetModelInfo()->GetPos();
 }

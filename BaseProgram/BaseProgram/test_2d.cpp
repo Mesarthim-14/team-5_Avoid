@@ -18,9 +18,9 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_POS		(HALF_SCREEN_POS)
-#define TEST_SIZE		(D3DXVECTOR3(300.0f, 300.0f, 0.0f))
-#define SCROLL_SPEED	(1.0f)
+#define TEST_POS        (HALF_SCREEN_POS)
+#define TEST_SIZE       (D3DXVECTOR3(300.0f, 300.0f, 0.0f))
+#define SCROLL_SPEED    (1.0f)
 
 //=============================================================================
 // コンストラクタ
@@ -41,19 +41,19 @@ CTest2d::~CTest2d()
 //=============================================================================
 CTest2d * CTest2d::Create()
 {
-	// メモリ確保
-	CTest2d *pPolygon = new CTest2d(PRIORITY_UI);
+    // メモリ確保
+    CTest2d *pPolygon = new CTest2d(PRIORITY_UI);
 
-	// !nullcheck
-	if (pPolygon)
-	{
-		// 初期化処理
-		pPolygon->Init();
+    // !nullcheck
+    if (pPolygon)
+    {
+        // 初期化処理
+        pPolygon->Init();
 
-		return pPolygon;
-	}
+        return pPolygon;
+    }
 
-	return nullptr;
+    return nullptr;
 }
 
 //=============================================================================
@@ -61,17 +61,17 @@ CTest2d * CTest2d::Create()
 //=============================================================================
 HRESULT CTest2d::Init()
 {
-	// 初期化処理
-	SetSceneInfo(TEST_POS, TEST_SIZE);
-	CScene2D::Init();
+    // 初期化処理
+    SetSceneInfo(TEST_POS, TEST_SIZE);
+    CScene2D::Init();
 
-	CTexture *pTexture = GET_TEXTURE_PTR;
-	INT_VERTEX_2D TexInfo = pTexture->GetSparateTexInfo(CTexture::SEPARATE_TEX_TEST);
-	bool bLoop = pTexture->GetSparateTexLoop(CTexture::SEPARATE_TEX_TEST);
-	BindTexture(pTexture->GetSeparateTexture(CTexture::SEPARATE_TEX_TEST));
-	InitAnimation(TexInfo.x, TexInfo.y, bLoop);
+    CTexture *pTexture = GET_TEXTURE_PTR;
+    INT_VERTEX_2D TexInfo = pTexture->GetSparateTexInfo(CTexture::SEPARATE_TEX_TEST);
+    bool bLoop = pTexture->GetSparateTexLoop(CTexture::SEPARATE_TEX_TEST);
+    BindTexture(pTexture->GetSeparateTexture(CTexture::SEPARATE_TEX_TEST));
+    InitAnimation(TexInfo.x, TexInfo.y, bLoop);
 
-	return S_OK;
+    return S_OK;
 }
 
 //=============================================================================
@@ -79,7 +79,7 @@ HRESULT CTest2d::Init()
 //=============================================================================
 void CTest2d::Uninit()
 {
-	CScene2D::Uninit();
+    CScene2D::Uninit();
 }
 
 //=============================================================================
@@ -87,7 +87,7 @@ void CTest2d::Uninit()
 //=============================================================================
 void CTest2d::Update()
 {
-	CScene2D::Update();
+    CScene2D::Update();
 }
 
 //=============================================================================
@@ -95,5 +95,5 @@ void CTest2d::Update()
 //=============================================================================
 void CTest2d::Draw()
 {
-	CScene2D::Draw();
+    CScene2D::Draw();
 }

@@ -19,26 +19,26 @@
 class CInputKeyboard : public CInput
 {
 public:
-	//=========================================================================
-	//メンバ関数宣言
-	//=========================================================================
-	CInputKeyboard();
-	~CInputKeyboard();
-	HRESULT Init(HINSTANCE hInstance, HWND hWnd);
-	void Uninit(void);
-	void Update(void);
+    //=========================================================================
+    //メンバ関数宣言
+    //=========================================================================
+    CInputKeyboard();
+    ~CInputKeyboard();
+    HRESULT Init(HINSTANCE hInstance, HWND hWnd);
+    void Uninit(void);
+    void Update(void);
 
-	BOOL GetPress(int nKey);
-	BOOL GetTrigger(int nKey);
-	BOOL GetRelease(int nKey);
+    BOOL GetPress(int nKey);
+    BOOL GetTrigger(int nKey);
+    BOOL GetRelease(int nKey);
 
 private:
-	//=========================================================================
-	//メンバ変数宣言
-	//=========================================================================
-	BYTE m_aKeyState[MAX_KEY_NUM];	//キーボードの入力情報
-	BYTE m_aKeyStateTrigger[MAX_KEY_NUM];	//キーボードのトリガー情報
-	BYTE m_aKeyStateRelease[MAX_KEY_NUM];	//キーボードのリリース情報
+    //=========================================================================
+    //メンバ変数宣言
+    //=========================================================================
+    BYTE m_aKeyState[MAX_KEY_NUM];          //キーボードの入力情報
+    BYTE m_aKeyStateTrigger[MAX_KEY_NUM];   //キーボードのトリガー情報
+    BYTE m_aKeyStateRelease[MAX_KEY_NUM];   //キーボードのリリース情報
 };
 #endif
 
