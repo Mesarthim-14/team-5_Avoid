@@ -202,6 +202,7 @@
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="particleaura.cpp" />
     <ClCompile Include="particlepop.cpp" />
+    <ClCompile Include="particleshrink.cpp" />
     <ClCompile Include="particle_info.cpp" />
     <ClCompile Include="move_scaffold.cpp" />
     <ClCompile Include="parallax_mapping2.cpp" />
@@ -319,6 +320,7 @@
     <ClInclude Include="mouse.h" />
     <ClInclude Include="particleaura.h" />
     <ClInclude Include="particlepop.h" />
+    <ClInclude Include="particleshrink.h" />
     <ClInclude Include="particle_info.h" />
     <ClInclude Include="move_scaffold.h" />
     <ClInclude Include="parallax_mapping2.h" />

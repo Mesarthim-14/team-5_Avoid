@@ -492,6 +492,9 @@
     <ClCompile Include="particlepop.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="particleshrink.cpp">
+      <Filter>06_Effect\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -837,6 +840,9 @@
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
     <ClInclude Include="particlepop.h">
+      <Filter>06_Effect\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="particleshrink.h">
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
   </ItemGroup>

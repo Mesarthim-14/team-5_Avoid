@@ -1,76 +1,72 @@
 //=====================================================================
 //
-//	パーティクル処理[particlepop.h]
+//	パーティクル処理[particle.h]
 //	Author : toshiki
 //
 //=====================================================================
 
 //=====================================================================
 // インクルードファイル
-// Author : toshiki
 //=====================================================================
-#include "particlepop.h"
+#include "particleshrink.h"
 #include "manager.h"
 #include "renderer.h"
 #include "library.h"
 #include "texture.h"
 #include "resource_manager.h"
 
-float CParticlePop::m_fSize = 0.0f;
+float CParticleShrink::m_fAngleX = 0.0f;
+float CParticleShrink::m_fAngleZ = 0.0f;
 //=====================================================================
 // マクロ定義
-// Author : toshiki
 //=====================================================================
-#define SIZE		(D3DXVECTOR3(m_fSize, m_fSize, m_fSize))
-#define ANGLE		(4.0f)
-#define SPEED		(15.0f)
-#define RANDOM		(3.14f)
-#define LIFE		(90)
-#define COLOR		(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
+#define PARTICLE_POS	((D3DXVECTOR3(m_fAngleX, 5.0f, m_fAngleZ)))
+#define SIZE			(D3DXVECTOR3(25.0f, 25.0f, 25.0f))
+#define SPEED			(5.0f)
+#define RANDOM			(3.14f)
+#define LIFE			(60)
+#define COLOR			(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
 
 //=====================================================================
 // コンストラクタ
-// Author : toshiki
 //=====================================================================
-CParticlePop::CParticlePop()
+CParticleShrink::CParticleShrink()
 {
-	m_fAngle = 0.0f;
-	m_nLife = 0;
+	m_fSpeed = 0.0f;
+	ShrinkPos = ZeroVector3;
 }
 
 //=====================================================================
 // デストラクタ
-// Author : toshiki
 //=====================================================================
-CParticlePop::~CParticlePop()
+CParticleShrink::~CParticleShrink()
 {
 
 }
 
 //=====================================================================
 // 生成処理
-// Author : toshiki
 //=====================================================================
-CParticlePop * CParticlePop::Create(D3DXVECTOR3 pos)
+CParticleShrink * CParticleShrink::Create(void)
 {
-	CParticlePop * pParticlePop = new CParticlePop;
+	CParticleShrink * pParticle = new CParticleShrink;
 
-	if (pParticlePop)
+	if (pParticle != nullptr)
 	{
-		m_fSize = CLibrary::Random(100.0f, 150.0f);
-		pParticlePop->SetSceneInfo(pos, SIZE);
+		m_fAngleX = CLibrary::Random(300.0f);
+		m_fAngleZ = CLibrary::Random(300.0f);
+		pParticle->SetSceneInfo(PARTICLE_POS, SIZE);
 
-		pParticlePop->Init();
-		return pParticlePop;
+		pParticle->Init();
+		return pParticle;
 	}
 	return nullptr;
 }
 
 //=====================================================================
 // 初期化処理
-// Author : toshiki
 //=====================================================================
-HRESULT CParticlePop::Init(void)
+HRESULT CParticleShrink::Init(void)
 {
 	CParticleInfo::Init();
 	SetParticle();
@@ -79,48 +75,41 @@ HRESULT CParticlePop::Init(void)
 
 //=====================================================================
 // 更新処理
-// Author : toshiki
 //=====================================================================
-void CParticlePop::Update(void)
+void CParticleShrink::Update(void)
 {
 	CParticleInfo::Update();
 }
 
 //=====================================================================
 // 終了処理
-// Author : toshiki
 //=====================================================================
-void CParticlePop::Uninit(void)
+void CParticleShrink::Uninit(void)
 {
 	CParticleInfo::Uninit();
 }
 
 //=====================================================================
 // 描画処理
-// Author : toshiki
 //=====================================================================
-void CParticlePop::Draw(void)
+void CParticleShrink::Draw(void)
 {
 	CParticleInfo::Draw();
 }
 
 //=====================================================================
-// パーティクルの設定
-// Author : toshiki
+// パーティクルを出す処理
 //=====================================================================
-void CParticlePop::SetParticle(void)
+void CParticleShrink::SetParticle(void)
 {
 	// テクスチャの設定
 	CTexture *pTexture = GET_TEXTURE_PTR;
 	BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_PARTICLE));
 	// スピードの値を設定
 	m_fSpeed = SPEED;
-	// パーティクルの出る角度の設定
-	m_fAngle = CLibrary::Random(RANDOM);
-	// 重力をつける
-	CParticleInfo::SetGravity(true);
+	float fTangent = atan2f(ShrinkPos.z - m_fAngleX, ShrinkPos.x - m_fAngleZ);
 	// 移動させるための処理
-	D3DXVECTOR3 move = D3DXVECTOR3(sinf(m_fAngle) * m_fSpeed, ANGLE, cosf(m_fAngle) * m_fSpeed);
+	D3DXVECTOR3 move = D3DXVECTOR3(sinf(fTangent), 0.2f, cosf(fTangent));
 	// 移動情報を設定
 	SetMove(move);
 	// 色の設定
