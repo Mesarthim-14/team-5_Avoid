@@ -233,6 +233,51 @@ float CLibrary::Random(const float &fMin, const float &fMax)
 	return (float)rand(mt);
 }
 
+//*****************************************************************************
+// “_‚ÌOŸŒ³‰ñ“]ˆ—
+//*****************************************************************************
+void CLibrary::Rotate3D(D3DXVECTOR3 &PointPos, const D3DXVECTOR3 &rot)
+{
+	//X²‰ñ“]
+	PointPos = D3DXVECTOR3(
+		PointPos.x,
+		PointPos.y * cosf(rot.x) + PointPos.z * -sinf(rot.x),
+		PointPos.y * sinf(rot.x) + PointPos.z * cosf(rot.x));
+
+	//Y²‰ñ“]
+	PointPos = D3DXVECTOR3(
+		PointPos.x * cosf(rot.y) + PointPos.z * sinf(rot.y),
+		PointPos.y,
+		PointPos.x * -sinf(rot.y) + PointPos.z * cosf(rot.y));
+
+	//Z²‰ñ“]
+	PointPos = D3DXVECTOR3(
+		PointPos.x * cosf(rot.z) + PointPos.y * -sinf(rot.z),
+		PointPos.x * sinf(rot.z) + PointPos.y * cosf(rot.z),
+		PointPos.z);
+}
+
+//*****************************************************************************
+// •ª—£²‚É“Š‰e‚³‚ê‚½²¬•ª‚©‚ç“Š‰eü•ª’·‚ğZo
+//*****************************************************************************
+float CLibrary::LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3)
+{
+	// 3‚Â‚Ì“àÏ‚Ìâ‘Î’l‚Ì˜a‚Å“Š‰eü•ª’·‚ğŒvZ
+	// •ª—£²Sep‚Í•W€‰»‚³‚ê‚Ä‚¢‚é‚±‚Æ
+	float r1 = (float)fabs(D3DXVec3Dot(Sep, e1));
+	float r2 = (float)fabs(D3DXVec3Dot(Sep, e2));
+	float r3 = (float)(e3 ? (fabs(D3DXVec3Dot(Sep, e3))) : 0);
+	return r1 + r2 + r3;
+}
+
+//*****************************************************************************
+// vector3“¯m‚ÌæZ
+//*****************************************************************************
+D3DXVECTOR3 CLibrary::MultiplyVector3(const D3DXVECTOR3 &vector1, const D3DXVECTOR3 &vector2)
+{
+	return D3DXVECTOR3(vector1.x * vector2.x, vector1.y * vector2.y, vector1.z * vector2.z);
+}
+
 //=============================================================================
 // “ñ“_‚Ì‹——£‚ğŒvZ
 //=============================================================================

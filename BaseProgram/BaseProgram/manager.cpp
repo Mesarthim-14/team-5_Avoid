@@ -489,7 +489,6 @@ CManager * CManager::GetInstance()
 	if (!m_pManager)
 	{
 		m_pManager = new CManager;
-		return m_pManager;
 	}
 
 	return m_pManager;

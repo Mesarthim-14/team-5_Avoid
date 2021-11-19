@@ -153,9 +153,10 @@ void CPlayerState::MoveByKeyboard(CPlayer* &pPlayer)
 		rotDest.y = atan2f(Inertia.x, Inertia.z) + D3DXToRadian(180.0f);
 		m_bMove[0] = true;
 	}
+	// 
 	if (CLibrary::KeyboardPress(DIK_Z))
 	{
-		CParticlePop::Create(pos);
+		CParticlePop::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z));;
 	}
 
 	// ç¿ïWê›íË

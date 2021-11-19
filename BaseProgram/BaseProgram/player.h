@@ -13,9 +13,11 @@
 #include "character.h"
 #include "skinmesh_model.h"
 
-//=============================================================================
+//=========================================================================
 // 前方宣言
-//=============================================================================
+//=========================================================================
+class CCollisionModel;
+
 class CPlayerState;
 
 //=============================================================================
@@ -24,6 +26,7 @@ class CPlayerState;
 class CPlayer : public CCharacter
 {
 public:
+
 	typedef enum
 	{
 		ACTION_NONE = -1,
@@ -54,6 +57,7 @@ public:
 		SLIME_STATE_MAX
 	}SLIME_STATE;//スライムの状態（大きさ）
 
+
 	CPlayer(PRIORITY Priority = PRIORITY_CHARACTER);	// コンストラクタ
 	~CPlayer();											// デストラクタ
 
@@ -77,12 +81,13 @@ public:
 	inline void SetAngle(const float& fAngle)							{ m_fAngle = fAngle; }			// アングル
 
 	// Get関数
-	inline int GetLife()const				{ return m_nHP; }			// HPの情報
-	inline float GetAngle()const			{ return m_fAngle; }		// アングル
-	inline D3DXVECTOR3 GetRotDest()const	{ return m_rotDest; }		// 目的
-	inline D3DXVECTOR3 GetInertia()const	{ return m_Inertia; }		// 慣性の情報
-	inline float GetInertiaNum()const		{ return m_fInertiaNum; }	// 慣性の値
-	inline SLIME_STATE GetSlimeState()const { return m_SlimeState; }	// スライムの状態
+	inline int GetLife()const					    { return m_nHP; }			    // HPの情報
+	inline float GetAngle()const				    { return m_fAngle; }		    // アングル
+	inline D3DXVECTOR3 GetRotDest()const		    { return m_rotDest; }		    // 目的
+	inline D3DXVECTOR3 GetInertia()const		    { return m_Inertia; }		    // 慣性の情報
+	inline float GetInertiaNum()const			    { return m_fInertiaNum; }	    // 慣性の値
+	inline SLIME_STATE GetSlimeState()const		    { return m_SlimeState; }	    // スライムの状態
+	inline CCollisionModel* GetCollisionPtr()const  { return m_pCollisionModel; }   //当たり判定ポインタ
 
 private:
 	// private関数
@@ -93,6 +98,7 @@ private:
 	void CreateModel();				// モデル生成
 
 	// メンバ変数
+
 	D3DXVECTOR3 m_rotDest;								// 回転(目標値)
 	D3DXVECTOR3 m_Inertia;								// 慣性
 	float m_fInertiaNum;								// 慣性の値
@@ -108,5 +114,7 @@ private:
 
 	CPlayerState* m_pCurrentState;						// 現在の状態ポインタ
 	CPlayerState* m_pNextState;							// 次の状態ポインタ
+
+	CCollisionModel* m_pCollisionModel;	//当たり判定モデルのポインタ
 };
 #endif

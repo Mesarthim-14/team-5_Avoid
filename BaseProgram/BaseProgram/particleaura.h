@@ -1,8 +1,8 @@
-#ifndef _PARTICLEPOP_H_
-#define _PARTICLEPOP_H_
+#ifndef _PARTICLEAURA_H_
+#define _PARTICLEAURA_H_
 //=====================================================================
 //
-//	パーティクル処理[particlepop.h]
+//	パーティクル処理[particleaura.h]
 //	Author : toshiki
 //
 //=====================================================================
@@ -15,16 +15,16 @@
 //=====================================================================
 // クラス定義
 //=====================================================================
-class CParticlePop : public CParticleInfo
+class CParticleAura : public CParticleInfo
 {
 public:
 	//==================
 	// メンバ関数
 	//==================
-	CParticlePop();
-	~CParticlePop();
+	CParticleAura();
+	~CParticleAura();
 
-	static CParticlePop * Create(D3DXVECTOR3 pos);
+	static CParticleAura * Create(D3DXVECTOR3 pos);
 	HRESULT Init(void);
 	void Update(void);
 	void Uninit(void);

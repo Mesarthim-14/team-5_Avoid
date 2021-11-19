@@ -162,6 +162,7 @@
     <ClCompile Include="check_flag.cpp" />
     <ClCompile Include="check_point.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="collisionModel.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="fresnel_lambert.cpp" />
@@ -199,6 +200,7 @@
     <ClCompile Include="mode_base.cpp" />
     <ClCompile Include="motion.cpp" />
     <ClCompile Include="mouse.cpp" />
+    <ClCompile Include="particleaura.cpp" />
     <ClCompile Include="particlepop.cpp" />
     <ClCompile Include="particle_info.cpp" />
     <ClCompile Include="move_scaffold.cpp" />
@@ -274,6 +276,7 @@
     <ClInclude Include="check_flag.h" />
     <ClInclude Include="check_point.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="collisionModel.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="fresnel_lambert.h" />
@@ -314,6 +317,7 @@
     <ClInclude Include="mode_base.h" />
     <ClInclude Include="motion.h" />
     <ClInclude Include="mouse.h" />
+    <ClInclude Include="particleaura.h" />
     <ClInclude Include="particlepop.h" />
     <ClInclude Include="particle_info.h" />
     <ClInclude Include="move_scaffold.h" />
