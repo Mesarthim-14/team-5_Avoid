@@ -116,7 +116,7 @@ void CTestModel::Hit()
 {
 	CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
 
-	if (!pPlayer)
+	if (pPlayer)
 	{
 		if (m_pCollisionModel && pPlayer->GetCollisionPtr())
 		{
