@@ -462,21 +462,13 @@
     <ClCompile Include="bullet.cpp">
       <Filter>08_Object\EnemyObject</Filter>
     </ClCompile>
-    <ClCompile Include="particlepop.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="particle_info.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="state_camera.cpp">
       <Filter>10_State\CameraState</Filter>
     </ClCompile>
     <ClCompile Include="state_camera_normal.cpp">
       <Filter>10_State\CameraState</Filter>
     </ClCompile>
-    <ClCompile Include="particleaura.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>    <ClCompile Include="production_cannon.cpp">
+    <ClCompile Include="production_cannon.cpp">
       <Filter>11_Production</Filter>
     </ClCompile>
     <ClCompile Include="state_player_cannon.cpp">
@@ -490,6 +482,15 @@
     </ClCompile>
     <ClCompile Include="collisionModel.cpp">
       <Filter>12_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="particle_info.cpp">
+      <Filter>06_Effect\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="particleaura.cpp">
+      <Filter>06_Effect\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="particlepop.cpp">
+      <Filter>06_Effect\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -808,21 +809,13 @@
     <ClInclude Include="bullet.h">
       <Filter>08_Object\EnemyObject</Filter>
     </ClInclude>
-    <ClInclude Include="particlepop.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="particle_info.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="state_camera.h">
       <Filter>10_State\CameraState</Filter>
     </ClInclude>
     <ClInclude Include="state_camera_normal.h">
       <Filter>10_State\CameraState</Filter>
     </ClInclude>
-    <ClInclude Include="particleaura.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>    <ClInclude Include="production_cannon.h">
+    <ClInclude Include="production_cannon.h">
       <Filter>11_Production</Filter>
     </ClInclude>
     <ClInclude Include="state_player_cannon.h">
@@ -836,6 +829,15 @@
     </ClInclude>
     <ClInclude Include="collisionModel.h">
       <Filter>12_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="particle_info.h">
+      <Filter>06_Effect\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="particleaura.h">
+      <Filter>06_Effect\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="particlepop.h">
+      <Filter>06_Effect\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

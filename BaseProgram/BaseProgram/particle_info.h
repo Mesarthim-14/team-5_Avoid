@@ -24,18 +24,18 @@ public:
 	CParticleInfo();
 	virtual ~CParticleInfo();
 
-	virtual HRESULT Init(void) = 0;
-	virtual void Update(void) = 0;
-	virtual void Uninit(void) = 0;
-	virtual void Draw(void) = 0;
+	virtual HRESULT Init() = 0;
+	virtual void Update() = 0;
+	virtual void Uninit() = 0;
+	virtual void Draw() = 0;
 
 	// getä÷êî
-	D3DXVECTOR3 GetMove(void) { return m_move; }
-	int GetLife(void) { return m_nLife; }
+	D3DXVECTOR3 GetMove()const { return m_move; }
+	int GetLife()const { return m_nLife; }
 	// setä÷êî
-	void SetMove(D3DXVECTOR3 move) { m_move = move; }
-	void SetLife(int life) { m_nLife = life; }
-	void SetGravity(bool set) { m_bGravitySet = set; }
+	void SetMove(const D3DXVECTOR3 move) { m_move = move; }
+	void SetLife(const int life) { m_nLife = life; }
+	void SetGravity(const bool set) { m_bGravitySet = set; }
 
 private:
 	void Gravity(void);
