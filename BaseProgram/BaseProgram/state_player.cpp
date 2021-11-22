@@ -144,20 +144,20 @@ void CPlayerState::MoveByKeyboard(CPlayer* &pPlayer)
         m_bMove[0] = true;
     }
 
-    //右後ろに移動
-    if (CLibrary::KeyboardPress(DIK_S) && CLibrary::KeyboardPress(DIK_D))
-    {
-        // 移動量・角度の設定
-        Inertia.x = -sinf((fAngle + D3DXToRadian(45.0f)))*fSpeed;
-        Inertia.z = +cosf((fAngle + D3DXToRadian(45.0f)))*fSpeed;
-        rotDest.y = atan2f(Inertia.x, Inertia.z) + D3DXToRadian(180.0f);
-        m_bMove[0] = true;
-    }
+	//右後ろに移動
+	if (CLibrary::KeyboardPress(DIK_S) && CLibrary::KeyboardPress(DIK_D))
+	{
+		// 移動量・角度の設定
+		Inertia.x = -sinf((fAngle + D3DXToRadian(45.0f)))*fSpeed;
+		Inertia.z = +cosf((fAngle + D3DXToRadian(45.0f)))*fSpeed;
+		rotDest.y = atan2f(Inertia.x, Inertia.z) + D3DXToRadian(180.0f);
+		m_bMove[0] = true;
+	}
     // 
-    if (CLibrary::KeyboardPress(DIK_Z))
-    {
-        CParticlePop::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z));;
-    }
+    if (CLibrary::KeyboardTrigger(DIK_Z))
+	{
+		CParticlePop::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z));;
+	}
 
     // 座標設定
     pPlayer->SetPos(pos);
