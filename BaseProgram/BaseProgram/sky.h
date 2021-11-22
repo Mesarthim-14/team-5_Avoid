@@ -1,8 +1,8 @@
-#ifndef _SHARK_MODEL_H_
-#define _SHARK_MODEL_H_
+#ifndef _SKY_H_
+#define _SKY_H_
 //=============================================================================
 //
-// サメモデルクラス [shark_model.h]
+// 空クラス [sky.h]
 // Author : Konishi Yuuto
 //
 //=============================================================================
@@ -15,18 +15,17 @@
 //=========================================================================
 // クラス定義
 //=========================================================================
-class CSharkModel : public CModel
+class CSky : public CModel
 {
 public:
-    CSharkModel(PRIORITY = PRIORITY_TEST_MODEL);    // コンストラクタ
-    ~CSharkModel();                                 // デストラクタ
+    CSky(PRIORITY = PRIORITY_TEST_MODEL); // コンストラクタ
+    ~CSky();                              // デストラクタ
 
-    static CSharkModel* Create(const D3DXVECTOR3 pos);  // インスタンス生成
-    HRESULT Init(const D3DXVECTOR3 &pos);               // 初期化処理
-    void Update();                                      // 更新処理
-    void Draw();                                        // 描画
-
-    void SetPos(const D3DXVECTOR3 &pos);
+    static CSky *Create();  // インスタンス生成
+    HRESULT Init();         // 初期化処理
+    void Uninit();          // 初期化処理
+    void Update();          // 更新処理
+    void Draw();            // 描画
 private:
 };
 

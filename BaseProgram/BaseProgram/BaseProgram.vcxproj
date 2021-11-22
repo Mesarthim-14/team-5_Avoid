@@ -231,6 +231,7 @@
     <ClCompile Include="shark_model.cpp" />
     <ClCompile Include="skinmesh.cpp" />
     <ClCompile Include="skinmesh_model.cpp" />
+    <ClCompile Include="sky.cpp" />
     <ClCompile Include="slope.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="state.cpp" />
@@ -348,6 +349,7 @@
     <ClInclude Include="shark_model.h" />
     <ClInclude Include="skinmesh.h" />
     <ClInclude Include="skinmesh_model.h" />
+    <ClInclude Include="sky.h" />
     <ClInclude Include="slope.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="state.h" />

@@ -65,6 +65,7 @@ public:
     	XFILE_NUM_BRIDGE,           // Лі
     	XFILE_NUM_CANNON_BULLET,    // СеЦCВћТe
     	XFILE_NUM_SWIRL_SCAFFOLD,   // ЙQВћСЂПк
+        XFILE_NUM_SKY_BLUE,         // Лу
     	XFILE_NUM_MAX
     };
     

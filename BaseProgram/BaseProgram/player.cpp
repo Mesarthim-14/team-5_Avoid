@@ -206,20 +206,12 @@ void CPlayer::Draw()
 //=============================================================================
 CSkinmeshModel *CPlayer::GetCurrentSkinMeshPtr()
 {
-
 	if (m_pSkinmeshModel[m_SlimeState])
 	{
 		return m_pSkinmeshModel[m_SlimeState];
 	}
 
-
 	return nullptr;
-
-	//当たり判定の位置の設定
-	if (m_pCollisionModel != nullptr)
-	{
-		m_pCollisionModel->SetPos(GetPos());
-	}
 }
 
 //=============================================================================
@@ -228,7 +220,6 @@ CSkinmeshModel *CPlayer::GetCurrentSkinMeshPtr()
 //=============================================================================
 void CPlayer::ChangeState(CPlayerState *pPlayerState)
 {
-
 	m_pNextState = pPlayerState;
 }
 
@@ -283,7 +274,7 @@ void CPlayer::UpdateRot()
 	SetRot(rot);
 
 	//当たり判定の角度の設定
-	if (m_pCollisionModel != nullptr)
+	if (m_pCollisionModel)
 	{
 		m_pCollisionModel->SetRot(rot);
 	}
@@ -457,6 +448,10 @@ void CPlayer::SubLife(const int &nDamage)
 		}
 		else
 		{
+            if (m_nHP > 100)
+            {
+                m_nHP = 100;
+            }
 			ChangeModel();
 		}
 	}
@@ -477,6 +472,7 @@ void CPlayer::ReSporn()
 			// 座標の取得
 			SetPos(pGame->GetGimmickFactory()->GetCheckPoint()->GetPointPos());
 			SetMove(ZeroVector3);
+            ChangeState(CPlayerStateNormal::Create());
 		}
 	}
 }

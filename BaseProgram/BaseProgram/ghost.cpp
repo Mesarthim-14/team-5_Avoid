@@ -26,6 +26,9 @@
 #define FOLLOW_END_DISTANCE (800.0f)                                // 追従を切る
 #define RISE_TIME           (120)                                   // 終了までの時間
 #define END_TIME            (250)                                   // 終了までの時間
+#define COLLISION_SIZE  (D3DXVECTOR3(m_fCollisionSize, m_fCollisionSize, m_fCollisionSize))
+
+const float CGhost::m_fCollisionSize = 500.0f;
 
 //=============================================================================
 // コンストラクタ
@@ -67,7 +70,7 @@ CGhost * CGhost::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 //=============================================================================
 HRESULT CGhost::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-    CWimpEnemy::Init();
+    CWimpEnemy::Init(pos, COLLISION_SIZE, rot);
     SetAttackInfo(ATTACK_INTER, ATTACK_STR, ATTACK_POWER);
     SetCharacterInfo(pos, rot);
     SetSpeed(SPEED);
@@ -105,6 +108,10 @@ void CGhost::Update()
 
     // 移動処理
     Move();
+
+    // 当たり判定
+    Collision();
+
 }
 
 //=============================================================================
@@ -141,6 +148,7 @@ void CGhost::Move()
         // 追従
         if (Follow())
         {
+
             // 一定の距離に近づいたら
             if (CLibrary::CalDistance(
                 CManager::GetInstance()->GetPlayer()->GetPos(), GetPos()) <= FOLLOW_END_DISTANCE)

@@ -492,6 +492,9 @@
     <ClCompile Include="particlepop.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="sky.cpp">
+      <Filter>08_Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -838,6 +841,9 @@
     </ClInclude>
     <ClInclude Include="particlepop.h">
       <Filter>06_Effect\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="sky.h">
+      <Filter>08_Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

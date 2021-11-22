@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// カジキクラス [marlin.cpp]
+// 空クラス [sky.cpp]
 // Author : Konishi Yuuto
 //
 //=============================================================================
@@ -8,46 +8,51 @@
 //=============================================================================
 // インクルード
 //=============================================================================
-#include "marlin.h"
-#include "marlin_model.h"
+#include "sky.h"
+#include "manager.h"
+#include "renderer.h"
+#include "game.h"
+#include "texture.h"
+#include "resource_manager.h"
+#include "xfile.h"
+#include "model_info.h"
+#include "player.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define ATTACK_INTER    (150)                                   // 攻撃間隔
-#define ATTACK_STR      (20)                                    // 攻撃力
-#define ATTACK_POWER    (2.0f)                                  // 吹っ飛ばし力
-#define SPEED           (130.0f)                                // スピード
-#define POS             (D3DXVECTOR3(-3500.0f, -200.0f, 0.0f))  // 座標
-#define COLLISION_SIZE  (D3DXVECTOR3(m_fCollisionSize, m_fCollisionSize, m_fCollisionSize))
-
-const float CMarlin::m_fCollisionSize = 500.0f;
+#define TEST_POS        (ZeroVector3)
+#define TEST_ROT        (ZeroVector3)
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CMarlin::CMarlin(PRIORITY Priority) : CWimpEnemy(Priority)
+CSky::CSky(PRIORITY Priority) : CModel(Priority)
 {
-    m_pMarlinModel = nullptr;
+
 }
 
 //=============================================================================
 // デストラクタ
 //=============================================================================
-CMarlin::~CMarlin()
+CSky::~CSky()
 {
 }
 
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CMarlin * CMarlin::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
+CSky * CSky::Create()
 {
-    CMarlin *pMarlin = new CMarlin;
-    if (pMarlin)
+    // メモリ確保
+    CSky *pTestModel = new CSky(PRIORITY_TEST_MODEL);
+
+    // !nullcheck
+    if (pTestModel)
     {
-        pMarlin->Init(pos, rot);
-        return pMarlin;
+        // 初期化処理
+        pTestModel->Init();
+        return pTestModel;
     }
 
     return nullptr;
@@ -56,14 +61,14 @@ CMarlin * CMarlin::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CMarlin::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
+HRESULT CSky::Init()
 {
-    CWimpEnemy::Init(pos, COLLISION_SIZE, rot);
-    SetAttackInfo(ATTACK_INTER, ATTACK_STR, ATTACK_POWER);
-    SetCharacterInfo(pos, rot);
-    SetSpeed(SPEED);
+    // 初期化処理
+    CModel::Init();
 
-    CreateModel();
+    CXfile *pXfile = GET_XFILE_PTR;
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_SKY_BLUE);
+    GetModelInfo()->SetModelStatus(TEST_POS, TEST_ROT, model);
 
     return S_OK;
 }
@@ -71,48 +76,29 @@ HRESULT CMarlin::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CMarlin::Uninit()
+void CSky::Uninit()
 {
-    // モデル更新処理
-    if (m_pMarlinModel)
-    {
-        m_pMarlinModel->Uninit();
-    }
-
-    CWimpEnemy::Uninit();
+    CModel::Uninit();
 }
 
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CMarlin::Update()
+void CSky::Update()
 {
-    CWimpEnemy::Update();
-
-    // モデル更新処理
-    if (m_pMarlinModel)
-    {
-        m_pMarlinModel->SetPos(GetPos());
-    }
+    CModel::Update();
 }
 
 //=============================================================================
-// モデルの生成
+// 描画処理
 //=============================================================================
-void CMarlin::CreateModel()
+void CSky::Draw()
 {
-    // モデル生成
-    if (!m_pMarlinModel)
-    {
-        m_pMarlinModel = CMarlinModel::Create(GetPos());
-    }
-}
+    LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
+    pDevice->SetRenderState(D3DRS_LIGHTING, false);
 
-//=============================================================================
-// 攻撃関数
-//=============================================================================
-void CMarlin::Attack()
-{
-    // 追従攻撃
-    Rush();
+    CModel::Draw();
+
+    // ライト効果を付ける
+    pDevice->SetRenderState(D3DRS_LIGHTING, true);
 }

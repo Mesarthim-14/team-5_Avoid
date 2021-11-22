@@ -97,7 +97,7 @@ void CHeel::Update()
         if (HeelPoint->Collision())
         {
             // ‰ñ•œ
-            CManager::GetInstance()->GetPlayer()->SubLife(HEEL_NUM);
+            CManager::GetInstance()->GetPlayer()->SubLife(-HEEL_NUM);
         }
     }
 }

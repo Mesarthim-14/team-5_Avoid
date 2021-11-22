@@ -30,6 +30,7 @@
 #include "ghost.h"
 #include "gimmick_factory.h"
 #include "kraken.h"
+#include "sky.h"
 
 float CGame::m_fGravity = 1.5f;
 //=======================================================================================
@@ -174,6 +175,8 @@ void CGame::CreateMap()
 {
     CTestModel::Create();
     CWaterFresnel::Create();
+    CSky::Create();
+
     if (!m_pGimmickFactory)
     {
         m_pGimmickFactory = CGimmickFactory::Create();
@@ -197,7 +200,7 @@ void CGame::ShowInfo()
         // èdóÕÇÃíl
         ImGui::SliderFloat("Gravity", &m_fGravity, 0.0f, 50.0f);
 
-        //    ImGui::TreePop();
+        // ImGui::TreePop();
     }
 
     ImGui::End();

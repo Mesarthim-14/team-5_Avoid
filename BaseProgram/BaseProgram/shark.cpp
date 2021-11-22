@@ -19,6 +19,9 @@
 #define ATTACK_POWER    (2.0f)                                  // 吹っ飛ばし力
 #define SPEED           (130.0f)                                // スピード
 #define POS             (D3DXVECTOR3(-3500.0f, -200.0f, 0.0f))  // 座標
+#define COLLISION_SIZE  (D3DXVECTOR3(m_fCollisionSize, m_fCollisionSize, m_fCollisionSize))
+
+const float CShark::m_fCollisionSize = 500.0f;
 
 //=============================================================================
 // コンストラクタ
@@ -57,7 +60,7 @@ CShark * CShark::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 //=============================================================================
 HRESULT CShark::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-    CWimpEnemy::Init();
+    CWimpEnemy::Init(pos, COLLISION_SIZE, rot);
     SetAttackInfo(ATTACK_INTER, ATTACK_STR, ATTACK_POWER);
     SetCharacterInfo(pos, rot);
     SetSpeed(SPEED);

@@ -13,16 +13,18 @@
 #include "manager.h"
 #include "game.h"
 #include "library.h"
-#include "skinmesh_model.h"
-#include "animation_skinmesh.h"
 #include "state_player_normal.h"
+
+//=====================================================================
+// マクロ定義
+//=====================================================================
+#define KNOCK_TIME  (150)   // ノックの時間
 
 //=====================================================================
 // コンストラクタ
 //=====================================================================
 CPlayerStateKnockback::CPlayerStateKnockback()
 {
-    m_nStanCount = 0;
 }
 
 //=====================================================================
@@ -36,15 +38,16 @@ CPlayerStateKnockback::~CPlayerStateKnockback()
 //=====================================================================
 // インスタンス生成
 //=====================================================================
-CPlayerStateKnockback * CPlayerStateKnockback::Create()
+CPlayerStateKnockback * CPlayerStateKnockback::Create(const D3DXVECTOR3& move)
 {
     // メモリ確保
-    CPlayerStateKnockback *pStateJump = new CPlayerStateKnockback;
-    if (pStateJump)
+    CPlayerStateKnockback *pState = new CPlayerStateKnockback;
+    if (pState)
     {
         // 初期化処理
-        pStateJump->Init();
-        return pStateJump;
+        pState->SetMove(move);
+        pState->Init();
+        return pState;
     }
     return nullptr;
 }
@@ -69,5 +72,24 @@ void CPlayerStateKnockback::Update()
         return;
     }
 
-    D3DXVECTOR3 move = pPlayer->GetMove();
+    if (pPlayer->GetLanding())
+    {
+        pPlayer->ChangeState(CPlayerStateNormal::Create());
+    }
+}
+
+//=====================================================================
+// 移動量設定
+//=====================================================================
+void CPlayerStateKnockback::SetMove(const D3DXVECTOR3 &move)
+{
+    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    if (!pPlayer)
+    {
+        return;
+    }
+
+    pPlayer->SetMove(move);
+    pPlayer->SetLanding(false);
+
 }
