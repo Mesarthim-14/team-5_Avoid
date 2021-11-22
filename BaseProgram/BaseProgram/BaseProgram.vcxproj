@@ -201,6 +201,8 @@
     <ClCompile Include="motion.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="particleaura.cpp" />
+    <ClCompile Include="particlecollective.cpp" />
+    <ClCompile Include="particlenormal.cpp" />
     <ClCompile Include="particlepop.cpp" />
     <ClCompile Include="particleshrink.cpp" />
     <ClCompile Include="particle_info.cpp" />
@@ -319,6 +321,8 @@
     <ClInclude Include="motion.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="particleaura.h" />
+    <ClInclude Include="particlecollective.h" />
+    <ClInclude Include="particlenormal.h" />
     <ClInclude Include="particlepop.h" />
     <ClInclude Include="particleshrink.h" />
     <ClInclude Include="particle_info.h" />
