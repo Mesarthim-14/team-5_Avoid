@@ -7,6 +7,7 @@
 
 //=====================================================================
 // インクルードファイル
+// Author : toshiki
 //=====================================================================
 #include "particlecollective.h"
 #include "manager.h"
@@ -17,6 +18,7 @@
 
 //=====================================================================
 // マクロ定義
+// Author : toshiki
 //=====================================================================
 #define POS			(ZeroVector3)
 #define SIZE		(D3DXVECTOR3(50.0f, 50.0f, 50.0f))
@@ -29,6 +31,7 @@
 
 //=====================================================================
 // コンストラクタ
+// Author : toshiki
 //=====================================================================
 CParticleCollective::CParticleCollective()
 {
@@ -38,6 +41,7 @@ CParticleCollective::CParticleCollective()
 
 //=====================================================================
 // デストラクタ
+// Author : toshiki
 //=====================================================================
 CParticleCollective::~CParticleCollective()
 {
@@ -46,14 +50,15 @@ CParticleCollective::~CParticleCollective()
 
 //=====================================================================
 // 生成処理
+// Author : toshiki
 //=====================================================================
-CParticleCollective * CParticleCollective::Create(void)
+CParticleCollective * CParticleCollective::Create(const D3DXVECTOR3 &pos)
 {
     CParticleCollective * pParticle = new CParticleCollective;
 
     if (pParticle != nullptr)
     {
-        pParticle->SetSceneInfo(POS, SIZE);
+        pParticle->SetSceneInfo(pos, SIZE);
 
         pParticle->Init();
         return pParticle;
@@ -63,6 +68,7 @@ CParticleCollective * CParticleCollective::Create(void)
 
 //=====================================================================
 // 初期化処理
+// Author : toshiki
 //=====================================================================
 HRESULT CParticleCollective::Init(void)
 {
@@ -73,6 +79,7 @@ HRESULT CParticleCollective::Init(void)
 
 //=====================================================================
 // 更新処理
+// Author : toshiki
 //=====================================================================
 void CParticleCollective::Update(void)
 {
@@ -81,6 +88,7 @@ void CParticleCollective::Update(void)
 
 //=====================================================================
 // 終了処理
+// Author : toshiki
 //=====================================================================
 void CParticleCollective::Uninit(void)
 {
@@ -89,6 +97,7 @@ void CParticleCollective::Uninit(void)
 
 //=====================================================================
 // 描画処理
+// Author : toshiki
 //=====================================================================
 void CParticleCollective::Draw(void)
 {
@@ -97,6 +106,7 @@ void CParticleCollective::Draw(void)
 
 //=====================================================================
 // パーティクルを出す処理
+// Author : toshiki
 //=====================================================================
 void CParticleCollective::SetParticle(void)
 {

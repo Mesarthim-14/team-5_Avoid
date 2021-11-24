@@ -31,6 +31,8 @@
 #include "gimmick_factory.h"
 #include "kraken.h"
 #include "sky.h"
+#include "gauge.h"
+#include "gaugebar.h"
 
 float CGame::m_fGravity = 1.5f;
 //=======================================================================================
@@ -63,6 +65,8 @@ HRESULT CGame::Init()
     CreatePlayer();
     CreateEnemy();
     CreateMap();
+    CGauge::Create();
+    CGaugebar::Create();
 
     return S_OK;
 }

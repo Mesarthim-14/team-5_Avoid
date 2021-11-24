@@ -51,7 +51,7 @@ CParticlePop::~CParticlePop()
 // ê∂ê¨èàóù
 // Author : toshiki
 //=====================================================================
-CParticlePop * CParticlePop::Create(D3DXVECTOR3 pos)
+CParticlePop * CParticlePop::Create(const D3DXVECTOR3 &pos)
 {
     CParticlePop * pParticlePop = new CParticlePop;
 

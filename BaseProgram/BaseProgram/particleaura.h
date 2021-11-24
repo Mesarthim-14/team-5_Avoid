@@ -24,7 +24,7 @@ public:
     CParticleAura();
     ~CParticleAura();
 
-    static CParticleAura * Create(D3DXVECTOR3 pos);
+    static CParticleAura * Create(const D3DXVECTOR3 &pos);
     HRESULT Init();
     void Update();
     void Uninit();
