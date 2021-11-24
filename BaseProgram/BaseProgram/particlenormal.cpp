@@ -7,6 +7,7 @@
 
 //=====================================================================
 // インクルードファイル
+// Author : toshiki
 //=====================================================================
 #include "particlenormal.h"
 #include "manager.h"
@@ -17,6 +18,7 @@
 
 //=====================================================================
 // マクロ定義
+// Author : toshiki
 //=====================================================================
 #define POS         (ZeroVector3)
 #define SIZE        (D3DXVECTOR3(50.0f, 50.0f, 50.0f))
@@ -27,6 +29,7 @@
 
 //=====================================================================
 // コンストラクタ
+// Author : toshiki
 //=====================================================================
 CParticleNormal::CParticleNormal()
 {
@@ -36,6 +39,7 @@ CParticleNormal::CParticleNormal()
 
 //=====================================================================
 // デストラクタ
+// Author : toshiki
 //=====================================================================
 CParticleNormal::~CParticleNormal()
 {
@@ -44,14 +48,15 @@ CParticleNormal::~CParticleNormal()
 
 //=====================================================================
 // 生成処理
+// Author : toshiki
 //=====================================================================
-CParticleNormal * CParticleNormal::Create(void)
+CParticleNormal * CParticleNormal::Create(const D3DXVECTOR3 &pos)
 {
     CParticleNormal * pParticle = new CParticleNormal;
 
     if (pParticle != nullptr)
     {
-        pParticle->SetSceneInfo(POS, SIZE);
+        pParticle->SetSceneInfo(pos, SIZE);
 
         pParticle->Init();
         return pParticle;
@@ -61,6 +66,7 @@ CParticleNormal * CParticleNormal::Create(void)
 
 //=====================================================================
 // 初期化処理
+// Author : toshiki
 //=====================================================================
 HRESULT CParticleNormal::Init(void)
 {
@@ -71,6 +77,7 @@ HRESULT CParticleNormal::Init(void)
 
 //=====================================================================
 // 更新処理
+// Author : toshiki
 //=====================================================================
 void CParticleNormal::Update(void)
 {
@@ -79,6 +86,7 @@ void CParticleNormal::Update(void)
 
 //=====================================================================
 // 終了処理
+// Author : toshiki
 //=====================================================================
 void CParticleNormal::Uninit(void)
 {
@@ -87,6 +95,7 @@ void CParticleNormal::Uninit(void)
 
 //=====================================================================
 // 描画処理
+// Author : toshiki
 //=====================================================================
 void CParticleNormal::Draw(void)
 {
@@ -95,6 +104,7 @@ void CParticleNormal::Draw(void)
 
 //=====================================================================
 // パーティクルを出す処理
+// Author : toshiki
 //=====================================================================
 void CParticleNormal::SetParticle(void)
 {

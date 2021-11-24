@@ -24,7 +24,7 @@ public:
     CParticleCollective();
     ~CParticleCollective();
 
-    static CParticleCollective * Create(void);
+    static CParticleCollective * Create(const D3DXVECTOR3 &pos);
     HRESULT Init(void);
     void Update(void);
     void Uninit(void);

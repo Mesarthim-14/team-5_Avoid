@@ -24,7 +24,7 @@ public:
     CParticlePop();
     ~CParticlePop();
 
-    static CParticlePop * Create(D3DXVECTOR3 pos);
+    static CParticlePop * Create(const D3DXVECTOR3 &pos);
     HRESULT Init();
     void Update();
     void Uninit();

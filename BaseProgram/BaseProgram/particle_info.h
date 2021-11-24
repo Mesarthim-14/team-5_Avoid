@@ -39,11 +39,12 @@ public:
 
 private:
     void Gravity();
+    void Erase();
     //==================
     // メンバ変数
     //==================
-    D3DXVECTOR3 m_move;        // パーティクルの移動量
-    int m_nLife;            // パーティクルのライフ
+    D3DXVECTOR3 m_move;         // パーティクルの移動量
+    int m_nLife;                // パーティクルのライフ
     bool m_bGravitySet;
 };
 
