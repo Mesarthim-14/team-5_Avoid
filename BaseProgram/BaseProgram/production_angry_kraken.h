@@ -1,8 +1,8 @@
-#ifndef _PRODUCTION_CANNON_H_
-#define _PRODUCTION_CANNON_H_
+#ifndef _PRODUCTION_ANGRY_KRAKEN_H_
+#define _PRODUCTION_ANGRY_KRAKEN_H_
 //=======================================================================================
 //
-// 大砲時の演出クラス [production_cannon.h]
+// クラーケンが怒る演出クラス [production_angry_kraken.h]
 // Author : Konishi Yuuto
 //
 //=======================================================================================
@@ -15,15 +15,16 @@
 //=======================================================================================
 // クラス定義
 //=======================================================================================
-class CProductionCannon : public CProduction
+class CProductionAngryKraken : public CProduction
 {
 public:
-    CProductionCannon();    // コンストラクタ
-    ~CProductionCannon();   // デストラクタ
+    CProductionAngryKraken();    // コンストラクタ
+    ~CProductionAngryKraken();   // デストラクタ
 
-    static CProductionCannon* Create(); // インスタンス生成
-    void Init();                        // 初期化処理
-    void Update();                      // 更新処理
+    static CProductionAngryKraken* Create();    // インスタンス生成
+    void Init();                                // 初期化処理
+    void Uninit();                              // 終了処理
+    void Update();                              // 更新処理
 
 private:
 };

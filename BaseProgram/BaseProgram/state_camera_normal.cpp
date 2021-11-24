@@ -169,7 +169,7 @@ void CCameraStateNormal::KeyBoardMove(CCamera* &pCamera)
     }
 
     D3DXVECTOR3 PlayerPos = pPlayer->GetPos();    //プレイヤー位置
-    D3DXVECTOR3 PlayerRot = pPlayer->GetPos();    //プレイヤー位置
+    D3DXVECTOR3 PlayerRot = pPlayer->GetRot();    //プレイヤー位置
 
     // カメラ座標
     float fDistance = pCamera->GetDistance();

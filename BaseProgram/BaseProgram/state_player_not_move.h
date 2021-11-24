@@ -1,8 +1,8 @@
-#ifndef _STATE_H_
-#define _STATE_H_
+#ifndef _STATE_PLAYER_STUN_H_
+#define _STATE_PLAYER_STUN_H_
 //=====================================================================
 //
-// 状態管理クラス処理[state.h]
+// ジャンプ状態管理クラス [state_player_stun.h]
 // Author : Konishi Yuuto
 //
 //=====================================================================
@@ -10,15 +10,22 @@
 //=====================================================================
 // インクルードファイル
 //=====================================================================
-#include "main.h"
+#include "state_player.h"
 
 //=====================================================================
-// 前方宣言
+// クラス定義
 //=====================================================================
-class CState
+class CPlayerStateNotMove : public CPlayerState
 {
 public:
-    virtual void Init() = 0;                // 初期化処理
-    virtual void Update() = 0;              // 更新処理
+    CPlayerStateNotMove();     // コンストラクタ
+    ~CPlayerStateNotMove();    // デストラクタ
+
+    static CPlayerStateNotMove* Create();  // インスタンス生成
+    void Init();                           // 初期化処理
+    void Update()override;                 // 更新処理
+
+private:
+    int m_nLimit;
 };
 #endif

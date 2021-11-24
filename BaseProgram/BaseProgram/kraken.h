@@ -34,6 +34,7 @@ public:
 
     inline void SubLife()           { m_nLife--; }
     CCollisionModel* GetCollosion() { return m_pCollision; }
+    inline bool GetDead()const      { return m_bDead; }
 
 private:
     // private関数
@@ -45,5 +46,6 @@ private:
     int m_nBulletCount;                 // 発射カウント
     CCollisionModel* m_pCollision;      // 当たり判定
     int m_nLife;                        // ライフ
+    bool m_bDead;                       // 死んだフラグ
 };
 #endif

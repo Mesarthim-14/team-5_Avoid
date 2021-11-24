@@ -71,7 +71,6 @@ HRESULT CHeelPoint::Init(const D3DXVECTOR3 &pos)
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_RECOVER);
     GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
-    GetModelInfo()->CreateShadowPtr();
     return S_OK;
 }
 

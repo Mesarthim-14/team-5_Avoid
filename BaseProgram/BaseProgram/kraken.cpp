@@ -31,6 +31,7 @@ CKraken::CKraken(PRIORITY Priority) : CEnemy(Priority)
     m_nBulletCount = 0;
     m_pCollision = nullptr;
     m_nLife = MAX_LIFE;
+    m_bDead = false;
 }
 
 //=============================================================================
@@ -109,9 +110,10 @@ void CKraken::Update()
         m_pCollision->SetRot(GetRot());
     }
 
+    // ‘Ì—Í‚ª–³‚­‚È‚Á‚½‚ç
     if (m_nLife <= 0)
     {
-        Uninit();
+        m_bDead = true;
     }
 }
 

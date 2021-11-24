@@ -17,7 +17,7 @@
 //=========================================================================
 class CCannon;
 class CKeyE;
-class CProductionCannon;
+class CProductionCannonManager;
 
 //=========================================================================
 // クラス定義
@@ -36,6 +36,7 @@ public:
 
     // Get関数
     inline CCannon* GetCurrentCannon()const { return m_apCannon.at(m_nTargetCannon); }
+
 private:
     // private関数
     void CreateCannon();        // 旗の生成
@@ -45,11 +46,11 @@ private:
     void CreateBullet();        // 大砲の弾生成
     void SetProductionMode();   // 大砲の演出モードへ以降
 
-    vector<CCannon*> m_apCannon;        // 大砲のポインタ
-    int m_nAttackNum;                   // 攻撃した回数
-    CKeyE *m_pKeyE;                     // EキーのUIポインタ
-    int m_nTargetCannon;                // 対象となる大砲の番号
-    CProductionCannon *m_pProduction;   // 演出のポインタ
+    vector<CCannon*> m_apCannon;                // 大砲のポインタ
+    int m_nAttackNum;                           // 攻撃した回数
+    CKeyE *m_pKeyE;                             // EキーのUIポインタ
+    int m_nTargetCannon;                        // 対象となる大砲の番号
+    CProductionCannonManager *m_pProduction;    // 演出のポインタ
 };
 
 #endif
