@@ -294,3 +294,23 @@ void SkinMesh::updateCombMatrix(std::map<DWORD, D3DXMATRIX>& combMatrixMap, D3DX
 {
     boneMatrixLink(combMatrixMap, matrix, frame);
 }
+
+// ブレンド行列インデックス作成
+void SkinMesh::createBlendIndex(BlendIndex** ppIndex, D3DXBONECOMBINATION* pBoneComb, DWORD boneCombNum)
+{
+	*ppIndex = new BlendIndex[boneCombNum];
+	BlendIndex *bi = *ppIndex;
+
+	for (DWORD i = 0; i < boneCombNum; ++i)
+	{
+		memcpy(bi[i].index, pBoneComb[i].BoneId, sizeof(DWORD) * 4);
+		bi[i].boneNum = 0;
+		for (int j = 0; j < 4; ++j)
+		{
+			if (pBoneComb[i].BoneId[j] != UINT_MAX)
+			{
+				bi[i].boneNum++;
+			}
+		}
+	}
+}
