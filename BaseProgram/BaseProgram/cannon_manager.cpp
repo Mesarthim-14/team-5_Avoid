@@ -25,7 +25,7 @@
 #include "cannon_bullet.h"
 #include "player.h"
 #include "camera_game.h"
-#include "production_cannon.h"
+#include "production_cannon_manager.h"
 #include "state_camera_cannon.h"
 #include "state_player_cannon.h"
 
@@ -72,8 +72,8 @@ CCannonManager * CCannonManager::Create()
 //=============================================================================
 HRESULT CCannonManager::Init()
 {
-    CreateCannon();    // Šø‚Ì¶¬
-    CreateUi();        // UI‚Ì¶¬
+    CreateCannon(); // Šø‚Ì¶¬
+    CreateUi();     // UI‚Ì¶¬
 
     return S_OK;
 }
@@ -206,6 +206,6 @@ void CCannonManager::SetProductionMode()
     // ‘å–C‚Ì‰‰o
     if (!m_pProduction)
     {
-        m_pProduction = CProductionCannon::Create();
+        m_pProduction = CProductionCannonManager::Create();
     }
 }

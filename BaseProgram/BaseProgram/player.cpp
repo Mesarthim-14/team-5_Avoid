@@ -219,7 +219,7 @@ CSkinmeshModel *CPlayer::GetCurrentSkinMeshPtr()
 // 状態の変更
 // Author : Konishi Yuuto
 //=============================================================================
-void CPlayer::ChangeState(CPlayerState *pPlayerState)
+void CPlayer::ChangeState(CState *pPlayerState)
 {
 	m_pNextState = pPlayerState;
 }
@@ -446,8 +446,8 @@ void CPlayer::SubLife(const int &nDamage)
             {
                 m_nHP = 100;
             }
-			ChangeModel();
 		}
+        ChangeModel();
 	}
 }
 

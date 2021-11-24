@@ -1,14 +1,14 @@
 //=====================================================================
 //
-//    カメラ通常状態管理クラス [state_camera_cannon.h]
-//    Author : Konishi Yuuto
+// クラーケン怒り演出カメラ [state_camera_angry_kraken.h]
+// Author : Konishi Yuuto
 //
 //=====================================================================
 
 //=====================================================================
 // インクルードファイル
 //=====================================================================
-#include "state_camera_cannon.h"
+#include "state_camera_angry_kraken.h"
 #include "library.h"
 #include "manager.h"
 #include "game.h"
@@ -16,22 +16,19 @@
 #include "camera.h"
 #include "keyboard.h"
 #include "renderer.h"
-#include "cannon.h"
-#include "gimmick_factory.h"
-#include "cannon_manager.h"
+#include "kraken.h"
 
 //=====================================================================
 // マクロ定義
 //=====================================================================
-#define DISTANCE        (3000.0f)               // 距離
-#define CANNON_HEIGHT   (1000.0f)               // 大砲の高さ
-#define SHIFT_ANGLE     (D3DXToRadian(20.0f))   // ずらす角度
-#define ANGLE_POS       (800.0f)                // 視点の高さ
+#define KRAKEN_HEIGHT   (800.0f)    // クラーケンの高さ
+#define DISTANCE        (8000.0f)   // 距離
+#define ANGLE_POS       (1200.0f)   // 視点の高さ
 
 //=====================================================================
 // コンストラクタ
 //=====================================================================
-CCameraStateCannon::CCameraStateCannon()
+CCameraStateAngryKraken::CCameraStateAngryKraken()
 {
 
 }
@@ -39,7 +36,7 @@ CCameraStateCannon::CCameraStateCannon()
 //=====================================================================
 // デストラクタ
 //=====================================================================
-CCameraStateCannon::~CCameraStateCannon()
+CCameraStateAngryKraken::~CCameraStateAngryKraken()
 {
 
 }
@@ -47,10 +44,10 @@ CCameraStateCannon::~CCameraStateCannon()
 //=====================================================================
 // インスタンス生成
 //=====================================================================
-CCameraStateCannon * CCameraStateCannon::Create()
+CCameraStateAngryKraken * CCameraStateAngryKraken::Create()
 {
     // メモリ確保
-    CCameraStateCannon *pStateNormal = new CCameraStateCannon;
+    CCameraStateAngryKraken *pStateNormal = new CCameraStateAngryKraken;
     if (pStateNormal)
     {
         // 初期化処理
@@ -64,7 +61,7 @@ CCameraStateCannon * CCameraStateCannon::Create()
 //=====================================================================
 // 初期化処理
 //=====================================================================
-void CCameraStateCannon::Init()
+void CCameraStateAngryKraken::Init()
 {
 
 }
@@ -72,7 +69,7 @@ void CCameraStateCannon::Init()
 //=====================================================================
 // 更新処理
 //=====================================================================
-void CCameraStateCannon::Update()
+void CCameraStateAngryKraken::Update()
 {
     CCamera *pCamera = CManager::GetInstance()->GetCamera();
     if (!pCamera)
@@ -80,31 +77,40 @@ void CCameraStateCannon::Update()
         return;
     }
 
-    // 大砲へ追従
-    TrackingCannon(pCamera);
+    // クラーケンを見る
+    ViewKraken(pCamera);
 }
 
 //=====================================================================
-// 大砲の向き
+// クラーケンを見る処理
 //=====================================================================
-void CCameraStateCannon::TrackingCannon(CCamera* &pCamera)
+void CCameraStateAngryKraken::ViewKraken(CCamera* &pCamera)
 {
-    CCannon* pCannon = CManager::GetInstance()->GetGame()->GetGimmickFactory()->GetCannonManager()->GetCurrentCannon();
-    D3DXVECTOR3 CannonPos = pCannon->GetPos();
-    D3DXVECTOR3 CannonRot = pCannon->GetRot();
-    float fDistance = DISTANCE;
-    float fVartical = pCamera->GetVartical();
+    // ポインタ取得
+    CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();
+    if (!pKraken)
+    {
+        return;
+    }
+
+    // カメラ座標
     D3DXVECTOR3 VDest = ZeroVector3;
-    D3DXVECTOR3 posRDest = ZeroVector3;
+    D3DXVECTOR3 posRDest = pCamera->GetposRDest();  // 目的の角度
+    D3DXVECTOR3 pos = pKraken->GetPos();            // 位置
+    D3DXVECTOR3 rot = pKraken->GetRot();            // 角度
+    float fDistance = DISTANCE;                     // 距離
+    float fVartical = pCamera->GetVartical();       // 角度
+    float fHorizontal = pCamera->GetHorizontal();   // 角度
+
+    posRDest = D3DXVECTOR3(pos.x, pos.y + KRAKEN_HEIGHT, pos.z);    //注視点設定
 
     // カメラの位置設定
-    VDest.x = CannonPos.x + fDistance * sinf(fVartical) * -sinf(CannonRot.y- SHIFT_ANGLE);  // カメラ位置X設定
-    VDest.y = CannonPos.y /*+ CANNON_HEIGHT*/ + ANGLE_POS * cosf(fVartical);                // カメラ位置Y設定
-    VDest.z = CannonPos.z + fDistance * sinf(fVartical) * -cosf(CannonRot.y- SHIFT_ANGLE);  // カメラ位置Z設定
-
-    posRDest = D3DXVECTOR3(CannonPos.x, CannonPos.y + CANNON_HEIGHT, CannonPos.z);    //注視点設定
+    VDest.x = pos.x + fDistance * sinf(fVartical) * sinf(rot.y + fHorizontal);  // カメラ位置X設定
+    VDest.y = pos.y + ANGLE_POS * cosf(fVartical);                              // カメラ位置Y設定
+    VDest.z = pos.z + fDistance * sinf(fVartical) * cosf(rot.y + fHorizontal);  // カメラ位置Z設定
 
     //設定値の反映
-    pCamera->GetposV() += (VDest - pCamera->GetposV())*0.1f;
-    pCamera->GetposR() += (posRDest - pCamera->GetposR())*0.9f;
+    pCamera->GetposV() += (VDest - pCamera->GetposV());
+    pCamera->GetposR() += (posRDest - pCamera->GetposR());
+
 }

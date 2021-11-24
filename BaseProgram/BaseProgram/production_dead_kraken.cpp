@@ -1,6 +1,6 @@
 //=======================================================================================
 //
-// 大砲時の演出 [production_cannon.cpp]
+// クラーケンが死ぬ演出 [production_dead_kraken.cpp]
 // Author : Konishi Yuuto
 //
 //=======================================================================================
@@ -8,7 +8,7 @@
 //=======================================================================================
 // インクルード
 //=======================================================================================
-#include "production_cannon.h"
+#include "production_dead_kraken.h"
 #include "manager.h"
 #include "renderer.h"
 #include "player.h"
@@ -18,41 +18,32 @@
 #include "gimmick_factory.h"
 #include "player.h"
 #include "camera_game.h"
-#include "state_player_cannon.h"
+#include "state_player_not_move.h"
 #include "state_player_normal.h"
-#include "state_camera_cannon.h"
 #include "state_camera_normal.h"
-#include "cannon_bullet.h"
-#include "cannon.h"
-#include "cannon_manager.h"
-
-//=======================================================================================
-// マクロ定義
-//=======================================================================================
-#define SHOT_BULLET_TIME    (60)    // 弾を打つ時間
-#define END_TIME            (240)   // 終了時間
+#include "state_camera_angry_kraken.h"
 
 //=======================================================================================
 // コンストラクタ
 //=======================================================================================
-CProductionCannon::CProductionCannon()
+CProductionDeadKraken::CProductionDeadKraken()
 {
 }
 
 //=======================================================================================
 // デストラクタ
 //=======================================================================================
-CProductionCannon::~CProductionCannon()
+CProductionDeadKraken::~CProductionDeadKraken()
 {
 }
 
 //=======================================================================================
 // インスタンス生成
 //=======================================================================================
-CProductionCannon * CProductionCannon::Create()
+CProductionDeadKraken * CProductionDeadKraken::Create()
 {
     // メモリ確保
-    CProductionCannon *pProductionCannon = new CProductionCannon;
+    CProductionDeadKraken *pProductionCannon = new CProductionDeadKraken;
     if (pProductionCannon)
     {
         // インスタンス生成
@@ -66,23 +57,32 @@ CProductionCannon * CProductionCannon::Create()
 //=======================================================================================
 // 初期化処理
 //=======================================================================================
-void CProductionCannon::Init()
+void CProductionDeadKraken::Init()
 {
     CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
-    CreateState(pPlayer, CPlayerStateCannon::Create());
-
     CCameraGame *pCamera = (CCameraGame*)CManager::GetInstance()->GetCamera();
-    CreateState(pCamera, CCameraStateCannon::Create());
+
+    CreateState(pPlayer, CPlayerStateNotMove::Create());
+    CreateState(pCamera, CCameraStateAngryKraken::Create());
+}
+
+//=======================================================================================
+// 終了処理
+//=======================================================================================
+void CProductionDeadKraken::Uninit()
+{
+    CProduction::Uninit();
 }
 
 //=======================================================================================
 // 更新処理
 //=======================================================================================
-void CProductionCannon::Update()
+void CProductionDeadKraken::Update()
 {
-    if (TimeCounter(END_TIME) == SHOT_BULLET_TIME)
+    TimeCounter(200);
+
+    if (GetEnd())
     {
-        CCannon* pCannon = CManager::GetInstance()->GetGame()->GetGimmickFactory()->GetCannonManager()->GetCurrentCannon();
-        CCannonBullet::Create(pCannon->GetPos(), pCannon->GetRot());
+        CManager::GetInstance()->GetGame()->GameEnd();
     }
 }

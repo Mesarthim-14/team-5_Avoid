@@ -1,9 +1,9 @@
-#ifndef _STATE_CAMERA_NORMAL_H_
-#define _STATE_CAMERA_NORMAL_H_
+#ifndef _STATE_CAMERA_ANGRY_KRAKEN_H_
+#define _STATE_CAMERA_ANGRY_KRAKEN_H_
 //=====================================================================
 //
-//    通常カメラ状態管理クラス [state_camera_normal.h]
-//    Author : Konishi Yuuto
+// クラーケン怒り演出カメラ [state_camera_angry_kraken.h]
+// Author : Konishi Yuuto
 //
 //=====================================================================
 
@@ -20,23 +20,16 @@ class CCamera;
 //=====================================================================
 // クラス定義
 //=====================================================================
-class CCameraStateNormal : public CCameraState
+class CCameraStateAngryKraken : public CCameraState
 {
 public:
-    CCameraStateNormal();                   // コンストラクタ
-    ~CCameraStateNormal();                  // デストラクタ
-    static CCameraStateNormal* Create();    // インスタンス生成
+    CCameraStateAngryKraken();                  // コンストラクタ
+    ~CCameraStateAngryKraken();                 // デストラクタ
+    static CCameraStateAngryKraken* Create();   // インスタンス生成
 
     void Init();            // 初期化処理
     void Update()override;  // 更新処理
-
 private:
-    // private関数
-    void MouseUpdate(CCamera* &pCamera);    // マウスの更新処理
-    void KeyBoardMove(CCamera* &pCamera);   // キーボードの更新処理
-    void ShowInfo();                        // 情報
-
-    // メンバ変数
-    bool m_bMouseCountrol;  // マウスのフラグ
+    void ViewKraken(CCamera* &pCamera); // クラーケンを見る処理
 };
 #endif

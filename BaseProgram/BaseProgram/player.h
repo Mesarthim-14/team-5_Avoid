@@ -12,17 +12,18 @@
 //=============================================================================
 #include "character.h"
 #include "skinmesh_model.h"
+#include "state_object.h"
 
 //=========================================================================
 // 前方宣言
 //=========================================================================
 class CCollisionModelOBB;
-class CPlayerState;
+class CState;
 
 //=============================================================================
 // プレイヤークラス
 //=============================================================================
-class CPlayer : public CCharacter
+class CPlayer : public CCharacter, public CStateObject
 {
 public:
 
@@ -70,7 +71,7 @@ public:
     void SaveInfo();                                // データセーブ
     void SubLife(const int &nDamage);               // ダメージ
     CSkinmeshModel* GetCurrentSkinMeshPtr();        // 現在のスキンメッシュポインタ
-    void ChangeState(CPlayerState* pPlayerState);   // 状態チェンジ
+    void ChangeState(CState* pPlayerState);         // 状態チェンジ
 
     // Set関数
     inline void SetAction(const int &nCount, const int &nMaxAction) { m_nMaxAction[nCount] = nMaxAction; }  // アクションの設定
@@ -108,8 +109,8 @@ private:
     ACTION_STATE m_ActionState;                         // 行動状態
     CSkinmeshModel *m_pSkinmeshModel[SLIME_STATE_MAX];  // スキンメッシュモデルポインタ
     int m_nMaxAction[SLIME_STATE_MAX];                  // アクションの最大数
-    CPlayerState* m_pCurrentState;                      // 現在の状態ポインタ
-    CPlayerState* m_pNextState;                         // 次の状態ポインタ
+    CState* m_pCurrentState;                            // 現在の状態ポインタ
+    CState* m_pNextState;                               // 次の状態ポインタ
     CCollisionModelOBB* m_pCollisionModelOBB;           // 当たり判定モデルのポインタ
 };
 #endif
