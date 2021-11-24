@@ -15,7 +15,7 @@
 //=========================================================================
 // 前方宣言
 //=========================================================================
-class CCollisionModel;
+class CCollisionModelOBB;
 
 //=========================================================================
 // クラス定義
@@ -34,7 +34,7 @@ public:
     void Hit();                     // 衝突判定
     void OBBs();                    // OBB衝突判定
 private:
-    CCollisionModel* m_pCollisionModel;    //当たり判定モデルのポインタ
+    CCollisionModelOBB* m_pCollisionModelOBB;    //当たり判定モデルのポインタ
 };
 
 #endif

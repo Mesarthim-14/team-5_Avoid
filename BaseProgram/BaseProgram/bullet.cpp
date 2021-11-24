@@ -17,6 +17,7 @@
 #include "xfile.h"
 #include "model_info.h"
 #include "player.h"
+#include "collisionModel_Sphere.h"
 
 //=============================================================================
 // マクロ定義
@@ -38,6 +39,7 @@ CBullet::CBullet(PRIORITY Priority) : CScene(Priority)
 	m_nDamage = 0;							        // ダメージ量
 	m_pos = ZeroVector3;
 	m_rot = ZeroVector3;
+    m_pCollisionModelSphere = nullptr;
 }
 
 //=============================================================================
@@ -72,6 +74,12 @@ CBullet * CBullet::Create(void)
 //=============================================================================
 HRESULT CBullet::Init(void)
 {
+    // 当たり判定モデル(球体)の生成
+    if (!m_pCollisionModelSphere)
+    {
+        m_pCollisionModelSphere = CCollisionModelSphere::Create(m_pos, m_size.x, m_rot);
+    }
+
 	return S_OK;
 }
 
@@ -80,7 +88,7 @@ HRESULT CBullet::Init(void)
 //=============================================================================
 void CBullet::Uninit(void)
 {
-
+    Release();
 }
 
 //=============================================================================
@@ -88,6 +96,12 @@ void CBullet::Uninit(void)
 //=============================================================================
 void CBullet::Update(void)
 {
+    // 当たり判定モデルの更新
+    if (m_pCollisionModelSphere)
+    {
+        m_pCollisionModelSphere->SetInfo(m_pos, m_size, m_rot);
+    }
+
 	// 位置更新
 	m_pos += m_move;
 
@@ -95,6 +109,12 @@ void CBullet::Update(void)
 
 	if (m_nLife < 0)
 	{
+        // 当たり判定モデルの終了処理
+        if (m_pCollisionModelSphere)
+        {
+            m_pCollisionModelSphere->Uninit();
+        }
+
 		Uninit();
 	}
 }

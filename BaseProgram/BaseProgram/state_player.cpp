@@ -17,6 +17,7 @@
 #include "animation_skinmesh.h"
 #include "camera.h"
 #include "particlepop.h"
+#include "particleshrink.h"
 
 //=====================================================================
 // コンストラクタ
@@ -153,10 +154,13 @@ void CPlayerState::MoveByKeyboard(CPlayer* &pPlayer)
 		rotDest.y = atan2f(Inertia.x, Inertia.z) + D3DXToRadian(180.0f);
 		m_bMove[0] = true;
 	}
-    // 
+    // （仮置き）パーティクル表示
     if (CLibrary::KeyboardTrigger(DIK_Z))
 	{
-		CParticlePop::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z));;
+        for (int n = 0; n <= 10; n++)
+        {
+            CParticlePop::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z));;
+        }
 	}
 
     // 座標設定

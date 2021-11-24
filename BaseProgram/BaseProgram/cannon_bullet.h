@@ -15,7 +15,7 @@
 //=========================================================================
 // 前方宣言
 //=========================================================================
-class CCollisionModel;
+class CCollisionModelOBB;
 
 //=========================================================================
 // クラス定義
@@ -36,10 +36,10 @@ private:
     void Collision();                                               // 当たり判定
 
     // メンバ変数
-    float m_fDistanceToKraken;      // 距離
-    D3DXVECTOR3 m_KrakenPos;        // クラーケンの座標
-    CCollisionModel* m_pCollision;  // 当たり判定
-    bool m_bHit;                    // 当たったかのフラグ
+    float m_fDistanceToKraken;          // 距離
+    D3DXVECTOR3 m_KrakenPos;            // クラーケンの座標
+    CCollisionModelOBB* m_pCollision;   // 当たり判定
+    bool m_bHit;                        // 当たったかのフラグ
 };
 
 #endif

@@ -12,6 +12,7 @@
 #include "particle_info.h"
 #include "scene3D.h"
 
+#define MOVE    (D3DXVECTOR3(0.0f,0.0f,0.0f))
 //=====================================================================
 // コンストラクタ
 // Author : toshiki
@@ -63,7 +64,7 @@ void CParticleInfo::Update()
     m_nLife--;
     if (m_nLife <= 0)
     {
-        Uninit();
+        Erase();
     }
     // 加算した情報を設定
     SetPos(pos);
@@ -95,7 +96,21 @@ void CParticleInfo::Gravity()
 {
     // 座標情報を取得
     D3DXVECTOR3 pos = GetPos();
-    m_move.y -= 0.1f;
+    m_move.y -= 0.5f;
     // 移動量を加算
     pos.y += m_move.y;
+
+    //if (pos.y <= 1.0f)
+    //{
+    //    m_move = MOVE;
+    //}
+}
+
+//=====================================================================
+// 指定消去処理
+// Author : toshiki
+//=====================================================================
+void CParticleInfo::Erase()
+{
+    Uninit();
 }

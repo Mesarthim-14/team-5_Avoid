@@ -163,6 +163,8 @@
     <ClCompile Include="check_point.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="collisionModel.cpp" />
+    <ClCompile Include="collisionModel_OBB.cpp" />
+    <ClCompile Include="collisionModel_Sphere.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="fresnel_lambert.cpp" />
@@ -288,6 +290,8 @@
     <ClInclude Include="check_point.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="collisionModel.h" />
+    <ClInclude Include="collisionModel_OBB.h" />
+    <ClInclude Include="collisionModel_Sphere.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="fresnel_lambert.h" />

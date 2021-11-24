@@ -106,13 +106,20 @@ HRESULT CSkinmeshModel::Init()
     //メッシュコンテナ取得関数
     SkinMesh::getMeshContainer(m_pRootFrame, &m_cont);
 
+	// ブレンド行列インデックス作成
+	SkinMesh::BlendIndex* pBlendIndex;
+
     for (unsigned int i = 0; i < m_cont.size(); i++)
     {
-        m_combs.push_back((D3DXBONECOMBINATION*)m_cont[i]->boneCombinationTable->GetBufferPointer());
+		m_combs.push_back((D3DXBONECOMBINATION*)m_cont[i]->boneCombinationTable->GetBufferPointer());
 
-        // フレーム内にボーンIDとオフセット行列を埋め込む
-        SkinMesh::setFrameId(m_pRootFrame, m_cont[i]->pSkinInfo);
-    }
+		m_cont[i]->pSkinInfo->ConvertToBlendedMesh(m_cont[i]->MeshData.pMesh, 0, 0, 0, 0, 0, &m_cont[i]->maxFaceInfl, &m_cont[i]->numBoneCombinations, &m_cont[i]->boneCombinationTable, &m_cont[i]->MeshData.pMesh);
+
+		// フレーム内にボーンIDとオフセット行列を埋め込む
+		SkinMesh::setFrameId(m_pRootFrame, m_cont[i]->pSkinInfo);
+
+		SkinMesh::createBlendIndex(&pBlendIndex, (D3DXBONECOMBINATION*)m_cont[i]->boneCombinationTable->GetBufferPointer(), m_cont[i]->numBoneCombinations);
+	}
 
     return S_OK;
 }

@@ -880,8 +880,7 @@
     </ClInclude>
     <ClInclude Include="particleshrink.h">
       <Filter>06_Effect\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="particlecollective.h">
+    </ClInclude>    <ClInclude Include="particlecollective.h">
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
     <ClInclude Include="particlenormal.h">

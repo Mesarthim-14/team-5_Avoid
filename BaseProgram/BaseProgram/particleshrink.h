@@ -24,7 +24,7 @@ public:
 	CParticleShrink();
 	~CParticleShrink();
 
-	static CParticleShrink * Create(void);
+	static CParticleShrink * Create(const D3DXVECTOR3 &pos);
 	HRESULT Init(void);
 	void Update(void);
 	void Uninit(void);
