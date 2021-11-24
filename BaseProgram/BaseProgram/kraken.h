@@ -16,7 +16,7 @@
 // 前方宣言
 //=============================================================================
 class CSkinmeshModel;
-class CCollisionModel;
+class CCollisionModelOBB;
 
 //=============================================================================
 // クラス定義
@@ -33,7 +33,7 @@ public:
     void Update();              // 更新処理
 
     inline void SubLife()           { m_nLife--; }
-    CCollisionModel* GetCollosion() { return m_pCollision; }
+    CCollisionModelOBB* GetCollosion() { return m_pCollision; }
 
 private:
     // private関数
@@ -43,7 +43,7 @@ private:
 
     CSkinmeshModel *m_pSkinmeshModel;   // スキンメッシュモデルポインタ
     int m_nBulletCount;                 // 発射カウント
-    CCollisionModel* m_pCollision;      // 当たり判定
+    CCollisionModelOBB* m_pCollision;   // 当たり判定
     int m_nLife;                        // ライフ
 };
 #endif

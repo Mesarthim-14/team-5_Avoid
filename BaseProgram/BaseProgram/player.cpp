@@ -214,7 +214,6 @@ CSkinmeshModel *CPlayer::GetCurrentSkinMeshPtr()
 
 	return nullptr;
 }
-}
 
 //=============================================================================
 // 状態の変更
