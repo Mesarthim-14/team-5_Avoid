@@ -16,7 +16,7 @@
 //=========================================================================
 // 前方宣言
 //=========================================================================
-class CCollisionModel;
+class CCollisionModelOBB;
 class CPlayerState;
 
 //=============================================================================
@@ -79,13 +79,13 @@ public:
     inline void SetAngle(const float& fAngle)                       { m_fAngle = fAngle; }                  // アングル
 
     // Get関数
-    inline int GetLife()const                       { return m_nHP; }               // HPの情報
-    inline float GetAngle()const                    { return m_fAngle; }            // アングル
-    inline D3DXVECTOR3 GetRotDest()const            { return m_rotDest; }           // 目的
-    inline D3DXVECTOR3 GetInertia()const            { return m_Inertia; }           // 慣性の情報
-    inline float GetInertiaNum()const               { return m_fInertiaNum; }       // 慣性の値
-    inline SLIME_STATE GetSlimeState()const         { return m_SlimeState; }        // スライムの状態
-    inline CCollisionModel* GetCollisionPtr()const  { return m_pCollisionModel; }   //当たり判定ポインタ
+    inline int GetLife()const                           { return m_nHP; }                   // HPの情報
+    inline float GetAngle()const                        { return m_fAngle; }                // アングル
+    inline D3DXVECTOR3 GetRotDest()const                { return m_rotDest; }               // 目的
+    inline D3DXVECTOR3 GetInertia()const                { return m_Inertia; }               // 慣性の情報
+    inline float GetInertiaNum()const                   { return m_fInertiaNum; }           // 慣性の値
+    inline SLIME_STATE GetSlimeState()const             { return m_SlimeState; }            // スライムの状態
+    inline CCollisionModelOBB* GetCollisionPtr()const   { return m_pCollisionModelOBB; }    //当たり判定ポインタ
 
 private:
     // private関数
@@ -110,6 +110,6 @@ private:
     int m_nMaxAction[SLIME_STATE_MAX];                  // アクションの最大数
     CPlayerState* m_pCurrentState;                      // 現在の状態ポインタ
     CPlayerState* m_pNextState;                         // 次の状態ポインタ
-    CCollisionModel* m_pCollisionModel;                 // 当たり判定モデルのポインタ
+    CCollisionModelOBB* m_pCollisionModelOBB;           // 当たり判定モデルのポインタ
 };
 #endif

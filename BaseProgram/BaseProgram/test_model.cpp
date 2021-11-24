@@ -17,7 +17,7 @@
 #include "xfile.h"
 #include "model_info.h"
 #include "player.h"
-#include "collisionModel.h"
+#include "collisionModel_OBB.h"
 #include "collision.h"
 
 //=============================================================================
@@ -31,7 +31,7 @@
 //=============================================================================
 CTestModel::CTestModel(PRIORITY Priority) : CModel(Priority)
 {
-    m_pCollisionModel = nullptr;
+    m_pCollisionModelOBB = nullptr;
 }
 
 //=============================================================================
@@ -74,9 +74,9 @@ HRESULT CTestModel::Init()
     GetModelInfo()->SetModelStatus(TEST_POS, TEST_ROT, model);
 
     //“–‚½‚è”»’èƒ‚ƒfƒ‹‚Ì¶¬
-    if (!m_pCollisionModel)
+    if (!m_pCollisionModelOBB)
     {
-        m_pCollisionModel = CCollisionModel::Create(GetModelInfo()->GetPos(), D3DXVECTOR3(5000.0f, 100.0f, 4200.0f), TEST_ROT, CCollisionModel::TYPE_BOX);
+        m_pCollisionModelOBB = CCollisionModelOBB::Create(GetModelInfo()->GetPos(), D3DXVECTOR3(5000.0f, 100.0f, 4200.0f), TEST_ROT);
     }
 
     return S_OK;
@@ -163,9 +163,9 @@ void CTestModel::OBBs()
 
     if (pPlayer)
     {
-        if (m_pCollisionModel && pPlayer->GetCollisionPtr())
+        if (m_pCollisionModelOBB && pPlayer->GetCollisionPtr())
         {
-            if (CCollision::ColOBBs(m_pCollisionModel->GetOBB(), pPlayer->GetCollisionPtr()->GetOBB()))
+            if (CCollision::ColOBBs(m_pCollisionModelOBB->GetOBB(), pPlayer->GetCollisionPtr()->GetOBB()))
             {
                 // ’…’n‚Ìˆ—
                 pPlayer->Landing(pPlayer->GetPos().y);

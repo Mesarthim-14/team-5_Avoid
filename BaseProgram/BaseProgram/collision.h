@@ -12,7 +12,7 @@
 //=============================================================================
 #include "main.h"
 #include "model.h"
-#include "collisionModel.h"
+#include "collisionModel_OBB.h"
 
 //=============================================================================
 // 当たり判定クラス
@@ -32,7 +32,7 @@ public:
     };
 
     //OBBとOBBの衝突判定
-    static bool ColOBBs(const CCollisionModel::OBB &obb1, const CCollisionModel::OBB &obb2);
+    static bool ColOBBs(const CCollisionModelOBB::OBB &obb1, const CCollisionModelOBB::OBB &obb2);
     //当たり判定(矩形と矩形)
     static bool CollisionRectangleAndRectangle(const D3DXVECTOR3 &pos1, const D3DXVECTOR3 &pos2, const D3DXVECTOR3 &size1, const D3DXVECTOR3 &size2);
     //当たり判定(円形と円形)

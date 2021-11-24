@@ -1,22 +1,16 @@
+#ifndef _COLLISION_MODEL_H_
+#define _COLLISION_MODEL_H_
 //=============================================================================
 //
-// 当たり判定モデルの処理 [collisionModel.h]
+// 当たり判定モデルの親クラス処理 [collisionModel.h]
 // Author : Suzuki Mahiro
 //
 //=============================================================================
-#ifndef _COLLISION_MODEL_H_
-#define _COLLISION_MODEL_H_
 
 //*****************************************************************************
 // インクルードファイル
 //*****************************************************************************
-#include "main.h"
 #include "scene.h"
-
-//*****************************************************************************
-// マクロ定義
-//*****************************************************************************
-#define AXIS_NUM_OBB (3) //OBBの軸数
 
 //*****************************************************************************
 //クラス定義
@@ -27,49 +21,47 @@ public:
     // 当たり判定タイプの列挙型
     enum TYPE
     {
-        TYPE_NONE = 0,
+        TYPE_NONE = -1,
         TYPE_POLYGON,   // ポリゴン
-        TYPE_BOX,       // 箱
-        TYPE_SPHERE,    // 球
+        TYPE_OBB,       // 直方体
+        TYPE_SPHERE,    // 球体
         TYPE_CYLINDER,  // 円柱
         TYPE_MAX
     };
 
-    //OBB情報の構造体
-    struct OBB
+    // 位置/大きさ/角度情報の構造体
+    struct COLLISION_MODEL_INFO
     {
-        D3DXVECTOR3 pos;                    // 位置
-        D3DXVECTOR3 size;                   // 大きさ
-        D3DXVECTOR3 rot;                    // 角度
-        D3DXVECTOR3 DirVect[AXIS_NUM_OBB];  // 方向ベクトル
-        TYPE CollisionType;                 // 当たり判定のタイプ
+        D3DXVECTOR3 pos;    // 位置
+        D3DXVECTOR3 size;   // 大きさ
+        D3DXVECTOR3 rot;    // 角度
     };
 
     CCollisionModel(PRIORITY = PRIORITY_COLLISION); // コンストラクタ
     ~CCollisionModel();                             // デストラクタ
 
-    void Load();        //ロード処理
-    void Unload();      //アンロード処理
+    void Load();    // ロード処理
+    void Unload();  // アンロード処理
 
-    static CCollisionModel *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size, const D3DXVECTOR3 &rot, const TYPE &type);    // 生成処理
+    HRESULT Init(); // 初期化処理
+    void Uninit();  // 終了処理
+    void Update();  // 更新処理
+    void Draw();    // 描画処理
 
-    HRESULT Init();        // 初期化処理
-    void Uninit(void);    // 終了処理
-    void Update(void);    // 更新処理
-    void Draw(void);    // 描画処理
+    inline void SetInfo(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size, const D3DXVECTOR3 &rot)
+    { m_info.pos = pos; m_info.size = size; m_info.rot = rot; }     // 位置/大きさ/角度の設定
 
-    // 各種設定
-    inline void SetPos(const D3DXVECTOR3 &pos)     { m_obb.pos = pos; }            // 位置
-    inline void SetSize(const D3DXVECTOR3 &size)   { m_obb.size = size; }          // 大きさ
-    inline void SetRot(const D3DXVECTOR3 &rot)     { m_obb.rot = rot; }            // 角度
-    inline void SetCollisionType(const TYPE &type) { m_obb.CollisionType = type; } // 種類
+    COLLISION_MODEL_INFO GetInfo()const { return m_info; }
 
-    inline OBB GetOBB()const { return m_obb; }    // OBBの取得
+protected:
+    inline void SetType(const TYPE &type) { m_type = type; }        // 当たり判定タイプの設定
 
 private:
-    LPD3DXMESH m_pMesh;         // メッシュ情報のポインタ
-    LPD3DXBUFFER m_pBuffMat;    // マテリアル情報のポインタ
-    D3DXMATRIX m_mtxWorld;      // 行列計算用
-    OBB m_obb;                  // OBB情報変数
+    // private変数
+    LPD3DXMESH m_pMesh;             // メッシュ情報のポインタ
+    LPD3DXBUFFER m_pBuffMat;        // マテリアル情報のポインタ
+    D3DXMATRIX m_mtxWorld;          // 行列計算用
+    COLLISION_MODEL_INFO m_info;    // 位置/大きさ/角度情報
+    TYPE m_type;                    // 当たり判定タイプ
 };
 #endif

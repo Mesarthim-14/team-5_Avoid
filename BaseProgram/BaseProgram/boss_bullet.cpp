@@ -23,6 +23,7 @@
 //=============================================================================
 #define TEST_POS		(ZeroVector3)
 #define TEST_ROT		(ZeroVector3)
+#define COLLISION_SIZE  (D3DXVECTOR3(90.0f, 90.0f, 90.0f))
 
 //=============================================================================
 // コンストラクタ
@@ -67,6 +68,9 @@ CBossBullet * CBossBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 
 //=============================================================================
 HRESULT CBossBullet::Init(void)
 {
+    // サイズの設定
+    m_size = COLLISION_SIZE;
+
 	// 初期化処理
 	CBullet::Init();
 
@@ -100,6 +104,7 @@ void CBossBullet::Update(void)
 {
 	// 衝突判定
 	Hit();
+
 	if (m_pModel != nullptr)
 	{
 		m_pModel->GetModelInfo()->SetPos(m_pos);
