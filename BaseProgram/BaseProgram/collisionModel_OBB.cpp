@@ -61,7 +61,7 @@ HRESULT CCollisionModelOBB::Init()
     m_DirVect[2] = D3DXVECTOR3(0.0f, 0.0f, GetInfo().size.z / 2);
 
     //各軸の方向ベクトルの計算
-    for (int nCount = 0; nCount < 3; nCount++)
+    for (int nCount = 0; nCount < AXIS_NUM_OBB; nCount++)
     {
         CLibrary::Rotate3D(m_DirVect[nCount], GetInfo().rot);
     }

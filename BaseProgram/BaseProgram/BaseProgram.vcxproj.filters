@@ -504,6 +504,12 @@
     <ClCompile Include="particlenormal.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="collisionModel_OBB.cpp">
+      <Filter>12_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionModel_Sphere.cpp">
+      <Filter>12_Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -856,11 +862,18 @@
     </ClInclude>
     <ClInclude Include="particleshrink.h">
       <Filter>06_Effect\Particle</Filter>
-    </ClInclude>    <ClInclude Include="particlecollective.h">
+    </ClInclude>
+    <ClInclude Include="particlecollective.h">
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
     <ClInclude Include="particlenormal.h">
       <Filter>06_Effect\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionModel_OBB.h">
+      <Filter>12_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionModel_Sphere.h">
+      <Filter>12_Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
