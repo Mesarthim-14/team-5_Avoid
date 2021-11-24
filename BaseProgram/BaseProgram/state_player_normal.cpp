@@ -88,7 +88,6 @@ void CPlayerStateNormal::Jump(CPlayer* &pPlayer)
         // ó‘Ô‚ÌÝ’è
         pPlayer->ChangeState(CPlayerStateJump::Create());
     }
-
 }
 
 //=====================================================================

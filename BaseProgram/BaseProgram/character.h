@@ -68,7 +68,7 @@ public:
     inline D3DXVECTOR3 GetMove()const                           { return m_move; }                      // 移動量の情報
     inline D3DXVECTOR3 GetSize()const                           { return m_size; }                      // サイズ取得
     inline CModelAnime *GetModelAnime(const int &nCount)const   { return m_apModelAnime.at(nCount); }   // モーションのカウント情報
-    inline CMotion *GetMotion()    const                        { return m_pMotion; }                   // モーションのポインタ情報
+    inline CMotion *GetMotion()const                            { return m_pMotion; }                   // モーションのポインタ情報
     inline int GetStateCounter()const                           { return m_nStateCounter; }             // 状態カウンターの情報
     inline int GetPartsNum()const                               { return m_apModelAnime.size(); }       // パーツ数取得
     inline float &GetSpeed()                                    { return m_fSpeed; }                    // スピードの情報
@@ -80,7 +80,6 @@ public:
     inline void SetPos(const D3DXVECTOR3 &pos)      { m_pos = pos; }            // 座標の設定
     inline void SetLanding(const bool &bLanding)    { m_bLanding = bLanding; }  // 着地
     inline bool GetLanding()                        { return m_bLanding; }      // 着地判定取得
-
 
 protected:
     void SetCharacterInfo(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);  // キャラクターの基本情報

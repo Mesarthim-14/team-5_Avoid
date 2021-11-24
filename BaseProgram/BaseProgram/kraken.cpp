@@ -12,9 +12,15 @@
 #include "animation_skinmesh.h"
 #include "skinmesh_model.h"
 #include "boss_bullet.h"
+#include "collision.h"
 
+//=============================================================================
+// マクロ定義
+//=============================================================================
 #define POS             (D3DXVECTOR3(-16686.5f, 0.0f, -2596.4f))
-#define BULLET_INTERVAL (120)                                    // たま発射間隔
+#define SIZE            (D3DXVECTOR3(3200.0f, 7500.0f, 3200.0f))
+#define BULLET_INTERVAL (120)                                      // たま発射間隔
+#define MAX_LIFE        (5)                                        // ライフ
 
 //=============================================================================
 // コンストラクタ
@@ -23,6 +29,8 @@ CKraken::CKraken(PRIORITY Priority) : CEnemy(Priority)
 {
     m_pSkinmeshModel = nullptr;
     m_nBulletCount = 0;
+    m_pCollision = nullptr;
+    m_nLife = MAX_LIFE;
 }
 
 //=============================================================================
@@ -54,12 +62,17 @@ HRESULT CKraken::Init()
 {
     // モデル情報設定
     SetCharacterInfo(POS, ZeroVector3);
-
+    SetGravityFlag(false);
     CEnemy::Init();
 
     // モデルの生成
     CreateModel();
 
+    if (!m_pCollision)
+    {
+        // インスタンス生成
+        m_pCollision = CCollisionModel::Create(POS, SIZE, ZeroVector3, CCollisionModel::TYPE_BOX);
+    }
     return S_OK;
 }
 
@@ -73,6 +86,11 @@ void CKraken::Uninit()
         m_pSkinmeshModel->Uninit();
         m_pSkinmeshModel = nullptr;
     }
+    if (m_pCollision)
+    {
+        m_pCollision->Uninit();
+        m_pCollision = nullptr;
+    }
 
     CEnemy::Uninit();
 }
@@ -84,6 +102,17 @@ void CKraken::Update()
 {
     CEnemy::Update();
     Attack();
+
+    if (m_pCollision)
+    {
+        m_pCollision->SetPos(GetPos());
+        m_pCollision->SetRot(GetRot());
+    }
+
+    if (m_nLife <= 0)
+    {
+        Uninit();
+    }
 }
 
 //=============================================================================
@@ -122,5 +151,4 @@ void CKraken::CreateModel()
     m_pSkinmeshModel->GetHLcontroller()->ChangeAnimation(0);
     m_pSkinmeshModel->GetHLcontroller()->SetLoopTime(0, 60);
     m_pSkinmeshModel->GetHLcontroller()->SetShiftTime(0, 60);
-
 }

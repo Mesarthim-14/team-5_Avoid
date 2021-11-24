@@ -24,7 +24,7 @@ namespace SkinMesh
     // D3DXFRAMEの派生(SMD3DXFRAME)作成idとoffsetMatrixを追加
     struct SMD3DXFRAME : public D3DXFRAME
     {
-        DWORD id;                        // ボーンID
+        DWORD id;                       // ボーンID
         D3DXMATRIX offsetMatrix;        // ボーンオフセット行列
 
         SMD3DXFRAME() : id(0xffffffff)    // 初期化

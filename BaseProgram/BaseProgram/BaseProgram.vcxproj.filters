@@ -492,14 +492,17 @@
     <ClCompile Include="particlepop.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="sky.cpp">
+      <Filter>08_Object</Filter>
+    </ClCompile>
     <ClCompile Include="particleshrink.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="collisionModel_OBB.cpp">
-      <Filter>12_Collision</Filter>
+    <ClCompile Include="particlecollective.cpp">
+      <Filter>06_Effect\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="collisionModel_Sphere.cpp">
-      <Filter>12_Collision</Filter>
+    <ClCompile Include="particlenormal.cpp">
+      <Filter>06_Effect\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -848,14 +851,16 @@
     <ClInclude Include="particlepop.h">
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="sky.h">
+      <Filter>08_Object</Filter>
+    </ClInclude>
     <ClInclude Include="particleshrink.h">
       <Filter>06_Effect\Particle</Filter>
+    </ClInclude>    <ClInclude Include="particlecollective.h">
+      <Filter>06_Effect\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="collisionModel_OBB.h">
-      <Filter>12_Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="collisionModel_Sphere.h">
-      <Filter>12_Collision</Filter>
+    <ClInclude Include="particlenormal.h">
+      <Filter>06_Effect\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

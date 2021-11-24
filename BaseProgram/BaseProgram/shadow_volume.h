@@ -21,12 +21,12 @@ public:
     CShadowVolume();    // コンストラクタ
     ~CShadowVolume();   // デストラクタ
 
-    static CShadowVolume *Create(const LPD3DXMESH pSrcMesh);                    // インスタンス生成
-    HRESULT Init(const LPD3DXMESH pSrcMesh);                                    // 初期化生成処理
+    static CShadowVolume *Create(const LPD3DXMESH &pSrcMesh);                   // インスタンス生成
+    HRESULT Init(const LPD3DXMESH &pSrcMesh);                                   // 初期化生成処理
     void Uninit();                                                              // 終了処理
     void Draw();                                                                // 描画処理
-    HRESULT CreateShadow(const D3DXVECTOR3 &rot, const D3DXVECTOR3 &ShipRot);   // 影の生成
-    HRESULT CreateShadow(const D3DXVECTOR3 &ShipRot);                           // 影の生成
+    HRESULT CreateShadow(const D3DXVECTOR3 &rot, const D3DXVECTOR3 &Rot);       // 影の生成
+    HRESULT CreateShadow(const D3DXVECTOR3 &Rot);                               // 影の生成
 
 private:
     // メッシュ情報の構造体
@@ -36,8 +36,8 @@ private:
         FLOAT tu, tv;
     };
     // private関数
-    void AddEdge(WORD* pEdges, DWORD& dwNumEdges, WORD v0, WORD v1);    // エッジの設定
-    void CreateVolume(vector<D3DXVECTOR3> pos, D3DXVECTOR3 Lpos);       // シャドウボリューム
+    void AddEdge(WORD* pEdges, DWORD& dwNumEdges, const WORD &v0, const WORD &v1);    // エッジの設定
+    void CreateVolume(const vector<D3DXVECTOR3> &pos, const D3DXVECTOR3 &Lpos);       // シャドウボリューム
 
     // メンバ変数
     D3DXVECTOR3 m_LightPos;         // ライトの座標

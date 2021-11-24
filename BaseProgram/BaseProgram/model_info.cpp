@@ -110,6 +110,9 @@ void CModelInfo::ShadowDraw(const D3DXVECTOR3 &rot)
 {
     if (m_pShadow)
     {
+        // ‰e‚Ì¶¬
+        m_pShadow->CreateShadow(m_rot, m_mtxWorld);
+
         // ‰e‚Ì•`‰æˆ—
         m_pShadow->VolumeDraw();
     }

@@ -29,10 +29,10 @@ protected:
         const int &nSTR, const float &fPower);  // 攻撃の情報設定
 private:
     // private関数
-    virtual void Move();                // 移動処理
-    virtual void UpdateState();         // キャラクター状態
-    virtual void CreateModel() = 0;     // モデル生成関数
-    virtual void Attack() = 0;          // 攻撃
+    virtual void Move();            // 移動処理
+    virtual void UpdateState();     // キャラクター状態
+    virtual void CreateModel() = 0; // モデル生成関数
+    virtual void Attack() = 0;      // 攻撃
 
     int m_nAttackInter; // 攻撃の間隔
     int m_nAttackCount; // 攻撃のカウンター

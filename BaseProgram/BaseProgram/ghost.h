@@ -43,5 +43,7 @@ private:
     bool m_bFollow;             // 追従フラグ
     bool m_bEnd;                // 終了フラグ
     int m_nEndCount;            // 終了時のカウント
+
+    static const float m_fCollisionSize;
 };
 #endif

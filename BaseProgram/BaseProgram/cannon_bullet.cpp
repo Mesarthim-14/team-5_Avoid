@@ -19,6 +19,9 @@
 #include "player.h"
 #include "kraken.h"
 #include "library.h"
+#include "collisionModel.h"
+#include "kraken.h"
+#include "collision.h"
 
 //=============================================================================
 // マクロ定義
@@ -29,6 +32,8 @@
 #define POS_FIX_Y   (700.0f)
 #define GRAVITY_NUM (0.65f)
 
+#define SIZE (D3DXVECTOR3(200.0f, 200.0f, 200.0f))
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -36,6 +41,8 @@ CCannonBullet::CCannonBullet(PRIORITY Priority) : CModel(Priority)
 {
     m_fDistanceToKraken = 0.0f;
     m_KrakenPos = ZeroVector3;
+    m_pCollision = nullptr;
+    m_bHit = false;
 }
 
 //=============================================================================
@@ -43,6 +50,11 @@ CCannonBullet::CCannonBullet(PRIORITY Priority) : CModel(Priority)
 //=============================================================================
 CCannonBullet::~CCannonBullet()
 {
+    if (m_pCollision)
+    {
+        m_pCollision->Uninit();
+        m_pCollision = nullptr;
+    }
 }
 
 //=============================================================================
@@ -80,7 +92,11 @@ HRESULT CCannonBullet::Init(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &Can
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_CANNON_BULLET);
     GetModelInfo()->SetModelStatus(pos, ZeroVector3, model);
-
+    
+    if (!m_pCollision)
+    {
+        m_pCollision = CCollisionModel::Create(pos, SIZE, ZeroVector3, CCollisionModel::TYPE_BOX);
+    }
     return S_OK;
 }
 
@@ -93,6 +109,14 @@ void CCannonBullet::Update()
     
     // 距離計算
     CalDistance();
+
+    if (m_pCollision)
+    {
+        m_pCollision->SetPos(GetPos());
+        m_pCollision->SetRot(GetRot());
+    }
+
+    Collision();
 }
 
 //=============================================================================
@@ -118,10 +142,32 @@ void CCannonBullet::SetBulletInfo(D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
         pos.y + POS_FIX_Y,
         pos.z + (cos(rot.y)*POS_FIX));
 
-    CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();    // ボスのポインタ
+    CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken(); // ボスのポインタ
     m_KrakenPos = pKraken->GetPos();                                    // 座標取得
-    m_fDistanceToKraken = CLibrary::CalDistance(pos, m_KrakenPos);        // 距離の取得
-    D3DXVECTOR3 move = CLibrary::FollowMoveXZ(pos, m_KrakenPos, SPEED);    // XZの移動量
-    move.y = SPEED_Y;                                                    // 高さ追加
-    SetMove(move);                                                        // 移動量設定
+    m_fDistanceToKraken = CLibrary::CalDistance(pos, m_KrakenPos);      // 距離の取得
+    D3DXVECTOR3 move = CLibrary::FollowMoveXZ(pos, m_KrakenPos, SPEED); // XZの移動量
+    move.y = SPEED_Y;                                                   // 高さ追加
+    SetMove(move);                                                      // 移動量設定
+}
+
+//=============================================================================
+// 更新処理
+//=============================================================================
+void CCannonBullet::Collision()
+{
+    CKraken* pKraken = CManager::GetInstance()->GetGame()->GetKraken();
+    if (!pKraken)
+    {
+        return;
+    }
+
+    if (!m_bHit)
+    {
+        if (CCollision::ColOBBs(m_pCollision->GetOBB(), pKraken->GetCollosion()->GetOBB()))
+        {
+            pKraken->SubLife();
+            m_bHit = true;
+            Uninit();
+        }
+    }
 }

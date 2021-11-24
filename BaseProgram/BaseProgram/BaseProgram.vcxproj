@@ -203,6 +203,8 @@
     <ClCompile Include="motion.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="particleaura.cpp" />
+    <ClCompile Include="particlecollective.cpp" />
+    <ClCompile Include="particlenormal.cpp" />
     <ClCompile Include="particlepop.cpp" />
     <ClCompile Include="particleshrink.cpp" />
     <ClCompile Include="particle_info.cpp" />
@@ -234,6 +236,7 @@
     <ClCompile Include="shark_model.cpp" />
     <ClCompile Include="skinmesh.cpp" />
     <ClCompile Include="skinmesh_model.cpp" />
+    <ClCompile Include="sky.cpp" />
     <ClCompile Include="slope.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="state.cpp" />
@@ -323,6 +326,8 @@
     <ClInclude Include="motion.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="particleaura.h" />
+    <ClInclude Include="particlecollective.h" />
+    <ClInclude Include="particlenormal.h" />
     <ClInclude Include="particlepop.h" />
     <ClInclude Include="particleshrink.h" />
     <ClInclude Include="particle_info.h" />
@@ -354,6 +359,7 @@
     <ClInclude Include="shark_model.h" />
     <ClInclude Include="skinmesh.h" />
     <ClInclude Include="skinmesh_model.h" />
+    <ClInclude Include="sky.h" />
     <ClInclude Include="slope.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="state.h" />

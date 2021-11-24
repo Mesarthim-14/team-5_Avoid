@@ -21,11 +21,11 @@ public:
     CPlayerStateKnockback();    // コンストラクタ
     ~CPlayerStateKnockback();   // デストラクタ
 
-    static CPlayerStateKnockback* Create(); // インスタンス生成
-    void Init();                            // 初期化処理
-    void Update()override;                  // 更新処理
+    static CPlayerStateKnockback* Create(const D3DXVECTOR3& move);  // インスタンス生成
+    void Init();                                                    // 初期化処理
+    void Update()override;                                          // 更新処理
 
 private:
-    int m_nStanCount;
+    void SetMove(const D3DXVECTOR3& move);  // 移動量設定
 };
 #endif

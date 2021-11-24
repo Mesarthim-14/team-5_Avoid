@@ -29,6 +29,7 @@ public:
 
     void Init();            // 初期化処理
     void Update()override;  // 更新処理
+
 private:
     void Jump(CPlayer* &pPlayer);       // ジャンプ処理
     void Avoidance(CPlayer* &pPlayer);  // 回避

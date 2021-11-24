@@ -33,11 +33,11 @@ public:
 
 private:
     // private関数
-    void CreateModel();     // モデル生成
-    void Attack();          // 攻撃
+    void CreateModel(); // モデル生成
+    void Attack();      // 攻撃
 
     // メンバ変数
     CMarlinModel *m_pMarlinModel;   // モデルのポインタ
-
+    static const float m_fCollisionSize;
 };
 #endif

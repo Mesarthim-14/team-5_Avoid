@@ -38,5 +38,6 @@ private:
 
     // ƒƒ“ƒo•Ï”
     CSharkModel *m_pSharkModel; // ƒ‚ƒfƒ‹‚Ì•Ï”
+    static const float m_fCollisionSize;
 };
 #endif

@@ -45,7 +45,7 @@ CShadowVolume::~CShadowVolume()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CShadowVolume * CShadowVolume::Create(LPD3DXMESH pSrcMesh)
+CShadowVolume * CShadowVolume::Create(const LPD3DXMESH &pSrcMesh)
 {
     // メモリ確保
     CShadowVolume *pShadowVolume = new CShadowVolume;
@@ -64,7 +64,7 @@ CShadowVolume * CShadowVolume::Create(LPD3DXMESH pSrcMesh)
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CShadowVolume::Init(LPD3DXMESH pSrcMesh)
+HRESULT CShadowVolume::Init(const LPD3DXMESH &pSrcMesh)
 {
     // メッシュ代入
     m_pSrcMesh = pSrcMesh;
@@ -111,7 +111,7 @@ void CShadowVolume::Draw()
 //=============================================================================
 // エッジの重なりをカウント
 //=============================================================================
-void CShadowVolume::AddEdge(WORD * pEdges, DWORD & dwNumEdges, WORD v0, WORD v1)
+void CShadowVolume::AddEdge(WORD *pEdges, DWORD &dwNumEdges, const WORD &v0, const WORD &v1)
 {
     // エッジの重なりを調べる
     for (DWORD i = 0; i < dwNumEdges; i++)
@@ -137,10 +137,10 @@ void CShadowVolume::AddEdge(WORD * pEdges, DWORD & dwNumEdges, WORD v0, WORD v1)
 //=============================================================================
 // 影の生成
 //=============================================================================
-HRESULT CShadowVolume::CreateShadow(const D3DXVECTOR3 &rot, const D3DXVECTOR3 &ShipRot)
+HRESULT CShadowVolume::CreateShadow(const D3DXVECTOR3 &rot, const D3DXVECTOR3 &Rot)
 {
     // nullcheck
-    if (m_pEdges == nullptr)
+    if (!m_pEdges)
     {
         m_pSrcMesh->UnlockVertexBuffer();
         m_pSrcMesh->UnlockIndexBuffer();
@@ -149,9 +149,8 @@ HRESULT CShadowVolume::CreateShadow(const D3DXVECTOR3 &rot, const D3DXVECTOR3 &S
 
     D3DXMATRIX mtxRot, mtxTrans;
     D3DXMATRIX mtxWorld;                            // ワールドマトリックス
-    D3DXMatrixIdentity(&mtxWorld);
 
-    D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);    // 向きを反映
+    D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);   // 向きを反映
     int nVerticesNum = m_pSrcMesh->GetNumVertices();                // 頂点の数
     vector<D3DXVECTOR3> VerticesPos;                                // 座標の入れ物
 
@@ -163,14 +162,12 @@ HRESULT CShadowVolume::CreateShadow(const D3DXVECTOR3 &rot, const D3DXVECTOR3 &S
     {
         // 初期化
         D3DXMatrixIdentity(&mtxWorld);
-
         //位置を反映
         D3DXMatrixTranslation(&mtxTrans,
             m_MeshVertices[nCount].pos.x,
             m_MeshVertices[nCount].pos.y,
             m_MeshVertices[nCount].pos.z);
         D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);
-
         // 角度
         D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
 
@@ -180,7 +177,7 @@ HRESULT CShadowVolume::CreateShadow(const D3DXVECTOR3 &rot, const D3DXVECTOR3 &S
 
     // 太陽の位置
     D3DXVECTOR3 posL = D3DXVECTOR3(
-        cosf(ShipRot.y)*m_LightPos.x, m_LightPos.y, sinf(ShipRot.y)*m_LightPos.z);
+        cosf(Rot.y)*m_LightPos.x, m_LightPos.y, sinf(Rot.y)*m_LightPos.z);
 
     // シャドウボリュームの生成
     CreateVolume(VerticesPos, posL);
@@ -189,19 +186,16 @@ HRESULT CShadowVolume::CreateShadow(const D3DXVECTOR3 &rot, const D3DXVECTOR3 &S
     m_pSrcMesh->UnlockVertexBuffer();
     m_pSrcMesh->UnlockIndexBuffer();
 
-    // 座標のクリア
-    VerticesPos.clear();
-
     return S_OK;
 }
 
 //=============================================================================
 // 影の生成
 //=============================================================================
-HRESULT CShadowVolume::CreateShadow(const D3DXVECTOR3 &ShipRot)
+HRESULT CShadowVolume::CreateShadow(const D3DXVECTOR3 &Rot)
 {
     // nullcheck
-    if (m_pEdges == nullptr)
+    if (!m_pEdges)
     {
         m_pSrcMesh->UnlockVertexBuffer();
         m_pSrcMesh->UnlockIndexBuffer();
@@ -209,9 +203,9 @@ HRESULT CShadowVolume::CreateShadow(const D3DXVECTOR3 &ShipRot)
     }
 
     D3DXVECTOR3 posL = D3DXVECTOR3(
-        cosf(ShipRot.y)*m_LightPos.x, m_LightPos.y, sinf(ShipRot.y)*m_LightPos.z);    // 太陽の位置
-    vector<D3DXVECTOR3> VerticesPos;                                                // 座標の入れ物
-    int nVerticesNum = m_pSrcMesh->GetNumVertices();                                // 頂点の数
+        cosf(Rot.y)*m_LightPos.x, m_LightPos.y, sinf(Rot.y)*m_LightPos.z);  // 太陽の位置
+    vector<D3DXVECTOR3> VerticesPos;                                        // 座標の入れ物
+    int nVerticesNum = m_pSrcMesh->GetNumVertices();                        // 頂点の数
 
     // バッファのロック
     m_pSrcMesh->LockVertexBuffer(0L, (LPVOID*)&m_MeshVertices);
@@ -230,18 +224,15 @@ HRESULT CShadowVolume::CreateShadow(const D3DXVECTOR3 &ShipRot)
     m_pSrcMesh->UnlockVertexBuffer();
     m_pSrcMesh->UnlockIndexBuffer();
 
-    // 座標のクリア
-    VerticesPos.clear();
-
     return S_OK;
 }
 
 //=============================================================================
 // シャドウボリュームの生成
 //=============================================================================
-void CShadowVolume::CreateVolume(vector<D3DXVECTOR3> pos, D3DXVECTOR3 posL)
+void CShadowVolume::CreateVolume(const vector<D3DXVECTOR3> &pos, const D3DXVECTOR3 &posL)
 {
-    DWORD dwNumEdges = 0;    // エッジのカウント
+    DWORD dwNumEdges = 0;   // エッジのカウント
     m_dwNumVertices = 0;    // 頂点の数リセット
 
     // 各面の設定

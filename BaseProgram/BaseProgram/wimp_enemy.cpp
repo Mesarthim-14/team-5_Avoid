@@ -12,13 +12,17 @@
 #include "manager.h"
 #include "player.h"
 #include "library.h"
+#include "collisionModel.h"
+#include "collision.h"
+#include "state_player_knockback.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define PERCEPTION_DISTANCE (6000.0f)    // 感知できる距離
-#define FOLLOW_TIME         (50)         // 重力がかからない時間
-#define PLAYER_ADD_HEIGHT   (500.0f)       // プレイヤーを適当に量増し
+#define PERCEPTION_DISTANCE (6000.0f)   // 感知できる距離
+#define FOLLOW_TIME         (50)        // 重力がかからない時間
+#define PLAYER_ADD_HEIGHT   (500.0f)    // プレイヤーを適当に量増し
+#define HIT_TIME_INTER      (300)       // 当たった後の間隔
 
 //=============================================================================
 // コンストラクタ
@@ -27,6 +31,9 @@ CWimpEnemy::CWimpEnemy(PRIORITY Priority) : CEnemy(Priority)
 {
     isRush = false;
     m_nRushCount = 0;
+    m_pCollision = nullptr;
+    m_nHitInter = 0;
+    m_bHit = false;
 }
 
 //=============================================================================
@@ -34,15 +41,25 @@ CWimpEnemy::CWimpEnemy(PRIORITY Priority) : CEnemy(Priority)
 //=============================================================================
 CWimpEnemy::~CWimpEnemy()
 {
+    if (m_pCollision)
+    {
+        m_pCollision->Uninit();
+        m_pCollision = nullptr;
+    }
 }
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CWimpEnemy::Init()
+HRESULT CWimpEnemy::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size, const D3DXVECTOR3 &rot)
 {
     CEnemy::Init();
     SetGravityFlag(false);
+
+    if (!m_pCollision)
+    {
+        m_pCollision = CCollisionModel::Create(pos, size, rot, CCollisionModel::TYPE_BOX);
+    }
 
     return S_OK;
 }
@@ -55,11 +72,13 @@ void CWimpEnemy::Update()
     CEnemy::Update();
     if (isRush)
     {
+        // 当たり判定
+        Collision();
+
         // 重力の切り替え
         GravitySwitch();
     }
 }
-
 
 //=============================================================================
 // 突進
@@ -104,6 +123,7 @@ bool CWimpEnemy::Follow()
         D3DXVECTOR3 Vector = Ppos - Epos;
         Vector = *D3DXVec3Normalize(&Vector, &Vector);
         Vector *= fSpeed;
+
         //自機を取得する
         float fAngle = atan2f((Epos.x - Ppos.x), (Epos.z - Ppos.z));    // 角度
         float fDistance = CLibrary::CalDistance(Ppos, Epos);
@@ -116,10 +136,60 @@ bool CWimpEnemy::Follow()
 
             // 移動量の設定
             SetMove(Vector);
-
             return true;
         }
     }
 
     return false;
+}
+
+//=============================================================================
+// 当たり判定
+//=============================================================================
+void CWimpEnemy::Collision()
+{
+    // 情報の更新
+    if (m_pCollision)
+    {
+        m_pCollision->SetPos(GetPos());
+        m_pCollision->SetRot(GetRot());
+    }
+
+    if (m_bHit)
+    {
+        m_nHitInter++;
+
+        // 当たった状態を戻す
+        if (m_nHitInter >= HIT_TIME_INTER)
+        {
+            m_bHit = false;
+            m_nHitInter = 0;
+        }
+    }
+    else
+    {
+        // プレイヤーとの当たり判定
+        CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+        if (CCollision::ColOBBs(m_pCollision->GetOBB(), pPlayer->GetCollisionPtr()->GetOBB()))
+        {
+            // プレイヤーへの影響
+            AffectPlayer(pPlayer);
+            m_bHit = true;
+        }
+    }
+}
+
+//=============================================================================
+// プレイヤーに影響を与える
+//=============================================================================
+void CWimpEnemy::AffectPlayer(CPlayer* &pPlayer)
+{
+    // プレイヤーにダメージ
+    pPlayer->SubLife(20);
+
+    D3DXVECTOR3 move = GetMove();
+    move.x *= 0.8f;
+    move.x *= 1.5f;
+    move.z *= 0.8f;
+    pPlayer->ChangeState(CPlayerStateKnockback::Create(move));
 }
