@@ -22,6 +22,7 @@ CParticleInfo::CParticleInfo()
     m_move = ZeroVector3;
     m_nLife = 0;
     m_bGravitySet = false;
+    m_LifeSet = true;
 }
 
 //=====================================================================
@@ -60,11 +61,14 @@ void CParticleInfo::Update()
     {
         Gravity();
     }
-    //    ÉâÉCÉtÇ™ÇOÇ…Ç»Ç¡ÇΩÇÁè¡Ç∑
-    m_nLife--;
-    if (m_nLife <= 0)
+    if (m_LifeSet)
     {
-        Erase();
+        //    ÉâÉCÉtÇ™ÇOÇ…Ç»Ç¡ÇΩÇÁè¡Ç∑
+        m_nLife--;
+        if (m_nLife <= 0)
+        {
+            Erase();
+        }
     }
     // â¡éZÇµÇΩèÓïÒÇê›íË
     SetPos(pos);

@@ -15,6 +15,7 @@
 #include "collisionModel.h"
 #include "collision.h"
 #include "state_player_knockback.h"
+#include "gauge.h"
 
 //=============================================================================
 // マクロ定義
@@ -186,6 +187,8 @@ void CWimpEnemy::AffectPlayer(CPlayer* &pPlayer)
 {
     // プレイヤーにダメージ
     pPlayer->SubLife(20);
+    CGauge::SetDown((float)20);
+    CGauge::SetHitDown(true);
 
     D3DXVECTOR3 move = GetMove();
     move.x *= 0.8f;

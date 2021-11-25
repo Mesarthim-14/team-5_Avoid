@@ -18,6 +18,8 @@
 #include "camera.h"
 #include "particlepop.h"
 #include "particleshrink.h"
+#include "particleaura.h"
+#include "gauge.h"
 
 //=====================================================================
 // コンストラクタ
@@ -157,11 +159,13 @@ void CPlayerState::MoveByKeyboard(CPlayer* &pPlayer)
     // （仮置き）パーティクル表示
     if (CLibrary::KeyboardTrigger(DIK_Z))
 	{
-        for (int n = 0; n <= 10; n++)
-        {
-            CParticlePop::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z));;
-        }
-	}
+        //for (int n = 0; n <= 10; n++)
+        //{
+        //    CParticlePop::Create(D3DXVECTOR3(pos.x, pos.y + 200.0f, pos.z));;
+        //}
+        CGauge::SetDown((float)30);
+        CGauge::SetHitUp(true);
+    }
 
     // 座標設定
     pPlayer->SetPos(pos);

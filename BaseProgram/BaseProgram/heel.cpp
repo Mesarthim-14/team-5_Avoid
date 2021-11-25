@@ -19,6 +19,7 @@
 #include "model_info.h"
 #include "player.h"
 #include "library.h"
+#include "gauge.h"
 
 //=============================================================================
 // ƒ}ƒNƒ’è‹`
@@ -98,6 +99,8 @@ void CHeel::Update()
         {
             // ‰ñ•œ
             CManager::GetInstance()->GetPlayer()->SubLife(-HEEL_NUM);
+            CGauge::SetDown((float)HEEL_NUM);
+            CGauge::SetHitUp(true);
         }
     }
 }

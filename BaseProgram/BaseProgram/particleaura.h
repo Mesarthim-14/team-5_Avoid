@@ -35,10 +35,10 @@ private:
     //==================
     // ƒƒ“ƒo•Ï”
     //==================
+    static D3DXVECTOR3 m_pos;
     float m_fAngle;         // Šp“x
     float m_fSpeed;         // ‘¬“x
-    int m_nLife;            // ‘Ì—Í
-    static float m_fSize;   
+    int m_nLife;            // ‘Ì—Í 
 };
 
 #endif

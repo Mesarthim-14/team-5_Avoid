@@ -16,16 +16,15 @@
 #include "texture.h"
 #include "resource_manager.h"
 
-float CParticleAura::m_fSize = 0.0f;
 //=====================================================================
 // マクロ定義
 // Author : toshiki
 //=====================================================================
-#define SIZE        (D3DXVECTOR3(m_fSize, m_fSize, m_fSize))
+#define SIZE         (D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f))
 #define ANGLE        (3.0f)
 #define SPEED        (10.0f)
-#define RANDOM        (3.14f)
-#define LIFE        (90)
+#define RANDOM       (3.14f)
+#define LIFE         (90)
 #define COLOR        (D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
 
 //=====================================================================
@@ -112,6 +111,7 @@ void CParticleAura::SetParticle()
     // テクスチャの設定
     CTexture *pTexture = GET_TEXTURE_PTR;
     BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_PARTICLE));
+    SetLife(false);
     // 色の設定
     SetColor(COLOR);
 }
