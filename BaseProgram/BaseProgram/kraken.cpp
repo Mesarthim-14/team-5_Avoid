@@ -12,7 +12,7 @@
 #include "animation_skinmesh.h"
 #include "skinmesh_model.h"
 #include "boss_bullet.h"
-#include "collision.h"
+#include "collisionModel_OBB.h"
 
 //=============================================================================
 // マクロ定義
@@ -31,6 +31,7 @@ CKraken::CKraken(PRIORITY Priority) : CEnemy(Priority)
     m_nBulletCount = 0;
     m_pCollision = nullptr;
     m_nLife = MAX_LIFE;
+    m_bDead = false;
 }
 
 //=============================================================================
@@ -71,7 +72,7 @@ HRESULT CKraken::Init()
     if (!m_pCollision)
     {
         // インスタンス生成
-        m_pCollision = CCollisionModel::Create(POS, SIZE, ZeroVector3, CCollisionModel::TYPE_BOX);
+        m_pCollision = CCollisionModelOBB::Create(POS, SIZE, ZeroVector3);
     }
     return S_OK;
 }
@@ -105,13 +106,13 @@ void CKraken::Update()
 
     if (m_pCollision)
     {
-        m_pCollision->SetPos(GetPos());
-        m_pCollision->SetRot(GetRot());
+        m_pCollision->SetInfo(GetPos(), m_pCollision->GetInfo().size, GetRot());
     }
 
+    // 体力が無くなったら
     if (m_nLife <= 0)
     {
-        Uninit();
+        m_bDead = true;
     }
 }
 

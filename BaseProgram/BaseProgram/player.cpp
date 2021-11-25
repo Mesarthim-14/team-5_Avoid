@@ -23,7 +23,7 @@
 #include "model.h"
 #include "skinmesh_model.h"
 #include "animation_skinmesh.h"
-#include "collisionModel.h"
+#include "collisionModel_OBB.h"
 #include "check_point.h"
 #include "gimmick_factory.h"
 #include "state_player.h"
@@ -95,7 +95,7 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	m_pCurrentState = nullptr;
 	m_pNextState = nullptr;
 
-	m_pCollisionModel = nullptr;
+	m_pCollisionModelOBB = nullptr;
 }
 
 //=============================================================================
@@ -132,9 +132,9 @@ HRESULT CPlayer::Init()
 	LoadInfo();
 
 	//当たり判定モデルの生成
-	if (m_pCollisionModel == nullptr)
+	if (m_pCollisionModelOBB == nullptr)
 	{
-		m_pCollisionModel = CCollisionModel::Create(GetPos(), PLAYER_COLLISION_SIZE, GetRot(), CCollisionModel::TYPE_BOX);
+		m_pCollisionModelOBB = CCollisionModelOBB::Create(GetPos(), PLAYER_COLLISION_SIZE, GetRot());
 	}
 
 	return S_OK;
@@ -173,11 +173,6 @@ void CPlayer::Update()
 
 	CCharacter::Update();
 
-	if (m_pCollisionModel)
-	{
-		m_pCollisionModel->SetPos(GetPos());
-	}
-
 	// リスポーン
 	ReSporn();
 
@@ -187,6 +182,12 @@ void CPlayer::Update()
 
 	// 更新処理
 	UpdateRot();
+
+    // 当たり判定モデル情報の更新処理
+	if (m_pCollisionModelOBB)
+	{
+        m_pCollisionModelOBB->SetInfo(GetPos(), m_pCollisionModelOBB->GetInfo().size, GetRot());
+	}
 
 	ShowInfo();
 }
@@ -219,7 +220,7 @@ CSkinmeshModel *CPlayer::GetCurrentSkinMeshPtr()
 // 状態の変更
 // Author : Konishi Yuuto
 //=============================================================================
-void CPlayer::ChangeState(CPlayerState *pPlayerState)
+void CPlayer::ChangeState(CState *pPlayerState)
 {
 	m_pNextState = pPlayerState;
 }
@@ -272,14 +273,7 @@ void CPlayer::UpdateRot()
 	CLibrary::RotFix(rot.y);
 
 	// 角度の設定
-	SetRot(rot);
-
-	//当たり判定の角度の設定
-	if (m_pCollisionModel)
-	{
-		m_pCollisionModel->SetRot(rot);
-	}
-}
+	SetRot(rot);}
 
 //=============================================================================
 // スライムモデルチェンジ
@@ -453,8 +447,8 @@ void CPlayer::SubLife(const int &nDamage)
             {
                 m_nHP = 100;
             }
-			ChangeModel();
 		}
+        ChangeModel();
 	}
 }
 

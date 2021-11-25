@@ -20,10 +20,10 @@
 //*****************************************************************************
 //OBB‚ÆOBB‚ÌÕ“Ë”»’è
 //*****************************************************************************
-bool CCollision::ColOBBs(const CCollisionModel::OBB &obb1, const CCollisionModel::OBB &obb2)
+bool CCollision::ColOBBs(const CCollisionModelOBB::OBB &obb1, const CCollisionModelOBB::OBB &obb2)
 {
     //OBB“¯Žm‚Ì‹——£
-    D3DXVECTOR3 Interval = obb1.pos - obb2.pos;
+    D3DXVECTOR3 Interval = obb1.info.pos - obb2.info.pos;
     if (D3DXVec3Length(&Interval) > (FLOAT)OBB_INTERVAL)
     { //OBB_INTERVAL‚æ‚è—£‚ê‚Ä‚¢‚é‚Æ‚«A“–‚½‚è”»’è‚ðs‚í‚È‚¢
         return false;

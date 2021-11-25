@@ -19,7 +19,7 @@
 #include "player.h"
 #include "kraken.h"
 #include "library.h"
-#include "collisionModel.h"
+#include "collisionModel_OBB.h"
 #include "kraken.h"
 #include "collision.h"
 
@@ -95,7 +95,7 @@ HRESULT CCannonBullet::Init(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &Can
     
     if (!m_pCollision)
     {
-        m_pCollision = CCollisionModel::Create(pos, SIZE, ZeroVector3, CCollisionModel::TYPE_BOX);
+        m_pCollision = CCollisionModelOBB::Create(pos, SIZE, ZeroVector3);
     }
     return S_OK;
 }
@@ -112,8 +112,7 @@ void CCannonBullet::Update()
 
     if (m_pCollision)
     {
-        m_pCollision->SetPos(GetPos());
-        m_pCollision->SetRot(GetRot());
+        m_pCollision->SetInfo(GetPos(), m_pCollision->GetInfo().size, GetRot());
     }
 
     Collision();

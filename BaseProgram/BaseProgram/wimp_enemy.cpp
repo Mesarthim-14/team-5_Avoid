@@ -12,7 +12,7 @@
 #include "manager.h"
 #include "player.h"
 #include "library.h"
-#include "collisionModel.h"
+#include "collisionModel_OBB.h"
 #include "collision.h"
 #include "state_player_knockback.h"
 #include "gauge.h"
@@ -59,7 +59,7 @@ HRESULT CWimpEnemy::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size, const 
 
     if (!m_pCollision)
     {
-        m_pCollision = CCollisionModel::Create(pos, size, rot, CCollisionModel::TYPE_BOX);
+        m_pCollision = CCollisionModelOBB::Create(pos, size, rot);
     }
 
     return S_OK;
@@ -152,8 +152,7 @@ void CWimpEnemy::Collision()
     // 情報の更新
     if (m_pCollision)
     {
-        m_pCollision->SetPos(GetPos());
-        m_pCollision->SetRot(GetRot());
+        m_pCollision->SetInfo(GetPos(), m_pCollision->GetInfo().size, GetRot());
     }
 
     if (m_bHit)
@@ -171,11 +170,17 @@ void CWimpEnemy::Collision()
     {
         // プレイヤーとの当たり判定
         CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
-        if (CCollision::ColOBBs(m_pCollision->GetOBB(), pPlayer->GetCollisionPtr()->GetOBB()))
+        if (pPlayer)
         {
-            // プレイヤーへの影響
-            AffectPlayer(pPlayer);
-            m_bHit = true;
+            if (m_pCollision && pPlayer->GetCollisionPtr())
+            {
+                if (CCollision::ColOBBs(m_pCollision->GetOBB(), pPlayer->GetCollisionPtr()->GetOBB()))
+                {
+                    // プレイヤーへの影響
+                    AffectPlayer(pPlayer);
+                    m_bHit = true;
+                }
+            }
         }
     }
 }

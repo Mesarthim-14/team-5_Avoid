@@ -42,6 +42,11 @@ namespace SkinMesh
         SMD3DXMESHCONTAINER() : maxFaceInfl(1), numBoneCombinations(0), boneCombinationTable(0) {}    // 初期化
     };
 
+	struct BlendIndex {
+		int boneNum;
+		int index[4];
+	};
+
     // 階層割り当てクラス（ボーンの構成であるフレームツリー（D3DXFRAME）、FKアニメーション（ID3DXAnimationController）という2つのオブジェクトを返す。）
     class AllocateHierarchy : public ID3DXAllocateHierarchy
     {
@@ -73,5 +78,7 @@ namespace SkinMesh
     void getMeshContainer(D3DXFRAME *frame, std::vector<SkinMesh::SMD3DXMESHCONTAINER*> *cont);
     //ボーンデータ格納関数
     void setFrameId(SkinMesh::SMD3DXFRAME * frame, ID3DXSkinInfo * info);
+
+	void createBlendIndex(BlendIndex** ppIndex, D3DXBONECOMBINATION* pBoneComb, DWORD boneCombNum);
 }
 #endif

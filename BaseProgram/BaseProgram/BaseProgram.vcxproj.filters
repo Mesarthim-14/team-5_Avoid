@@ -154,6 +154,9 @@
     <Filter Include="12_Collision">
       <UniqueIdentifier>{ceb8d960-e110-4f35-afd1-db44ed5e0ac7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="11_Production\ProductionManager">
+      <UniqueIdentifier>{0af9d9ed-c82a-4328-9181-b4e0aab923e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="fade.cpp">
@@ -504,7 +507,33 @@
     <ClCompile Include="particlenormal.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
-  </ItemGroup>
+    <ClCompile Include="production_angry_kraken.cpp">
+      <Filter>11_Production</Filter>
+    </ClCompile>
+    <ClCompile Include="production.cpp">
+      <Filter>11_Production</Filter>
+    </ClCompile>
+    <ClCompile Include="state_player_not_move.cpp">
+      <Filter>10_State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="production_cannon_manager.cpp">
+      <Filter>11_Production\ProductionManager</Filter>
+    </ClCompile>
+    <ClCompile Include="state_camera_angry_kraken.cpp">
+      <Filter>10_State\CameraState</Filter>
+    </ClCompile>
+    <ClCompile Include="production_dead_kraken.cpp">
+      <Filter>11_Production</Filter>
+    </ClCompile>
+    <ClCompile Include="state_object.cpp">
+      <Filter>10_State</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionModel_OBB.cpp">
+      <Filter>12_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionModel_Sphere.cpp">
+      <Filter>12_Collision</Filter>
+    </ClCompile>  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
       <Filter>00_Important</Filter>
@@ -863,7 +892,33 @@
     <ClInclude Include="particlenormal.h">
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
-  </ItemGroup>
+    <ClInclude Include="production_angry_kraken.h">
+      <Filter>11_Production</Filter>
+    </ClInclude>
+    <ClInclude Include="production.h">
+      <Filter>11_Production</Filter>
+    </ClInclude>
+    <ClInclude Include="state_player_not_move.h">
+      <Filter>10_State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="production_cannon_manager.h">
+      <Filter>11_Production\ProductionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="state_camera_angry_kraken.h">
+      <Filter>10_State\CameraState</Filter>
+    </ClInclude>
+    <ClInclude Include="production_dead_kraken.h">
+      <Filter>11_Production</Filter>
+    </ClInclude>
+    <ClInclude Include="state_object.h">
+      <Filter>10_State</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionModel_OBB.h">
+      <Filter>12_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionModel_Sphere.h">
+      <Filter>12_Collision</Filter>
+    </ClInclude>  </ItemGroup>
   <ItemGroup>
     <None Include="data\Text\Shader\BlurFilter.fx">
       <Filter>06_Effect\Shader\FresnelWater\ShaderFile</Filter>

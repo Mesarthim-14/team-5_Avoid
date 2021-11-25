@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// 当たり判定モデルの処理 [collisionModel.cpp]
+// 当たり判定モデルの親クラス処理 [collisionModel.cpp]
 // Author : Suzuki Mahiro
 //
 //=============================================================================
@@ -20,7 +20,8 @@ CCollisionModel::CCollisionModel(PRIORITY Priority) :CScene(Priority)
 {
     m_pMesh = nullptr;
     m_pBuffMat = nullptr;
-    memset(&m_obb, 0, sizeof(m_obb));
+    memset(&m_info, 0, sizeof(m_info));
+    m_type = TYPE_NONE;
 }
 
 //*****************************************************************************
@@ -38,7 +39,7 @@ void CCollisionModel::Load(void)
     //デバイスの取得
     LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-    switch (m_obb.CollisionType)
+    switch (m_type)
     {
     case TYPE_POLYGON:
 
@@ -52,9 +53,9 @@ void CCollisionModel::Load(void)
 
         break;
 
-    case TYPE_BOX:
+    case TYPE_OBB:
 
-        //箱の作成
+        //直方体の作成
         D3DXCreateBox(
             pDevice,        //デバイス情報
             1.0f,            //横幅
@@ -120,47 +121,12 @@ void CCollisionModel::Unload()
 }
 
 //*****************************************************************************
-// 当たり判定モデルの生成
-//*****************************************************************************
-CCollisionModel * CCollisionModel::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size, const D3DXVECTOR3 &rot, const TYPE &type)
-{
-    CCollisionModel *pCollision = new CCollisionModel;
-
-    if (pCollision)
-    {
-        //当たり判定モデル情報の設定
-        pCollision->m_obb.pos = pos;
-        pCollision->m_obb.size = size;
-        pCollision->m_obb.rot = rot;
-        pCollision->m_obb.CollisionType = type;
-
-        //当たり判定モデルの初期化処理
-        pCollision->Init();
-
-        return pCollision;
-    }
-
-    return nullptr;
-}
-
-//*****************************************************************************
 // 初期化処理
 //*****************************************************************************
 HRESULT CCollisionModel::Init()
 {
     //ロード処理
     Load();
-
-    //各軸の回転前座標の設定(回転していないXYZ軸に大きさだけを適応)
-    m_obb.DirVect[0] = D3DXVECTOR3(m_obb.size.x / 2, 0.0f, 0.0f);
-    m_obb.DirVect[1] = D3DXVECTOR3(0.0f, m_obb.size.y / 2, 0.0f);
-    m_obb.DirVect[2] = D3DXVECTOR3(0.0f, 0.0f, m_obb.size.z / 2);
-
-    //各軸の方向ベクトルの計算
-    for (int nCount = 0; nCount < 3; nCount++)
-    {
-        CLibrary::Rotate3D(m_obb.DirVect[nCount], m_obb.rot);
-    }
 
     return S_OK;
 }
@@ -213,15 +179,15 @@ void CCollisionModel::Draw()
     D3DXMatrixIdentity(&m_mtxWorld);
 
     // 拡大率を反映
-    D3DXMatrixScaling(&mtxScale, m_obb.size.x, m_obb.size.y, m_obb.size.z);
+    D3DXMatrixScaling(&mtxScale, m_info.size.x, m_info.size.y, m_info.size.z);
     D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxScale);
 
     //向きを反映
-    D3DXMatrixRotationYawPitchRoll(&mtxRot, m_obb.rot.y, m_obb.rot.x, m_obb.rot.z);
+    D3DXMatrixRotationYawPitchRoll(&mtxRot, m_info.rot.y, m_info.rot.x, m_info.rot.z);
     D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
 
     //位置を反映
-    D3DXMatrixTranslation(&mtxTrans, m_obb.pos.x, m_obb.pos.y, m_obb.pos.z);
+    D3DXMatrixTranslation(&mtxTrans, m_info.pos.x, m_info.pos.y, m_info.pos.z);
     D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
     //ワールドマトリックスの設定

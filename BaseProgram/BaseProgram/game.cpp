@@ -112,6 +112,16 @@ void CGame::Update()
         m_pGimmickFactory->Update();
     }
 
+    if (m_bGameEnd)
+    {
+        CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
+        if (mode == CFade::FADE_MODE_NONE)
+        {
+            CFade *pFade = CManager::GetInstance()->GetFade();
+            pFade->SetFade(CManager::MODE_TYPE_TITLE);
+        }
+    }
+
 #ifdef _DEBUG
     CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
     CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
@@ -209,4 +219,11 @@ void CGame::ShowInfo()
 
     ImGui::End();
 #endif // !_DEBUG
+}
+
+//=======================================================================================
+// ƒNƒ‰[ƒPƒ“‚ª
+//=======================================================================================
+void CGame::JudgeDeadKraken()
+{
 }

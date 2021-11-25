@@ -15,7 +15,7 @@
 //=========================================================================
 // 前方宣言
 //=========================================================================
-class CCollisionModel;
+class CCollisionModelOBB;
 class CPlayer;
 
 //=============================================================================
@@ -37,11 +37,11 @@ protected:
     void AffectPlayer(CPlayer* &pPlayer);    // プレイヤーに影響を与える
 
 private:
-    void GravitySwitch();           // 重力の切り替え
-    int m_nRushCount;               // 飛んだカウント
-    bool isRush;                    // 飛んだらtrue
-    CCollisionModel* m_pCollision;  // 当たり判定
-    bool m_bHit;                    // 当たったフラグ
-    int m_nHitInter;                // 当たり判定のカウント
+    void GravitySwitch();               // 重力の切り替え
+    int m_nRushCount;                   // 飛んだカウント
+    bool isRush;                        // 飛んだらtrue
+    CCollisionModelOBB* m_pCollision;   // 当たり判定
+    bool m_bHit;                        // 当たったフラグ
+    int m_nHitInter;                    // 当たり判定のカウント
 };
 #endif

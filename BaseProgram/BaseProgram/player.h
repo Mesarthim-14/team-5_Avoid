@@ -12,17 +12,18 @@
 //=============================================================================
 #include "character.h"
 #include "skinmesh_model.h"
+#include "state_object.h"
 
 //=========================================================================
 // 前方宣言
 //=========================================================================
-class CCollisionModel;
-class CPlayerState;
+class CCollisionModelOBB;
+class CState;
 
 //=============================================================================
 // プレイヤークラス
 //=============================================================================
-class CPlayer : public CCharacter
+class CPlayer : public CCharacter, public CStateObject
 {
 public:
 
@@ -70,7 +71,7 @@ public:
     void SaveInfo();                                // データセーブ
     void SubLife(const int &nDamage);               // ダメージ
     CSkinmeshModel* GetCurrentSkinMeshPtr();        // 現在のスキンメッシュポインタ
-    void ChangeState(CPlayerState* pPlayerState);   // 状態チェンジ
+    void ChangeState(CState* pPlayerState);         // 状態チェンジ
 
     // Set関数
     inline void SetAction(const int &nCount, const int &nMaxAction) { m_nMaxAction[nCount] = nMaxAction; }  // アクションの設定
@@ -79,13 +80,13 @@ public:
     inline void SetAngle(const float& fAngle)                       { m_fAngle = fAngle; }                  // アングル
 
     // Get関数
-    inline int GetLife()const                       { return m_nHP; }               // HPの情報
-    inline float GetAngle()const                    { return m_fAngle; }            // アングル
-    inline D3DXVECTOR3 GetRotDest()const            { return m_rotDest; }           // 目的
-    inline D3DXVECTOR3 GetInertia()const            { return m_Inertia; }           // 慣性の情報
-    inline float GetInertiaNum()const               { return m_fInertiaNum; }       // 慣性の値
-    inline SLIME_STATE GetSlimeState()const         { return m_SlimeState; }        // スライムの状態
-    inline CCollisionModel* GetCollisionPtr()const  { return m_pCollisionModel; }   //当たり判定ポインタ
+    inline int GetLife()const                           { return m_nHP; }                   // HPの情報
+    inline float GetAngle()const                        { return m_fAngle; }                // アングル
+    inline D3DXVECTOR3 GetRotDest()const                { return m_rotDest; }               // 目的
+    inline D3DXVECTOR3 GetInertia()const                { return m_Inertia; }               // 慣性の情報
+    inline float GetInertiaNum()const                   { return m_fInertiaNum; }           // 慣性の値
+    inline SLIME_STATE GetSlimeState()const             { return m_SlimeState; }            // スライムの状態
+    inline CCollisionModelOBB* GetCollisionPtr()const   { return m_pCollisionModelOBB; }    //当たり判定ポインタ
 
 private:
     // private関数
@@ -108,8 +109,8 @@ private:
     ACTION_STATE m_ActionState;                         // 行動状態
     CSkinmeshModel *m_pSkinmeshModel[SLIME_STATE_MAX];  // スキンメッシュモデルポインタ
     int m_nMaxAction[SLIME_STATE_MAX];                  // アクションの最大数
-    CPlayerState* m_pCurrentState;                      // 現在の状態ポインタ
-    CPlayerState* m_pNextState;                         // 次の状態ポインタ
-    CCollisionModel* m_pCollisionModel;                 // 当たり判定モデルのポインタ
+    CState* m_pCurrentState;                            // 現在の状態ポインタ
+    CState* m_pNextState;                               // 次の状態ポインタ
+    CCollisionModelOBB* m_pCollisionModelOBB;           // 当たり判定モデルのポインタ
 };
 #endif

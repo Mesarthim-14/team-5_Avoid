@@ -35,6 +35,7 @@ public:
     inline static float GetGravity()                   { return m_fGravity; };         // 重力
     inline CGimmickFactory* GetGimmickFactory()const   { return m_pGimmickFactory; }   // ギミックの情報
     inline CKraken* GetKraken()const                   { return m_pKraken; }           // クラーケン
+    inline void GameEnd()                              { m_bGameEnd = true; }          // ゲーム終了フラグ
 
 private:
     // private関数
@@ -42,6 +43,7 @@ private:
     void CreateEnemy();         // 敵の生成
     void CreateMap();           // マップの生成
     void ShowInfo();            // 情報表示
+    void JudgeDeadKraken();     // クラーケンが死んだかを判定
 
     // メンバ変数
     CPlayer *m_pPlayer;                     // プレイヤーのポインタ
