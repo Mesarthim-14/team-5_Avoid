@@ -177,9 +177,14 @@ void CGauge::SetDownUp()
         }
         if (m_fDown >= 0.0f)
         {
-            m_fHP -= 0.1f;
+            m_fHP -= 1.0f;
             SetVertexGauge();
-            m_fDown -= 0.1f;
+            m_fDown -= 1.0f;
+            // 0以下に行かないようにする　
+            if (m_fHP < 0.0f)
+            {
+                m_fHP = 0.0f;
+            }
         }
     }
     // 増える処理
@@ -191,11 +196,17 @@ void CGauge::SetDownUp()
             m_fUp = GetHP();
             m_bHitUp = false;
         }
+        // 指定の数値分上げる
         if (m_fUp >= 0.0f)
         {
-            m_fHP += 0.1f;
+            m_fHP += 1.0f;
             SetVertexGauge();
-            m_fUp -= 0.1f;
+            m_fUp -= 1.0f;
+            // 100以上に行かないようにする
+            if (m_fHP > 100.0f)
+            {
+                m_fHP = 100.0f;
+            }
         }
     }
 }

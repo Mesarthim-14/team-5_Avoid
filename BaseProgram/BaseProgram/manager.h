@@ -36,6 +36,7 @@ class CLight;
 class CCamera;
 class CPlayer;
 class CPause;
+class CGauge;
 
 //=============================================================================
 //マネージャークラス
@@ -81,6 +82,7 @@ public:
     inline CCamera *GetCamera()const                        { return m_pCamera.get(); }             // カメラのポインタ
     inline CLight *GetLight()const                          { return m_pLight.get(); }              // ライトのポインタ
     inline CPause *GetPause()const                          { return m_pPause; }                    // ポーズの取得処理
+    inline CGauge *GetGauge()const                          { return m_pGauge; }                    // ゲージの取得処理
     inline static void SetActivePause(const bool &bPause)   { m_bPause = bPause; }                  // ポーズのセット
     inline static bool GetActivePause()                     { return m_bPause; }                    // フェードの取得処理
 
@@ -102,6 +104,7 @@ private:
     unique_ptr<CLight> m_pLight;                        // ライトのポインタ
     MODE_TYPE m_mode;                                   // モード
     CPause *m_pPause;                                   // ポーズ
+    CGauge *m_pGauge;                                   // ゲージ
 
     // シングルトン
     CManager();                     // コンストラクタ
