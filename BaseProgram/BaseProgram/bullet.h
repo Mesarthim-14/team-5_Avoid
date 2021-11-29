@@ -33,6 +33,8 @@ public:
 	virtual void Draw(void);					// 描画
 
 protected:
+    CCollisionModelSphere* GetColSpherePtr()const { return m_pColModelSphere; }    // 当たり判定モデルのポインタ(カプセル)
+
 	D3DXVECTOR3 m_pos;						// 座標
 	D3DXVECTOR3 m_move;						// 移動量
 	D3DXVECTOR3 m_rot;						// 現在の回転
@@ -41,7 +43,7 @@ protected:
 	float m_fSpeed;							// スピード
 	int m_nDamage;							// ダメージ量
 
-    CCollisionModelSphere* m_pCollisionModelSphere;   // 当たり判定モデルのポインタ
+    CCollisionModelSphere* m_pColModelSphere;   // 当たり判定モデルのポインタ
 };
 
 #endif

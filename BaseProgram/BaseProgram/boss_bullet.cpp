@@ -17,6 +17,8 @@
 #include "xfile.h"
 #include "model_info.h"
 #include "player.h"
+#include "collision.h"
+#include "collisionModel_Sphere.h"
 
 //=============================================================================
 // マクロ定義
@@ -126,43 +128,18 @@ void CBossBullet::Draw(void)
 //=============================================================================
 void CBossBullet::Hit(void)
 {
-	//CPlayer* pPlayer = nullptr;
-	//pPlayer = (CPlayer*)GetTop(PRIORITY_CHARACTER);
+    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
 
-	//if (pPlayer != nullptr)
-	//{
-	//	D3DXVECTOR3 RayDir = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
-	//	BOOL bHit = FALSE;
-	//	FLOAT fDistance = 0.0f;
-
-	//	for (int nCount = 0; nCount < (int)GetModelInfo()->GetMesh()->GetNumFaces(); nCount++)
-	//	{
-	//		//下方向
-	//		D3DXIntersect(
-	//			GetModelInfo()->GetMesh(),
-	//			&pPlayer->GetPos(),
-	//			&RayDir,
-	//			&bHit,
-	//			nullptr,
-	//			nullptr,
-	//			nullptr,
-	//			&fDistance,
-	//			nullptr,
-	//			nullptr);
-
-	//		if (bHit && fDistance < 80.0f)
-	//		{
-	//			// 着地の処理
-	//			pPlayer->Landing(pPlayer->GetPos().y + fDistance);
-
-	//			break;
-	//		}
-	//		else if (!bHit)
-	//		{
-	//			pPlayer->SetLanding(false);
-	//		}
-	//	}
-	//}
+    if (pPlayer)
+    {
+        if (GetColSpherePtr() && pPlayer->GetColCapsulePtr())
+        {
+            if (CCollision::ColSphereAndCapsule(GetColSpherePtr()->GetInfo(), pPlayer->GetColCapsulePtr()->GetInfo()))
+            {
+                Uninit();
+            }
+        }
+    }
 }
 
 //=============================================================================

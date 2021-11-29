@@ -26,7 +26,7 @@ public:
     //OBB情報の構造体
     struct OBB
     {
-        COLLISION_MODEL_INFO info;
+        INFO info;
         D3DXVECTOR3 DirVect[AXIS_NUM_OBB];  // 方向ベクトル
     };
 

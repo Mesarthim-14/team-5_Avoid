@@ -171,9 +171,9 @@ void CWimpEnemy::Collision()
         CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
         if (pPlayer)
         {
-            if (m_pCollision && pPlayer->GetCollisionPtr())
+            if (m_pCollision && pPlayer->GetColOBBPtr())
             {
-                if (CCollision::ColOBBs(m_pCollision->GetOBB(), pPlayer->GetCollisionPtr()->GetOBB()))
+                if (CCollision::ColOBBs(m_pCollision->GetOBB(), pPlayer->GetColOBBPtr()->GetOBB()))
                 {
                     // ƒvƒŒƒCƒ„[‚Ö‚Ì‰e‹¿
                     AffectPlayer(pPlayer);

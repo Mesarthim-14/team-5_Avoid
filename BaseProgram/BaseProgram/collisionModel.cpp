@@ -46,10 +46,10 @@ void CCollisionModel::Load(void)
         //ポリゴンの作成
         D3DXCreatePolygon(
             pDevice,        //デバイス情報
-            10.0f,            //辺の長さ
-            4,                //辺の数
-            &m_pMesh,        //メッシュ情報
-            &m_pBuffMat);    //バッファ情報
+            10.0f,          //辺の長さ
+            4,              //辺の数
+            &m_pMesh,       //メッシュ情報
+            &m_pBuffMat);   //バッファ情報
 
         break;
 
@@ -58,11 +58,11 @@ void CCollisionModel::Load(void)
         //直方体の作成
         D3DXCreateBox(
             pDevice,        //デバイス情報
-            1.0f,            //横幅
-            1.0f,            //立幅
-            1.0f,            //奥幅
-            &m_pMesh,        //メッシュ情報
-            &m_pBuffMat);    //バッファ情報
+            1.0f,           //横幅
+            1.0f,           //立幅
+            1.0f,           //奥幅
+            &m_pMesh,       //メッシュ情報
+            &m_pBuffMat);   //バッファ情報
 
         break;
 
@@ -71,11 +71,11 @@ void CCollisionModel::Load(void)
         //球の作成
         D3DXCreateSphere(
             pDevice,        //デバイス情報
-            1.0f,            //手前の円の半径
-            10,                //スライスの数
-            10,                //スタック数
-            &m_pMesh,        //メッシュ情報
-            &m_pBuffMat);    //バッファ情報
+            1.0f,           //手前の円の半径
+            10,             //スライスの数
+            10,             //スタック数
+            &m_pMesh,       //メッシュ情報
+            &m_pBuffMat);   //バッファ情報
 
         break;
 
@@ -84,13 +84,13 @@ void CCollisionModel::Load(void)
         //円柱の作成
         D3DXCreateCylinder(
             pDevice,        //デバイス情報
-            1.0f,            //手前の円の半径
-            1.0f,            //奥の円の半径
-            1.0f,            //円柱の長さ
-            10,                //スライス(円の超点数)
-            1,                //スタック(円柱の分割数)
-            &m_pMesh,        //メッシュ情報
-            &m_pBuffMat);    //バッファ情報
+            1.0f,           //手前の円の半径
+            1.0f,           //奥の円の半径
+            1.0f,           //円柱の長さ
+            10,             //スライス(円の超点数)
+            1,              //スタック(円柱の分割数)
+            &m_pMesh,       //メッシュ情報
+            &m_pBuffMat);   //バッファ情報
 
         break;
 

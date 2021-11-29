@@ -35,7 +35,8 @@ public:
     static float CalDistance(const D3DXVECTOR3 &pos1, const D3DXVECTOR3 &pos2);                                 // 二点の距離を計算
     static float LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 = 0); // 分離軸に投影された軸成分から投影線分長を算出
     static D3DXVECTOR3 MultiplyVector3(const D3DXVECTOR3 &vector1, const D3DXVECTOR3 &vector2);                 // vector3同士の乗算
-
+    static D3DXVECTOR3 DivisionVector3(const D3DXVECTOR3 &vector1, const D3DXVECTOR3 &vector2);                 // vector3同士の除算
+    static float DivisionCheck(const float &num1, const float &num2);                                           // 0チェック有の除算(float型のみ)
     static BOOL KeyboardPress(const int &nKey);                                                                 // キーボードの押し込み判定
     static BOOL KeyboardTrigger(const int &nKey);                                                               // キーボードの押した判定
     static BOOL KeyboardRelease(const int &nKey);                                                               // キーボードの離した判定

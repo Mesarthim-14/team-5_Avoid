@@ -18,6 +18,7 @@
 // 前方宣言
 //=========================================================================
 class CCollisionModelOBB;
+class CCollisionModelCapsule;
 class CState;
 
 //=============================================================================
@@ -80,13 +81,14 @@ public:
     inline void SetAngle(const float& fAngle)                       { m_fAngle = fAngle; }                  // アングル
 
     // Get関数
-    inline int GetLife()const                           { return m_nHP; }                   // HPの情報
-    inline float GetAngle()const                        { return m_fAngle; }                // アングル
-    inline D3DXVECTOR3 GetRotDest()const                { return m_rotDest; }               // 目的
-    inline D3DXVECTOR3 GetInertia()const                { return m_Inertia; }               // 慣性の情報
-    inline float GetInertiaNum()const                   { return m_fInertiaNum; }           // 慣性の値
-    inline SLIME_STATE GetSlimeState()const             { return m_SlimeState; }            // スライムの状態
-    inline CCollisionModelOBB* GetCollisionPtr()const   { return m_pCollisionModelOBB; }    //当たり判定ポインタ
+    inline int GetLife()const                               { return m_nHP; }                   // HPの情報
+    inline float GetAngle()const                            { return m_fAngle; }                // アングル
+    inline D3DXVECTOR3 GetRotDest()const                    { return m_rotDest; }               // 目的
+    inline D3DXVECTOR3 GetInertia()const                    { return m_Inertia; }               // 慣性の情報
+    inline float GetInertiaNum()const                       { return m_fInertiaNum; }           // 慣性の値
+    inline SLIME_STATE GetSlimeState()const                 { return m_SlimeState; }            // スライムの状態
+    inline CCollisionModelOBB* GetColOBBPtr()const          { return m_pColModelOBB; }          //当たり判定ポインタ(OBB)
+    inline CCollisionModelCapsule* GetColCapsulePtr()const  { return m_pColModelCapsule; }      //当たり判定ポインタ(カプセル)
 
 private:
     // private関数
@@ -111,6 +113,7 @@ private:
     int m_nMaxAction[SLIME_STATE_MAX];                  // アクションの最大数
     CState* m_pCurrentState;                            // 現在の状態ポインタ
     CState* m_pNextState;                               // 次の状態ポインタ
-    CCollisionModelOBB* m_pCollisionModelOBB;           // 当たり判定モデルのポインタ
+    CCollisionModelOBB* m_pColModelOBB;                 // 当たり判定モデル(直方体)のポインタ
+    CCollisionModelCapsule* m_pColModelCapsule;         // 当たり判定モデル(カプセル)のポインタ
 };
 #endif
