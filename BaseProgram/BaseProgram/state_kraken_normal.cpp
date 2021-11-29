@@ -1,6 +1,6 @@
 //=====================================================================
 //
-// プレイヤー動けない状態 [state_player_not_move.cpp]
+// クラーケン通常状態管理クラス [state_kraken_normal.cpp]
 // Author : Konishi Yuuto
 //
 //=====================================================================
@@ -8,25 +8,32 @@
 //=====================================================================
 // インクルードファイル
 //=====================================================================
-#include "state_player_not_move.h"
+#include "state_kraken_normal.h"
 #include "player.h"
+#include "library.h"
 #include "manager.h"
 #include "game.h"
-#include "library.h"
-#include "skinmesh_model.h"
-#include "animation_skinmesh.h"
+#include "camera.h"
+#include "kraken.h"
+#include "boss_bullet.h"
+
+//=====================================================================
+// マクロ定義
+//=====================================================================
+#define BULLET_INTERVAL (500)   // たま発射間隔
 
 //=====================================================================
 // コンストラクタ
 //=====================================================================
-CPlayerStateNotMove::CPlayerStateNotMove()
+CKrakenStateNormal::CKrakenStateNormal()
 {
+    m_nBulletCount = 0;
 }
 
 //=====================================================================
 // デストラクタ
 //=====================================================================
-CPlayerStateNotMove::~CPlayerStateNotMove()
+CKrakenStateNormal::~CKrakenStateNormal()
 {
 
 }
@@ -34,15 +41,15 @@ CPlayerStateNotMove::~CPlayerStateNotMove()
 //=====================================================================
 // インスタンス生成
 //=====================================================================
-CPlayerStateNotMove * CPlayerStateNotMove::Create()
+CKrakenStateNormal * CKrakenStateNormal::Create()
 {
     // メモリ確保
-    CPlayerStateNotMove *pState = new CPlayerStateNotMove;
-    if (pState)
+    CKrakenStateNormal *pStateNormal = new CKrakenStateNormal;
+    if (pStateNormal)
     {
         // 初期化処理
-        pState->Init();
-        return pState;
+        pStateNormal->Init();
+        return pStateNormal;
     }
     return nullptr;
 }
@@ -50,21 +57,37 @@ CPlayerStateNotMove * CPlayerStateNotMove::Create()
 //=====================================================================
 // 初期化処理
 //=====================================================================
-void CPlayerStateNotMove::Init()
+void CKrakenStateNormal::Init()
 {
     // アニメーション設定
     SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_IDOL), 60);
-    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
-    if (pPlayer)
-    {
-        pPlayer->SetMove(ZeroVector3);
-    }
 }
 
 //=====================================================================
 // 更新処理
 //=====================================================================
-void CPlayerStateNotMove::Update()
+void CKrakenStateNormal::Update()
 {
+    CKraken* pKraken = GetKrakenPtr();
+    if (!pKraken)
+    {
+        return;
+    }
 
+    // 弾発射
+    ShotBullet(pKraken);
+}
+
+//=====================================================================
+// 弾発射
+//=====================================================================
+void CKrakenStateNormal::ShotBullet(CKraken* &pKraken)
+{
+    // バレットカウント
+    m_nBulletCount++;
+    if (m_nBulletCount == BULLET_INTERVAL)
+    {
+        CBossBullet::Create(pKraken->GetPos(), ZeroVector3);
+        m_nBulletCount = 0;
+    }
 }

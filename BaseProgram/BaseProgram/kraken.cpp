@@ -13,13 +13,15 @@
 #include "skinmesh_model.h"
 #include "boss_bullet.h"
 #include "collisionModel_OBB.h"
+#include "state.h"
+#include "state_kraken_normal.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
 #define POS             (D3DXVECTOR3(-16686.5f, 0.0f, -2596.4f))
 #define SIZE            (D3DXVECTOR3(3200.0f, 7500.0f, 3200.0f))
-#define BULLET_INTERVAL (120)                                      // たま発射間隔
+#define BULLET_INTERVAL (500)                                      // たま発射間隔
 #define MAX_LIFE        (5)                                        // ライフ
 
 //=============================================================================
@@ -32,6 +34,8 @@ CKraken::CKraken(PRIORITY Priority) : CEnemy(Priority)
     m_pCollision = nullptr;
     m_nLife = MAX_LIFE;
     m_bDead = false;
+    m_pCurrentState = nullptr;
+    m_pNextState = nullptr;
 }
 
 //=============================================================================
@@ -74,6 +78,11 @@ HRESULT CKraken::Init()
         // インスタンス生成
         m_pCollision = CCollisionModelOBB::Create(POS, SIZE, ZeroVector3);
     }
+
+    if (!m_pCurrentState)
+    {
+        m_pCurrentState = CKrakenStateNormal::Create();
+    }
     return S_OK;
 }
 
@@ -103,7 +112,6 @@ void CKraken::Update()
 {
     CEnemy::Update();
     Attack();
-
     if (m_pCollision)
     {
         m_pCollision->SetInfo(GetPos(), m_pCollision->GetInfo().size, GetRot());
@@ -117,25 +125,11 @@ void CKraken::Update()
 }
 
 //=============================================================================
-// 攻撃処理
+// 状態の変更
 //=============================================================================
-void CKraken::Attack()
+void CKraken::ChangeState(CState* pState)
 {
-    ShotBullet();
-}
-
-//=============================================================================
-// 弾発射
-// Author : hayashikawa sarina
-//=============================================================================
-void CKraken::ShotBullet()
-{
-    m_nBulletCount++;
-    if (m_nBulletCount == BULLET_INTERVAL)
-    {
-        CBossBullet::Create(POS, ZeroVector3, D3DXVECTOR3(50.0f, 0.0f, 0.0f));
-        m_nBulletCount = 0;
-    }
+    m_pNextState = pState;
 }
 
 //=============================================================================
@@ -146,10 +140,38 @@ void CKraken::CreateModel()
     m_pSkinmeshModel = CSkinmeshModel::Create(GetPos(), GetRot(), CSkinmeshModel::MODEL_ENEMY_KRAKEN_HEAD);
 
     m_pSkinmeshModel->IsDraw(true);
-    //SetAction(m_pSkinmeshModel->MaxAction());
 
-    // モデルの情報…分からない
+    // モデルの情報分からない
     m_pSkinmeshModel->GetHLcontroller()->ChangeAnimation(0);
     m_pSkinmeshModel->GetHLcontroller()->SetLoopTime(0, 60);
     m_pSkinmeshModel->GetHLcontroller()->SetShiftTime(0, 60);
+}
+
+//=============================================================================
+// 状態の更新
+//=============================================================================
+void CKraken::UpdateState()
+{
+    if (m_pNextState)
+    {
+        delete m_pCurrentState;
+        m_pCurrentState = nullptr;
+
+        m_pCurrentState = m_pNextState;
+        m_pNextState = nullptr;
+    }
+
+    if (m_pCurrentState)
+    {
+        // 更新処理
+        m_pCurrentState->Update();
+    }
+}
+
+//=============================================================================
+// 攻撃
+//=============================================================================
+void CKraken::Attack()
+{
+    UpdateState();
 }

@@ -1,6 +1,6 @@
 //=======================================================================================
 //
-// クラーケンが怒る演出 [production_angry_kraken.cpp]
+// 会話時の演出 [production_npc_talk.cpp]
 // Author : Konishi Yuuto
 //
 //=======================================================================================
@@ -8,7 +8,7 @@
 //=======================================================================================
 // インクルード
 //=======================================================================================
-#include "production_angry_kraken.h"
+#include "production_npc_talk.h"
 #include "manager.h"
 #include "renderer.h"
 #include "player.h"
@@ -18,38 +18,42 @@
 #include "gimmick_factory.h"
 #include "player.h"
 #include "camera_game.h"
-#include "state_player_not_move.h"
 #include "state_player_normal.h"
 #include "state_camera_normal.h"
-#include "state_camera_angry_kraken.h"
+#include "cannon_bullet.h"
+#include "cannon.h"
+#include "cannon_manager.h"
 #include "kraken.h"
+#include "state_kraken_not_attack.h"
 #include "state_kraken_normal.h"
+#include "state_player_not_move.h"
+#include "state_camera_talk.h"
 
 //=======================================================================================
 // コンストラクタ
 //=======================================================================================
-CProductionAngryKraken::CProductionAngryKraken()
+CProductionNpcTalk::CProductionNpcTalk()
 {
 }
 
 //=======================================================================================
 // デストラクタ
 //=======================================================================================
-CProductionAngryKraken::~CProductionAngryKraken()
+CProductionNpcTalk::~CProductionNpcTalk()
 {
 }
 
 //=======================================================================================
 // インスタンス生成
 //=======================================================================================
-CProductionAngryKraken * CProductionAngryKraken::Create()
+CProductionNpcTalk * CProductionNpcTalk::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // メモリ確保
-    CProductionAngryKraken *pProductionCannon = new CProductionAngryKraken;
+    CProductionNpcTalk *pProductionCannon = new CProductionNpcTalk;
     if (pProductionCannon)
     {
         // インスタンス生成
-        pProductionCannon->Init();
+        pProductionCannon->Init(pos, rot);
         return pProductionCannon;
     }
 
@@ -59,39 +63,39 @@ CProductionAngryKraken * CProductionAngryKraken::Create()
 //=======================================================================================
 // 初期化処理
 //=======================================================================================
-void CProductionAngryKraken::Init()
+void CProductionNpcTalk::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
-    CCameraGame *pCamera = (CCameraGame*)CManager::GetInstance()->GetCamera();
-
     CreateState(pPlayer, CPlayerStateNotMove::Create());
-    CreateState(pCamera, CCameraStateAngryKraken::Create());
+
+    CCameraGame *pCamera = (CCameraGame*)CManager::GetInstance()->GetCamera();
+    CreateState(pCamera, CCameraStateTalk::Create(pos, rot));
+
+    CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();
+    CreateState(pKraken, CKrakenStateNotAttack::Create());
 }
 
 //=======================================================================================
 // 終了処理
 //=======================================================================================
-void CProductionAngryKraken::Uninit()
+void CProductionNpcTalk::Uninit()
 {
+    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    CreateState(pPlayer, CPlayerStateNormal::Create());
+
+    CCameraGame *pCamera = (CCameraGame*)CManager::GetInstance()->GetCamera();
+    CreateState(pCamera, CCameraStateNormal::Create());
+
+    CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();
+    CreateState(pKraken, CKrakenStateNormal::Create());
+
     CProduction::Uninit();
 }
 
 //=======================================================================================
 // 更新処理
 //=======================================================================================
-void CProductionAngryKraken::Update()
+void CProductionNpcTalk::Update()
 {
-    TimeCounter(100);
 
-    if (GetEnd())
-    {
-        CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
-        CreateState(pPlayer, CPlayerStateNormal::Create());
-
-        CCameraGame *pCamera = (CCameraGame*)CManager::GetInstance()->GetCamera();
-        CreateState(pCamera, CCameraStateNormal::Create());
-
-        CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();
-        CreateState(pKraken, CKrakenStateNormal::Create());
-    }
 }

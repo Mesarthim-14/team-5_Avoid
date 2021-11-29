@@ -27,7 +27,7 @@ public:
     CProduction();          // コンストラクタ
     virtual ~CProduction(); // デストラクタ
 
-    virtual void Init(); // 初期化処理
+    virtual void Init();    // 初期化処理
     virtual void Uninit();  // 終了処理
     virtual void Update();  // 更新処理
 
@@ -36,7 +36,7 @@ public:
 protected:
     void CreateState(CStateObject* pObj, CState* pState);
 
-    // 終了のカウントをするラムダ式
+    // 終了のカウントをする式
     function<int (const int)> TimeCounter = [&](const int nLimit)
     {
         m_nCounter++;

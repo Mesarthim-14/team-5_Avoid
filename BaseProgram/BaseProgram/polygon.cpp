@@ -20,6 +20,7 @@ CPolygon::CPolygon()
     m_pVtxBuff = nullptr;
     m_pos = ZeroVector3;
     m_size = ZeroVector3;
+    m_pTexture = nullptr;
 }
 
 //=============================================================================
@@ -137,7 +138,7 @@ void CPolygon::Draw(void)
     pD3DDevice->SetFVF(FVF_VERTEX_2D);
 
     //テクスチャの設定
-    pD3DDevice->SetTexture(0, nullptr);
+    pD3DDevice->SetTexture(0, m_pTexture);
 
     // ポリゴンの描画
     pD3DDevice->DrawPrimitive(

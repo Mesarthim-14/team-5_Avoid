@@ -1,70 +1,59 @@
 //=====================================================================
 //
-// プレイヤー動けない状態 [state_player_not_move.cpp]
+// クラーケンの状態管理クラス [state_kraken.h]
 // Author : Konishi Yuuto
 //
 //=====================================================================
 
 //=====================================================================
-// インクルードファイル
+// インクルード
 //=====================================================================
-#include "state_player_not_move.h"
-#include "player.h"
+#include "state_kraken.h"
 #include "manager.h"
 #include "game.h"
 #include "library.h"
 #include "skinmesh_model.h"
 #include "animation_skinmesh.h"
+#include "kraken.h"
 
 //=====================================================================
 // コンストラクタ
 //=====================================================================
-CPlayerStateNotMove::CPlayerStateNotMove()
+CKrakenState::CKrakenState()
 {
 }
 
 //=====================================================================
 // デストラクタ
 //=====================================================================
-CPlayerStateNotMove::~CPlayerStateNotMove()
+CKrakenState::~CKrakenState()
 {
-
 }
 
 //=====================================================================
-// インスタンス生成
+// アニメーション設定
 //=====================================================================
-CPlayerStateNotMove * CPlayerStateNotMove::Create()
+void CKrakenState::SetAnimation(const UINT &animID, const FLOAT &time)
 {
-    // メモリ確保
-    CPlayerStateNotMove *pState = new CPlayerStateNotMove;
-    if (pState)
+    CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();
+    if (!pKraken)
     {
-        // 初期化処理
-        pState->Init();
-        return pState;
+        return;
     }
-    return nullptr;
-}
-
-//=====================================================================
-// 初期化処理
-//=====================================================================
-void CPlayerStateNotMove::Init()
-{
-    // アニメーション設定
-    SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_IDOL), 60);
-    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
-    if (pPlayer)
+    CSkinmeshModel* pSkinMeshModel = pKraken->GetSkinMesh();
+    if (!pSkinMeshModel)
     {
-        pPlayer->SetMove(ZeroVector3);
+        return;
     }
+
+    pSkinMeshModel->GetHLcontroller()->ChangeAnimation(animID);
+    pSkinMeshModel->GetHLcontroller()->SetLoopTime(animID, time);
 }
 
 //=====================================================================
-// 更新処理
+// クラーケンのポインタ
 //=====================================================================
-void CPlayerStateNotMove::Update()
+CKraken * CKrakenState::GetKrakenPtr() const
 {
-
+    return CManager::GetInstance()->GetGame()->GetKraken();
 }

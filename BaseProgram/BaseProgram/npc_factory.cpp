@@ -1,6 +1,6 @@
 //=======================================================================================
 //
-// クラーケンが怒る演出 [production_angry_kraken.cpp]
+// NPC生成クラス [npc_factory.cpp]
 // Author : Konishi Yuuto
 //
 //=======================================================================================
@@ -8,90 +8,76 @@
 //=======================================================================================
 // インクルード
 //=======================================================================================
-#include "production_angry_kraken.h"
+#include "npc_factory.h"
 #include "manager.h"
-#include "renderer.h"
-#include "player.h"
 #include "resource_manager.h"
-#include "library.h"
-#include "game.h"
-#include "gimmick_factory.h"
-#include "player.h"
-#include "camera_game.h"
-#include "state_player_not_move.h"
-#include "state_player_normal.h"
-#include "state_camera_normal.h"
-#include "state_camera_angry_kraken.h"
-#include "kraken.h"
-#include "state_kraken_normal.h"
+#include "npc_enemy_info.h"
 
 //=======================================================================================
 // コンストラクタ
 //=======================================================================================
-CProductionAngryKraken::CProductionAngryKraken()
+CNpcFactory::CNpcFactory()
 {
+    m_pNPC.clear();
 }
 
 //=======================================================================================
 // デストラクタ
 //=======================================================================================
-CProductionAngryKraken::~CProductionAngryKraken()
+CNpcFactory::~CNpcFactory()
 {
 }
 
 //=======================================================================================
 // インスタンス生成
 //=======================================================================================
-CProductionAngryKraken * CProductionAngryKraken::Create()
+CNpcFactory * CNpcFactory::Create()
 {
-    // メモリ確保
-    CProductionAngryKraken *pProductionCannon = new CProductionAngryKraken;
-    if (pProductionCannon)
+    CNpcFactory *pNpcFactory = new CNpcFactory;
+    if (pNpcFactory)
     {
-        // インスタンス生成
-        pProductionCannon->Init();
-        return pProductionCannon;
+        pNpcFactory->Init();
+        return pNpcFactory;
     }
-
     return nullptr;
 }
 
 //=======================================================================================
 // 初期化処理
 //=======================================================================================
-void CProductionAngryKraken::Init()
+HRESULT CNpcFactory::Init()
 {
-    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
-    CCameraGame *pCamera = (CCameraGame*)CManager::GetInstance()->GetCamera();
+    CreateNPC();
 
-    CreateState(pPlayer, CPlayerStateNotMove::Create());
-    CreateState(pCamera, CCameraStateAngryKraken::Create());
+    return S_OK;
 }
 
 //=======================================================================================
 // 終了処理
 //=======================================================================================
-void CProductionAngryKraken::Uninit()
+void CNpcFactory::Uninit()
 {
-    CProduction::Uninit();
+    for (auto &pNPC : m_pNPC)
+    {
+        // 終了処理
+        pNPC->Uninit();
+        pNPC = nullptr;
+    }
+
+    m_pNPC.clear();
 }
 
 //=======================================================================================
 // 更新処理
 //=======================================================================================
-void CProductionAngryKraken::Update()
+void CNpcFactory::Update()
 {
-    TimeCounter(100);
+}
 
-    if (GetEnd())
-    {
-        CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
-        CreateState(pPlayer, CPlayerStateNormal::Create());
-
-        CCameraGame *pCamera = (CCameraGame*)CManager::GetInstance()->GetCamera();
-        CreateState(pCamera, CCameraStateNormal::Create());
-
-        CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();
-        CreateState(pKraken, CKrakenStateNormal::Create());
-    }
+//=======================================================================================
+// NPC生成
+//=======================================================================================
+void CNpcFactory::CreateNPC()
+{
+    m_pNPC.push_back(CNpcEnemyInfo::Create());
 }

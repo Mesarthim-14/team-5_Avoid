@@ -66,6 +66,7 @@ public:
     	XFILE_NUM_CANNON_BULLET,    // ‘å–C‚Ì’e
     	XFILE_NUM_SWIRL_SCAFFOLD,   // ‰Q‚Ì‘«ê
         XFILE_NUM_SKY_BLUE,         // ‹ó
+        XFILE_NUM_KRAKEN_BULLET,    // ƒNƒ‰[ƒPƒ“‚Ì’e
     	XFILE_NUM_MAX
     };
     

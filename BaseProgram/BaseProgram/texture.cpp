@@ -67,6 +67,7 @@ HRESULT CTexture::SetTextureName(void)
         { "data/Texture/Gauge.png" },
         { "data/Texture/Gauge_Frame.png" },
         { "data/Texture/E-key.png"},
+        { "data/Texture/message_back.jpeg" },
     };
 
     // 分割テクスチャ

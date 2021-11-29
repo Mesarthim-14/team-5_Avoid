@@ -202,6 +202,13 @@
     <ClCompile Include="mode_base.cpp" />
     <ClCompile Include="motion.cpp" />
     <ClCompile Include="mouse.cpp" />
+    <ClCompile Include="non_player_character.cpp" />
+    <ClCompile Include="npc_enemy_info.cpp" />
+    <ClCompile Include="npc_factory.cpp" />
+    <ClCompile Include="npc_sentence_enemy1.cpp" />
+    <ClCompile Include="npc_sentence_enemy2.cpp" />
+    <ClCompile Include="npc_text.cpp" />
+    <ClCompile Include="npc_text_enemy.cpp" />
     <ClCompile Include="particleaura.cpp" />
     <ClCompile Include="particlecollective.cpp" />
     <ClCompile Include="particlenormal.cpp" />
@@ -220,6 +227,7 @@
     <ClCompile Include="production_cannon.cpp" />
     <ClCompile Include="production_cannon_manager.cpp" />
     <ClCompile Include="production_dead_kraken.cpp" />
+    <ClCompile Include="production_npc_talk.cpp" />
     <ClCompile Include="reflect.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="resource_manager.cpp" />
@@ -248,6 +256,10 @@
     <ClCompile Include="state_camera_angry_kraken.cpp" />
     <ClCompile Include="state_camera_cannon.cpp" />
     <ClCompile Include="state_camera_normal.cpp" />
+    <ClCompile Include="state_camera_talk.cpp" />
+    <ClCompile Include="state_kraken.cpp" />
+    <ClCompile Include="state_kraken_normal.cpp" />
+    <ClCompile Include="state_kraken_not_attack.cpp" />
     <ClCompile Include="state_object.cpp" />
     <ClCompile Include="state_player.cpp" />
     <ClCompile Include="state_player_avoid.cpp" />
@@ -332,6 +344,13 @@
     <ClInclude Include="mode_base.h" />
     <ClInclude Include="motion.h" />
     <ClInclude Include="mouse.h" />
+    <ClInclude Include="non_player_character.h" />
+    <ClInclude Include="npc_enemy_info.h" />
+    <ClInclude Include="npc_factory.h" />
+    <ClInclude Include="npc_sentence_enemy1.h" />
+    <ClInclude Include="npc_sentence_enemy2.h" />
+    <ClInclude Include="npc_text.h" />
+    <ClInclude Include="npc_text_enemy.h" />
     <ClInclude Include="particleaura.h" />
     <ClInclude Include="particlecollective.h" />
     <ClInclude Include="particlenormal.h" />
@@ -350,6 +369,7 @@
     <ClInclude Include="production_cannon.h" />
     <ClInclude Include="production_cannon_manager.h" />
     <ClInclude Include="production_dead_kraken.h" />
+    <ClInclude Include="production_npc_talk.h" />
     <ClInclude Include="reflect.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="resource_manager.h" />
@@ -378,6 +398,10 @@
     <ClInclude Include="state_camera_angry_kraken.h" />
     <ClInclude Include="state_camera_cannon.h" />
     <ClInclude Include="state_camera_normal.h" />
+    <ClInclude Include="state_camera_talk.h" />
+    <ClInclude Include="state_kraken.h" />
+    <ClInclude Include="state_kraken_normal.h" />
+    <ClInclude Include="state_kraken_not_attack.h" />
     <ClInclude Include="state_object.h" />
     <ClInclude Include="state_player.h" />
     <ClInclude Include="state_player_avoid.h" />

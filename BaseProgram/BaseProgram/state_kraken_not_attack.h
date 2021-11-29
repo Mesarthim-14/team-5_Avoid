@@ -1,8 +1,8 @@
-#ifndef _STATE_PLAYER_NOT_MOVE_H_
-#define _STATE_PLAYER_NOT_MOVE_H_
+#ifndef _STATE_KRAKEN_NOT_ATTACK_H_
+#define _STATE_KRAKEN_NOT_ATTACK_H_
 //=====================================================================
 //
-// ジャンプ状態管理クラス [state_player_not_move.h]
+// 攻撃しない状態管理クラス [state_kraken_not_attack.h]
 // Author : Konishi Yuuto
 //
 //=====================================================================
@@ -10,20 +10,20 @@
 //=====================================================================
 // インクルードファイル
 //=====================================================================
-#include "state_player.h"
+#include "state_kraken.h"
 
 //=====================================================================
 // クラス定義
 //=====================================================================
-class CPlayerStateNotMove : public CPlayerState
+class CKrakenStateNotAttack : public CKrakenState
 {
 public:
-    CPlayerStateNotMove();     // コンストラクタ
-    ~CPlayerStateNotMove();    // デストラクタ
+    CKrakenStateNotAttack();    // コンストラクタ
+    ~CKrakenStateNotAttack();   // デストラクタ
 
-    static CPlayerStateNotMove* Create();  // インスタンス生成
-    void Init();                           // 初期化処理
-    void Update()override;                 // 更新処理
+    static CKrakenStateNotAttack* Create(); // インスタンス生成
+    void Init();                            // 初期化処理
+    void Update()override;                  // 更新処理
 
 private:
 };

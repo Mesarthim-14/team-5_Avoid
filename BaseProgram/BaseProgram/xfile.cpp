@@ -57,6 +57,7 @@ CXfile::CXfile()
         { "data/Model/Normal/CannonBullet.x" },     // ‘å–C‚Ì’e
         { "data/Model/Normal/ugokuashiba.x" },      // ‰Q‚Ì‘«ê
         { "data/Model/Normal/sky_blue5.x" },        // ‚¨‹ó
+        { "data/Model/Normal/Kraken_Bullet.x" },    // ƒNƒ‰[ƒPƒ“‚Ì’e
     };
     
     // ŠK‘w\‘¢ƒ‚ƒfƒ‹

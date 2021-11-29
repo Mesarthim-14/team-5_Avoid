@@ -28,10 +28,13 @@ public:
     void SetColor(const D3DXCOLOR &color);                          // 色の設定
 
     static CPolygon *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size);   // インスタンス生成
+    inline void BindTexture(const LPDIRECT3DTEXTURE9 &pTexture) { m_pTexture = pTexture; }
 
 private:
+    LPDIRECT3DTEXTURE9 m_pTexture;      // テクスチャのポインタ
     LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff; // 頂点バッファへのポインタ
     D3DXVECTOR3 m_size;                 // ポリゴンのサイズ
     D3DXVECTOR3 m_pos;                  // ライフの位置
+
 };
 #endif 

@@ -33,6 +33,8 @@
 #include "sky.h"
 #include "gauge.h"
 #include "gaugebar.h"
+#include "npc_enemy_info.h"
+#include "npc_factory.h"
 
 float CGame::m_fGravity = 1.5f;
 //=======================================================================================
@@ -45,6 +47,7 @@ CGame::CGame()
     m_pFont = nullptr;
     m_pGimmickFactory = nullptr;
     m_pKraken = nullptr;
+    m_pNpcFactory = nullptr;
 }
 
 //=======================================================================================
@@ -65,6 +68,7 @@ HRESULT CGame::Init()
     CreatePlayer();
     CreateEnemy();
     CreateMap();
+    CreateNPC();
     CGauge::Create();
     CGaugebar::Create();
 
@@ -86,6 +90,11 @@ void CGame::Uninit()
     {
         m_pKraken->Uninit();
         m_pKraken = nullptr;
+    }
+    if (m_pNpcFactory)
+    {
+        m_pNpcFactory->Uninit();
+        m_pNpcFactory = nullptr;
     }
 
     // デバッグ情報表示用フォントの破棄
@@ -179,6 +188,17 @@ void CGame::CreateEnemy()
     if (!m_pKraken)
     {
         m_pKraken = CKraken::Create();
+    }
+}
+
+//=======================================================================================
+// NPCの生成
+//=======================================================================================
+void CGame::CreateNPC()
+{
+    if (!m_pNpcFactory)
+    {
+        m_pNpcFactory = CNpcFactory::Create();
     }
 }
 

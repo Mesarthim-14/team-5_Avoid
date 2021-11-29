@@ -51,7 +51,7 @@ void CBillboard::Draw()
 
     // テクスチャの設定
     pDevice->SetTexture(0, GetTexture());
-
+    
     // 頂点バッファをデバイスのデータストリームに設定
     pDevice->SetStreamSource(0, GetVtxBuff(), 0, sizeof(VERTEX_3D));
 
@@ -99,4 +99,8 @@ void CBillboard::Draw()
 
     // ライト有効
     pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+    // テクスチャの設定
+    pDevice->SetTexture(0, nullptr);
+
 }

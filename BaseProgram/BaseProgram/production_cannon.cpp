@@ -25,6 +25,8 @@
 #include "cannon_bullet.h"
 #include "cannon.h"
 #include "cannon_manager.h"
+#include "kraken.h"
+#include "state_kraken_not_attack.h"
 
 //=======================================================================================
 // ƒ}ƒNƒ’è‹`
@@ -73,6 +75,9 @@ void CProductionCannon::Init()
 
     CCameraGame *pCamera = (CCameraGame*)CManager::GetInstance()->GetCamera();
     CreateState(pCamera, CCameraStateCannon::Create());
+
+    CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();
+    CreateState(pKraken, CKrakenStateNotAttack::Create());
 }
 
 //=======================================================================================

@@ -154,8 +154,38 @@
     <Filter Include="12_Collision">
       <UniqueIdentifier>{ceb8d960-e110-4f35-afd1-db44ed5e0ac7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="11_Production\ProductionManager">
+    <Filter Include="04_Character\NPC">
+      <UniqueIdentifier>{6ffd4f63-ddff-4345-b626-daf2690a6b73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\NPC\Text">
+      <UniqueIdentifier>{37d4f9df-4a13-4892-b879-2ca4b2f81d55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\NPC\Sentence">
+      <UniqueIdentifier>{52af95ed-e52e-4f36-a6b9-f1da55e83ce5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\NPC\Character">
+      <UniqueIdentifier>{af6be52c-c7c7-4ba9-a0c8-df45b0f2d8c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\NPC\Text\Type">
+      <UniqueIdentifier>{ed4c9673-05ff-4972-9927-815e95a0df4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\NPC\Character\Type">
+      <UniqueIdentifier>{b9b2ad65-909c-47d4-add3-9107bbf6b6b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\NPC\Sentence\EnemyInfo">
+      <UniqueIdentifier>{fcc0a9ab-1bd1-41d3-8d9f-efaa92e3eec9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10_State\KrakenState">
+      <UniqueIdentifier>{cabfc97d-3f76-4373-8cc9-ac9aa59a8ce3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="11_Production\Cannon">
+      <UniqueIdentifier>{d3a7b8d4-2929-4060-a503-a686806a49aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="11_Production\Cannon\ProductionManager">
       <UniqueIdentifier>{0af9d9ed-c82a-4328-9181-b4e0aab923e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="11_Production\Talk">
+      <UniqueIdentifier>{47768fed-5ff2-40f4-8cd5-fe74b792ebbf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -471,9 +501,6 @@
     <ClCompile Include="state_camera_normal.cpp">
       <Filter>10_State\CameraState</Filter>
     </ClCompile>
-    <ClCompile Include="production_cannon.cpp">
-      <Filter>11_Production</Filter>
-    </ClCompile>
     <ClCompile Include="state_player_cannon.cpp">
       <Filter>10_State\PlayerState</Filter>
     </ClCompile>
@@ -507,9 +534,6 @@
     <ClCompile Include="particlenormal.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="production_angry_kraken.cpp">
-      <Filter>11_Production</Filter>
-    </ClCompile>
     <ClCompile Include="production.cpp">
       <Filter>11_Production</Filter>
     </ClCompile>
@@ -517,13 +541,10 @@
       <Filter>10_State\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="production_cannon_manager.cpp">
-      <Filter>11_Production\ProductionManager</Filter>
+      <Filter>11_Production\Cannon\ProductionManager</Filter>
     </ClCompile>
     <ClCompile Include="state_camera_angry_kraken.cpp">
       <Filter>10_State\CameraState</Filter>
-    </ClCompile>
-    <ClCompile Include="production_dead_kraken.cpp">
-      <Filter>11_Production</Filter>
     </ClCompile>
     <ClCompile Include="state_object.cpp">
       <Filter>10_State</Filter>
@@ -533,7 +554,53 @@
     </ClCompile>
     <ClCompile Include="collisionModel_Sphere.cpp">
       <Filter>12_Collision</Filter>
-    </ClCompile>  </ItemGroup>
+    </ClCompile>
+    <ClCompile Include="npc_text.cpp">
+      <Filter>04_Character\NPC\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_factory.cpp">
+      <Filter>04_Character\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="non_player_character.cpp">
+      <Filter>04_Character\NPC\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_text_enemy.cpp">
+      <Filter>04_Character\NPC\Text\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_enemy_info.cpp">
+      <Filter>04_Character\NPC\Character\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_sentence_enemy1.cpp">
+      <Filter>04_Character\NPC\Sentence\EnemyInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_sentence_enemy2.cpp">
+      <Filter>04_Character\NPC\Sentence\EnemyInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="state_kraken.cpp">
+      <Filter>10_State\KrakenState</Filter>
+    </ClCompile>
+    <ClCompile Include="state_kraken_normal.cpp">
+      <Filter>10_State\KrakenState</Filter>
+    </ClCompile>
+    <ClCompile Include="state_kraken_not_attack.cpp">
+      <Filter>10_State\KrakenState</Filter>
+    </ClCompile>
+    <ClCompile Include="state_camera_talk.cpp">
+      <Filter>10_State\CameraState</Filter>
+    </ClCompile>
+    <ClCompile Include="production_dead_kraken.cpp">
+      <Filter>11_Production\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="production_cannon.cpp">
+      <Filter>11_Production\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="production_angry_kraken.cpp">
+      <Filter>11_Production\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="production_npc_talk.cpp">
+      <Filter>11_Production\Talk</Filter>
+    </ClCompile>
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
       <Filter>00_Important</Filter>
@@ -856,9 +923,6 @@
     <ClInclude Include="state_camera_normal.h">
       <Filter>10_State\CameraState</Filter>
     </ClInclude>
-    <ClInclude Include="production_cannon.h">
-      <Filter>11_Production</Filter>
-    </ClInclude>
     <ClInclude Include="state_player_cannon.h">
       <Filter>10_State\PlayerState</Filter>
     </ClInclude>
@@ -892,9 +956,6 @@
     <ClInclude Include="particlenormal.h">
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="production_angry_kraken.h">
-      <Filter>11_Production</Filter>
-    </ClInclude>
     <ClInclude Include="production.h">
       <Filter>11_Production</Filter>
     </ClInclude>
@@ -902,13 +963,10 @@
       <Filter>10_State\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="production_cannon_manager.h">
-      <Filter>11_Production\ProductionManager</Filter>
+      <Filter>11_Production\Cannon\ProductionManager</Filter>
     </ClInclude>
     <ClInclude Include="state_camera_angry_kraken.h">
       <Filter>10_State\CameraState</Filter>
-    </ClInclude>
-    <ClInclude Include="production_dead_kraken.h">
-      <Filter>11_Production</Filter>
     </ClInclude>
     <ClInclude Include="state_object.h">
       <Filter>10_State</Filter>
@@ -918,7 +976,53 @@
     </ClInclude>
     <ClInclude Include="collisionModel_Sphere.h">
       <Filter>12_Collision</Filter>
-    </ClInclude>  </ItemGroup>
+    </ClInclude>
+    <ClInclude Include="npc_text.h">
+      <Filter>04_Character\NPC\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="npc_factory.h">
+      <Filter>04_Character\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="non_player_character.h">
+      <Filter>04_Character\NPC\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="npc_text_enemy.h">
+      <Filter>04_Character\NPC\Text\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="npc_enemy_info.h">
+      <Filter>04_Character\NPC\Character\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="npc_sentence_enemy1.h">
+      <Filter>04_Character\NPC\Sentence\EnemyInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="npc_sentence_enemy2.h">
+      <Filter>04_Character\NPC\Sentence\EnemyInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="state_kraken.h">
+      <Filter>10_State\KrakenState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_kraken_normal.h">
+      <Filter>10_State\KrakenState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_kraken_not_attack.h">
+      <Filter>10_State\KrakenState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_camera_talk.h">
+      <Filter>10_State\CameraState</Filter>
+    </ClInclude>
+    <ClInclude Include="production_dead_kraken.h">
+      <Filter>11_Production\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="production_cannon.h">
+      <Filter>11_Production\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="production_angry_kraken.h">
+      <Filter>11_Production\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="production_npc_talk.h">
+      <Filter>11_Production\Talk</Filter>
+    </ClInclude>
+  </ItemGroup>
   <ItemGroup>
     <None Include="data\Text\Shader\BlurFilter.fx">
       <Filter>06_Effect\Shader\FresnelWater\ShaderFile</Filter>

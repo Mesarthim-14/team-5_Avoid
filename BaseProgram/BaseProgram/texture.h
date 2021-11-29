@@ -38,6 +38,7 @@ public:
         TEXTURE_NUM_GAUGE,                  
         TEXTURE_NUM_GAUGEBAR,               
         TEXTURE_NUM_E_KEY,                  // Eキー
+        TEXTURE_NUM_MESSAGE_BACK,           // メッセージ背景
         TEXTURE_NUM_MAX                     
     };
 

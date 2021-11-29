@@ -29,8 +29,8 @@
 //=====================================================================
 CPlayerStateAvoid::CPlayerStateAvoid()
 {
-    m_fAvoidValueY = 30.0f;
-    m_fAvoidValueXZ = 5.0f;
+    m_fAvoidValueY = 20.0f;
+    m_fAvoidValueXZ = 25.0f;
 }
 
 //=====================================================================
@@ -96,6 +96,7 @@ void CPlayerStateAvoid::SetMove()
     {
         return;
     }
+
     D3DXVECTOR3 move = pPlayer->GetMove();
 
     float fRot = pPlayer->GetRot().y;

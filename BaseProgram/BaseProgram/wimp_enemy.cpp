@@ -130,11 +130,6 @@ bool CWimpEnemy::Follow()
         float fDistance = CLibrary::CalDistance(Ppos, Epos);
         if (fDistance <= PERCEPTION_DISTANCE)
         {
-            // “§–¾‚È“G‚ÌˆÚ“®
-            D3DXVECTOR3 FollowMove = D3DXVECTOR3(
-                (sinf(fAngle)*-fSpeed),
-                0.0f, cosf(fAngle)*-fSpeed);
-
             // ˆÚ“®—Ê‚ÌÝ’è
             SetMove(Vector);
             return true;
