@@ -31,6 +31,7 @@
 #include "state_player_avoid.h"
 #include "state_player_jump.h"
 #include "state_player_normal.h"
+#include "gauge.h"
 
 //=============================================================================
 // マクロ定義

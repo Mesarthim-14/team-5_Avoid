@@ -19,11 +19,13 @@
 #include "model_info.h"
 #include "player.h"
 #include "library.h"
+#include "gauge.h"
+#include "particleshrink.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define HEEL_NUM        (20)    // 回復の値
+#define HEEL_NUM        (1)    // 回復の値
 
 //=============================================================================
 // コンストラクタ
@@ -91,6 +93,10 @@ void CHeel::Uninit()
 //=============================================================================
 void CHeel::Update()
 {
+    // プレイヤーの位置取得
+    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    D3DXVECTOR3 pos = pPlayer->GetPos();
+
     for (auto &HeelPoint : m_apHeelPoint)
     {
         // 当たり判定
@@ -98,6 +104,10 @@ void CHeel::Update()
         {
             // 回復
             CManager::GetInstance()->GetPlayer()->SubLife(-HEEL_NUM);
+            CGauge::SetDown((float)HEEL_NUM);
+            CGauge::SetHitUp(true);
+            // プレイヤーの位置にエフェクト生成
+            CParticleShrink::Create(pos);
         }
     }
 }

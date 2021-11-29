@@ -36,6 +36,7 @@ public:
     inline void SetMove(const D3DXVECTOR3 &move)    { m_move = move; }
     inline void SetLife(const int &life)            { m_nLife = life; }
     inline void SetGravity(const bool &set)         { m_bGravitySet = set; }
+    inline void SetLife(const bool &set)            { m_LifeSet = set; }
 
 private:
     void Gravity();
@@ -46,6 +47,7 @@ private:
     D3DXVECTOR3 m_move;         // パーティクルの移動量
     int m_nLife;                // パーティクルのライフ
     bool m_bGravitySet;
+    bool m_LifeSet;
 };
 
 #endif

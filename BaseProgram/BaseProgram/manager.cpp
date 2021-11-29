@@ -59,6 +59,7 @@ CManager::CManager()
     m_pLight = nullptr;
     m_pCamera = nullptr;
     m_pPause = nullptr;
+    m_pGauge = nullptr;
 }
 
 //=============================================================================

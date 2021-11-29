@@ -16,6 +16,7 @@
 #include "skinmesh_model.h"
 #include "animation_skinmesh.h"
 #include "state_player_normal.h"
+#include "gauge.h"
 
 //=====================================================================
 // ƒ}ƒNƒ’è‹`
@@ -97,6 +98,8 @@ void CPlayerStateJump::SubLife(CPlayer* &pPlayer)
 {
     // HpÁ”ï
     pPlayer->SubLife(HIGHJUMP_CONSUME);
+    CGauge::SetDown((float)HIGHJUMP_CONSUME);
+    CGauge::SetHitDown(true);
 }
 
 //=====================================================================

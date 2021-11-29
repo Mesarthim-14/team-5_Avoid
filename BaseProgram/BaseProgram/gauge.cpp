@@ -15,6 +15,10 @@
 #include "resource_manager.h"
 #include "keyboard.h"
 
+float CGauge::m_fHP = 0.0f;
+float CGauge::m_fSave = 0.0f;
+bool CGauge::m_bHitDown = false;
+bool CGauge::m_bHitUp = false;
 //=====================================================================
 // マクロ定義
 //=====================================================================
@@ -27,8 +31,9 @@
 //=====================================================================
 CGauge::CGauge()
 {
-    m_fDown = MAX_GAUGE;
-    m_fSave = 0.0f;
+    m_fHP = 60.0f;
+    m_fDown = 0.0f;
+    m_fUp = 0.0f;
 }
 
 //=====================================================================
@@ -118,7 +123,7 @@ void CGauge::SetVertexGauge()
     D3DXVECTOR3 size = GetSize();
     D3DXCOLOR color = GetColor();
     // ゲージの量の計算
-    float fDown = MAX_GAUGE / m_fDown;
+    float fDown = MAX_GAUGE / m_fHP;
 
     // 頂点データをロックする
     pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
@@ -161,32 +166,47 @@ void CGauge::SetVertexGauge()
 //=====================================================================
 void CGauge::SetDownUp()
 {
-    CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
-    if (m_fDown <= MAX_GAUGE)
+    // 減らす処理
+    if (m_fHP >= 0.0f)
     {
-        if (pKey->GetPress(DIK_0))
+        if (m_bHitDown)
         {
-            m_fDown += 0.1f;
+            // 減らしたい値
+            m_fDown = GetHP();
+            m_bHitDown = false;
+        }
+        if (m_fDown >= 0.0f)
+        {
+            m_fHP -= 1.0f;
             SetVertexGauge();
+            m_fDown -= 1.0f;
+            // 0以下に行かないようにする　
+            if (m_fHP < 0.0f)
+            {
+                m_fHP = 0.0f;
+            }
         }
     }
-    if (m_fDown >= 0.0f)
+    // 増える処理
+    if (m_fHP <= MAX_GAUGE)
     {
-        if (pKey->GetPress(DIK_9))
+        if (m_bHitUp)
         {
-            m_fDown -= 0.1f;
-            SetVertexGauge();
+            // 増やしたい値
+            m_fUp = GetHP();
+            m_bHitUp = false;
         }
-    }
-    if (pKey->GetTrigger(DIK_8))
-    {
-        // 減らしたい値
-        m_fSave += 30.0f;
-    }
-    if (m_fSave >= 0.0f)
-    {
-        m_fDown -= 0.1f;
-        SetVertexGauge();
-        m_fSave -= 0.1f;
+        // 指定の数値分上げる
+        if (m_fUp >= 0.0f)
+        {
+            m_fHP += 1.0f;
+            SetVertexGauge();
+            m_fUp -= 1.0f;
+            // 100以上に行かないようにする
+            if (m_fHP > 100.0f)
+            {
+                m_fHP = 100.0f;
+            }
+        }
     }
 }

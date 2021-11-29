@@ -20,6 +20,7 @@
 class CCollisionModelOBB;
 class CCollisionModelCapsule;
 class CState;
+class CGauge;
 
 //=============================================================================
 // プレイヤークラス
