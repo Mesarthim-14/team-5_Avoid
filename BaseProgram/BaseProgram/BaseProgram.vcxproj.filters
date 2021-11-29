@@ -601,6 +601,11 @@
       <Filter>11_Production\Talk</Filter>
     </ClCompile>
   </ItemGroup>
+    </ClCompile>
+    <ClCompile Include="collisionModel_Capsule.cpp">
+      <Filter>12_Collision</Filter>
+    </ClCompile>
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
       <Filter>00_Important</Filter>
@@ -1021,6 +1026,11 @@
     </ClInclude>
     <ClInclude Include="production_npc_talk.h">
       <Filter>11_Production\Talk</Filter>
+    </ClInclude>
+  </ItemGroup>
+    </ClInclude>
+    <ClInclude Include="collisionModel_Capsule.h">
+      <Filter>12_Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

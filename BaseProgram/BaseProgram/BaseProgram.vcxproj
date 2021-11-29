@@ -36,7 +36,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -163,6 +163,7 @@
     <ClCompile Include="check_point.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="collisionModel.cpp" />
+    <ClCompile Include="collisionModel_Capsule.cpp" />
     <ClCompile Include="collisionModel_OBB.cpp" />
     <ClCompile Include="collisionModel_Sphere.cpp" />
     <ClCompile Include="enemy.cpp" />
@@ -302,6 +303,7 @@
     <ClInclude Include="check_point.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="collisionModel.h" />
+    <ClInclude Include="collisionModel_Capsule.h" />
     <ClInclude Include="collisionModel_OBB.h" />
     <ClInclude Include="collisionModel_Sphere.h" />
     <ClInclude Include="enemy.h" />

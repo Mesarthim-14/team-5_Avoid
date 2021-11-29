@@ -6,26 +6,26 @@
 //=============================================================================
 
 //=============================================================================
-//インクルードファイル
+// インクルードファイル
 //=============================================================================
 #include "model.h"
 #include "collision.h"
 #include "library.h"
 
 //*****************************************************************************
-//マクロ定義
+// マクロ定義
 //*****************************************************************************
-#define OBB_INTERVAL (10000.0f)    //OBB同士の当たり判定を行う範囲(半径)
+#define OBB_INTERVAL (10000.0f)    // OBB同士の当たり判定を行う範囲(半径)
 
 //*****************************************************************************
-//OBBとOBBの衝突判定
+// 当たり判定(OBBとOBB)
 //*****************************************************************************
 bool CCollision::ColOBBs(const CCollisionModelOBB::OBB &obb1, const CCollisionModelOBB::OBB &obb2)
 {
-    //OBB同士の距離
+    // 当たり判定モデル同士の距離
     D3DXVECTOR3 Interval = obb1.info.pos - obb2.info.pos;
     if (D3DXVec3Length(&Interval) > (FLOAT)OBB_INTERVAL)
-    { //OBB_INTERVALより離れているとき、当たり判定を行わない
+    { // OBB_INTERVALより離れているとき、当たり判定を行わない
         return false;
     }
 
@@ -51,7 +51,7 @@ bool CCollision::ColOBBs(const CCollisionModelOBB::OBB &obb1, const CCollisionMo
     FLOAT L = (FLOAT)fabs(D3DXVec3Dot(&Interval, &NAe1));
     if (L > rA + rB)
     {
-        return false; // 衝突していない
+        return false;
     }
 
     // 分離軸 : Ae2
@@ -195,9 +195,77 @@ bool CCollision::ColOBBs(const CCollisionModelOBB::OBB &obb1, const CCollisionMo
 }
 
 //=============================================================================
-//当たり判定(矩形と矩形)
+// 当たり判定(球体とカプセル)
 //=============================================================================
-bool CCollision::CollisionRectangleAndRectangle(const D3DXVECTOR3 &pos1,
+bool CCollision::ColSphereAndCapsule(const CCollisionModel::INFO &SphereInfo, const CCollisionModelCapsule::INFO &CapsuleInfo)
+{
+    // 当たり判定モデル同士の距離
+    D3DXVECTOR3 Interval = SphereInfo.pos - CapsuleInfo.pos;
+    if (D3DXVec3Length(&Interval) > (FLOAT)OBB_INTERVAL)
+    { // OBB_INTERVALより離れているとき、当たり判定を行わない
+        return false;
+    }
+
+    D3DXVECTOR3 V1 = ZeroVector3;       // カプセル線分のベクトル
+    D3DXVECTOR3 V2 = ZeroVector3;       // カプセル線分の始点から球体の中心までのベクトル
+    FLOAT L1 = 0.0f;                    // カプセル線分のベクトルの長さ
+    D3DXVECTOR3 norV1 = ZeroVector3;    // V1の単位ベクトル
+    FLOAT fDot = 0.0f;                  // 2つのベクトルの内積
+
+    // カプセル線分のベクトルを計算
+    V1 = CapsuleInfo.P1 - CapsuleInfo.P0;
+
+    // V1の長さと単位ベクトルを計算
+    L1 = D3DXVec3Length(&V1);       // 長さ
+    D3DXVec3Normalize(&norV1, &V1); // 単位ベクトル
+
+    // カプセル線分の始点から球体の中心までのベクトルの計算
+    V2 = SphereInfo.pos - CapsuleInfo.P0;
+
+    // 2つのベクトルの内積を計算
+    fDot = D3DXVec3Dot(&norV1, &V2);
+
+    D3DXVECTOR3 ret = ZeroVector3;  // 線分上最近点
+    FLOAT ratio = 0.0f;             // 線分を0～1の範囲で表したときの線分上最近点の位置
+
+    // 線分上最近点を計算
+    ret = CapsuleInfo.P0 + D3DXVECTOR3(norV1.x * fDot, norV1.y * fDot, norV1.z * fDot);
+
+    // 線分を-1～0の範囲で表したときの線分上最近点の位置を計算
+    ratio = D3DXVec3Dot(&norV1, &CLibrary::DivisionVector3((ret - CapsuleInfo.P0), V1));
+
+    if (ratio >= -1.0f && ratio <= 0.0f)
+    { // ratioが-1以上0以下のとき
+        // 「線分上最近点と球体の中心との距離」がカプセルと球体の半径を足した値より小さいとき
+        if (D3DXVec3Length(&(SphereInfo.pos - ret)) <= SphereInfo.size.x + CapsuleInfo.radius)
+        {
+             return true;
+        }
+    }
+    else if (ratio > 0.0f)
+    { // ratioが0より大きいとき
+        // 「カプセル線分の終点から球体の中心までのベクトルの長さ」がカプセルと球体の半径を足した値より小さいとき
+        if (D3DXVec3Length(&V2) <= SphereInfo.size.x + CapsuleInfo.radius)
+        {
+            return true;
+        }
+    }
+    else if (ratio < -1.0f)
+    { // ratioが-1より小さいとき
+        // V2の長さがカプセルと球体の半径を足した値より小さいとき
+        if (D3DXVec3Length(&(SphereInfo.pos - CapsuleInfo.P1)) <= SphereInfo.size.x + CapsuleInfo.radius)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+//=============================================================================
+// 当たり判定(矩形と矩形)
+//=============================================================================
+bool CCollision::ColRectangleAndRectangle(const D3DXVECTOR3 &pos1,
     const D3DXVECTOR3 &pos2, const D3DXVECTOR3 &size1, const D3DXVECTOR3 &size2)
 {
     bool bCollision = false;
@@ -216,9 +284,9 @@ bool CCollision::CollisionRectangleAndRectangle(const D3DXVECTOR3 &pos1,
 }
 
 //=============================================================================
-//当たり判定(円形と円形)
+// 当たり判定(円形と円形)
 //=============================================================================
-bool CCollision::CollisionCircularAndCircular(const D3DXVECTOR3 &pos1,
+bool CCollision::ColCircularAndCircular(const D3DXVECTOR3 &pos1,
     const D3DXVECTOR3 &pos2, const float &radius1, const float &radius2)
 {
     bool bCollision = false;
@@ -234,12 +302,12 @@ bool CCollision::CollisionCircularAndCircular(const D3DXVECTOR3 &pos1,
 }
 
 //=============================================================================
-//当たり判定(矩形と円形)
+// 当たり判定(矩形と円形)
 //=============================================================================
-bool CCollision::CollisionRectangleAndCircular(const D3DXVECTOR3 &RectanglePos, const D3DXVECTOR3 &CircularPos,
+bool CCollision::ColRectangleAndCircular(const D3DXVECTOR3 &RectanglePos, const D3DXVECTOR3 &CircularPos,
     const D3DXVECTOR3 &RectangleSize, const float &CircularRadius, const float &RectangleRadian)
 {
-    //矩形の角度を０にした時の円形の座標を求める
+    // 矩形の角度を０にした時の円形の座標を求める
     D3DXVECTOR3 NewCircularPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     NewCircularPos.x = (float)(cos(RectangleRadian) * (CircularPos.x - RectanglePos.x) -
         sin(RectangleRadian) * (CircularPos.y - RectanglePos.y) + RectanglePos.x);
@@ -250,7 +318,7 @@ bool CCollision::CollisionRectangleAndCircular(const D3DXVECTOR3 &RectanglePos, 
         NewCircularPos.x >(RectanglePos.x + (RectangleSize.x / 2) + CircularRadius) ||
         NewCircularPos.y < (RectanglePos.y - (RectangleSize.y / 2) - CircularRadius) ||
         NewCircularPos.y >(RectanglePos.y + (RectangleSize.y / 2) + CircularRadius))
-    { //「矩形の外枠 + 円の半径」の範囲に入っていないとき
+    { // 「矩形の外枠 + 円の半径」の範囲に入っていないとき
         return false;
     }
     if (NewCircularPos.x < (RectanglePos.x - (RectangleSize.x / 2)) &&
@@ -258,7 +326,7 @@ bool CCollision::CollisionRectangleAndCircular(const D3DXVECTOR3 &RectanglePos, 
         !(pow((RectanglePos.x - (RectangleSize.x / 2)) - NewCircularPos.x, 2)
             + pow((RectanglePos.y - (RectangleSize.y / 2)) - NewCircularPos.y, 2)
             < pow(CircularRadius, 2)))
-    { //矩形の左上の判定
+    { // 矩形の左上の判定
         return false;
     }
     if (NewCircularPos.x > (RectanglePos.x + (RectangleSize.x / 2)) &&
@@ -266,7 +334,7 @@ bool CCollision::CollisionRectangleAndCircular(const D3DXVECTOR3 &RectanglePos, 
         !(pow((RectanglePos.x + (RectangleSize.x / 2)) - NewCircularPos.x, 2)
             + pow((RectanglePos.y - (RectangleSize.y / 2)) - NewCircularPos.y, 2)
             < pow(CircularRadius, 2)))
-    { //矩形の右上の判定
+    { // 矩形の右上の判定
         return false;
     }
     if (NewCircularPos.x < (RectanglePos.x - (RectangleSize.x / 2)) &&
@@ -274,7 +342,7 @@ bool CCollision::CollisionRectangleAndCircular(const D3DXVECTOR3 &RectanglePos, 
         !(pow((RectanglePos.x - (RectangleSize.x / 2)) - NewCircularPos.x, 2)
             + pow((RectanglePos.y + (RectangleSize.y / 2)) - NewCircularPos.y, 2)
             < pow(CircularRadius, 2)))
-    { //矩形の左下の判定
+    { // 矩形の左下の判定
         return false;
     }
     if (NewCircularPos.x > (RectanglePos.x + (RectangleSize.x / 2)) &&
@@ -282,7 +350,7 @@ bool CCollision::CollisionRectangleAndCircular(const D3DXVECTOR3 &RectanglePos, 
         !(pow((RectanglePos.x + (RectangleSize.x / 2)) - NewCircularPos.x, 2)
             + pow((RectanglePos.y + (RectangleSize.y / 2)) - NewCircularPos.y, 2)
             < pow(CircularRadius, 2)))
-    { //矩形の右下の判定
+    { // 矩形の右下の判定
         return false;
     }
 

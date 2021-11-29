@@ -273,6 +273,27 @@ D3DXVECTOR3 CLibrary::MultiplyVector3(const D3DXVECTOR3 &vector1, const D3DXVECT
     return D3DXVECTOR3(vector1.x * vector2.x, vector1.y * vector2.y, vector1.z * vector2.z);
 }
 
+//*****************************************************************************
+// vector3同士の除算
+//*****************************************************************************
+D3DXVECTOR3 CLibrary::DivisionVector3(const D3DXVECTOR3 & vector1, const D3DXVECTOR3 & vector2)
+{
+    return D3DXVECTOR3(DivisionCheck(vector1.x, vector2.x), DivisionCheck(vector1.y, vector2.y), DivisionCheck(vector1.z, vector2.z));
+}
+
+//*****************************************************************************
+// 0チェック有の除算(float型のみ)
+//*****************************************************************************
+float CLibrary::DivisionCheck(const float & num1, const float & num2)
+{
+    if (num1 == 0.0f && num2 == 0.0f)
+    {
+        return 0.0f;
+    }
+
+    return num1 / num2;
+}
+
 //=============================================================================
 // 二点の距離を計算
 //=============================================================================

@@ -16,6 +16,7 @@
 #include "collision.h"
 #include "state_player_knockback.h"
 #include "gauge.h"
+#include "particlepop.h"
 
 //=============================================================================
 // マクロ定義
@@ -167,9 +168,9 @@ void CWimpEnemy::Collision()
         CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
         if (pPlayer)
         {
-            if (m_pCollision && pPlayer->GetCollisionPtr())
+            if (m_pCollision && pPlayer->GetColOBBPtr())
             {
-                if (CCollision::ColOBBs(m_pCollision->GetOBB(), pPlayer->GetCollisionPtr()->GetOBB()))
+                if (CCollision::ColOBBs(m_pCollision->GetOBB(), pPlayer->GetColOBBPtr()->GetOBB()))
                 {
                     // プレイヤーへの影響
                     AffectPlayer(pPlayer);
@@ -185,11 +186,15 @@ void CWimpEnemy::Collision()
 //=============================================================================
 void CWimpEnemy::AffectPlayer(CPlayer* &pPlayer)
 {
+    D3DXVECTOR3 pos = pPlayer->GetPos();
     // プレイヤーにダメージ
     pPlayer->SubLife(20);
     CGauge::SetDown((float)20);
     CGauge::SetHitDown(true);
-
+    for (int nCntParticle = 0; nCntParticle <= 10; nCntParticle++)
+    {
+        CParticlePop::Create(pos);
+    }
     D3DXVECTOR3 move = GetMove();
     move.x *= 0.8f;
     move.x *= 1.5f;

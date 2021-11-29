@@ -163,9 +163,9 @@ void CTestModel::OBBs()
 
     if (pPlayer)
     {
-        if (m_pCollisionModelOBB && pPlayer->GetCollisionPtr())
+        if (m_pCollisionModelOBB && pPlayer->GetColOBBPtr())
         {
-            if (CCollision::ColOBBs(m_pCollisionModelOBB->GetOBB(), pPlayer->GetCollisionPtr()->GetOBB()))
+            if (CCollision::ColOBBs(m_pCollisionModelOBB->GetOBB(), pPlayer->GetColOBBPtr()->GetOBB()))
             {
                 // ’…’n‚Ìˆ—
                 pPlayer->Landing(pPlayer->GetPos().y);

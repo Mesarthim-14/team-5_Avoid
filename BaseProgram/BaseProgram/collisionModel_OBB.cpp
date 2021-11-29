@@ -14,7 +14,7 @@
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-CCollisionModelOBB::CCollisionModelOBB(PRIORITY)
+CCollisionModelOBB::CCollisionModelOBB(PRIORITY Priority) :CCollisionModel(Priority)
 {
     memset(&m_DirVect, 0, sizeof(m_DirVect));
 }

@@ -14,7 +14,7 @@
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-CCollisionModelSphere::CCollisionModelSphere(PRIORITY)
+CCollisionModelSphere::CCollisionModelSphere(PRIORITY Priority) :CCollisionModel(Priority)
 {
 }
 
