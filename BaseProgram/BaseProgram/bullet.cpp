@@ -39,7 +39,7 @@ CBullet::CBullet(PRIORITY Priority) : CScene(Priority)
 	m_nDamage = 0;							        // ダメージ量
 	m_pos = ZeroVector3;
 	m_rot = ZeroVector3;
-    m_pColModelSphere = nullptr;
+    m_pCollisionModelSphere = nullptr;
 }
 
 //=============================================================================
@@ -75,9 +75,9 @@ CBullet * CBullet::Create()
 HRESULT CBullet::Init()
 {
     // 当たり判定モデル(球体)の生成
-    if (!m_pColModelSphere)
+    if (!m_pCollisionModelSphere)
     {
-        m_pColModelSphere = CCollisionModelSphere::Create(m_pos, m_size.x, m_rot);
+        m_pCollisionModelSphere = CCollisionModelSphere::Create(m_pos, m_size.x, m_rot);
     }
 
 	return S_OK;
@@ -89,10 +89,10 @@ HRESULT CBullet::Init()
 void CBullet::Uninit()
 {
     // 当たり判定モデル(球体)の終了処理
-    if (m_pColModelSphere)
+    if (m_pCollisionModelSphere)
     {
-        m_pColModelSphere->Uninit();
-        m_pColModelSphere = nullptr;
+        m_pCollisionModelSphere->Uninit();
+        m_pCollisionModelSphere = nullptr;
     }
 
     Release();
@@ -104,9 +104,9 @@ void CBullet::Uninit()
 void CBullet::Update()
 {
     // 当たり判定モデルの更新
-    if (m_pColModelSphere)
+    if (m_pCollisionModelSphere)
     {
-        m_pColModelSphere->SetInfo(m_pos, m_size, m_rot);
+        m_pCollisionModelSphere->SetInfo(m_pos, m_size, m_rot);
     }
 
 	// 位置更新
@@ -117,9 +117,9 @@ void CBullet::Update()
 	if (m_nLife < 0)
 	{
         // 当たり判定モデルの終了処理
-        if (m_pColModelSphere)
+        if (m_pCollisionModelSphere)
         {
-            m_pColModelSphere->Uninit();
+            m_pCollisionModelSphere->Uninit();
         }
 
 		Uninit();

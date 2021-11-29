@@ -1,194 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="00_Important">
-      <UniqueIdentifier>{8e5b1c5f-58ce-4fa4-8a43-84bb5a00856c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01_Resource">
-      <UniqueIdentifier>{0c381524-cc4c-438b-b822-bc6aa9ee679f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02_Input">
-      <UniqueIdentifier>{25d4b941-aaad-46cc-9b24-25d80fffa076}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03_Mode">
-      <UniqueIdentifier>{c7970afb-f83e-4924-8702-4d086508db6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character">
-      <UniqueIdentifier>{665799d5-88f7-402e-af68-7a99cc3570f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05_Scene">
-      <UniqueIdentifier>{46962e6c-df69-41c3-a73d-37de22f8fee2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06_Effect">
-      <UniqueIdentifier>{3d47cdce-98bd-450a-8b9b-f4528afe88b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00_Important\Camera">
-      <UniqueIdentifier>{72e190c9-dba1-4c73-89c1-c95bfbda1fdc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03_Mode\Game">
-      <UniqueIdentifier>{ecc6d923-40a1-40fc-bdde-e580f9e724e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03_Mode\Result">
-      <UniqueIdentifier>{772194e6-fe67-4543-9227-ffa3d99c0ac3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03_Mode\Title">
-      <UniqueIdentifier>{01e1eb15-be92-4aa0-8b51-b8ab2fe9ecf7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03_Mode\Tutorial">
-      <UniqueIdentifier>{08c49ad5-190d-4682-93b6-3cf78de52901}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character\Player">
-      <UniqueIdentifier>{024e7ef0-db81-4be7-98a8-1dc6e9ee7f89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05_Scene\Mesh">
-      <UniqueIdentifier>{3b951791-a7f8-47a3-823f-e2c6b6ee1765}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06_Effect\Shadow">
-      <UniqueIdentifier>{33760b98-4a89-4bdf-8c6a-9d9dc05f5a80}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="08_Object">
-      <UniqueIdentifier>{6df30ef8-d25e-4574-b424-7ffb0cf8befc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="09_Ui">
-      <UniqueIdentifier>{3680b137-e782-432a-9a65-4679115e88d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00_Important\Imgui">
-      <UniqueIdentifier>{461840e8-50f6-457d-bfbe-49e969fbe9e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07_Model">
-      <UniqueIdentifier>{0b7fa75f-6142-4860-9ba6-676d79aa1bdd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03_Mode\Editor">
-      <UniqueIdentifier>{304cf4d0-331b-4b82-9633-1318a2680623}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="08_Object\CheckPoint">
-      <UniqueIdentifier>{cbfe83bb-025a-48be-8a08-d92e308c1ffd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06_Effect\Shader">
-      <UniqueIdentifier>{ddbce5a4-ecb3-4ebe-95ea-26e7a1e6987c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06_Effect\Shader\FresnelWater">
-      <UniqueIdentifier>{ef604c70-7f3a-4c96-8a60-3e0cf6840420}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06_Effect\Shader\FresnelWater\ShaderFile">
-      <UniqueIdentifier>{c289fd4c-f565-428e-9e75-7375150935d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character\Enemy">
-      <UniqueIdentifier>{d3887324-871f-4ab5-961f-c198402e428b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character\Enemy\Boss">
-      <UniqueIdentifier>{fe43d487-8208-46e3-b45a-73e2aa800746}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character\Enemy\Wimp">
-      <UniqueIdentifier>{cb3a54ea-319e-45db-bb5d-22f308f025d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character\Enemy\Wimp\Shark">
-      <UniqueIdentifier>{e2b3266a-e269-4148-b772-657eb18d6b59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character\Enemy\Wimp\Ghost">
-      <UniqueIdentifier>{7ff177f6-28c2-4a9f-85a1-68e3b17e39bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character\Enemy\Wimp\Marlin">
-      <UniqueIdentifier>{86bb7888-9e09-4cce-9c68-61ea3c3d713d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="08_Object\Gimmick">
-      <UniqueIdentifier>{12a55dcb-70a5-4e0a-a48f-794216a336b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="08_Object\Gimmick\RotateFloor">
-      <UniqueIdentifier>{a52979fa-ad88-49d6-9152-b82031ed54df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="08_Object\Gimmick\BlockParty">
-      <UniqueIdentifier>{844ab4d1-bb75-4814-aa39-65f7a9fc966c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="08_Object\Gimmick\Barrel">
-      <UniqueIdentifier>{280b4a9b-087f-4400-864f-d97aee78bcb7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="08_Object\Gimmick\Slope">
-      <UniqueIdentifier>{d2ef561b-257b-4358-b10c-8329dd6d9671}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="08_Object\HeelPoint">
-      <UniqueIdentifier>{678c5037-fb57-4618-81de-03fbeb324638}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="08_Object\Gimmick\Cannon">
-      <UniqueIdentifier>{06f60e9f-4b2f-4dc6-b5a5-362f706b47a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="08_Object\Gimmick\Bridge">
-      <UniqueIdentifier>{591bd628-f8c1-4b53-b84a-56b6e5c70bba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="08_Object\Gimmick\Swirl">
-      <UniqueIdentifier>{d55f749a-1aed-49b6-8d59-f226c6a8908f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="10_State">
-      <UniqueIdentifier>{c56c905c-bfa3-4c0e-90e1-8a253ce12466}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="10_State\PlayerState">
-      <UniqueIdentifier>{c5b1ba84-127b-4781-aff4-9e72a75d3851}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03_Mode\pause">
-      <UniqueIdentifier>{0d451309-488e-4534-acd7-dd6ee910099d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="08_Object\EnemyObject">
-      <UniqueIdentifier>{d187ac1d-2400-4b01-8b57-d82df842dcad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="10_State\CameraState">
-      <UniqueIdentifier>{27359d3e-f4fb-40b0-a1d1-bba9b9be8d0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="11_Production">
-      <UniqueIdentifier>{c8d76e28-e95a-4d06-b779-b602b8f31316}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06_Effect\Particle">
-      <UniqueIdentifier>{25c215ec-f0ca-4301-8d88-9000724620c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="12_Collision">
-      <UniqueIdentifier>{ceb8d960-e110-4f35-afd1-db44ed5e0ac7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character\NPC">
-      <UniqueIdentifier>{6ffd4f63-ddff-4345-b626-daf2690a6b73}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character\NPC\Text">
-      <UniqueIdentifier>{37d4f9df-4a13-4892-b879-2ca4b2f81d55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character\NPC\Sentence">
-      <UniqueIdentifier>{52af95ed-e52e-4f36-a6b9-f1da55e83ce5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character\NPC\Character">
-      <UniqueIdentifier>{af6be52c-c7c7-4ba9-a0c8-df45b0f2d8c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character\NPC\Text\Type">
-      <UniqueIdentifier>{ed4c9673-05ff-4972-9927-815e95a0df4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character\NPC\Character\Type">
-      <UniqueIdentifier>{b9b2ad65-909c-47d4-add3-9107bbf6b6b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04_Character\NPC\Sentence\EnemyInfo">
-      <UniqueIdentifier>{fcc0a9ab-1bd1-41d3-8d9f-efaa92e3eec9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="10_State\KrakenState">
-      <UniqueIdentifier>{cabfc97d-3f76-4373-8cc9-ac9aa59a8ce3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="11_Production\Cannon">
-      <UniqueIdentifier>{d3a7b8d4-2929-4060-a503-a686806a49aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="11_Production\Cannon\ProductionManager">
-      <UniqueIdentifier>{0af9d9ed-c82a-4328-9181-b4e0aab923e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="11_Production\Talk">
-      <UniqueIdentifier>{47768fed-5ff2-40f4-8cd5-fe74b792ebbf}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="camera_title.cpp">
+      <Filter>00_Important\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="camera_game.cpp">
+      <Filter>00_Important\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>00_Important\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui.cpp">
+      <Filter>00_Important\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_draw.cpp">
+      <Filter>00_Important\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_dx9.cpp">
+      <Filter>00_Important\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_win32.cpp">
+      <Filter>00_Important\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_widgets.cpp">
+      <Filter>00_Important\Imgui</Filter>
+    </ClCompile>
     <ClCompile Include="fade.cpp">
       <Filter>00_Important</Filter>
     </ClCompile>
@@ -207,25 +43,16 @@
     <ClCompile Include="renderer.cpp">
       <Filter>00_Important</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>00_Important\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="camera_game.cpp">
-      <Filter>00_Important\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="camera_title.cpp">
-      <Filter>00_Important\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="resource_manager.cpp">
-      <Filter>01_Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="sound.cpp">
+    <ClCompile Include="xfile.cpp">
       <Filter>01_Resource</Filter>
     </ClCompile>
     <ClCompile Include="texture.cpp">
       <Filter>01_Resource</Filter>
     </ClCompile>
-    <ClCompile Include="xfile.cpp">
+    <ClCompile Include="sound.cpp">
+      <Filter>01_Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource_manager.cpp">
       <Filter>01_Resource</Filter>
     </ClCompile>
     <ClCompile Include="input.cpp">
@@ -237,14 +64,47 @@
     <ClCompile Include="keyboard.cpp">
       <Filter>02_Input</Filter>
     </ClCompile>
-    <ClCompile Include="mode_base.cpp">
-      <Filter>03_Mode</Filter>
+    <ClCompile Include="mouse.cpp">
+      <Filter>02_Input</Filter>
+    </ClCompile>
+    <ClCompile Include="player_editor.cpp">
+      <Filter>03_Mode\Editor</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp">
       <Filter>03_Mode\Game</Filter>
     </ClCompile>
+    <ClCompile Include="pause.cpp">
+      <Filter>03_Mode\pause</Filter>
+    </ClCompile>
     <ClCompile Include="title.cpp">
       <Filter>03_Mode\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="kraken.cpp">
+      <Filter>04_Character\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="ghost.cpp">
+      <Filter>04_Character\Enemy\Wimp\Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="ghost_model.cpp">
+      <Filter>04_Character\Enemy\Wimp\Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="marlin_model.cpp">
+      <Filter>04_Character\Enemy\Wimp\Marlin</Filter>
+    </ClCompile>
+    <ClCompile Include="marlin.cpp">
+      <Filter>04_Character\Enemy\Wimp\Marlin</Filter>
+    </ClCompile>
+    <ClCompile Include="shark_model.cpp">
+      <Filter>04_Character\Enemy\Wimp\Shark</Filter>
+    </ClCompile>
+    <ClCompile Include="shark.cpp">
+      <Filter>04_Character\Enemy\Wimp\Shark</Filter>
+    </ClCompile>
+    <ClCompile Include="wimp_enemy.cpp">
+      <Filter>04_Character\Enemy\Wimp</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>04_Character\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="character.cpp">
       <Filter>04_Character</Filter>
@@ -252,86 +112,101 @@
     <ClCompile Include="player.cpp">
       <Filter>04_Character\Player</Filter>
     </ClCompile>
-    <ClCompile Include="billboard.cpp">
-      <Filter>05_Scene</Filter>
+    <ClCompile Include="meshfield.cpp">
+      <Filter>05_Scene\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="polygon.cpp">
-      <Filter>05_Scene</Filter>
+    <ClCompile Include="mesh_3d.cpp">
+      <Filter>05_Scene\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="scene.cpp">
-      <Filter>05_Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="scene_base.cpp">
-      <Filter>05_Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="scene2d.cpp">
+    <ClCompile Include="texture_animation.cpp">
       <Filter>05_Scene</Filter>
     </ClCompile>
     <ClCompile Include="scene3D.cpp">
       <Filter>05_Scene</Filter>
     </ClCompile>
-    <ClCompile Include="mesh_3d.cpp">
-      <Filter>05_Scene\Mesh</Filter>
+    <ClCompile Include="scene2d.cpp">
+      <Filter>05_Scene</Filter>
     </ClCompile>
-    <ClCompile Include="meshfield.cpp">
-      <Filter>05_Scene\Mesh</Filter>
+    <ClCompile Include="scene_base.cpp">
+      <Filter>05_Scene</Filter>
     </ClCompile>
-    <ClCompile Include="shadow.cpp">
+    <ClCompile Include="scene.cpp">
+      <Filter>05_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="polygon.cpp">
+      <Filter>05_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="plane.cpp">
+      <Filter>05_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="billboard.cpp">
+      <Filter>05_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="particle_info.cpp">
+      <Filter>06_Effect\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="particleaura.cpp">
+      <Filter>06_Effect\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="particlecollective.cpp">
+      <Filter>06_Effect\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="particleshrink.cpp">
+      <Filter>06_Effect\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="particlepop.cpp">
+      <Filter>06_Effect\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="particlenormal.cpp">
+      <Filter>06_Effect\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="shadow_volume.cpp">
       <Filter>06_Effect\Shadow</Filter>
     </ClCompile>
     <ClCompile Include="shadow_polygon.cpp">
       <Filter>06_Effect\Shadow</Filter>
     </ClCompile>
-    <ClCompile Include="shadow_volume.cpp">
+    <ClCompile Include="shadow.cpp">
       <Filter>06_Effect\Shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="shader_square.cpp">
+      <Filter>06_Effect\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="blur_filter.cpp">
+      <Filter>06_Effect\Shader\FresnelWater</Filter>
+    </ClCompile>
+    <ClCompile Include="fresnel_lambert.cpp">
+      <Filter>06_Effect\Shader\FresnelWater</Filter>
+    </ClCompile>
+    <ClCompile Include="mask.cpp">
+      <Filter>06_Effect\Shader\FresnelWater</Filter>
+    </ClCompile>
+    <ClCompile Include="parallax_mapping2.cpp">
+      <Filter>06_Effect\Shader\FresnelWater</Filter>
+    </ClCompile>
+    <ClCompile Include="reflect.cpp">
+      <Filter>06_Effect\Shader\FresnelWater</Filter>
+    </ClCompile>
+    <ClCompile Include="wave.cpp">
+      <Filter>06_Effect\Shader\FresnelWater</Filter>
+    </ClCompile>
+    <ClCompile Include="water_fresnel.cpp">
+      <Filter>06_Effect\Shader\FresnelWater</Filter>
+    </ClCompile>
+    <ClCompile Include="animation_skinmesh.cpp">
+      <Filter>07_Model</Filter>
     </ClCompile>
     <ClCompile Include="model.cpp">
       <Filter>07_Model</Filter>
     </ClCompile>
-    <ClCompile Include="modelanime.cpp">
+    <ClCompile Include="model_info.cpp">
       <Filter>07_Model</Filter>
     </ClCompile>
     <ClCompile Include="motion.cpp">
       <Filter>07_Model</Filter>
     </ClCompile>
-    <ClCompile Include="texture_animation.cpp">
-      <Filter>05_Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="test_2d.cpp">
-      <Filter>08_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="plane.cpp">
-      <Filter>05_Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="model_info.cpp">
+    <ClCompile Include="modelanime.cpp">
       <Filter>07_Model</Filter>
-    </ClCompile>
-    <ClCompile Include="test_model.cpp">
-      <Filter>08_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="test_character.cpp">
-      <Filter>08_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\imgui.cpp">
-      <Filter>00_Important\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\imgui_draw.cpp">
-      <Filter>00_Important\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\imgui_impl_dx9.cpp">
-      <Filter>00_Important\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\imgui_impl_win32.cpp">
-      <Filter>00_Important\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\imgui_widgets.cpp">
-      <Filter>00_Important\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="ground.cpp">
-      <Filter>08_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="player_editor.cpp">
-      <Filter>03_Mode\Editor</Filter>
     </ClCompile>
     <ClCompile Include="skinmesh_model.cpp">
       <Filter>07_Model</Filter>
@@ -339,11 +214,86 @@
     <ClCompile Include="skinmesh.cpp">
       <Filter>07_Model</Filter>
     </ClCompile>
-    <ClCompile Include="animation_skinmesh.cpp">
-      <Filter>07_Model</Filter>
+    <ClCompile Include="check_point.cpp">
+      <Filter>08_Object\CheckPoint</Filter>
     </ClCompile>
-    <ClCompile Include="mouse.cpp">
-      <Filter>02_Input</Filter>
+    <ClCompile Include="check_flag.cpp">
+      <Filter>08_Object\CheckPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="boss_bullet.cpp">
+      <Filter>08_Object\EnemyObject</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>08_Object\EnemyObject</Filter>
+    </ClCompile>
+    <ClCompile Include="barrel_factory.cpp">
+      <Filter>08_Object\Gimmick\Barrel</Filter>
+    </ClCompile>
+    <ClCompile Include="barrel.cpp">
+      <Filter>08_Object\Gimmick\Barrel</Filter>
+    </ClCompile>
+    <ClCompile Include="move_scaffold.cpp">
+      <Filter>08_Object\Gimmick\BlockParty</Filter>
+    </ClCompile>
+    <ClCompile Include="rubble2.cpp">
+      <Filter>08_Object\Gimmick\BlockParty</Filter>
+    </ClCompile>
+    <ClCompile Include="rubble1.cpp">
+      <Filter>08_Object\Gimmick\BlockParty</Filter>
+    </ClCompile>
+    <ClCompile Include="bridge.cpp">
+      <Filter>08_Object\Gimmick\Bridge</Filter>
+    </ClCompile>
+    <ClCompile Include="cannon.cpp">
+      <Filter>08_Object\Gimmick\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="cannon_bullet.cpp">
+      <Filter>08_Object\Gimmick\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="cannon_manager.cpp">
+      <Filter>08_Object\Gimmick\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="key_e.cpp">
+      <Filter>08_Object\Gimmick\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="rotate_body.cpp">
+      <Filter>08_Object\Gimmick\RotateFloor</Filter>
+    </ClCompile>
+    <ClCompile Include="rotate_floor.cpp">
+      <Filter>08_Object\Gimmick\RotateFloor</Filter>
+    </ClCompile>
+    <ClCompile Include="rotate_gimmick.cpp">
+      <Filter>08_Object\Gimmick\RotateFloor</Filter>
+    </ClCompile>
+    <ClCompile Include="slope.cpp">
+      <Filter>08_Object\Gimmick\Slope</Filter>
+    </ClCompile>
+    <ClCompile Include="swirl_scaffold.cpp">
+      <Filter>08_Object\Gimmick\Swirl</Filter>
+    </ClCompile>
+    <ClCompile Include="gimmick_factory.cpp">
+      <Filter>08_Object\Gimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="heel_point.cpp">
+      <Filter>08_Object\HeelPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="heel.cpp">
+      <Filter>08_Object\HeelPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="ground.cpp">
+      <Filter>08_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="sky.cpp">
+      <Filter>08_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="test_model.cpp">
+      <Filter>08_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="test_character.cpp">
+      <Filter>08_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="test_2d.cpp">
+      <Filter>08_Object</Filter>
     </ClCompile>
     <ClCompile Include="gauge.cpp">
       <Filter>09_Ui</Filter>
@@ -354,227 +304,50 @@
     <ClCompile Include="translation.cpp">
       <Filter>09_Ui</Filter>
     </ClCompile>
-    <ClCompile Include="check_point.cpp">
-      <Filter>08_Object\CheckPoint</Filter>
-    </ClCompile>
-    <ClCompile Include="check_flag.cpp">
-      <Filter>08_Object\CheckPoint</Filter>
-    </ClCompile>
-    <ClCompile Include="reflect.cpp">
-      <Filter>06_Effect\Shader\FresnelWater</Filter>
-    </ClCompile>
-    <ClCompile Include="parallax_mapping2.cpp">
-      <Filter>06_Effect\Shader\FresnelWater</Filter>
-    </ClCompile>
-    <ClCompile Include="mask.cpp">
-      <Filter>06_Effect\Shader\FresnelWater</Filter>
-    </ClCompile>
-    <ClCompile Include="wave.cpp">
-      <Filter>06_Effect\Shader\FresnelWater</Filter>
-    </ClCompile>
-    <ClCompile Include="water_fresnel.cpp">
-      <Filter>06_Effect\Shader\FresnelWater</Filter>
-    </ClCompile>
-    <ClCompile Include="fresnel_lambert.cpp">
-      <Filter>06_Effect\Shader\FresnelWater</Filter>
-    </ClCompile>
-    <ClCompile Include="shader_square.cpp">
-      <Filter>06_Effect\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="blur_filter.cpp">
-      <Filter>06_Effect\Shader\FresnelWater</Filter>
-    </ClCompile>
-    <ClCompile Include="enemy.cpp">
-      <Filter>04_Character\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="kraken.cpp">
-      <Filter>04_Character\Enemy\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="shark.cpp">
-      <Filter>04_Character\Enemy\Wimp\Shark</Filter>
-    </ClCompile>
-    <ClCompile Include="shark_model.cpp">
-      <Filter>04_Character\Enemy\Wimp\Shark</Filter>
-    </ClCompile>
-    <ClCompile Include="ghost.cpp">
-      <Filter>04_Character\Enemy\Wimp\Ghost</Filter>
-    </ClCompile>
-    <ClCompile Include="ghost_model.cpp">
-      <Filter>04_Character\Enemy\Wimp\Ghost</Filter>
-    </ClCompile>
-    <ClCompile Include="marlin.cpp">
-      <Filter>04_Character\Enemy\Wimp\Marlin</Filter>
-    </ClCompile>
-    <ClCompile Include="marlin_model.cpp">
-      <Filter>04_Character\Enemy\Wimp\Marlin</Filter>
-    </ClCompile>
-    <ClCompile Include="wimp_enemy.cpp">
-      <Filter>04_Character\Enemy\Wimp</Filter>
-    </ClCompile>
-    <ClCompile Include="move_scaffold.cpp">
-      <Filter>08_Object\Gimmick\BlockParty</Filter>
-    </ClCompile>
-    <ClCompile Include="rubble1.cpp">
-      <Filter>08_Object\Gimmick\BlockParty</Filter>
-    </ClCompile>
-    <ClCompile Include="rubble2.cpp">
-      <Filter>08_Object\Gimmick\BlockParty</Filter>
-    </ClCompile>
-    <ClCompile Include="rotate_floor.cpp">
-      <Filter>08_Object\Gimmick\RotateFloor</Filter>
-    </ClCompile>
-    <ClCompile Include="barrel.cpp">
-      <Filter>08_Object\Gimmick\Barrel</Filter>
-    </ClCompile>
-    <ClCompile Include="rotate_body.cpp">
-      <Filter>08_Object\Gimmick\RotateFloor</Filter>
-    </ClCompile>
-    <ClCompile Include="rotate_gimmick.cpp">
-      <Filter>08_Object\Gimmick\RotateFloor</Filter>
-    </ClCompile>
-    <ClCompile Include="slope.cpp">
-      <Filter>08_Object\Gimmick\Slope</Filter>
-    </ClCompile>
-    <ClCompile Include="barrel_factory.cpp">
-      <Filter>08_Object\Gimmick\Barrel</Filter>
-    </ClCompile>
-    <ClCompile Include="heel_point.cpp">
-      <Filter>08_Object\HeelPoint</Filter>
-    </ClCompile>
-    <ClCompile Include="heel.cpp">
-      <Filter>08_Object\HeelPoint</Filter>
-    </ClCompile>
-    <ClCompile Include="gimmick_factory.cpp">
-      <Filter>08_Object\Gimmick</Filter>
-    </ClCompile>
-    <ClCompile Include="cannon.cpp">
-      <Filter>08_Object\Gimmick\Cannon</Filter>
-    </ClCompile>
-    <ClCompile Include="bridge.cpp">
-      <Filter>08_Object\Gimmick\Bridge</Filter>
-    </ClCompile>
-    <ClCompile Include="cannon_manager.cpp">
-      <Filter>08_Object\Gimmick\Cannon</Filter>
-    </ClCompile>
-    <ClCompile Include="key_e.cpp">
-      <Filter>08_Object\Gimmick\Cannon</Filter>
-    </ClCompile>
-    <ClCompile Include="cannon_bullet.cpp">
-      <Filter>08_Object\Gimmick\Cannon</Filter>
-    </ClCompile>
-    <ClCompile Include="swirl_scaffold.cpp">
-      <Filter>08_Object\Gimmick\Swirl</Filter>
-    </ClCompile>
-    <ClCompile Include="state.cpp">
-      <Filter>10_State</Filter>
-    </ClCompile>
-    <ClCompile Include="state_player.cpp">
-      <Filter>10_State\PlayerState</Filter>
-    </ClCompile>
-    <ClCompile Include="state_player_normal.cpp">
-      <Filter>10_State\PlayerState</Filter>
-    </ClCompile>
-    <ClCompile Include="state_player_avoid.cpp">
-      <Filter>10_State\PlayerState</Filter>
-    </ClCompile>
-    <ClCompile Include="state_player_jump.cpp">
-      <Filter>10_State\PlayerState</Filter>
-    </ClCompile>
-    <ClCompile Include="state_player_stun.cpp">
-      <Filter>10_State\PlayerState</Filter>
-    </ClCompile>
-    <ClCompile Include="state_player_knockback.cpp">
-      <Filter>10_State\PlayerState</Filter>
-    </ClCompile>
-    <ClCompile Include="pause.cpp">
-      <Filter>03_Mode\pause</Filter>
-    </ClCompile>
-    <ClCompile Include="boss_bullet.cpp">
-      <Filter>08_Object\EnemyObject</Filter>
-    </ClCompile>
-    <ClCompile Include="bullet.cpp">
-      <Filter>08_Object\EnemyObject</Filter>
-    </ClCompile>
-    <ClCompile Include="state_camera.cpp">
+    <ClCompile Include="state_camera_talk.cpp">
       <Filter>10_State\CameraState</Filter>
     </ClCompile>
     <ClCompile Include="state_camera_normal.cpp">
       <Filter>10_State\CameraState</Filter>
     </ClCompile>
-    <ClCompile Include="state_player_cannon.cpp">
-      <Filter>10_State\PlayerState</Filter>
-    </ClCompile>
     <ClCompile Include="state_camera_cannon.cpp">
       <Filter>10_State\CameraState</Filter>
-    </ClCompile>
-    <ClCompile Include="collision.cpp">
-      <Filter>12_Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="collisionModel.cpp">
-      <Filter>12_Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="particle_info.cpp">
-      <Filter>06_Effect\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="particleaura.cpp">
-      <Filter>06_Effect\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="particlepop.cpp">
-      <Filter>06_Effect\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="sky.cpp">
-      <Filter>08_Object</Filter>
-    </ClCompile>
-    <ClCompile Include="particleshrink.cpp">
-      <Filter>06_Effect\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="particlecollective.cpp">
-      <Filter>06_Effect\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="particlenormal.cpp">
-      <Filter>06_Effect\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="production.cpp">
-      <Filter>11_Production</Filter>
-    </ClCompile>
-    <ClCompile Include="state_player_not_move.cpp">
-      <Filter>10_State\PlayerState</Filter>
-    </ClCompile>
-    <ClCompile Include="production_cannon_manager.cpp">
-      <Filter>11_Production\Cannon\ProductionManager</Filter>
     </ClCompile>
     <ClCompile Include="state_camera_angry_kraken.cpp">
       <Filter>10_State\CameraState</Filter>
     </ClCompile>
+    <ClCompile Include="state_camera.cpp">
+      <Filter>10_State\CameraState</Filter>
+    </ClCompile>
+    <ClCompile Include="state_player.cpp">
+      <Filter>10_State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="state_player_avoid.cpp">
+      <Filter>10_State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="state_player_cannon.cpp">
+      <Filter>10_State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="state_player_jump.cpp">
+      <Filter>10_State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="state_player_knockback.cpp">
+      <Filter>10_State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="state_player_normal.cpp">
+      <Filter>10_State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="state_player_not_move.cpp">
+      <Filter>10_State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="state_player_stun.cpp">
+      <Filter>10_State\PlayerState</Filter>
+    </ClCompile>
     <ClCompile Include="state_object.cpp">
       <Filter>10_State</Filter>
     </ClCompile>
-    <ClCompile Include="collisionModel_OBB.cpp">
-      <Filter>12_Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="collisionModel_Sphere.cpp">
-      <Filter>12_Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="npc_text.cpp">
-      <Filter>04_Character\NPC\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="npc_factory.cpp">
-      <Filter>04_Character\NPC</Filter>
-    </ClCompile>
-    <ClCompile Include="non_player_character.cpp">
-      <Filter>04_Character\NPC\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="npc_text_enemy.cpp">
-      <Filter>04_Character\NPC\Text\Type</Filter>
-    </ClCompile>
-    <ClCompile Include="npc_enemy_info.cpp">
-      <Filter>04_Character\NPC\Character\Type</Filter>
-    </ClCompile>
-    <ClCompile Include="npc_sentence_enemy1.cpp">
-      <Filter>04_Character\NPC\Sentence\EnemyInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="npc_sentence_enemy2.cpp">
-      <Filter>04_Character\NPC\Sentence\EnemyInfo</Filter>
+    <ClCompile Include="state.cpp">
+      <Filter>10_State</Filter>
     </ClCompile>
     <ClCompile Include="state_kraken.cpp">
       <Filter>10_State\KrakenState</Filter>
@@ -585,28 +358,95 @@
     <ClCompile Include="state_kraken_not_attack.cpp">
       <Filter>10_State\KrakenState</Filter>
     </ClCompile>
-    <ClCompile Include="state_camera_talk.cpp">
-      <Filter>10_State\CameraState</Filter>
+    <ClCompile Include="production.cpp">
+      <Filter>11_Production</Filter>
     </ClCompile>
-    <ClCompile Include="production_dead_kraken.cpp">
+    <ClCompile Include="collision.cpp">
+      <Filter>12_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionModel.cpp">
+      <Filter>12_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionModel_Capsule.cpp">
+      <Filter>12_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionModel_OBB.cpp">
+      <Filter>12_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionModel_Sphere.cpp">
+      <Filter>12_Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="mode_base.cpp">
+      <Filter>03_Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="production_angry_kraken.cpp">
       <Filter>11_Production\Cannon</Filter>
     </ClCompile>
     <ClCompile Include="production_cannon.cpp">
       <Filter>11_Production\Cannon</Filter>
     </ClCompile>
-    <ClCompile Include="production_angry_kraken.cpp">
+    <ClCompile Include="production_cannon_manager.cpp">
+      <Filter>11_Production\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="production_dead_kraken.cpp">
       <Filter>11_Production\Cannon</Filter>
     </ClCompile>
     <ClCompile Include="production_npc_talk.cpp">
-      <Filter>11_Production\Talk</Filter>
+      <Filter>11_Production\NpcTalk</Filter>
     </ClCompile>
-  </ItemGroup>
+    <ClCompile Include="npc_factory.cpp">
+      <Filter>04_Character\NPC</Filter>
     </ClCompile>
-    <ClCompile Include="collisionModel_Capsule.cpp">
-      <Filter>12_Collision</Filter>
+    <ClCompile Include="non_player_character.cpp">
+      <Filter>04_Character\NPC\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_enemy_info.cpp">
+      <Filter>04_Character\NPC\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_sentence_enemy2.cpp">
+      <Filter>04_Character\NPC\Sentence</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_sentence_enemy1.cpp">
+      <Filter>04_Character\NPC\Sentence</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_text_enemy.cpp">
+      <Filter>04_Character\NPC\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_text.cpp">
+      <Filter>04_Character\NPC\Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="camera_title.h">
+      <Filter>00_Important\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="camera_game.h">
+      <Filter>00_Important\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>00_Important\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui.h">
+      <Filter>00_Important\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_dx9.h">
+      <Filter>00_Important\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_win32.h">
+      <Filter>00_Important\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_internal.h">
+      <Filter>00_Important\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_truetype.h">
+      <Filter>00_Important\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_textedit.h">
+      <Filter>00_Important\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_rectpack.h">
+      <Filter>00_Important\Imgui</Filter>
+    </ClInclude>
     <ClInclude Include="fade.h">
       <Filter>00_Important</Filter>
     </ClInclude>
@@ -625,25 +465,19 @@
     <ClInclude Include="renderer.h">
       <Filter>00_Important</Filter>
     </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>00_Important\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="camera_game.h">
-      <Filter>00_Important\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="camera_title.h">
-      <Filter>00_Important\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="resource_manager.h">
-      <Filter>01_Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="sound.h">
+    <ClInclude Include="xfile.h">
       <Filter>01_Resource</Filter>
     </ClInclude>
     <ClInclude Include="texture.h">
       <Filter>01_Resource</Filter>
     </ClInclude>
-    <ClInclude Include="xfile.h">
+    <ClInclude Include="sound.h">
+      <Filter>01_Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource_manager.h">
+      <Filter>01_Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="json.h">
       <Filter>01_Resource</Filter>
     </ClInclude>
     <ClInclude Include="input.h">
@@ -655,14 +489,47 @@
     <ClInclude Include="keyboard.h">
       <Filter>02_Input</Filter>
     </ClInclude>
-    <ClInclude Include="mode_base.h">
-      <Filter>03_Mode</Filter>
+    <ClInclude Include="mouse.h">
+      <Filter>02_Input</Filter>
+    </ClInclude>
+    <ClInclude Include="player_editor.h">
+      <Filter>03_Mode\Editor</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
       <Filter>03_Mode\Game</Filter>
     </ClInclude>
+    <ClInclude Include="pause.h">
+      <Filter>03_Mode\pause</Filter>
+    </ClInclude>
     <ClInclude Include="title.h">
       <Filter>03_Mode\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="kraken.h">
+      <Filter>04_Character\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost.h">
+      <Filter>04_Character\Enemy\Wimp\Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost_model.h">
+      <Filter>04_Character\Enemy\Wimp\Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="marlin_model.h">
+      <Filter>04_Character\Enemy\Wimp\Marlin</Filter>
+    </ClInclude>
+    <ClInclude Include="marlin.h">
+      <Filter>04_Character\Enemy\Wimp\Marlin</Filter>
+    </ClInclude>
+    <ClInclude Include="shark_model.h">
+      <Filter>04_Character\Enemy\Wimp\Shark</Filter>
+    </ClInclude>
+    <ClInclude Include="shark.h">
+      <Filter>04_Character\Enemy\Wimp\Shark</Filter>
+    </ClInclude>
+    <ClInclude Include="wimp_enemy.h">
+      <Filter>04_Character\Enemy\Wimp</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>04_Character\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="character.h">
       <Filter>04_Character</Filter>
@@ -670,122 +537,71 @@
     <ClInclude Include="player.h">
       <Filter>04_Character\Player</Filter>
     </ClInclude>
-    <ClInclude Include="billboard.h">
-      <Filter>05_Scene</Filter>
+    <ClInclude Include="meshfield.h">
+      <Filter>05_Scene\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="polygon.h">
-      <Filter>05_Scene</Filter>
+    <ClInclude Include="mesh_3d.h">
+      <Filter>05_Scene\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="scene.h">
-      <Filter>05_Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="scene_base.h">
-      <Filter>05_Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="scene2d.h">
+    <ClInclude Include="texture_animation.h">
       <Filter>05_Scene</Filter>
     </ClInclude>
     <ClInclude Include="scene3D.h">
       <Filter>05_Scene</Filter>
     </ClInclude>
-    <ClInclude Include="mesh_3d.h">
-      <Filter>05_Scene\Mesh</Filter>
+    <ClInclude Include="scene2d.h">
+      <Filter>05_Scene</Filter>
     </ClInclude>
-    <ClInclude Include="meshfield.h">
-      <Filter>05_Scene\Mesh</Filter>
+    <ClInclude Include="scene_base.h">
+      <Filter>05_Scene</Filter>
     </ClInclude>
-    <ClInclude Include="shadow.h">
+    <ClInclude Include="scene.h">
+      <Filter>05_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="polygon.h">
+      <Filter>05_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="plane.h">
+      <Filter>05_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="billboard.h">
+      <Filter>05_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="particle_info.h">
+      <Filter>06_Effect\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="particleaura.h">
+      <Filter>06_Effect\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="particleshrink.h">
+      <Filter>06_Effect\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="particlepop.h">
+      <Filter>06_Effect\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="particlenormal.h">
+      <Filter>06_Effect\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="particlecollective.h">
+      <Filter>06_Effect\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="shadow_volume.h">
       <Filter>06_Effect\Shadow</Filter>
     </ClInclude>
     <ClInclude Include="shadow_polygon.h">
       <Filter>06_Effect\Shadow</Filter>
     </ClInclude>
-    <ClInclude Include="shadow_volume.h">
+    <ClInclude Include="shadow.h">
       <Filter>06_Effect\Shadow</Filter>
     </ClInclude>
-    <ClInclude Include="model.h">
-      <Filter>07_Model</Filter>
+    <ClInclude Include="shader_square.h">
+      <Filter>06_Effect\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="modelanime.h">
-      <Filter>07_Model</Filter>
+    <ClInclude Include="blur_filter.h">
+      <Filter>06_Effect\Shader\FresnelWater</Filter>
     </ClInclude>
-    <ClInclude Include="motion.h">
-      <Filter>07_Model</Filter>
-    </ClInclude>
-    <ClInclude Include="texture_animation.h">
-      <Filter>05_Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="test_2d.h">
-      <Filter>08_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="plane.h">
-      <Filter>05_Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="model_info.h">
-      <Filter>07_Model</Filter>
-    </ClInclude>
-    <ClInclude Include="test_model.h">
-      <Filter>08_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="test_character.h">
-      <Filter>08_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="json.h">
-      <Filter>01_Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGui\imgui.h">
-      <Filter>00_Important\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGui\imgui_impl_dx9.h">
-      <Filter>00_Important\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGui\imgui_impl_win32.h">
-      <Filter>00_Important\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGui\imgui_internal.h">
-      <Filter>00_Important\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGui\imstb_rectpack.h">
-      <Filter>00_Important\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGui\imstb_textedit.h">
-      <Filter>00_Important\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGui\imstb_truetype.h">
-      <Filter>00_Important\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="ground.h">
-      <Filter>08_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="player_editor.h">
-      <Filter>03_Mode\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="skinmesh_model.h">
-      <Filter>07_Model</Filter>
-    </ClInclude>
-    <ClInclude Include="skinmesh.h">
-      <Filter>07_Model</Filter>
-    </ClInclude>
-    <ClInclude Include="animation_skinmesh.h">
-      <Filter>07_Model</Filter>
-    </ClInclude>
-    <ClInclude Include="mouse.h">
-      <Filter>02_Input</Filter>
-    </ClInclude>
-    <ClInclude Include="gauge.h">
-      <Filter>09_Ui</Filter>
-    </ClInclude>
-    <ClInclude Include="gaugebar.h">
-      <Filter>09_Ui</Filter>
-    </ClInclude>
-    <ClInclude Include="translation.h">
-      <Filter>09_Ui</Filter>
-    </ClInclude>
-    <ClInclude Include="check_point.h">
-      <Filter>08_Object\CheckPoint</Filter>
-    </ClInclude>
-    <ClInclude Include="check_flag.h">
-      <Filter>08_Object\CheckPoint</Filter>
+    <ClInclude Include="fresnel_lambert.h">
+      <Filter>06_Effect\Shader\FresnelWater</Filter>
     </ClInclude>
     <ClInclude Include="mask.h">
       <Filter>06_Effect\Shader\FresnelWater</Filter>
@@ -802,58 +618,73 @@
     <ClInclude Include="water_fresnel.h">
       <Filter>06_Effect\Shader\FresnelWater</Filter>
     </ClInclude>
-    <ClInclude Include="fresnel_lambert.h">
-      <Filter>06_Effect\Shader\FresnelWater</Filter>
+    <ClInclude Include="animation_skinmesh.h">
+      <Filter>07_Model</Filter>
     </ClInclude>
-    <ClInclude Include="shader_square.h">
-      <Filter>06_Effect\Shader</Filter>
+    <ClInclude Include="model.h">
+      <Filter>07_Model</Filter>
     </ClInclude>
-    <ClInclude Include="blur_filter.h">
-      <Filter>06_Effect\Shader\FresnelWater</Filter>
+    <ClInclude Include="model_info.h">
+      <Filter>07_Model</Filter>
     </ClInclude>
-    <ClInclude Include="enemy.h">
-      <Filter>04_Character\Enemy</Filter>
+    <ClInclude Include="motion.h">
+      <Filter>07_Model</Filter>
     </ClInclude>
-    <ClInclude Include="kraken.h">
-      <Filter>04_Character\Enemy\Boss</Filter>
+    <ClInclude Include="modelanime.h">
+      <Filter>07_Model</Filter>
     </ClInclude>
-    <ClInclude Include="shark.h">
-      <Filter>04_Character\Enemy\Wimp\Shark</Filter>
+    <ClInclude Include="skinmesh_model.h">
+      <Filter>07_Model</Filter>
     </ClInclude>
-    <ClInclude Include="shark_model.h">
-      <Filter>04_Character\Enemy\Wimp\Shark</Filter>
+    <ClInclude Include="skinmesh.h">
+      <Filter>07_Model</Filter>
     </ClInclude>
-    <ClInclude Include="ghost.h">
-      <Filter>04_Character\Enemy\Wimp\Ghost</Filter>
+    <ClInclude Include="check_point.h">
+      <Filter>08_Object\CheckPoint</Filter>
     </ClInclude>
-    <ClInclude Include="ghost_model.h">
-      <Filter>04_Character\Enemy\Wimp\Ghost</Filter>
+    <ClInclude Include="check_flag.h">
+      <Filter>08_Object\CheckPoint</Filter>
     </ClInclude>
-    <ClInclude Include="marlin.h">
-      <Filter>04_Character\Enemy\Wimp\Marlin</Filter>
+    <ClInclude Include="boss_bullet.h">
+      <Filter>08_Object\EnemyObject</Filter>
     </ClInclude>
-    <ClInclude Include="marlin_model.h">
-      <Filter>04_Character\Enemy\Wimp\Marlin</Filter>
+    <ClInclude Include="bullet.h">
+      <Filter>08_Object\EnemyObject</Filter>
     </ClInclude>
-    <ClInclude Include="wimp_enemy.h">
-      <Filter>04_Character\Enemy\Wimp</Filter>
+    <ClInclude Include="barrel_factory.h">
+      <Filter>08_Object\Gimmick\Barrel</Filter>
+    </ClInclude>
+    <ClInclude Include="barrel.h">
+      <Filter>08_Object\Gimmick\Barrel</Filter>
     </ClInclude>
     <ClInclude Include="move_scaffold.h">
-      <Filter>08_Object\Gimmick\BlockParty</Filter>
-    </ClInclude>
-    <ClInclude Include="rubble1.h">
       <Filter>08_Object\Gimmick\BlockParty</Filter>
     </ClInclude>
     <ClInclude Include="rubble2.h">
       <Filter>08_Object\Gimmick\BlockParty</Filter>
     </ClInclude>
-    <ClInclude Include="rotate_floor.h">
-      <Filter>08_Object\Gimmick\RotateFloor</Filter>
+    <ClInclude Include="rubble1.h">
+      <Filter>08_Object\Gimmick\BlockParty</Filter>
     </ClInclude>
-    <ClInclude Include="barrel.h">
-      <Filter>08_Object\Gimmick\Barrel</Filter>
+    <ClInclude Include="bridge.h">
+      <Filter>08_Object\Gimmick\Bridge</Filter>
+    </ClInclude>
+    <ClInclude Include="cannon.h">
+      <Filter>08_Object\Gimmick\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="cannon_bullet.h">
+      <Filter>08_Object\Gimmick\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="cannon_manager.h">
+      <Filter>08_Object\Gimmick\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="key_e.h">
+      <Filter>08_Object\Gimmick\Cannon</Filter>
     </ClInclude>
     <ClInclude Include="rotate_body.h">
+      <Filter>08_Object\Gimmick\RotateFloor</Filter>
+    </ClInclude>
+    <ClInclude Include="rotate_floor.h">
       <Filter>08_Object\Gimmick\RotateFloor</Filter>
     </ClInclude>
     <ClInclude Include="rotate_gimmick.h">
@@ -862,8 +693,11 @@
     <ClInclude Include="slope.h">
       <Filter>08_Object\Gimmick\Slope</Filter>
     </ClInclude>
-    <ClInclude Include="barrel_factory.h">
-      <Filter>08_Object\Gimmick\Barrel</Filter>
+    <ClInclude Include="swirl_scaffold.h">
+      <Filter>08_Object\Gimmick\Swirl</Filter>
+    </ClInclude>
+    <ClInclude Include="gimmick_factory.h">
+      <Filter>08_Object\Gimmick</Filter>
     </ClInclude>
     <ClInclude Include="heel_point.h">
       <Filter>08_Object\HeelPoint</Filter>
@@ -871,137 +705,74 @@
     <ClInclude Include="heel.h">
       <Filter>08_Object\HeelPoint</Filter>
     </ClInclude>
-    <ClInclude Include="gimmick_factory.h">
-      <Filter>08_Object\Gimmick</Filter>
+    <ClInclude Include="ground.h">
+      <Filter>08_Object</Filter>
     </ClInclude>
-    <ClInclude Include="cannon.h">
-      <Filter>08_Object\Gimmick\Cannon</Filter>
+    <ClInclude Include="sky.h">
+      <Filter>08_Object</Filter>
     </ClInclude>
-    <ClInclude Include="bridge.h">
-      <Filter>08_Object\Gimmick\Bridge</Filter>
+    <ClInclude Include="test_model.h">
+      <Filter>08_Object</Filter>
     </ClInclude>
-    <ClInclude Include="cannon_manager.h">
-      <Filter>08_Object\Gimmick\Cannon</Filter>
+    <ClInclude Include="test_character.h">
+      <Filter>08_Object</Filter>
     </ClInclude>
-    <ClInclude Include="key_e.h">
-      <Filter>08_Object\Gimmick\Cannon</Filter>
+    <ClInclude Include="test_2d.h">
+      <Filter>08_Object</Filter>
     </ClInclude>
-    <ClInclude Include="cannon_bullet.h">
-      <Filter>08_Object\Gimmick\Cannon</Filter>
+    <ClInclude Include="gauge.h">
+      <Filter>09_Ui</Filter>
     </ClInclude>
-    <ClInclude Include="swirl_scaffold.h">
-      <Filter>08_Object\Gimmick\Swirl</Filter>
+    <ClInclude Include="gaugebar.h">
+      <Filter>09_Ui</Filter>
     </ClInclude>
-    <ClInclude Include="state.h">
-      <Filter>10_State</Filter>
+    <ClInclude Include="translation.h">
+      <Filter>09_Ui</Filter>
     </ClInclude>
-    <ClInclude Include="state_player.h">
-      <Filter>10_State\PlayerState</Filter>
-    </ClInclude>
-    <ClInclude Include="state_player_normal.h">
-      <Filter>10_State\PlayerState</Filter>
-    </ClInclude>
-    <ClInclude Include="state_player_avoid.h">
-      <Filter>10_State\PlayerState</Filter>
-    </ClInclude>
-    <ClInclude Include="state_player_jump.h">
-      <Filter>10_State\PlayerState</Filter>
-    </ClInclude>
-    <ClInclude Include="state_player_stun.h">
-      <Filter>10_State\PlayerState</Filter>
-    </ClInclude>
-    <ClInclude Include="state_player_knockback.h">
-      <Filter>10_State\PlayerState</Filter>
-    </ClInclude>
-    <ClInclude Include="pause.h">
-      <Filter>03_Mode\pause</Filter>
-    </ClInclude>
-    <ClInclude Include="boss_bullet.h">
-      <Filter>08_Object\EnemyObject</Filter>
-    </ClInclude>
-    <ClInclude Include="bullet.h">
-      <Filter>08_Object\EnemyObject</Filter>
-    </ClInclude>
-    <ClInclude Include="state_camera.h">
+    <ClInclude Include="state_camera_talk.h">
       <Filter>10_State\CameraState</Filter>
     </ClInclude>
     <ClInclude Include="state_camera_normal.h">
       <Filter>10_State\CameraState</Filter>
     </ClInclude>
-    <ClInclude Include="state_player_cannon.h">
-      <Filter>10_State\PlayerState</Filter>
-    </ClInclude>
     <ClInclude Include="state_camera_cannon.h">
       <Filter>10_State\CameraState</Filter>
-    </ClInclude>
-    <ClInclude Include="collision.h">
-      <Filter>12_Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="collisionModel.h">
-      <Filter>12_Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="particle_info.h">
-      <Filter>06_Effect\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="particleaura.h">
-      <Filter>06_Effect\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="particlepop.h">
-      <Filter>06_Effect\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="sky.h">
-      <Filter>08_Object</Filter>
-    </ClInclude>
-    <ClInclude Include="particleshrink.h">
-      <Filter>06_Effect\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="particlecollective.h">
-      <Filter>06_Effect\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="particlenormal.h">
-      <Filter>06_Effect\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="production.h">
-      <Filter>11_Production</Filter>
-    </ClInclude>
-    <ClInclude Include="state_player_not_move.h">
-      <Filter>10_State\PlayerState</Filter>
-    </ClInclude>
-    <ClInclude Include="production_cannon_manager.h">
-      <Filter>11_Production\Cannon\ProductionManager</Filter>
     </ClInclude>
     <ClInclude Include="state_camera_angry_kraken.h">
       <Filter>10_State\CameraState</Filter>
     </ClInclude>
+    <ClInclude Include="state_camera.h">
+      <Filter>10_State\CameraState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_player.h">
+      <Filter>10_State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_player_avoid.h">
+      <Filter>10_State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_player_cannon.h">
+      <Filter>10_State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_player_jump.h">
+      <Filter>10_State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_player_knockback.h">
+      <Filter>10_State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_player_normal.h">
+      <Filter>10_State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_player_not_move.h">
+      <Filter>10_State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_player_stun.h">
+      <Filter>10_State\PlayerState</Filter>
+    </ClInclude>
     <ClInclude Include="state_object.h">
       <Filter>10_State</Filter>
     </ClInclude>
-    <ClInclude Include="collisionModel_OBB.h">
-      <Filter>12_Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="collisionModel_Sphere.h">
-      <Filter>12_Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="npc_text.h">
-      <Filter>04_Character\NPC\Text</Filter>
-    </ClInclude>
-    <ClInclude Include="npc_factory.h">
-      <Filter>04_Character\NPC</Filter>
-    </ClInclude>
-    <ClInclude Include="non_player_character.h">
-      <Filter>04_Character\NPC\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="npc_text_enemy.h">
-      <Filter>04_Character\NPC\Text\Type</Filter>
-    </ClInclude>
-    <ClInclude Include="npc_enemy_info.h">
-      <Filter>04_Character\NPC\Character\Type</Filter>
-    </ClInclude>
-    <ClInclude Include="npc_sentence_enemy1.h">
-      <Filter>04_Character\NPC\Sentence\EnemyInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="npc_sentence_enemy2.h">
-      <Filter>04_Character\NPC\Sentence\EnemyInfo</Filter>
+    <ClInclude Include="state.h">
+      <Filter>10_State</Filter>
     </ClInclude>
     <ClInclude Include="state_kraken.h">
       <Filter>10_State\KrakenState</Filter>
@@ -1012,25 +783,62 @@
     <ClInclude Include="state_kraken_not_attack.h">
       <Filter>10_State\KrakenState</Filter>
     </ClInclude>
-    <ClInclude Include="state_camera_talk.h">
-      <Filter>10_State\CameraState</Filter>
+    <ClInclude Include="production.h">
+      <Filter>11_Production</Filter>
     </ClInclude>
-    <ClInclude Include="production_dead_kraken.h">
+    <ClInclude Include="collision.h">
+      <Filter>12_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionModel.h">
+      <Filter>12_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionModel_Capsule.h">
+      <Filter>12_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionModel_OBB.h">
+      <Filter>12_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionModel_Sphere.h">
+      <Filter>12_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="mode_base.h">
+      <Filter>03_Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="production_angry_kraken.h">
       <Filter>11_Production\Cannon</Filter>
     </ClInclude>
     <ClInclude Include="production_cannon.h">
       <Filter>11_Production\Cannon</Filter>
     </ClInclude>
-    <ClInclude Include="production_angry_kraken.h">
+    <ClInclude Include="production_cannon_manager.h">
+      <Filter>11_Production\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="production_dead_kraken.h">
       <Filter>11_Production\Cannon</Filter>
     </ClInclude>
     <ClInclude Include="production_npc_talk.h">
-      <Filter>11_Production\Talk</Filter>
+      <Filter>11_Production\NpcTalk</Filter>
     </ClInclude>
-  </ItemGroup>
+    <ClInclude Include="npc_factory.h">
+      <Filter>04_Character\NPC</Filter>
     </ClInclude>
-    <ClInclude Include="collisionModel_Capsule.h">
-      <Filter>12_Collision</Filter>
+    <ClInclude Include="non_player_character.h">
+      <Filter>04_Character\NPC\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="npc_enemy_info.h">
+      <Filter>04_Character\NPC\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="npc_sentence_enemy2.h">
+      <Filter>04_Character\NPC\Sentence</Filter>
+    </ClInclude>
+    <ClInclude Include="npc_sentence_enemy1.h">
+      <Filter>04_Character\NPC\Sentence</Filter>
+    </ClInclude>
+    <ClInclude Include="npc_text_enemy.h">
+      <Filter>04_Character\NPC\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="npc_text.h">
+      <Filter>04_Character\NPC\Text</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1052,5 +860,169 @@
     <None Include="data\Text\Shader\wave.fx">
       <Filter>06_Effect\Shader\FresnelWater\ShaderFile</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="00_Important">
+      <UniqueIdentifier>{06def8d7-02dd-4100-9e8d-76b1673fed19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00_Important\Imgui">
+      <UniqueIdentifier>{05abe363-c012-4814-b026-6acdacb3d7e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00_Important\Camera">
+      <UniqueIdentifier>{38ba8b96-57f2-488e-8bde-2d807a7d02a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_Resource">
+      <UniqueIdentifier>{e42cbc66-faac-4231-abfc-091a3c37ff9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Input">
+      <UniqueIdentifier>{10030114-50f5-431b-8458-af3c95e36f3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03_Mode">
+      <UniqueIdentifier>{93c0e565-ed89-41d5-b7ef-82e6d5ee345c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03_Mode\Editor">
+      <UniqueIdentifier>{1101d4ca-c7fe-4924-8d02-7f14cfc78a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03_Mode\Game">
+      <UniqueIdentifier>{d05d26e5-5134-44ba-b34c-1230ebc7691e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03_Mode\pause">
+      <UniqueIdentifier>{02628bbd-e84f-4083-88eb-9d5d06e8e9e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03_Mode\Result">
+      <UniqueIdentifier>{5653b6ae-e96d-4110-afca-9834adefe0c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03_Mode\Title">
+      <UniqueIdentifier>{b880b3ad-3d12-411a-b3e7-599579ed24cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03_Mode\Tutorial">
+      <UniqueIdentifier>{5ba9f8e1-fc84-49a5-9554-ee7472b1ba80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character">
+      <UniqueIdentifier>{c525dee5-0ca5-4260-982e-89d38c27306f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\Enemy">
+      <UniqueIdentifier>{15afffef-2d1e-4464-923e-b2dc2c65f29a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\Player">
+      <UniqueIdentifier>{feffbe93-d2a9-4096-bb53-1477f7eda034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\Enemy\Boss">
+      <UniqueIdentifier>{780d447e-f420-4875-8842-afaf98e44ccc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\Enemy\Wimp">
+      <UniqueIdentifier>{31dfa033-2674-47f3-902b-9ee3f7adbb5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\Enemy\Wimp\Ghost">
+      <UniqueIdentifier>{024b8f51-91d3-41cb-a9b2-a86c8fe9663c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\Enemy\Wimp\Marlin">
+      <UniqueIdentifier>{a9477d77-c3c7-4510-8d83-a9e2c0d445a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\Enemy\Wimp\Shark">
+      <UniqueIdentifier>{59e6d8b6-e03f-4903-916d-5a024bb9334d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05_Scene">
+      <UniqueIdentifier>{6283b308-4f4c-44bd-b6bd-9553b77cb2f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05_Scene\Mesh">
+      <UniqueIdentifier>{5909efcf-39d1-4fd3-b2da-0c262fd781b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_Effect">
+      <UniqueIdentifier>{92c02080-9448-4a50-97a1-4679f0ef25bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_Effect\Particle">
+      <UniqueIdentifier>{422f5b7b-4707-4a94-81bb-ad2b7e0c2db0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_Effect\Shader">
+      <UniqueIdentifier>{7a754d9a-937e-4b21-bf26-570da966e096}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_Effect\Shadow">
+      <UniqueIdentifier>{6f68dce6-4d46-4810-9afe-3c9122c21a0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_Effect\Shader\FresnelWater">
+      <UniqueIdentifier>{b0b1f578-a854-4240-bf6c-95270a878c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_Effect\Shader\FresnelWater\ShaderFile">
+      <UniqueIdentifier>{f6129bb6-46c4-440e-a394-8a64e4470e50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07_Model">
+      <UniqueIdentifier>{527c23e1-05c0-4724-95ec-3e92b7141eaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object">
+      <UniqueIdentifier>{67d947a8-5bcb-444c-8b25-6b6cc621e23e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object\CheckPoint">
+      <UniqueIdentifier>{b1b1480e-2b50-47ba-a0c8-ff81986f1256}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object\EnemyObject">
+      <UniqueIdentifier>{1ebb7706-354c-4c5b-920f-38c0dd36c499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object\Gimmick">
+      <UniqueIdentifier>{c38a0e07-99a5-49b2-a8b8-a5676696ffab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object\Gimmick\Barrel">
+      <UniqueIdentifier>{d17ef20c-cd05-46f0-9e86-9f06de6ca9c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object\Gimmick\BlockParty">
+      <UniqueIdentifier>{cf0e0437-8d5e-4a35-86cf-70288d93b759}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object\Gimmick\Bridge">
+      <UniqueIdentifier>{17b3e39a-c7c6-4544-b8f9-5c1eae53b790}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object\Gimmick\Cannon">
+      <UniqueIdentifier>{ff96c349-b64a-4a79-8579-543217178e0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object\Gimmick\RotateFloor">
+      <UniqueIdentifier>{8e74ff34-bbf3-4fa3-af89-ceec7ca6579d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object\Gimmick\Slope">
+      <UniqueIdentifier>{d023a5cb-1ea2-45dd-8427-624d5fff66b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object\Gimmick\Swirl">
+      <UniqueIdentifier>{0ad228df-3856-4e3c-8a51-203ee21b88e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object\HeelPoint">
+      <UniqueIdentifier>{3838d515-f418-46d0-876b-42693665a1fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="09_Ui">
+      <UniqueIdentifier>{f2196bd6-c9ec-45fc-ac85-049ee13e37a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10_State">
+      <UniqueIdentifier>{7125ed73-2391-4bfb-8dc4-4c3f3272b350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10_State\CameraState">
+      <UniqueIdentifier>{a8a5df8d-8da7-4dc0-8606-83a93194d195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10_State\PlayerState">
+      <UniqueIdentifier>{171d268b-79b2-43a5-b04e-68dd485c5c10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10_State\KrakenState">
+      <UniqueIdentifier>{77caf841-7f53-4fa7-b9e4-0d52bf47b450}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="11_Production">
+      <UniqueIdentifier>{8f246fcb-0d7f-401a-90b5-81297c8e2ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="12_Collision">
+      <UniqueIdentifier>{fd1d60fd-a480-4de7-be49-74510b097951}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="11_Production\Cannon">
+      <UniqueIdentifier>{22716c6b-7a9e-4509-8b4c-c6fca10b4075}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="11_Production\NpcTalk">
+      <UniqueIdentifier>{4528436b-8a6a-43cf-b385-f699893a6cf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\NPC">
+      <UniqueIdentifier>{a4737e5a-11c7-460e-8abc-6bd036511235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\NPC\Character">
+      <UniqueIdentifier>{aaf1213a-577a-4e02-9cb1-1f392a5daf83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\NPC\Sentence">
+      <UniqueIdentifier>{1e07b865-dec1-4a9a-8288-5ec5a736fd70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Character\NPC\Text">
+      <UniqueIdentifier>{33fa3e41-2a56-428d-9f19-0a2411cb0b9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

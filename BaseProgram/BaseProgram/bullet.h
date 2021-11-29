@@ -31,7 +31,8 @@ public:
 	virtual void Uninit();      // 終了処理
 	virtual void Update();      // 更新処理
 	virtual void Draw();        // 描画
-    CCollisionModelSphere* GetColSpherePtr()const { return m_pColModelSphere; }    // 当たり判定モデルのポインタ(カプセル)
+    CCollisionModelSphere* GetColSpherePtr()const { return m_pCollisionModelSphere; }    // 当たり判定モデルのポインタ(カプセル)
+    
     // Set関数
     inline void SetPos(const D3DXVECTOR3 &pos)      { m_pos = pos; }        // 座標設定
     inline void SetMove(const D3DXVECTOR3 &move)    { m_move = move; }      // 移動量設定

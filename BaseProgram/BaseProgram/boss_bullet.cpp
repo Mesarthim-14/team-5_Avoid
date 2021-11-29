@@ -26,7 +26,7 @@
 //=============================================================================
 #define TEST_POS        (ZeroVector3)
 #define TEST_ROT        (ZeroVector3)
-#define COLLISION_SIZE  (D3DXVECTOR3(90.0f, 90.0f, 90.0f))
+#define COLLISION_SIZE  (D3DXVECTOR3(900.0f, 900.0f, 900.0f))
 #define SPEED           (150.0f)
 
 //=============================================================================
