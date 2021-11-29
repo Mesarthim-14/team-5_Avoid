@@ -23,7 +23,7 @@ float CParticlePop::m_fSize = 0.0f;
 //=====================================================================
 #define SIZE		(D3DXVECTOR3(m_fSize, m_fSize, m_fSize))
 #define ANGLE		(4.0f)
-#define SPEED		(15.0f)
+#define SPEED		(100.0f)
 #define RANDOM		(3.14f)
 #define LIFE		(90)
 #define COLOR		(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
@@ -57,7 +57,7 @@ CParticlePop * CParticlePop::Create(const D3DXVECTOR3 &pos)
 
     if (pParticlePop)
     {
-        m_fSize = CLibrary::Random(100.0f, 150.0f);
+        m_fSize = CLibrary::Random(200.0f, 300.0f);
         pParticlePop->SetSceneInfo(pos, SIZE);
 
         pParticlePop->Init();

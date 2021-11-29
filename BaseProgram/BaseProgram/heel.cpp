@@ -20,6 +20,7 @@
 #include "player.h"
 #include "library.h"
 #include "gauge.h"
+#include "particleshrink.h"
 
 //=============================================================================
 // マクロ定義
@@ -92,6 +93,10 @@ void CHeel::Uninit()
 //=============================================================================
 void CHeel::Update()
 {
+    // プレイヤーの位置取得
+    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    D3DXVECTOR3 pos = pPlayer->GetPos();
+
     for (auto &HeelPoint : m_apHeelPoint)
     {
         // 当たり判定
@@ -101,6 +106,8 @@ void CHeel::Update()
             CManager::GetInstance()->GetPlayer()->SubLife(-HEEL_NUM);
             CGauge::SetDown((float)HEEL_NUM);
             CGauge::SetHitUp(true);
+            // プレイヤーの位置にエフェクト生成
+            CParticleShrink::Create(pos);
         }
     }
 }
