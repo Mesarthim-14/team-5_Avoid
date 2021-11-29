@@ -28,7 +28,6 @@ class CGauge;
 class CPlayer : public CCharacter, public CStateObject
 {
 public:
-
     enum ACTION_STATE
     {
         ACTION_NONE = -1,
@@ -80,6 +79,7 @@ public:
     inline void SetMove(const D3DXVECTOR3 &move)                    { CCharacter::SetMove(move); }          // 移動量設定
     inline void SetRotDest(const D3DXVECTOR3& rotDest)              { m_rotDest = rotDest; }                // 目的の角度
     inline void SetAngle(const float& fAngle)                       { m_fAngle = fAngle; }                  // アングル
+    inline void SetCollision(const bool &bFlag)                     { m_bCollision = bFlag; }               // 当たり判定
 
     // Get関数
     inline int GetLife()const                               { return m_nHP; }                   // HPの情報
@@ -90,6 +90,7 @@ public:
     inline SLIME_STATE GetSlimeState()const                 { return m_SlimeState; }            // スライムの状態
     inline CCollisionModelOBB* GetColOBBPtr()const          { return m_pColModelOBB; }          //当たり判定ポインタ(OBB)
     inline CCollisionModelCapsule* GetColCapsulePtr()const  { return m_pColModelCapsule; }      //当たり判定ポインタ(カプセル)
+    inline bool GetCollision()const                         { return m_bCollision; }            // 当たり判定の使用
 
 private:
     // private関数
@@ -106,7 +107,7 @@ private:
     float m_fRotationSpeed;                             // 回転の速度
     bool m_bMove;                                       // 移動のフラグ
     int m_nHP;                                          // スライムHP ~100まで（パーセント）
-    SLIME_STATE    m_SlimeState;                        // スライムの状態
+    SLIME_STATE m_SlimeState;                           // スライムの状態
     float m_fAngle;                                     // カメラ向きアングル
     float m_fAngleSpeed;                                // 目標向きまで向かうスピード
     ACTION_STATE m_ActionState;                         // 行動状態
@@ -116,5 +117,6 @@ private:
     CState* m_pNextState;                               // 次の状態ポインタ
     CCollisionModelOBB* m_pColModelOBB;                 // 当たり判定モデル(直方体)のポインタ
     CCollisionModelCapsule* m_pColModelCapsule;         // 当たり判定モデル(カプセル)のポインタ
+    bool m_bCollision;                                  // 当たり判定の使用
 };
 #endif

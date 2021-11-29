@@ -91,5 +91,4 @@ void CPlayerStateKnockback::SetMove(const D3DXVECTOR3 &move)
 
     pPlayer->SetMove(move);
     pPlayer->SetLanding(false);
-
 }

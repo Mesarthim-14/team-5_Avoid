@@ -20,6 +20,7 @@
 #include "library.h"
 #include "collision.h"
 #include "collisionModel_Sphere.h"
+#include "state_player_knockback.h"
 
 //=============================================================================
 // ƒ}ƒNƒ’è‹`
@@ -128,15 +129,25 @@ void CBossBullet::Draw()
 void CBossBullet::Hit()
 {
     CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    if (!pPlayer)
+    {
+        return;
+    }
     //CPlayer* pPlayer = nullptr;
     //pPlayer = (CPlayer*)GetTop(PRIORITY_CHARACTER);
 
-    if (pPlayer)
+    if (pPlayer->GetCollision())
     {
         if (GetColSpherePtr() && pPlayer->GetColCapsulePtr())
         {
             if (CCollision::ColSphereAndCapsule(GetColSpherePtr()->GetInfo(), pPlayer->GetColCapsulePtr()->GetInfo()))
             {
+                D3DXVECTOR3 move = GetMove();
+                move.x *= 0.5f;
+                move.z *= 0.5f;
+                move.y += 50.0f;
+                pPlayer->ChangeState(CPlayerStateKnockback::Create(move));
+
                 Uninit();
             }
         }

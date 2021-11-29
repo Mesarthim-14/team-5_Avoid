@@ -71,6 +71,7 @@ void CPlayerStateNormal::Update()
         return;
     }
 
+    pPlayer->SetCollision(true);
     // キーボード移動処理
     MoveByKeyboard(pPlayer);
     Jump(pPlayer);
