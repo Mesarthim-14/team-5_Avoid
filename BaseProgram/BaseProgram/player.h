@@ -88,8 +88,8 @@ public:
     inline D3DXVECTOR3 GetInertia()const                    { return m_Inertia; }               // 慣性の情報
     inline float GetInertiaNum()const                       { return m_fInertiaNum; }           // 慣性の値
     inline SLIME_STATE GetSlimeState()const                 { return m_SlimeState; }            // スライムの状態
-    inline CCollisionModelOBB* GetColOBBPtr()const          { return m_pColModelOBB; }          //当たり判定ポインタ(OBB)
-    inline CCollisionModelCapsule* GetColCapsulePtr()const  { return m_pColModelCapsule; }      //当たり判定ポインタ(カプセル)
+    inline CCollisionModelOBB* GetColOBBPtr()const          { return m_pColModelOBB; }          // 当たり判定ポインタ(OBB)
+    inline CCollisionModelCapsule* GetColCapsulePtr()const  { return m_pColModelCapsule; }      // 当たり判定ポインタ(カプセル)
     inline bool GetCollision()const                         { return m_bCollision; }            // 当たり判定の使用
 
 private:

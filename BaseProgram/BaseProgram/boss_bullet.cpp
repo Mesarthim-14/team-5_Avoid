@@ -133,8 +133,6 @@ void CBossBullet::Hit()
     {
         return;
     }
-    //CPlayer* pPlayer = nullptr;
-    //pPlayer = (CPlayer*)GetTop(PRIORITY_CHARACTER);
 
     if (pPlayer->GetCollision())
     {
@@ -147,7 +145,7 @@ void CBossBullet::Hit()
                 move.z *= 0.5f;
                 move.y += 50.0f;
                 pPlayer->ChangeState(CPlayerStateKnockback::Create(move));
-
+                pPlayer->SubLife(20);
                 Uninit();
             }
         }
@@ -179,4 +177,5 @@ void CBossBullet::FollowPlayer()
 //=============================================================================
 void CBossBullet::Move()
 {
+
 }

@@ -453,12 +453,12 @@ void CPlayer::SaveInfo()
 // ライフ減少
 // Author : Hayashikawa Sarina
 //=============================================================================
-
 void CPlayer::SubLife(const int &nDamage)
 {
 	if (m_nHP > 0)
 	{
 		m_nHP -= nDamage;
+
 		if (m_nHP < 0)
 		{
 			m_nHP = 0;
@@ -519,5 +519,4 @@ void CPlayer::CreateModel()
 	m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->ChangeAnimation(0);
 	m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->SetLoopTime(0, 60);
 	m_pSkinmeshModel[m_SlimeState]->GetHLcontroller()->SetShiftTime(0, 60);
-
 }
