@@ -131,7 +131,7 @@ void CGhost::CreateModel()
 //=============================================================================
 void CGhost::Attack()
 {
-    if (!m_bFollow && !m_bEnd)
+     if (!m_bFollow && !m_bEnd)
     {
         m_bFollow = true;
     }
@@ -148,7 +148,6 @@ void CGhost::Move()
         // ’Ç]
         if (Follow())
         {
-
             // ˆê’è‚Ì‹——£‚É‹ß‚Ã‚¢‚½‚ç
             if (CLibrary::CalDistance(
                 CManager::GetInstance()->GetPlayer()->GetPos(), GetPos()) <= FOLLOW_END_DISTANCE)
