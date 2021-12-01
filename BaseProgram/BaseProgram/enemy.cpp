@@ -44,13 +44,6 @@ HRESULT CEnemy::Init()
 void CEnemy::Update()
 {
     CCharacter::Update();
-
-    m_nAttackCount++;
-    if (m_nAttackCount >= m_nAttackInter)
-    {
-        Attack();
-        m_nAttackCount = 0;
-    }
 }
 
 //=============================================================================

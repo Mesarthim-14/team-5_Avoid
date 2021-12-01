@@ -415,6 +415,12 @@
     <ClCompile Include="npc_text.cpp">
       <Filter>04_Character\NPC\Text</Filter>
     </ClCompile>
+    <ClCompile Include="caution_boss_bullet_ui.cpp">
+      <Filter>06_Effect\Caution</Filter>
+    </ClCompile>
+    <ClCompile Include="caution_wimp_attack.cpp">
+      <Filter>06_Effect\Caution</Filter>
+    </ClCompile>
     <ClCompile Include="particleshrink_heel.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
@@ -846,6 +852,12 @@
     <ClInclude Include="npc_text.h">
       <Filter>04_Character\NPC\Text</Filter>
     </ClInclude>
+    <ClInclude Include="caution_boss_bullet_ui.h">
+      <Filter>06_Effect\Caution</Filter>
+    </ClInclude>
+    <ClInclude Include="caution_wimp_attack.h">
+      <Filter>06_Effect\Caution</Filter>
+    </ClInclude>
     <ClInclude Include="particleshrink_heel.h">
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
@@ -1035,6 +1047,9 @@
     </Filter>
     <Filter Include="04_Character\NPC\Text">
       <UniqueIdentifier>{33fa3e41-2a56-428d-9f19-0a2411cb0b9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_Effect\Caution">
+      <UniqueIdentifier>{dc468a1e-130e-472e-bbd2-6693d39ebb95}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

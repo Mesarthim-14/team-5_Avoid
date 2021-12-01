@@ -21,6 +21,7 @@
 #include "collision.h"
 #include "collisionModel_Sphere.h"
 #include "state_player_knockback.h"
+#include "caution_boss_bullet_ui.h"
 #include "gauge.h"
 #include "particlepop.h"
 
@@ -38,6 +39,7 @@
 CBossBullet::CBossBullet(PRIORITY Priority) : CBullet(Priority)
 {
     m_pModel = nullptr;
+    m_pCaution = nullptr;
 }
 
 //=============================================================================
@@ -84,6 +86,11 @@ HRESULT CBossBullet::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
     m_pModel->GetModelInfo()->SetModelStatus(pos, rot, model);
     FollowPlayer();
     SetLife(200);
+    if (!m_pCaution)
+    {
+        m_pCaution = CCautionBossBulletUi::Create();
+        m_pCaution->SetBulletPos(pos);
+    }
 
     return S_OK;
 }
@@ -98,6 +105,12 @@ void CBossBullet::Uninit()
         m_pModel->Uninit();
         m_pModel = nullptr;
     }
+    if (m_pCaution)
+    {
+        m_pCaution->Uninit();
+        m_pCaution = nullptr;
+    }
+
     CBullet::Uninit();
 }
 
@@ -106,11 +119,19 @@ void CBossBullet::Uninit()
 //=============================================================================
 void CBossBullet::Update()
 {
+    D3DXVECTOR3 pos = GetPos();
     if (m_pModel)
     {
         m_pModel->GetModelInfo()->SetPos(GetPos());
     }
-     
+
+    // 警告
+    if (m_pCaution)
+    {
+        m_pCaution->SetBulletPos(GetPos());
+    }
+
+    // 親クラスの更新処理
     CBullet::Update();
 
     // 衝突判定
@@ -143,12 +164,14 @@ void CBossBullet::Hit()
         {
             if (CCollision::ColSphereAndCapsule(GetColSpherePtr()->GetInfo(), pPlayer->GetColCapsulePtr()->GetInfo()))
             {
+                // 吹っ飛ぶ値
                 D3DXVECTOR3 move = GetMove();
                 move.x *= 0.5f;
                 move.z *= 0.5f;
                 move.y += 50.0f;
-                pPlayer->ChangeState(CPlayerStateKnockback::Create(move));
-                pPlayer->SubLife(20);
+                pPlayer->ChangeState(CPlayerStateKnockback::Create(move));  // プレイヤーをノックバック
+                pPlayer->SubLife(20);                                       // 体力を減らす
+                // 自身の終了処理
                 CGauge::SetHitDown(true);
                 CGauge::SetDown(20);
                 // パーティクルの生成

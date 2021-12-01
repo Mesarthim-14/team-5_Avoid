@@ -21,7 +21,7 @@ CScene2D::CScene2D(PRIORITY Priority) : CSceneBase(Priority)
 {
     m_fRotasion = 0.0f;
     m_fScaleNum = 0.0f;
-    m_fSubFlashNum = 0.0f;
+    m_fSubFlashNum = 1.0f;
     m_fSubNum = 0.0f;
     m_fFadeSpeedNum = 0.0f;
     m_nFlashFlame = 0;
@@ -414,20 +414,11 @@ void CScene2D::ScaleUp(const float &fScaleUp)
 //======================================================
 // ローテーションの取得
 //======================================================
-void CScene2D::SetRotation(float rotasion)
+void CScene2D::SetRotation(const float& rotasion)
 {
     // 情報取得
-    D3DXVECTOR3 pos = GetPos();    // 座標
-    D3DXVECTOR3 size = GetSize();    // 座標
-
-    // 回転の値を加算
-    rotasion += m_fRotasion;
-
-    float r = sqrtf(powf(size.x / 2, 2.0) + powf(size.x / 2, 2.0));    //半径
-    float fTheta = atan2(size.x / 2, size.x / 2);                    //シータ
-
-    float XAngle = r*cos(fTheta + rotasion);    //Xの角度
-    float YAngle = r*sin(fTheta + rotasion);    //Yの角度
+    D3DXVECTOR3 pos = GetPos();         // 座標
+    D3DXVECTOR3 size = GetSize()*0.5f;  // サイズ
 
     VERTEX_2D*pVtx = nullptr;    //頂点情報へのポインタ
     LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();
@@ -435,22 +426,20 @@ void CScene2D::SetRotation(float rotasion)
     //頂点データ範囲をロックし、頂点バッファへのポインタを所得
     pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
-    pVtx[0].pos = D3DXVECTOR3(pos.x + XAngle, pos.y + YAngle, 0.0f);
-    XAngle = r*cos(fTheta + D3DXToRadian(90) + rotasion);
-    YAngle = r*sin(fTheta + D3DXToRadian(90) + rotasion);
-    pVtx[1].pos = D3DXVECTOR3(pos.x + XAngle, pos.y + YAngle, 0.0f);
-    XAngle = r*cos(fTheta + D3DXToRadian(-90) + rotasion);
-    YAngle = r*sin(fTheta + D3DXToRadian(-90) + rotasion);
-    pVtx[2].pos = D3DXVECTOR3(pos.x + XAngle, pos.y + YAngle, 0.0f);
-    XAngle = r*cos(fTheta + D3DXToRadian(180) + rotasion);
-    YAngle = r*sin(fTheta + D3DXToRadian(180) + rotasion);
-    pVtx[3].pos = D3DXVECTOR3(pos.x + XAngle, pos.y + YAngle, 0.0f);
+    // 中心から頂点の距離
+    float fDistance = sqrtf(powf(size.x, 2) + powf(size.y, 2));
+    // 中心から右上の頂点の角度
+    float fAngle = atan2f(size.y, size.x);
+    // 中心から左上の頂点の角度
+    float  fAngle2 = atan2f(size.y, -size.x);
 
-    //頂点データをアンロック
+    // 頂点座標の設定
+    pVtx[0].pos = D3DXVECTOR3(pos.x + (cosf(-fAngle2 + rotasion) * fDistance), pos.y + (sinf(-fAngle2 + rotasion) * fDistance), 0);
+    pVtx[1].pos = D3DXVECTOR3(pos.x + (cosf(-fAngle + rotasion) * fDistance), pos.y + (sinf(-fAngle + rotasion) * fDistance), 0);
+    pVtx[2].pos = D3DXVECTOR3(pos.x + (cosf(fAngle2 + rotasion) * fDistance), pos.y + (sinf(fAngle2 + rotasion) * fDistance), 0);
+    pVtx[3].pos = D3DXVECTOR3(pos.x + (cosf(fAngle + rotasion)  * fDistance), pos.y + (sinf(fAngle + rotasion)  * fDistance), 0);
+    
     pVtxBuff->Unlock();
-
-    // 回転量
-    m_fRotasion += 0.01f;
 }
 
 //=============================================
@@ -464,7 +453,7 @@ void CScene2D::SetScale(const float &fScale)
 //====================================================================
 // ポリゴンの点滅
 //====================================================================
-void CScene2D::FlashPolygon(const int &nFlashFlame)
+void CScene2D::FlashPolygon(const float &fFlashFlame)
 {
     // 頂点情報を設定
     VERTEX_2D *pVtx = nullptr;
@@ -473,43 +462,38 @@ void CScene2D::FlashPolygon(const int &nFlashFlame)
     // 頂点バッファをロックし、頂点情報へのポインタを取得
     pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
-    // カラーの減算
-    m_fSubFlashNum += m_fSubNum;
+    // 点滅の反転状態
+    if (!m_bDisappearFlag)
+    {
+        // カラーの減算
+        m_fSubFlashNum += fFlashFlame;
+    }
+    else
+    {
+        // カラーの減算
+        m_fSubFlashNum -= fFlashFlame;
+    }
 
     // 上限に行ったら
     if (m_fSubFlashNum >= 1.0f)
     {
         m_fSubFlashNum = 1.0f;
         m_bDisappearFlag = true;
-
     }
-    else if (m_fSubFlashNum <= 0.0f)
+    if (m_fSubFlashNum <= 0.0f)
     {
-        m_fSubFlashNum = 0;
-        m_fSubNum *= -1;
-    }
-
-    // 反転状態
-    if (m_bDisappearFlag == true)
-    {
-        m_nFlashFlame++;
-
-        if (m_nFlashFlame >= nFlashFlame)
-        {
-            m_nFlashFlame = 0;
-            m_fSubNum *= -1;
-            m_bDisappearFlag = false;
-        }
+        m_fSubFlashNum = 0.0f;
+        m_bDisappearFlag = false;
     }
 
     // カラー情報の更新
     D3DXCOLOR color = GetColor();
 
     // 頂点カラーの設定
-    pVtx[0].col = D3DXCOLOR(color.r, color.g, color.b, color.a - m_fSubFlashNum);    // 左上頂点の色    透明度255
-    pVtx[1].col = D3DXCOLOR(color.r, color.g, color.b, color.a - m_fSubFlashNum);    // 右上頂点の色    透明度255
-    pVtx[2].col = D3DXCOLOR(color.r, color.g, color.b, color.a - m_fSubFlashNum);    // 左下頂点の色    透明度255
-    pVtx[3].col = D3DXCOLOR(color.r, color.g, color.b, color.a - m_fSubFlashNum);    // 右下頂点の色    透明度255
+    pVtx[0].col = D3DXCOLOR(color.r, color.g, color.b, m_fSubFlashNum);    // 左上頂点の色    透明度255
+    pVtx[1].col = D3DXCOLOR(color.r, color.g, color.b, m_fSubFlashNum);    // 右上頂点の色    透明度255
+    pVtx[2].col = D3DXCOLOR(color.r, color.g, color.b, m_fSubFlashNum);    // 左下頂点の色    透明度255
+    pVtx[3].col = D3DXCOLOR(color.r, color.g, color.b, m_fSubFlashNum);    // 右下頂点の色    透明度255
 
     // 頂点バッファをアンロックする
     pVtxBuff->Unlock();

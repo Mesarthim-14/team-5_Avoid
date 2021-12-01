@@ -158,6 +158,8 @@
     <ClCompile Include="cannon.cpp" />
     <ClCompile Include="cannon_bullet.cpp" />
     <ClCompile Include="cannon_manager.cpp" />
+    <ClCompile Include="caution_boss_bullet_ui.cpp" />
+    <ClCompile Include="caution_wimp_attack.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="check_flag.cpp" />
     <ClCompile Include="check_point.cpp" />
@@ -300,6 +302,8 @@
     <ClInclude Include="cannon.h" />
     <ClInclude Include="cannon_bullet.h" />
     <ClInclude Include="cannon_manager.h" />
+    <ClInclude Include="caution_boss_bullet_ui.h" />
+    <ClInclude Include="caution_wimp_attack.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="check_flag.h" />
     <ClInclude Include="check_point.h" />
