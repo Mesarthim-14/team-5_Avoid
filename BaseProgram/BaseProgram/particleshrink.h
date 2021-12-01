@@ -35,10 +35,11 @@ private:
 	//==================
 	// メンバ変数
 	//==================
-	static float m_fAngleX;		// 角度
-	static float m_fAngleZ;		// 角度
-	float m_fSpeed;				// 速度
-	int m_nLife;				// 体力
+	static float m_fAngleX;     // 角度
+	static float m_fAngleZ;     // 角度
+    static float m_fSize;       // 大きさ
+	float m_fSpeed;             // 速度
+	int m_nLife;                // 体力
 
 	D3DXVECTOR3 ShrinkPos;
 };

@@ -415,6 +415,9 @@
     <ClCompile Include="npc_text.cpp">
       <Filter>04_Character\NPC\Text</Filter>
     </ClCompile>
+    <ClCompile Include="particleshrink_heel.cpp">
+      <Filter>06_Effect\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -839,6 +842,9 @@
     </ClInclude>
     <ClInclude Include="npc_text.h">
       <Filter>04_Character\NPC\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="particleshrink_heel.h">
+      <Filter>06_Effect\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

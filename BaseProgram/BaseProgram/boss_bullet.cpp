@@ -21,6 +21,8 @@
 #include "collision.h"
 #include "collisionModel_Sphere.h"
 #include "state_player_knockback.h"
+#include "gauge.h"
+#include "particlepop.h"
 
 //=============================================================================
 // マクロ定義
@@ -129,6 +131,7 @@ void CBossBullet::Draw()
 void CBossBullet::Hit()
 {
     CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    D3DXVECTOR3 pos = pPlayer->GetPos();
     if (!pPlayer)
     {
         return;
@@ -146,6 +149,13 @@ void CBossBullet::Hit()
                 move.y += 50.0f;
                 pPlayer->ChangeState(CPlayerStateKnockback::Create(move));
                 pPlayer->SubLife(20);
+                CGauge::SetHitDown(true);
+                CGauge::SetDown(20);
+                // パーティクルの生成
+                for (int nCntParticle = 0; nCntParticle <= 20; nCntParticle++)
+                {
+                    CParticlePop::Create(pos);
+                }
                 Uninit();
             }
         }
