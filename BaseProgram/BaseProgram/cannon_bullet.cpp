@@ -22,6 +22,7 @@
 #include "collisionModel_OBB.h"
 #include "kraken.h"
 #include "collision.h"
+#include "particlecannon.h"
 
 //=============================================================================
 // ƒ}ƒNƒ’è‹`
@@ -155,6 +156,7 @@ void CCannonBullet::SetBulletInfo(D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 void CCannonBullet::Collision()
 {
     CKraken* pKraken = CManager::GetInstance()->GetGame()->GetKraken();
+    D3DXVECTOR3 pos = CCannonBullet::GetPos();
     if (!pKraken)
     {
         return;
@@ -166,6 +168,10 @@ void CCannonBullet::Collision()
         {
             pKraken->SubLife();
             m_bHit = true;
+            for (int nCnt = 0; nCnt <= 20; nCnt++)
+            {
+                CParticleCannon::Create(pos);
+            }
             Uninit();
         }
     }

@@ -9,43 +9,39 @@
 // インクルードファイル
 // Author : toshiki
 //=====================================================================
-#include "particleshrink_heel.h"
+#include "particlecannon.h"
 #include "manager.h"
 #include "renderer.h"
 #include "library.h"
 #include "texture.h"
 #include "resource_manager.h"
 
-float CParticleHeel::m_fAngleX = 0.0f;
-float CParticleHeel::m_fAngleZ = 0.0f;
-float CParticleHeel::m_fSize = 0.0f;
 //=====================================================================
 // マクロ定義
 // Author : toshiki
 //=====================================================================
-#define PARTICLE_POS    ((D3DXVECTOR3(m_fAngleX, 5.0f, m_fAngleZ)))
-#define SIZE            (D3DXVECTOR3(m_fSize, m_fSize, m_fSize))
-#define SPEED           (5.0f)
-#define RANDOM          (3.14f)
-#define LIFE            (40)
-#define COLOR           (D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
-#define TANGENT         (7.0f)
+#define POS         (ZeroVector3)
+#define SIZE        (D3DXVECTOR3(200.0f, 200.0f, 200.0f))
+#define SPEED       (30.0f)
+#define RANDOM      (3.14f)
+#define LIFE        (40)
+#define COLOR       (D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
 
 //=====================================================================
 // コンストラクタ
 // Author : toshiki
 //=====================================================================
-CParticleHeel::CParticleHeel()
+CParticleCannon::CParticleCannon()
 {
+    m_fAngle = 0.0f;
     m_fSpeed = 0.0f;
-    ShrinkPos = ZeroVector3;
 }
 
 //=====================================================================
 // デストラクタ
 // Author : toshiki
 //=====================================================================
-CParticleHeel::~CParticleHeel()
+CParticleCannon::~CParticleCannon()
 {
 
 }
@@ -54,16 +50,13 @@ CParticleHeel::~CParticleHeel()
 // 生成処理
 // Author : toshiki
 //=====================================================================
-CParticleHeel * CParticleHeel::Create(const D3DXVECTOR3 &pos)
+CParticleCannon * CParticleCannon::Create(const D3DXVECTOR3 &pos)
 {
-    CParticleHeel * pParticle = new CParticleHeel;
+    CParticleCannon * pParticle = new CParticleCannon;
 
     if (pParticle != nullptr)
     {
-        m_fAngleX = CLibrary::Random(400.0f);
-        m_fAngleZ = CLibrary::Random(400.0f);
-        m_fSize = CLibrary::Random(30.0f, 100.0f);
-        pParticle->SetSceneInfo(D3DXVECTOR3(pos.x + m_fAngleX, pos.y, pos.z + m_fAngleZ), SIZE);
+        pParticle->SetSceneInfo(pos, SIZE);
 
         pParticle->Init();
         return pParticle;
@@ -75,7 +68,7 @@ CParticleHeel * CParticleHeel::Create(const D3DXVECTOR3 &pos)
 // 初期化処理
 // Author : toshiki
 //=====================================================================
-HRESULT CParticleHeel::Init(void)
+HRESULT CParticleCannon::Init(void)
 {
     CParticleInfo::Init();
     SetParticle();
@@ -86,7 +79,7 @@ HRESULT CParticleHeel::Init(void)
 // 更新処理
 // Author : toshiki
 //=====================================================================
-void CParticleHeel::Update(void)
+void CParticleCannon::Update(void)
 {
     CParticleInfo::Update();
 }
@@ -95,7 +88,7 @@ void CParticleHeel::Update(void)
 // 終了処理
 // Author : toshiki
 //=====================================================================
-void CParticleHeel::Uninit(void)
+void CParticleCannon::Uninit(void)
 {
     CParticleInfo::Uninit();
 }
@@ -104,7 +97,7 @@ void CParticleHeel::Uninit(void)
 // 描画処理
 // Author : toshiki
 //=====================================================================
-void CParticleHeel::Draw(void)
+void CParticleCannon::Draw(void)
 {
     CParticleInfo::Draw();
 }
@@ -113,16 +106,19 @@ void CParticleHeel::Draw(void)
 // パーティクルを出す処理
 // Author : toshiki
 //=====================================================================
-void CParticleHeel::SetParticle(void)
+void CParticleCannon::SetParticle(void)
 {
     // テクスチャの設定
     CTexture *pTexture = GET_TEXTURE_PTR;
     BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_PARTICLE));
     // スピードの値を設定
     m_fSpeed = SPEED;
-    float fTangent = atan2f(ShrinkPos.z - m_fAngleX, ShrinkPos.x - m_fAngleZ);
+    // パーティクルの出る角度の設定
+    m_fAngle = CLibrary::Random(RANDOM);
+    // 重力をつける
+    SetGravity(true);
     // 移動させるための処理
-    D3DXVECTOR3 move = D3DXVECTOR3(sinf(fTangent) * m_fSpeed, TANGENT, cosf(fTangent) * m_fSpeed);
+    D3DXVECTOR3 move = D3DXVECTOR3(sinf(m_fAngle)*m_fSpeed, CLibrary::Random(4.0f, m_fSpeed), cosf(m_fAngle)*m_fSpeed);
     // 移動情報を設定
     SetMove(move);
     // 色の設定
