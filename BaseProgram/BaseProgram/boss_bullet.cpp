@@ -22,6 +22,8 @@
 #include "collisionModel_Sphere.h"
 #include "state_player_knockback.h"
 #include "caution_boss_bullet_ui.h"
+#include "gauge.h"
+#include "particlepop.h"
 
 //=============================================================================
 // マクロ定義
@@ -150,6 +152,7 @@ void CBossBullet::Draw()
 void CBossBullet::Hit()
 {
     CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    D3DXVECTOR3 pos = pPlayer->GetPos();
     if (!pPlayer)
     {
         return;
@@ -169,6 +172,13 @@ void CBossBullet::Hit()
                 pPlayer->ChangeState(CPlayerStateKnockback::Create(move));  // プレイヤーをノックバック
                 pPlayer->SubLife(20);                                       // 体力を減らす
                 // 自身の終了処理
+                CGauge::SetHitDown(true);
+                CGauge::SetDown(20);
+                // パーティクルの生成
+                for (int nCntParticle = 0; nCntParticle <= 20; nCntParticle++)
+                {
+                    CParticlePop::Create(pos);
+                }
                 Uninit();
             }
         }

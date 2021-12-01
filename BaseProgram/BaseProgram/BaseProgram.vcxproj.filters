@@ -421,6 +421,9 @@
     <ClCompile Include="caution_wimp_attack.cpp">
       <Filter>06_Effect\Caution</Filter>
     </ClCompile>
+    <ClCompile Include="particleshrink_heel.cpp">
+      <Filter>06_Effect\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -851,6 +854,9 @@
     </ClInclude>
     <ClInclude Include="caution_wimp_attack.h">
       <Filter>06_Effect\Caution</Filter>
+    </ClInclude>
+    <ClInclude Include="particleshrink_heel.h">
+      <Filter>06_Effect\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

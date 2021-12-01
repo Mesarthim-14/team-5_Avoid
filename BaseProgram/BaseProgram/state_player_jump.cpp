@@ -17,11 +17,13 @@
 #include "animation_skinmesh.h"
 #include "state_player_normal.h"
 #include "gauge.h"
+#include "particleshrink.h"
 
 //=====================================================================
 // マクロ定義
 //=====================================================================
 #define CHARGEJUMP_MAX      (100)   // タメカウント最大
+#define PARTICLE_STRAT      (30)    // 溜めエフェクト発生開始までの時間
 #define HIGHJUMP_CONSUME    (1)     // ためジャンプした時のライフ減少量
 
 //=====================================================================
@@ -110,11 +112,20 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
     // キーボード移動処理
     MoveByKeyboard(pPlayer);
     D3DXVECTOR3 move = pPlayer->GetMove();
+    D3DXVECTOR3 pos = pPlayer->GetPos();
 
     if (CLibrary::KeyboardPress(DIK_SPACE))
     {
         m_nChargeJumpCount++;
-
+        // エフェクトの発生時間
+        if (m_nChargeJumpCount >= PARTICLE_STRAT)
+        {
+            // 溜めエフェクト生成
+            if (m_nChargeJumpCount < CHARGEJUMP_MAX && !m_bJumpCheck)
+            {
+                CParticleShrink::Create(pos);
+            }
+        }
         //エフェクト発生
         if (m_nChargeJumpCount >= CHARGEJUMP_MAX)
         {

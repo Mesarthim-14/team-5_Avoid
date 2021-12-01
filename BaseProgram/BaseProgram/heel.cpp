@@ -20,7 +20,7 @@
 #include "player.h"
 #include "library.h"
 #include "gauge.h"
-#include "particleshrink.h"
+#include "particleshrink_heel.h"
 
 //=============================================================================
 // マクロ定義
@@ -107,7 +107,7 @@ void CHeel::Update()
             CGauge::SetDown((float)HEEL_NUM);
             CGauge::SetHitUp(true);
             // プレイヤーの位置にエフェクト生成
-            CParticleShrink::Create(pos);
+            CParticleHeel::Create(pos);
         }
     }
 }
