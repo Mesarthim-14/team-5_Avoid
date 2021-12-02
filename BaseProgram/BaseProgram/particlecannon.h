@@ -1,5 +1,5 @@
-#ifndef _PARTICLENORMAL_H_
-#define _PARTICLENORMAL_H_
+#ifndef _PARTICLECANNON_H_
+#define _PARTICLECANNON_H_
 //=====================================================================
 //
 //	パーティクル処理[particlenormal.h]

@@ -35,6 +35,7 @@
 #include "gaugebar.h"
 #include "npc_enemy_info.h"
 #include "npc_factory.h"
+#include "pause.h"
 
 float CGame::m_fGravity = 1.5f;
 //=======================================================================================
@@ -48,6 +49,7 @@ CGame::CGame()
     m_pGimmickFactory = nullptr;
     m_pKraken = nullptr;
     m_pNpcFactory = nullptr;
+    m_pPause = nullptr;
 }
 
 //=======================================================================================
@@ -116,6 +118,13 @@ void CGame::Uninit()
 //=======================================================================================
 void CGame::Update()
 {
+    CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
+
+    if (pKey->GetTrigger(DIK_P))
+    {
+        m_pPause = CManager::GetInstance()->GetPause();
+        m_pPause->Create();
+    }
     if (m_pGimmickFactory)
     {
         m_pGimmickFactory->Update();
@@ -132,7 +141,7 @@ void CGame::Update()
     }
 
 #ifdef _DEBUG
-    CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
+    //CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
     CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
 
     // ƒ^ƒCƒgƒ‹‚É–ß‚é

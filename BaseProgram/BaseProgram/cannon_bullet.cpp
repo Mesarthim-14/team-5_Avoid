@@ -21,8 +21,9 @@
 #include "library.h"
 #include "collisionModel_OBB.h"
 #include "kraken.h"
-#include "collision.h"
 #include "particlecannon.h"
+#include "collision.h"
+#include "particlenormal.h"
 
 //=============================================================================
 // ƒ}ƒNƒ’è‹`
@@ -93,6 +94,8 @@ HRESULT CCannonBullet::Init(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &Can
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_CANNON_BULLET);
     GetModelInfo()->SetModelStatus(pos, ZeroVector3, model);
+
+    CParticleNormal::Create(pos, CannonRot);
     
     if (!m_pCollision)
     {

@@ -19,6 +19,7 @@ class CPlayer;
 class CGimmickFactory;
 class CKraken;
 class CNpcFactory;
+class CPause;
 
 //=======================================================================================
 // ゲームクラス
@@ -56,5 +57,6 @@ private:
     static float m_fGravity;            // 重力
     CGimmickFactory *m_pGimmickFactory; // ギミック生成
     CNpcFactory* m_pNpcFactory;         // NPC生成クラスポインタ
+    CPause *m_pPause;
 };
 #endif
