@@ -20,6 +20,7 @@ class CGimmickFactory;
 class CKraken;
 class CNpcFactory;
 class CGaussFilter;
+class CPause;
 
 //=======================================================================================
 // ゲームクラス
@@ -28,6 +29,7 @@ class CGame : public CModeBase
 {
 public:
     CGame();        // コンストラクタ
+
     ~CGame();       // デストラクタ
 
     HRESULT Init();     // 初期化処理
@@ -65,5 +67,6 @@ private:
     static bool m_bGaussFilter;             // フィルターのフラグ
     static CGaussFilter* m_pGaussFilter;    // ガウスフィルター
 
+    CPause *m_pPause;
 };
 #endif

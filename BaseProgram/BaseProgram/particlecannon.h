@@ -1,5 +1,5 @@
-#ifndef _PARTICLENORMAL_H_
-#define _PARTICLENORMAL_H_
+#ifndef _PARTICLECANNON_H_
+#define _PARTICLECANNON_H_
 //=====================================================================
 //
 //	パーティクル処理[particlenormal.h]
@@ -15,16 +15,16 @@
 //=====================================================================
 // クラス定義
 //=====================================================================
-class CParticleNormal : public CParticleInfo
+class CParticleCannon : public CParticleInfo
 {
 public:
     //==================
     // メンバ関数
     //==================
-    CParticleNormal();
-    ~CParticleNormal();
+    CParticleCannon();
+    ~CParticleCannon();
 
-    static CParticleNormal * Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);
+    static CParticleCannon * Create(const D3DXVECTOR3 &pos);
     HRESULT Init(void);
     void Update(void);
     void Uninit(void);
@@ -35,7 +35,6 @@ private:
     //==================
     // メンバ変数
     //==================
-    static D3DXVECTOR3 m_Rot;   // 方向
     float m_fAngle;             // 角度
     float m_fSpeed;             // 速度
     int m_nLife;                // 体力

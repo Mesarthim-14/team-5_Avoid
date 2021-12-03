@@ -214,6 +214,7 @@
     <ClCompile Include="npc_text.cpp" />
     <ClCompile Include="npc_text_enemy.cpp" />
     <ClCompile Include="particleaura.cpp" />
+    <ClCompile Include="particlecannon.cpp" />
     <ClCompile Include="particlecollective.cpp" />
     <ClCompile Include="particlenormal.cpp" />
     <ClCompile Include="particlepop.cpp" />
@@ -363,6 +364,7 @@
     <ClInclude Include="npc_text.h" />
     <ClInclude Include="npc_text_enemy.h" />
     <ClInclude Include="particleaura.h" />
+    <ClInclude Include="particlecannon.h" />
     <ClInclude Include="particlecollective.h" />
     <ClInclude Include="particlenormal.h" />
     <ClInclude Include="particlepop.h" />

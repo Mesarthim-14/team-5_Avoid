@@ -21,7 +21,9 @@
 #include "library.h"
 #include "collisionModel_OBB.h"
 #include "kraken.h"
+#include "particlecannon.h"
 #include "collision.h"
+#include "particlenormal.h"
 
 //=============================================================================
 // マクロ定義
@@ -92,6 +94,9 @@ HRESULT CCannonBullet::Init(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &Can
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_CANNON_BULLET);
     GetModelInfo()->SetModelStatus(pos, ZeroVector3, model);
+
+    // エフェクト表示
+    CParticleNormal::Create(pos, CannonRot);
     
     if (!m_pCollision)
     {
@@ -155,6 +160,7 @@ void CCannonBullet::SetBulletInfo(D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 void CCannonBullet::Collision()
 {
     CKraken* pKraken = CManager::GetInstance()->GetGame()->GetKraken();
+    D3DXVECTOR3 pos = CCannonBullet::GetPos();
     if (!pKraken)
     {
         return;
@@ -166,6 +172,10 @@ void CCannonBullet::Collision()
         {
             pKraken->SubLife();
             m_bHit = true;
+            for (int nCnt = 0; nCnt <= 20; nCnt++)
+            {
+                CParticleCannon::Create(pos);
+            }
             Uninit();
         }
     }

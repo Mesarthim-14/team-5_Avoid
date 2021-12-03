@@ -29,6 +29,7 @@ float CParticleShrink::m_fSize = 0.0f;
 #define RANDOM          (3.14f)
 #define LIFE            (40)
 #define COLOR           (D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
+#define TANGENT         (7.0f)
 
 //=====================================================================
 // コンストラクタ
@@ -121,7 +122,7 @@ void CParticleShrink::SetParticle(void)
     m_fSpeed = SPEED;
     float fTangent = atan2f(ShrinkPos.z - m_fAngleX, ShrinkPos.x - m_fAngleZ);
     // 移動させるための処理
-    D3DXVECTOR3 move = D3DXVECTOR3(sinf(fTangent) * m_fSpeed, 1.0f, cosf(fTangent) * m_fSpeed);
+    D3DXVECTOR3 move = D3DXVECTOR3(sinf(fTangent) * m_fSpeed, TANGENT, cosf(fTangent) * m_fSpeed);
     // 移動情報を設定
     SetMove(move);
     // 色の設定

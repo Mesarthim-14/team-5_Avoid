@@ -22,6 +22,7 @@ CParticleInfo::CParticleInfo()
     m_move = ZeroVector3;
     m_nLife = 0;
     m_bGravitySet = false;
+    m_bGravityMiniSet = false;
     m_LifeSet = true;
 }
 
@@ -61,6 +62,11 @@ void CParticleInfo::Update()
     {
         Gravity();
     }
+    else if (m_bGravityMiniSet)
+    {
+        Gravitymini();
+    }
+
     if (m_LifeSet)
     {
         //    ライフが０になったら消す
@@ -100,14 +106,22 @@ void CParticleInfo::Gravity()
 {
     // 座標情報を取得
     D3DXVECTOR3 pos = GetPos();
-    m_move.y -= 0.5f;
+    m_move.y -= 2.0f;
     // 移動量を加算
     pos.y += m_move.y;
+}
 
-    //if (pos.y <= 1.0f)
-    //{
-    //    m_move = MOVE;
-    //}
+//=====================================================================
+// 重力
+// Author : toshiki
+//=====================================================================
+void CParticleInfo::Gravitymini()
+{
+    // 座標情報を取得
+    D3DXVECTOR3 pos = GetPos();
+    m_move.y -= 0.2f;
+    // 移動量を加算
+    pos.y += m_move.y;
 }
 
 //=====================================================================

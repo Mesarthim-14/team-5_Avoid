@@ -40,6 +40,7 @@
 #include "state_kraken_not_attack.h"
 #include "camera_game.h"
 #include "state_camera_descent.h"
+#include "pause.h"
 
 float CGame::m_fGravity = 1.5f;
 CGaussFilter* CGame::m_pGaussFilter = nullptr;
@@ -56,6 +57,7 @@ CGame::CGame()
     m_pGimmickFactory = nullptr;
     m_pKraken = nullptr;
     m_pNpcFactory = nullptr;
+    m_pPause = nullptr;
 }
 
 //=======================================================================================
@@ -123,6 +125,13 @@ void CGame::Uninit()
 //=======================================================================================
 void CGame::Update()
 {
+    CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
+
+    //if (pKey->GetTrigger(DIK_ESCAPE))
+    //{
+    //    m_pPause = CManager::GetInstance()->GetPause();
+    //    m_pPause->Create();
+    //}
     if (m_pGimmickFactory)
     {
         m_pGimmickFactory->Update();
@@ -139,7 +148,7 @@ void CGame::Update()
     }
 
 #ifdef _DEBUG
-    CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
+    //CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
     CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
 
     // タイトルに戻る
@@ -273,7 +282,6 @@ void CGame::CreateMap()
 void CGame::ShowInfo()
 {
 #ifdef _DEBUG
-
     //レンダラーで管理してるやつの情報
     ImGui::Begin("DebugInfo");
 
