@@ -76,6 +76,7 @@ void CCameraStateDescent::Update()
     CCameraGame* pCamera = (CCameraGame*)CManager::GetInstance()->GetCamera();  // カメラ
     CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();                    // プレイヤー
     CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();         // クラーケン
+
     if (!pCamera || !pPlayer || !pKraken)
     {
         return;
@@ -123,6 +124,10 @@ void CCameraStateDescent::Update()
         pPlayer->ChangeState(CPlayerStateNormal::Create());
         pCamera->ChangeState(CCameraStateNormal::Create());
         pKraken->ChangeState(CKrakenStateNormal::Create());
-
+        CGame *pGame = CManager::GetInstance()->GetGame();
+        if (pGame)
+        {
+            pGame->CreateUi();
+        }
     }
 }

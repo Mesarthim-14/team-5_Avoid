@@ -29,22 +29,21 @@ class CGame : public CModeBase
 {
 public:
     CGame();        // コンストラクタ
-
     ~CGame();       // デストラクタ
 
     HRESULT Init();     // 初期化処理
     void Uninit();      // 終了処理
     void Update();      // 更新処理
     void Draw();        // 描画処理
+    void CreateUi();    // Uiの生成
+    static void BeginGauss();                                                           // ガウスフィルタの開始
+    static void EndGauss();                                                             // ガウスフィルタの終了
     inline static float GetGravity()                    { return m_fGravity; };         // 重力
     inline CGimmickFactory* GetGimmickFactory()const    { return m_pGimmickFactory; }   // ギミックの情報
     inline CKraken* GetKraken()const                    { return m_pKraken; }           // クラーケン
     inline void GameEnd()                               { m_bGameEnd = true; }          // ゲーム終了フラグ
     inline CNpcFactory* GetNpcFactory()const            { return m_pNpcFactory; }       // NPCファクトリー
-
-    inline void SetGaussFilter(const bool& bUse) { m_bGaussFilter = bUse; } // ガウスフィルタ―を設定
-    static void BeginGauss();                                               // ガウスフィルタの開始
-    static void EndGauss();                                                 // ガウスフィルタの終了
+    inline void SetGaussFilter(const bool& bUse)        { m_bGaussFilter = bUse; }      // ガウスフィルタ―を設定
 
 private:
     // private関数
