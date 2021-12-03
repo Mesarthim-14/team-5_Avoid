@@ -22,11 +22,11 @@ D3DXVECTOR3 CParticleNormal::m_Rot = ZeroVector3;
 // Author : toshiki
 //=====================================================================
 #define POS         (ZeroVector3)
-#define SIZE        (D3DXVECTOR3(300.0f, 300.0f, 300.0f))
+#define SIZE        (D3DXVECTOR3(650.0f, 400.0f, 400.0f))
 #define SPEED       (7.0f)
 #define RANDOM      (3.14f)
 #define LIFE        (80)
-#define COLOR       (D3DXCOLOR(1.0f,1.0f,1.0f,0.4f))
+#define COLOR       (D3DXCOLOR(1.0f,1.0f,1.0f,0.7f))
 
 //=====================================================================
 // コンストラクタ
@@ -111,9 +111,11 @@ void CParticleNormal::SetParticle(void)
 {
     // テクスチャの設定
     CTexture *pTexture = GET_TEXTURE_PTR;
-    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_PARTICLE));
+    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_SMOKE));
     // スピードの値を設定
     m_fSpeed = SPEED;
+    // 重力つける
+    SetGravityMini(true);
     // パーティクルの出る角度の設定
     m_fAngle = CLibrary::Random(RANDOM);
     // 移動させるための処理

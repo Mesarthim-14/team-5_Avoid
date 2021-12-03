@@ -35,6 +35,7 @@ public:
         TEXTURE_NUM_NONE = -1,              // 初期値 使うとき-1にしてください
         TEXTURE_NUM_TEST,                   // テストテクスチャ
         TEXTURE_NUM_PARTICLE,               // パーティクルテクスチャ
+        TEXTURE_NUM_SMOKE,
         TEXTURE_NUM_GAUGE,                  
         TEXTURE_NUM_GAUGEBAR,               
         TEXTURE_NUM_E_KEY,                  // Eキー

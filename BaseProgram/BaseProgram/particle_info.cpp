@@ -119,7 +119,7 @@ void CParticleInfo::Gravitymini()
 {
     // À•Wî•ñ‚ğæ“¾
     D3DXVECTOR3 pos = GetPos();
-    m_move.y -= 0.2f;
+    m_move.y += 0.09f;
     // ˆÚ“®—Ê‚ğ‰ÁZ
     pos.y += m_move.y;
 }

@@ -56,7 +56,7 @@ CPause * CPause::Create()
     CPause * pPause = new CPause();
 
     if (pPause)
-    {
+    { 
         pPause->Init();
         return pPause;
     }
