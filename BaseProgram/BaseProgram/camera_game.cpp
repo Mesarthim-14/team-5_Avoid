@@ -15,6 +15,7 @@
 #include "game.h"
 #include "library.h"
 #include "state_camera_normal.h"
+#include "state_camera_select.h"
 
 //=============================================================================
 // マクロ定義
@@ -87,7 +88,7 @@ HRESULT CCameraGame::Init()
     if (!m_pCurrentState)
     {
     	// インスタンス生成
-    	m_pCurrentState = CCameraStateNormal::Create();
+    	m_pCurrentState = CCameraStateSelect::Create();
     }
     
     return S_OK;

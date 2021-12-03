@@ -95,6 +95,10 @@ void CHeel::Update()
 {
     // プレイヤーの位置取得
     CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    if (!pPlayer)
+    {
+        return;
+    }
     D3DXVECTOR3 pos = pPlayer->GetPos();
 
     for (auto &HeelPoint : m_apHeelPoint)

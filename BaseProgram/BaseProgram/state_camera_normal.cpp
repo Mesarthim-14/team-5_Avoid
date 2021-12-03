@@ -31,7 +31,7 @@
 //=====================================================================
 CCameraStateNormal::CCameraStateNormal()
 {
-    m_bMouseCountrol = false;
+    m_bMouseCountrol = true;
 }
 
 //=====================================================================
@@ -174,7 +174,8 @@ void CCameraStateNormal::KeyBoardMove(CCamera* &pCamera)
     // カメラ座標
     float fDistance = pCamera->GetDistance();
     float fVartical = pCamera->GetVartical();
-    float fHorizontal = pCamera->GetHorizontal();                            // カメラの角度
+    float fHorizontal = pCamera->GetHorizontal();   // カメラの角度
+
     //キーボードクラス情報の取得
     CInputKeyboard *pKeyInput = CManager::GetInstance()->GetKeyboard();
     D3DXVECTOR3 VDest = ZeroVector3;

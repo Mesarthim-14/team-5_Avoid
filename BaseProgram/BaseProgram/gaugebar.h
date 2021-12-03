@@ -18,7 +18,7 @@
 class CGaugebar : public CScene2D
 {
 public:
-    CGaugebar();
+    CGaugebar(PRIORITY priority);
     ~CGaugebar();
 
     static CGaugebar * Create();

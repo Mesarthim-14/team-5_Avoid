@@ -23,7 +23,7 @@
 //=====================================================================
 // コンストラクタ
 //=====================================================================
-CTranslation::CTranslation()
+CTranslation::CTranslation(PRIORITY priority) : CScene2D(priority)
 {
 
 }
@@ -41,7 +41,7 @@ CTranslation::~CTranslation()
 //=====================================================================
 CTranslation * CTranslation::Create()
 {
-    CTranslation * pGauge = new CTranslation;
+    CTranslation * pGauge = new CTranslation(PRIORITY_UI);
 
     if (pGauge)
     {

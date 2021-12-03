@@ -29,7 +29,7 @@ bool CGauge::m_bHitUp = false;
 //=====================================================================
 // コンストラクタ
 //=====================================================================
-CGauge::CGauge()
+CGauge::CGauge(PRIORITY priority) : CScene2D(priority)
 {
     m_fHP = 60.0f;
     m_fDown = 0.0f;
@@ -49,7 +49,7 @@ CGauge::~CGauge()
 //=====================================================================
 CGauge * CGauge::Create()
 {
-    CGauge * pGauge = new CGauge;
+    CGauge * pGauge = new CGauge(PRIORITY_UI);
 
     if (pGauge)
     {

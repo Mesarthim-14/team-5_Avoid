@@ -39,8 +39,11 @@ public:
     CScene(PRIORITY Priority);      // コンストラクタ
     virtual ~CScene();              // デストラクタ
     static void ReleaseAll();       // 全てのオブジェクトをリリース
+
     static void UpdateAll();        // 全てのオブジェクトを更新
     static void DrawAll();          // 全てのオブジェクトを描画
+    static void DrawAll2D();        // 全ての2Dオブジェクトを描画
+    static void DrawAll3D();        // 全ての3Dオブジェクトを描画
 
     virtual HRESULT Init() = 0;     // 初期化処理
     virtual void Uninit() = 0;      // 終了処理

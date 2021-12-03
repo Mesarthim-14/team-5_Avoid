@@ -505,8 +505,8 @@ void CWaterFresnel::Draw()
         m_pReflect->BeginPass();
         map.pMesh->DrawSubset(0);
         m_pReflect->EndPass();
-        D3DXVECTOR3 playerPos = pPlayer->GetPos();
-        D3DXVECTOR3 playerRot = pPlayer->GetRot();
+//        D3DXVECTOR3 playerPos = pPlayer->GetPos();
+//        D3DXVECTOR3 playerRot = pPlayer->GetRot();
 
     //    size_t size = pPlayer->GetModelAnimeVec().size();
         m_pReflect->SetAmbient(&m_ReflectPlayerAmbiend);
