@@ -95,6 +95,7 @@ HRESULT CCannonBullet::Init(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &Can
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_CANNON_BULLET);
     GetModelInfo()->SetModelStatus(pos, ZeroVector3, model);
 
+    // エフェクト表示
     CParticleNormal::Create(pos, CannonRot);
     
     if (!m_pCollision)

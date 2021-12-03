@@ -120,11 +120,11 @@ void CGame::Update()
 {
     CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
 
-    if (pKey->GetTrigger(DIK_P))
-    {
-        m_pPause = CManager::GetInstance()->GetPause();
-        m_pPause->Create();
-    }
+    //if (pKey->GetTrigger(DIK_ESCAPE))
+    //{
+    //    m_pPause = CManager::GetInstance()->GetPause();
+    //    m_pPause->Create();
+    //}
     if (m_pGimmickFactory)
     {
         m_pGimmickFactory->Update();
@@ -232,7 +232,6 @@ void CGame::CreateMap()
 void CGame::ShowInfo()
 {
 #ifdef _DEBUG
-
     //ƒŒƒ“ƒ_ƒ‰[‚ÅŠÇ—‚µ‚Ä‚é‚â‚Â‚Ìî•ñ
     ImGui::Begin("DebugInfo");
 
