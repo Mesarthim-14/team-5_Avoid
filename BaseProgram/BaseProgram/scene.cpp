@@ -166,6 +166,68 @@ void CScene::DrawAll()
 }
 
 //=============================================================================
+// 全ての2Dオブジェクト描画処理
+//=============================================================================
+void CScene::DrawAll2D()
+{
+    for (int nCount = PRIORITY_UI; nCount < PRIORITY_MAX; nCount++)
+    {
+        // !nullcheck
+        if (m_pTop[nCount])
+        {
+            // 先頭を取得
+            CScene *pScene = m_pTop[nCount];
+            do
+            {
+                // 次のシーン取得z
+                CScene *pSceneCur = pScene->m_pNext;
+
+                // 死亡フラグがない時
+                if (!pScene->m_bDeath)
+                {
+                    pScene->Draw();
+                }
+
+                // 次のシーンへ
+                pScene = pSceneCur;
+
+            } while (pScene);
+        }
+    }
+}
+
+//=============================================================================
+// 全ての3Dオブジェクト描画処理
+//=============================================================================
+void CScene::DrawAll3D()
+{
+    for (int nCount = 0; nCount < PRIORITY_UI; nCount++)
+    {
+        // !nullcheck
+        if (m_pTop[nCount])
+        {
+            // 先頭を取得
+            CScene *pScene = m_pTop[nCount];
+            do
+            {
+                // 次のシーン取得z
+                CScene *pSceneCur = pScene->m_pNext;
+
+                // 死亡フラグがない時
+                if (!pScene->m_bDeath)
+                {
+                    pScene->Draw();
+                }
+
+                // 次のシーンへ
+                pScene = pSceneCur;
+
+            } while (pScene);
+        }
+    }
+}
+
+//=============================================================================
 // 全ての終了処理
 //=============================================================================
 void CScene::ReleaseAll()

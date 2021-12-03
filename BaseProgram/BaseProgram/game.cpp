@@ -35,8 +35,16 @@
 #include "gaugebar.h"
 #include "npc_enemy_info.h"
 #include "npc_factory.h"
+#include "gauss_filter.h"
+#include "state_player_not_move.h"
+#include "state_kraken_not_attack.h"
+#include "camera_game.h"
+#include "state_camera_descent.h"
 
 float CGame::m_fGravity = 1.5f;
+CGaussFilter* CGame::m_pGaussFilter = nullptr;
+bool CGame::m_bGaussFilter = true;
+
 //=======================================================================================
 // コンストラクタ
 //=======================================================================================
@@ -64,14 +72,8 @@ CGame::~CGame()
 //=======================================================================================
 HRESULT CGame::Init()
 {
-    // プレイヤーの生成
-    CreatePlayer();
-    CreateEnemy();
-    CreateMap();
-    CreateNPC();
-    CGauge::Create();
-    CGaugebar::Create();
-
+    CreateFilter();
+    CreateObject();
     return S_OK;
 }
 
@@ -109,6 +111,11 @@ void CGame::Uninit()
         delete m_pGimmickFactory;
         m_pGimmickFactory = nullptr;
     }
+    if (m_pGaussFilter)
+    {
+        m_pGaussFilter->Uninit();
+        m_pGaussFilter = nullptr;
+    }
 }
 
 //=======================================================================================
@@ -141,6 +148,19 @@ void CGame::Update()
         CFade *pFade = CManager::GetInstance()->GetFade();
         pFade->SetFade(CManager::MODE_TYPE_TITLE);
     }
+    // タイトルに戻る
+    if (pKey->GetTrigger(DIK_RETURN))
+    {
+        if (m_pGaussFilter)
+        {
+            // ガウスのフェードに以降
+            m_pGaussFilter->SetFade(true);
+
+            // カメラの種類を変える
+            CCameraGame* pCamera = (CCameraGame*)CManager::GetInstance()->GetCamera();
+            pCamera->ChangeState(CCameraStateDescent::Create());
+        }
+    }
 
     ShowInfo();
 #endif // !_DEBUG
@@ -155,6 +175,34 @@ void CGame::Draw()
 }
 
 //=======================================================================================
+// ガウスフィルタの開始
+//=======================================================================================
+void CGame::BeginGauss()
+{
+    if (m_pGaussFilter)
+    {
+        if (m_pGaussFilter->GetUse())
+        {
+            m_pGaussFilter->BeginSurface();
+        }
+    }
+}
+
+//=======================================================================================
+// ガウスフィルタの終了
+//=======================================================================================
+void CGame::EndGauss()
+{
+    if (m_pGaussFilter)
+    {
+        if (m_pGaussFilter->GetUse())
+        {
+            m_pGaussFilter->DrawPolygon();
+        }
+    }
+}
+
+//=======================================================================================
 // プレイヤーの生成
 //=======================================================================================
 void CGame::CreatePlayer()
@@ -163,6 +211,7 @@ void CGame::CreatePlayer()
     if (!m_pPlayer)
     {
         m_pPlayer = CPlayer::Create(ZeroVector3, ZeroVector3);
+        m_pPlayer->ChangeState(CPlayerStateNotMove::Create());
     }
 }
 
@@ -188,6 +237,7 @@ void CGame::CreateEnemy()
     if (!m_pKraken)
     {
         m_pKraken = CKraken::Create();
+        m_pKraken->ChangeState(CKrakenStateNotAttack::Create());
     }
 }
 
@@ -233,6 +283,7 @@ void CGame::ShowInfo()
 
         // 重力の値
         ImGui::SliderFloat("Gravity", &m_fGravity, 0.0f, 50.0f);
+        ImGui::Checkbox("Gauss", &m_bGaussFilter);
 
         // ImGui::TreePop();
     }
@@ -242,8 +293,27 @@ void CGame::ShowInfo()
 }
 
 //=======================================================================================
-// クラーケンが
+// オブジェクト生成
 //=======================================================================================
-void CGame::JudgeDeadKraken()
+void CGame::CreateObject()
 {
+    CreateMap();
+    CreatePlayer();
+    CreateEnemy();
+    CreateNPC();
+    CGauge::Create();
+    CGaugebar::Create();
+}
+
+//=======================================================================================
+// フィルタの生成
+//=======================================================================================
+void CGame::CreateFilter()
+{
+    if (!m_pGaussFilter)
+    {
+        m_pGaussFilter = new CGaussFilter(GET_RENDERER_DEVICE);
+        m_pGaussFilter->Load();
+        m_pGaussFilter->Restore();
+    }
 }

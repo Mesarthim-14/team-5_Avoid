@@ -18,7 +18,7 @@
 class CGauge : public CScene2D
 {
 public:
-    CGauge();
+    CGauge(PRIORITY priority);
     ~CGauge();
     //========================
     // ƒƒ“ƒoŠÖ”

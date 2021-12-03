@@ -275,9 +275,17 @@ void CRenderer::Draw(void)
 			}
 		}
 
+        // フィルタの開始
+        CGame::BeginGauss();
+
 		//オブジェクトクラスの全描画処理呼び出し
-		CScene::DrawAll();
-		
+        CScene::DrawAll3D();
+
+        // フィルタの終了
+        CGame::EndGauss();
+
+        CScene::DrawAll2D();
+
 		CFade *pFade = CManager::GetInstance()->GetFade();
 
 		if (pFade != nullptr)

@@ -18,7 +18,7 @@
 class CTranslation : public CScene2D
 {
 public:
-    CTranslation();
+    CTranslation(PRIORITY priority);
     ~CTranslation();
 
     static CTranslation * Create();

@@ -424,6 +424,15 @@
     <ClCompile Include="particleshrink_heel.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="state_camera_select.cpp">
+      <Filter>10_State\CameraState</Filter>
+    </ClCompile>
+    <ClCompile Include="gauss_filter.cpp">
+      <Filter>06_Effect\Shader\Gauss</Filter>
+    </ClCompile>
+    <ClCompile Include="state_camera_descent.cpp">
+      <Filter>10_State\CameraState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -858,6 +867,15 @@
     <ClInclude Include="particleshrink_heel.h">
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="state_camera_select.h">
+      <Filter>10_State\CameraState</Filter>
+    </ClInclude>
+    <ClInclude Include="gauss_filter.h">
+      <Filter>06_Effect\Shader\Gauss</Filter>
+    </ClInclude>
+    <ClInclude Include="state_camera_descent.h">
+      <Filter>10_State\CameraState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\Text\Shader\BlurFilter.fx">
@@ -877,6 +895,9 @@
     </None>
     <None Include="data\Text\Shader\wave.fx">
       <Filter>06_Effect\Shader\FresnelWater\ShaderFile</Filter>
+    </None>
+    <None Include="data\Text\Shader\gauss_filter.fx">
+      <Filter>06_Effect\Shader\Gauss\ShaderFile</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1044,6 +1065,12 @@
     </Filter>
     <Filter Include="06_Effect\Caution">
       <UniqueIdentifier>{dc468a1e-130e-472e-bbd2-6693d39ebb95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_Effect\Shader\Gauss">
+      <UniqueIdentifier>{62092aa8-9ac9-443f-b3ac-0830f2b6c73c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_Effect\Shader\Gauss\ShaderFile">
+      <UniqueIdentifier>{1251a179-3895-4a2f-bca3-bd2c03cf2b55}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

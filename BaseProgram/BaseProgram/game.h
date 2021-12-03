@@ -19,6 +19,7 @@ class CPlayer;
 class CGimmickFactory;
 class CKraken;
 class CNpcFactory;
+class CGaussFilter;
 
 //=======================================================================================
 // ゲームクラス
@@ -27,7 +28,7 @@ class CGame : public CModeBase
 {
 public:
     CGame();        // コンストラクタ
-    ~CGame();        // デストラクタ
+    ~CGame();       // デストラクタ
 
     HRESULT Init();     // 初期化処理
     void Uninit();      // 終了処理
@@ -39,22 +40,30 @@ public:
     inline void GameEnd()                               { m_bGameEnd = true; }          // ゲーム終了フラグ
     inline CNpcFactory* GetNpcFactory()const            { return m_pNpcFactory; }       // NPCファクトリー
 
+    inline void SetGaussFilter(const bool& bUse) { m_bGaussFilter = bUse; } // ガウスフィルタ―を設定
+    static void BeginGauss();                                               // ガウスフィルタの開始
+    static void EndGauss();                                                 // ガウスフィルタの終了
+
 private:
     // private関数
-    void CreatePlayer();        // プレイヤーの生成関数
-    void CreateEnemy();         // 敵の生成
-    void CreateNPC();           // NPC
-    void CreateMap();           // マップの生成
-    void ShowInfo();            // 情報表示
-    void JudgeDeadKraken();     // クラーケンが死んだかを判定
+    void CreatePlayer();    // プレイヤーの生成関数
+    void CreateEnemy();     // 敵の生成
+    void CreateNPC();       // NPC
+    void CreateMap();       // マップの生成
+    void ShowInfo();        // 情報表示
+    void CreateObject();    // オブジェクト生成
+    void CreateFilter();    // フィルタの生成
 
     // メンバ変数
-    CPlayer *m_pPlayer;                 // プレイヤーのポインタ
-    CKraken *m_pKraken;                 // クラーケンのポインタ
-    bool m_bGameEnd;                    // ゲームのエンドフラグ
-    LPD3DXFONT m_pFont;                 // デバック用フォント
-    static float m_fGravity;            // 重力
-    CGimmickFactory *m_pGimmickFactory; // ギミック生成
-    CNpcFactory* m_pNpcFactory;         // NPC生成クラスポインタ
+    CPlayer *m_pPlayer;                     // プレイヤーのポインタ
+    CKraken *m_pKraken;                     // クラーケンのポインタ
+    bool m_bGameEnd;                        // ゲームのエンドフラグ
+    LPD3DXFONT m_pFont;                     // デバック用フォント
+    static float m_fGravity;                // 重力
+    CGimmickFactory *m_pGimmickFactory;     // ギミック生成
+    CNpcFactory* m_pNpcFactory;             // NPC生成クラスポインタ
+    static bool m_bGaussFilter;             // フィルターのフラグ
+    static CGaussFilter* m_pGaussFilter;    // ガウスフィルター
+
 };
 #endif
