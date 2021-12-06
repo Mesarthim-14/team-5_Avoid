@@ -125,13 +125,6 @@ void CGame::Uninit()
 //=======================================================================================
 void CGame::Update()
 {
-    CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
-
-    //if (pKey->GetTrigger(DIK_ESCAPE))
-    //{
-    //    m_pPause = CManager::GetInstance()->GetPause();
-    //    m_pPause->Create();
-    //}
     if (m_pGimmickFactory)
     {
         m_pGimmickFactory->Update();
@@ -148,7 +141,7 @@ void CGame::Update()
     }
 
 #ifdef _DEBUG
-    //CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
+    CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
     CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
 
     // ƒ^ƒCƒgƒ‹‚É–ß‚é
@@ -169,6 +162,11 @@ void CGame::Update()
             CCameraGame* pCamera = (CCameraGame*)CManager::GetInstance()->GetCamera();
             pCamera->ChangeState(CCameraStateDescent::Create());
         }
+    }
+
+    if (pKey->GetTrigger(DIK_P))
+    {
+        CPause::Create();
     }
 
     ShowInfo();
