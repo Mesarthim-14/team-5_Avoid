@@ -307,8 +307,7 @@ void CGame::CreateObject()
     CreatePlayer();
     CreateEnemy();
     CreateNPC();
-    CGauge::Create();
-    CGaugebar::Create();
+
 }
 
 //=======================================================================================
@@ -322,4 +321,13 @@ void CGame::CreateFilter()
         m_pGaussFilter->Load();
         m_pGaussFilter->Restore();
     }
+}
+
+//=======================================================================================
+// Ui‚Ì¶¬
+//=======================================================================================
+void CGame::CreateUi()
+{
+    CGauge::Create();
+    CGaugebar::Create();
 }
