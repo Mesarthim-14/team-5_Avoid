@@ -15,10 +15,10 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define GET_TEXTURE_PTR        (CManager::GetInstance()->GetResourceManager()->GetTextureClass())    // テクスチャのポインタ
-#define GET_SOUND_PTR        (CManager::GetInstance()->GetResourceManager()->GetSoundClass())    // サウンドのポインタ
-#define GET_XFILE_PTR        (CManager::GetInstance()->GetResourceManager()->GetXfileClass())    // Xファイルのポインタ
-#define GET_RENDERER_DEVICE    (CManager::GetInstance()->GetRenderer()->GetDevice())                // デバイス取得
+#define GET_TEXTURE_PTR     (CManager::GetInstance()->GetResourceManager()->GetTextureClass())    // テクスチャのポインタ
+#define GET_SOUND_PTR       (CManager::GetInstance()->GetResourceManager()->GetSoundClass())    // サウンドのポインタ
+#define GET_XFILE_PTR       (CManager::GetInstance()->GetResourceManager()->GetXfileClass())    // Xファイルのポインタ
+#define GET_RENDERER_DEVICE (CManager::GetInstance()->GetRenderer()->GetDevice())                // デバイス取得
 
 //=============================================================================
 //前方宣言

@@ -64,6 +64,13 @@ CPlayerStateCannon * CPlayerStateCannon::Create()
 //=====================================================================
 void CPlayerStateCannon::Init()
 {
+    // メモリ確保
+    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    if (!pPlayer)
+    {
+        return;
+    }
+    pPlayer->SetCollision(false);
     // アニメーション設定
     SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_IDOL), 60);
 }

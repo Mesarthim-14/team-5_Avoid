@@ -158,6 +158,8 @@
     <ClCompile Include="cannon.cpp" />
     <ClCompile Include="cannon_bullet.cpp" />
     <ClCompile Include="cannon_manager.cpp" />
+    <ClCompile Include="caution_boss_bullet_ui.cpp" />
+    <ClCompile Include="caution_wimp_attack.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="check_flag.cpp" />
     <ClCompile Include="check_point.cpp" />
@@ -173,6 +175,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gauge.cpp" />
     <ClCompile Include="gaugebar.cpp" />
+    <ClCompile Include="gauss_filter.cpp" />
     <ClCompile Include="ghost.cpp" />
     <ClCompile Include="ghost_model.cpp" />
     <ClCompile Include="gimmick_factory.cpp" />
@@ -212,10 +215,12 @@
     <ClCompile Include="npc_text.cpp" />
     <ClCompile Include="npc_text_enemy.cpp" />
     <ClCompile Include="particleaura.cpp" />
+    <ClCompile Include="particlecannon.cpp" />
     <ClCompile Include="particlecollective.cpp" />
     <ClCompile Include="particlenormal.cpp" />
     <ClCompile Include="particlepop.cpp" />
     <ClCompile Include="particleshrink.cpp" />
+    <ClCompile Include="particleshrink_heel.cpp" />
     <ClCompile Include="particle_info.cpp" />
     <ClCompile Include="move_scaffold.cpp" />
     <ClCompile Include="parallax_mapping2.cpp" />
@@ -257,7 +262,9 @@
     <ClCompile Include="state_camera.cpp" />
     <ClCompile Include="state_camera_angry_kraken.cpp" />
     <ClCompile Include="state_camera_cannon.cpp" />
+    <ClCompile Include="state_camera_descent.cpp" />
     <ClCompile Include="state_camera_normal.cpp" />
+    <ClCompile Include="state_camera_select.cpp" />
     <ClCompile Include="state_camera_talk.cpp" />
     <ClCompile Include="state_kraken.cpp" />
     <ClCompile Include="state_kraken_normal.cpp" />
@@ -299,6 +306,8 @@
     <ClInclude Include="cannon.h" />
     <ClInclude Include="cannon_bullet.h" />
     <ClInclude Include="cannon_manager.h" />
+    <ClInclude Include="caution_boss_bullet_ui.h" />
+    <ClInclude Include="caution_wimp_attack.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="check_flag.h" />
     <ClInclude Include="check_point.h" />
@@ -314,6 +323,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="gauge.h" />
     <ClInclude Include="gaugebar.h" />
+    <ClInclude Include="gauss_filter.h" />
     <ClInclude Include="ghost.h" />
     <ClInclude Include="ghost_model.h" />
     <ClInclude Include="gimmick_factory.h" />
@@ -356,10 +366,12 @@
     <ClInclude Include="npc_text.h" />
     <ClInclude Include="npc_text_enemy.h" />
     <ClInclude Include="particleaura.h" />
+    <ClInclude Include="particlecannon.h" />
     <ClInclude Include="particlecollective.h" />
     <ClInclude Include="particlenormal.h" />
     <ClInclude Include="particlepop.h" />
     <ClInclude Include="particleshrink.h" />
+    <ClInclude Include="particleshrink_heel.h" />
     <ClInclude Include="particle_info.h" />
     <ClInclude Include="move_scaffold.h" />
     <ClInclude Include="parallax_mapping2.h" />
@@ -401,7 +413,9 @@
     <ClInclude Include="state_camera.h" />
     <ClInclude Include="state_camera_angry_kraken.h" />
     <ClInclude Include="state_camera_cannon.h" />
+    <ClInclude Include="state_camera_descent.h" />
     <ClInclude Include="state_camera_normal.h" />
+    <ClInclude Include="state_camera_select.h" />
     <ClInclude Include="state_camera_talk.h" />
     <ClInclude Include="state_kraken.h" />
     <ClInclude Include="state_kraken_normal.h" />
@@ -445,6 +459,11 @@
       <FileType>Document</FileType>
     </None>
     <None Include="data\Text\Shader\wave.fx">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\Text\Shader\gauss_filter.fx">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

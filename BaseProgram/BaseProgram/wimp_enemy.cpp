@@ -17,6 +17,7 @@
 #include "state_player_knockback.h"
 #include "gauge.h"
 #include "particlepop.h"
+#include "caution_wimp_attack.h"
 
 //=============================================================================
 // マクロ定義
@@ -25,6 +26,7 @@
 #define FOLLOW_TIME         (50)        // 重力がかからない時間
 #define PLAYER_ADD_HEIGHT   (500.0f)    // プレイヤーを適当に量増し
 #define HIT_TIME_INTER      (300)       // 当たった後の間隔
+#define CAUTION_TIME        (60)        // 警告のタイム
 
 //=============================================================================
 // コンストラクタ
@@ -36,6 +38,8 @@ CWimpEnemy::CWimpEnemy(PRIORITY Priority) : CEnemy(Priority)
     m_pCollision = nullptr;
     m_nHitInter = 0;
     m_bHit = false;
+    m_pCaution = nullptr;
+    m_nCautionCounter = 0;
 }
 
 //=============================================================================
@@ -72,6 +76,27 @@ HRESULT CWimpEnemy::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size, const 
 void CWimpEnemy::Update()
 {
     CEnemy::Update();
+
+    // プレイヤーを探す
+    if (Search())
+    {
+        if (!m_pCaution)
+        {
+            m_pCaution = CCautionWimpAttack::Create(GetPos());
+            m_nCautionCounter = 0;
+        }
+    }
+
+    // 警告が出てるとき
+    if (m_pCaution)
+    {
+        m_nCautionCounter++;
+        if (m_nCautionCounter == CAUTION_TIME)
+        {
+            m_pCaution->Uninit();
+            Attack();
+        }
+    }
     if (isRush)
     {
         // 当たり判定
@@ -108,6 +133,23 @@ void CWimpEnemy::GravitySwitch()
 }
 
 //=============================================================================
+// プレイヤーを探す処理
+//=============================================================================
+bool CWimpEnemy::Search()
+{
+    // メモリ取得
+    D3DXVECTOR3 pos = CManager::GetInstance()->GetPlayer()->GetPos();
+
+    float fDistance = CLibrary::CalDistance(pos, GetPos());
+    if (fDistance <= PERCEPTION_DISTANCE)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+//=============================================================================
 // 追従
 //=============================================================================
 bool CWimpEnemy::Follow()
@@ -118,23 +160,15 @@ bool CWimpEnemy::Follow()
     {
         D3DXVECTOR3 Ppos = pPlayer->GetPos();
         Ppos.y += PLAYER_ADD_HEIGHT;
-        D3DXVECTOR3 Epos = GetPos();
         float fSpeed = GetSpeed();
-
         // 2点間のベクトルを求める（終点[目標地点] - 始点[自身の位置]）
-        D3DXVECTOR3 Vector = Ppos - Epos;
+        D3DXVECTOR3 Vector = Ppos - GetPos();
         Vector = *D3DXVec3Normalize(&Vector, &Vector);
         Vector *= fSpeed;
 
-        //自機を取得する
-        float fAngle = atan2f((Epos.x - Ppos.x), (Epos.z - Ppos.z));    // 角度
-        float fDistance = CLibrary::CalDistance(Ppos, Epos);
-        if (fDistance <= PERCEPTION_DISTANCE)
-        {
-            // 移動量の設定
-            SetMove(Vector);
-            return true;
-        }
+        // 移動量の設定
+        SetMove(Vector);
+        return true;
     }
 
     return false;

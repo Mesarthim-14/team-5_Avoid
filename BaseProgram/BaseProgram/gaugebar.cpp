@@ -23,7 +23,7 @@
 //=====================================================================
 // コンストラクタ
 //=====================================================================
-CGaugebar::CGaugebar()
+CGaugebar::CGaugebar(PRIORITY priority) : CScene2D(priority)
 {
 
 }
@@ -41,7 +41,7 @@ CGaugebar::~CGaugebar()
 //=====================================================================
 CGaugebar * CGaugebar::Create()
 {
-    CGaugebar * pGauge = new CGaugebar;
+    CGaugebar * pGauge = new CGaugebar(PRIORITY_UI);
 
     if (pGauge)
     {

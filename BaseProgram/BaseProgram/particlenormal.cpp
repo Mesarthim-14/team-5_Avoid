@@ -16,16 +16,17 @@
 #include "texture.h"
 #include "resource_manager.h"
 
+D3DXVECTOR3 CParticleNormal::m_Rot = ZeroVector3;
 //=====================================================================
 // マクロ定義
 // Author : toshiki
 //=====================================================================
 #define POS         (ZeroVector3)
-#define SIZE        (D3DXVECTOR3(50.0f, 50.0f, 50.0f))
-#define SPEED       (5.0f)
+#define SIZE        (D3DXVECTOR3(650.0f, 400.0f, 400.0f))
+#define SPEED       (7.0f)
 #define RANDOM      (3.14f)
-#define LIFE        (60)
-#define COLOR       (D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
+#define LIFE        (200)
+#define COLOR       (D3DXCOLOR(1.0f,1.0f,1.0f,0.8f))
 
 //=====================================================================
 // コンストラクタ
@@ -50,14 +51,14 @@ CParticleNormal::~CParticleNormal()
 // 生成処理
 // Author : toshiki
 //=====================================================================
-CParticleNormal * CParticleNormal::Create(const D3DXVECTOR3 &pos)
+CParticleNormal * CParticleNormal::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
     CParticleNormal * pParticle = new CParticleNormal;
 
     if (pParticle != nullptr)
     {
-        pParticle->SetSceneInfo(pos, SIZE);
-
+        pParticle->SetSceneInfo(D3DXVECTOR3(pos.x, pos.y - 100.0f, pos.z), SIZE);
+        m_Rot = rot;
         pParticle->Init();
         return pParticle;
     }
@@ -110,13 +111,13 @@ void CParticleNormal::SetParticle(void)
 {
     // テクスチャの設定
     CTexture *pTexture = GET_TEXTURE_PTR;
-    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_PARTICLE));
+    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_SMOKE));
     // スピードの値を設定
     m_fSpeed = SPEED;
     // パーティクルの出る角度の設定
     m_fAngle = CLibrary::Random(RANDOM);
     // 移動させるための処理
-    D3DXVECTOR3 move = D3DXVECTOR3(sinf(m_fAngle)*m_fSpeed, CLibrary::Random(4.0f, m_fSpeed), cosf(m_fAngle)*m_fSpeed);
+    D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 1.5f, 0.0f);
     // 移動情報を設定
     SetMove(move);
     // 色の設定

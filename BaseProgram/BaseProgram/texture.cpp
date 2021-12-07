@@ -57,17 +57,20 @@ CTexture * CTexture::Create()
 //=============================================================================
 // テクスチャの名前を設定
 //=============================================================================
-HRESULT CTexture::SetTextureName(void)
+HRESULT CTexture::SetTextureName()
 {
     // 通常テクスチャ
     m_aTexFileName[TEXTURE_TYPE_NUM_NORMAL] =
     {
         { "data/Texture/test.jpg" },                // テスト
         { "data/Texture/star.png" },
+        { "data/Texture/smoke.png" },
         { "data/Texture/Gauge.png" },
         { "data/Texture/Gauge_Frame.png" },
         { "data/Texture/E-key.png"},
         { "data/Texture/message_back.jpeg" },
+        { "data/Texture/Warning.png" },
+        { "data/Texture/Warning2.png" },
     };
 
     // 分割テクスチャ

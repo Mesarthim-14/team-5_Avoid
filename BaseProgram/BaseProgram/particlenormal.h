@@ -24,7 +24,7 @@ public:
     CParticleNormal();
     ~CParticleNormal();
 
-    static CParticleNormal * Create(const D3DXVECTOR3 &pos);
+    static CParticleNormal * Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);
     HRESULT Init(void);
     void Update(void);
     void Uninit(void);
@@ -35,6 +35,7 @@ private:
     //==================
     // ƒƒ“ƒo•Ï”
     //==================
+    static D3DXVECTOR3 m_Rot;   // •ûŒü
     float m_fAngle;             // Šp“x
     float m_fSpeed;             // ‘¬“x
     int m_nLife;                // ‘Ì—Í

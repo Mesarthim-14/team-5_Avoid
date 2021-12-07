@@ -35,10 +35,10 @@ public:
     void Update();                      // 更新処理
     void ChangeState(CState* pState);   // 状態の変更
 
-    inline void SubLife()                       { m_nLife--; }
-    CCollisionModelOBB* GetCollosion()const     { return m_pCollision; }
-    inline bool GetDead()const                  { return m_bDead; }
-    inline CSkinmeshModel* GetSkinMesh()const   { return m_pSkinmeshModel; }
+    inline void SubLife()                           { m_nLife--; }                  // 体力の減算
+    inline CCollisionModelOBB* GetCollosion()const  { return m_pCollision; }        // 当たり判定の情報
+    inline bool GetDead()const                      { return m_bDead; }             // 死んだ判定
+    inline CSkinmeshModel* GetSkinMesh()const       { return m_pSkinmeshModel; }    // スキンメッシュの情報
 
 private:
     // private関数

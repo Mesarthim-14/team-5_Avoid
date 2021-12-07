@@ -17,6 +17,7 @@
 //=========================================================================
 class CCollisionModelOBB;
 class CPlayer;
+class CCautionWimpAttack;
 
 //=============================================================================
 // クラス定義
@@ -37,11 +38,18 @@ protected:
     void AffectPlayer(CPlayer* &pPlayer);    // プレイヤーに影響を与える
 
 private:
+    // private関数
+    virtual void Attack() = 0;          // 攻撃
     void GravitySwitch();               // 重力の切り替え
+    bool Search();                      // プレイヤーを探す
+
+    // メンバ変数
     int m_nRushCount;                   // 飛んだカウント
-    bool isRush;                        // 飛んだらtrue
-    CCollisionModelOBB* m_pCollision;   // 当たり判定
-    bool m_bHit;                        // 当たったフラグ
     int m_nHitInter;                    // 当たり判定のカウント
+    int m_nCautionCounter;              // 警告のカウント
+    bool isRush;                        // 飛んだらtrue
+    bool m_bHit;                        // 当たったフラグ
+    CCollisionModelOBB* m_pCollision;   // 当たり判定
+    CCautionWimpAttack* m_pCaution;     // 攻撃警告
 };
 #endif

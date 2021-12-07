@@ -56,7 +56,7 @@ CPause * CPause::Create()
     CPause * pPause = new CPause();
 
     if (pPause)
-    {
+    { 
         pPause->Init();
         return pPause;
     }
@@ -150,11 +150,13 @@ void CPause::Update()
         case RESTART:
             // リスタート
             pFade->SetFade(CManager::MODE_TYPE_GAME);
+            CManager::SetActivePause(false);
             break;
         case EXIT:
             // 終了処理
             // リスタート
             pFade->SetFade(CManager::MODE_TYPE_TITLE);
+            CManager::SetActivePause(false);
             break;
         default:
             break;

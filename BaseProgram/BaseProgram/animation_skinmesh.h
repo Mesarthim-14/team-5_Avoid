@@ -11,6 +11,7 @@ public:
     {
         UINT uiAnimID;                 // アニメーションID
         ID3DXAnimationSet *pAnimSet;   // アニメーションセット
+		BOOL bLoop;
         FLOAT fLoopTime;               // 1ループの時間
         FLOAT fTrackSpeed;             // トラックスピード調節値
         FLOAT fShiftTime;              // シフトするにかかる時間
@@ -20,6 +21,8 @@ public:
     bool SetAnimationController(ID3DXAnimationController *pAnimCont);
     // アニメーションコントローラを取得
     bool GetAnimationController(ID3DXAnimationController **ppAnimCont);
+	// アニメーションループの有無
+	bool SetAnimationLoop(UINT animID, BOOL loop);
     // ループ時間を設定
     bool SetLoopTime(UINT animID, FLOAT time);
     // 動作開始にかかる時間を設定

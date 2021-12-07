@@ -3,6 +3,7 @@
 #include "animation_skinmesh.h"
 #include <vector>
 
+//アニメーションコントローラーのポインタ取得
 bool IHighLevelAnimController::SetAnimationController(ID3DXAnimationController * pAnimCont)
 {
     //NULLチェック
@@ -28,6 +29,7 @@ bool IHighLevelAnimController::SetAnimationController(ID3DXAnimationController *
     }
 }
 
+//アニメーションコントローラーのポインタを譲渡
 bool IHighLevelAnimController::GetAnimationController(ID3DXAnimationController ** ppAnimCont)
 {
     //NULLチェック
@@ -43,6 +45,20 @@ bool IHighLevelAnimController::GetAnimationController(ID3DXAnimationController *
     }
 }
 
+bool IHighLevelAnimController::SetAnimationLoop(UINT animID, BOOL loop)
+{
+	// 指定のアニメーションIDの存在をチェック
+	if (m_Anim.size() <= animID)
+	{
+		return false;
+	}
+
+	m_Anim[animID].bLoop = loop;
+
+	return true;
+}
+
+//アニメーションが一回のアニメーションがループするまでの時間
 bool IHighLevelAnimController::SetLoopTime(UINT animID, FLOAT time)
 {
     // 指定のアニメーションIDの存在をチェック
@@ -59,6 +75,7 @@ bool IHighLevelAnimController::SetLoopTime(UINT animID, FLOAT time)
     return true;
 }
 
+//アニメーションが完全に次に移る回るまでの時間
 bool IHighLevelAnimController::SetShiftTime(UINT animID, FLOAT interval)
 {
     // 指定のアニメーションIDの存在をチェック
@@ -73,6 +90,7 @@ bool IHighLevelAnimController::SetShiftTime(UINT animID, FLOAT interval)
     return true;
 }
 
+//アニメーション変更
 bool IHighLevelAnimController::ChangeAnimation(UINT animID)
 {
     // 指定のアニメーションIDの存在をチェック
@@ -117,6 +135,7 @@ bool IHighLevelAnimController::ChangeAnimation(UINT animID)
     return true;
 }
 
+//アニメーション合成及び更新
 bool IHighLevelAnimController::AdvanceTime(FLOAT time)
 {
     m_Anim[m_CurAnimID].fCurWeightTime += time;
@@ -135,6 +154,15 @@ bool IHighLevelAnimController::AdvanceTime(FLOAT time)
         // 合成終了中。通常アニメーションをするTrack0のウェイトを最大値に
         m_AnimCont->SetTrackWeight(0, 1);       // 現在のアニメーション
         m_AnimCont->SetTrackEnable(1, false);      // 前のアニメーションを無効にする
+
+		if (m_Anim[m_CurAnimID].bLoop)
+		{
+
+		}
+		else
+		{
+			ChangeAnimation(0);
+		}
     }
 
     // 時間を更新
