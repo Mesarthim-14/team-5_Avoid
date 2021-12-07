@@ -164,6 +164,7 @@
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="collisionModel.cpp" />
     <ClCompile Include="collisionModel_Capsule.cpp" />
+    <ClCompile Include="collisionModel_Cylinder.cpp" />
     <ClCompile Include="collisionModel_OBB.cpp" />
     <ClCompile Include="collisionModel_Sphere.cpp" />
     <ClCompile Include="enemy.cpp" />
@@ -304,6 +305,7 @@
     <ClInclude Include="collision.h" />
     <ClInclude Include="collisionModel.h" />
     <ClInclude Include="collisionModel_Capsule.h" />
+    <ClInclude Include="collisionModel_Cylinder.h" />
     <ClInclude Include="collisionModel_OBB.h" />
     <ClInclude Include="collisionModel_Sphere.h" />
     <ClInclude Include="enemy.h" />

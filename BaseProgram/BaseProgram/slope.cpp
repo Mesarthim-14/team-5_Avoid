@@ -17,6 +17,7 @@
 #include "xfile.h"
 #include "model_info.h"
 #include "player.h"
+#include "collisionModel_OBB.h"
 
 //=============================================================================
 // マクロ定義
@@ -69,6 +70,9 @@ HRESULT CSlope::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_SLOPE);
     GetModelInfo()->SetModelStatus(pos, rot, model);
+
+    // 当たり判定モデル(直方体)の生成
+    CCollisionModelOBB::Create(pos, D3DXVECTOR3(1500.0f, 1500.0f, 4000.0f), rot);
 
     return S_OK;
 }

@@ -415,6 +415,9 @@
     <ClCompile Include="npc_text.cpp">
       <Filter>04_Character\NPC\Text</Filter>
     </ClCompile>
+    <ClCompile Include="collisionModel_Cylinder.cpp">
+      <Filter>12_Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -839,6 +842,9 @@
     </ClInclude>
     <ClInclude Include="npc_text.h">
       <Filter>04_Character\NPC\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionModel_Cylinder.h">
+      <Filter>12_Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

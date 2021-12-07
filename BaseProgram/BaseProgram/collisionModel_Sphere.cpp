@@ -28,7 +28,7 @@ CCollisionModelSphere::~CCollisionModelSphere()
 //*****************************************************************************
 // ìñÇΩÇËîªíËÉÇÉfÉãÇÃê∂ê¨
 //*****************************************************************************
-CCollisionModelSphere * CCollisionModelSphere::Create(const D3DXVECTOR3 & pos, const float &radius, const D3DXVECTOR3 & rot)
+CCollisionModelSphere * CCollisionModelSphere::Create(const D3DXVECTOR3 &pos, const float &radius, const D3DXVECTOR3 &rot)
 {
     CCollisionModelSphere *pCollisionModelSphere = new CCollisionModelSphere;
 
