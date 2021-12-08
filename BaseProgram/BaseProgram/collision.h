@@ -21,21 +21,21 @@
 class CCollision
 {
 public:
-    // 当たった面
+    // 当たった面の列挙型
     enum SURFACE
     {
-        SURFACE_DOWN = 1,
-        SURFACE_UP,
-        SURFACE_LEFT,
-        SURFACE_RIGHT,
-        SURFACE_PREVIOUS,
-        SURFACE_BACK
+        SURFACE_NONE = -1,
+        SURFACE_UP,         // 上面
+        SURFACE_DOWN,       // 下面
+        SURFACE_SIDE        // 側面
     };
 
     // 当たり判定(OBBとOBB)
     static bool ColOBBs(const CCollisionModelOBB::OBB &obb1, const CCollisionModelOBB::OBB &obb2);
     // 当たり判定(球体とカプセル)
     static bool ColSphereAndCapsule(const CCollisionModel::INFO &SphereInfo, const CCollisionModelCapsule::INFO &CapsuleInfo);
+    // 当たり判定(球体と円柱)
+    static void ColSphereAndCylinder(bool &bHit, SURFACE &surface, const CCollisionModel::INFO &SphereInfo, const CCollisionModel::INFO &CylinderInfo);
     // 当たり判定(矩形と矩形)
     static bool ColRectangleAndRectangle(const D3DXVECTOR3 &pos1, const D3DXVECTOR3 &pos2, const D3DXVECTOR3 &size1, const D3DXVECTOR3 &size2);
     // 当たり判定(円形と円形)

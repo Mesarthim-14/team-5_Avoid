@@ -15,7 +15,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define OBB_INTERVAL (10000.0f)    // OBB同士の当たり判定を行う範囲(半径)
+#define OBB_INTERVAL (10000.0f)    // OBB同士の当たり判定を行う範囲
 
 //*****************************************************************************
 // 当たり判定(OBBとOBB)
@@ -208,16 +208,14 @@ bool CCollision::ColSphereAndCapsule(const CCollisionModel::INFO &SphereInfo, co
 
     D3DXVECTOR3 V1 = ZeroVector3;       // カプセル線分のベクトル
     D3DXVECTOR3 V2 = ZeroVector3;       // カプセル線分の始点から球体の中心までのベクトル
-    FLOAT L1 = 0.0f;                    // カプセル線分のベクトルの長さ
     D3DXVECTOR3 norV1 = ZeroVector3;    // V1の単位ベクトル
     FLOAT fDot = 0.0f;                  // 2つのベクトルの内積
 
     // カプセル線分のベクトルを計算
     V1 = CapsuleInfo.P1 - CapsuleInfo.P0;
 
-    // V1の長さと単位ベクトルを計算
-    L1 = D3DXVec3Length(&V1);       // 長さ
-    D3DXVec3Normalize(&norV1, &V1); // 単位ベクトル
+    // 単位ベクトルを計算
+    D3DXVec3Normalize(&norV1, &V1);
 
     // カプセル線分の始点から球体の中心までのベクトルの計算
     V2 = SphereInfo.pos - CapsuleInfo.P0;
@@ -231,35 +229,116 @@ bool CCollision::ColSphereAndCapsule(const CCollisionModel::INFO &SphereInfo, co
     // 線分上最近点を計算
     ret = CapsuleInfo.P0 + D3DXVECTOR3(norV1.x * fDot, norV1.y * fDot, norV1.z * fDot);
 
-    // 線分を-1～0の範囲で表したときの線分上最近点の位置を計算
-    ratio = D3DXVec3Dot(&norV1, &CLibrary::DivisionVector3((ret - CapsuleInfo.P0), V1));
+    // 線分を0～1の範囲で表したときの線分上最近点の位置を計算
+    ratio = D3DXVec3Dot(&norV1, &(ret - CapsuleInfo.P0)) / D3DXVec3Dot(&norV1, &V1);
 
-    if (ratio >= -1.0f && ratio <= 0.0f)
-    { // ratioが-1以上0以下のとき
+    if (ratio >= 0.0f && ratio <= 1.0f)
+    { // ratioが0以上1以下のとき
         // 「線分上最近点と球体の中心との距離」がカプセルと球体の半径を足した値より小さいとき
-        if (D3DXVec3Length(&(SphereInfo.pos - ret)) <= SphereInfo.size.x + CapsuleInfo.radius)
+        if (D3DXVec3Length(&(SphereInfo.pos - ret)) <= (SphereInfo.size.x / 2) + (CapsuleInfo.radius / 2))
         {
              return true;
         }
     }
-    else if (ratio > 0.0f)
-    { // ratioが0より大きいとき
-        // 「カプセル線分の終点から球体の中心までのベクトルの長さ」がカプセルと球体の半径を足した値より小さいとき
-        if (D3DXVec3Length(&V2) <= SphereInfo.size.x + CapsuleInfo.radius)
+    else if (ratio > 1.0f)
+    { // ratioが1より大きいとき
+        // 「カプセル線分の終点から球体の中心までのベクトルの長さ」が球体の半径より小さいとき
+        if (D3DXVec3Length(&(SphereInfo.pos - CapsuleInfo.P1)) <= (SphereInfo.size.x / 2))
         {
             return true;
         }
     }
-    else if (ratio < -1.0f)
-    { // ratioが-1より小さいとき
-        // V2の長さがカプセルと球体の半径を足した値より小さいとき
-        if (D3DXVec3Length(&(SphereInfo.pos - CapsuleInfo.P1)) <= SphereInfo.size.x + CapsuleInfo.radius)
+    else if (ratio < 0.0f)
+    { // ratioが0より小さいとき
+        // V2の長さがカプセルと球体の半径より小さいとき
+        if (D3DXVec3Length(&(ret - CapsuleInfo.P0)) <= (SphereInfo.size.x / 2))
         {
             return true;
         }
     }
 
     return false;
+}
+
+//=============================================================================
+// 当たり判定(球体と円柱)
+//=============================================================================
+void CCollision::ColSphereAndCylinder(bool &bHit, SURFACE &surface, const CCollisionModel::INFO & SphereInfo, const CCollisionModel::INFO & CylinderInfo)
+{
+    // 当たり判定モデル同士の距離
+    D3DXVECTOR3 Interval = SphereInfo.pos - CylinderInfo.pos;
+    if (D3DXVec3Length(&Interval) > (FLOAT)OBB_INTERVAL)
+    { // OBB_INTERVALより離れているとき、当たり判定を行わない
+        bHit = false;
+        return;
+    }
+
+    D3DXVECTOR3 P0 = ZeroVector3;       // 線分の始点
+    D3DXVECTOR3 P1 = ZeroVector3;       // 線分の終点
+    D3DXVECTOR3 V1 = ZeroVector3;       // 円柱線分のベクトル
+    D3DXVECTOR3 V2 = ZeroVector3;       // 円柱線分の始点から球体の中心までのベクトル
+    D3DXVECTOR3 norV1 = ZeroVector3;    // V1の単位ベクトル
+    FLOAT fDot = 0.0f;                  // 2つのベクトルの内積
+
+    // 円柱線分の始点座標を計算
+    P0 = D3DXVECTOR3(CylinderInfo.pos.x, CylinderInfo.pos.y + (CylinderInfo.size.z / 2), CylinderInfo.pos.z);
+    //CLibrary::Rotate3D(P0, CylinderInfo.rot);
+
+    // 円柱線分の終点座標を計算
+    P1 = D3DXVECTOR3(CylinderInfo.pos.x, CylinderInfo.pos.y - (CylinderInfo.size.z / 2), CylinderInfo.pos.z);
+    //CLibrary::Rotate3D(P1, CylinderInfo.rot);
+
+    // 円柱線分のベクトルを計算
+    V1 = P1 - P0;
+
+    // 単位ベクトルを計算
+    D3DXVec3Normalize(&norV1, &V1);
+
+    // 円柱線分の始点から球体の中心までのベクトルの計算
+    V2 = SphereInfo.pos - P0;
+
+    // 2つのベクトルの内積を計算
+    fDot = D3DXVec3Dot(&norV1, &V2);
+
+    D3DXVECTOR3 ret = ZeroVector3;  // 線分上最近点
+    FLOAT ratio = 0.0f;             // 線分を0～1の範囲で表したときの線分上最近点の位置
+
+    // 線分上最近点を計算
+    ret = P0 + D3DXVECTOR3(norV1.x * fDot, norV1.y * fDot, norV1.z * fDot);
+
+    // 「線分上最近点と球体の中心との距離」が円柱と球体の半径を足した値より小さいとき
+    if (D3DXVec3Length(&(SphereInfo.pos - ret)) <= (SphereInfo.size.x / 2) + (CylinderInfo.size.x / 2))
+    {
+        // 線分を0～1の範囲で表したときの線分上最近点の位置を計算
+        ratio = D3DXVec3Dot(&norV1, &(ret - P0)) / D3DXVec3Dot(&norV1, &V1);
+
+        if (ratio >= 0.0f && ratio <= 1.0f)
+        { // ratioが0以上1以下のとき
+            surface = SURFACE::SURFACE_SIDE;
+            bHit = true;
+            return;
+        }
+
+        // 「円柱線分の中心から線分上最近点までの長さ」が「円柱線分の半分の長さ + 球体の半径」より小さいとき
+        if (D3DXVec3Length(&(ret - CylinderInfo.pos)) <= (CylinderInfo.size.z / 2) + (SphereInfo.size.x / 2))
+        {
+            if (ratio < 0.0f)
+            { // ratioが0より小さいとき
+                surface = SURFACE::SURFACE_UP;
+                bHit = true;
+                return;
+            }
+            else if (ratio > 1.0f)
+            { // ratioが1より大きいとき
+                surface = SURFACE::SURFACE_DOWN;
+                bHit = true;
+                return;
+            }
+        }
+    }
+    
+    bHit = false;
+    return;
 }
 
 //=============================================================================

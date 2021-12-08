@@ -436,7 +436,9 @@
     <ClCompile Include="particlecannon.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
-  </ItemGroup>
+    <ClCompile Include="collisionModel_Cylinder.cpp">
+      <Filter>12_Collision</Filter>
+    </ClCompile>  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
       <Filter>00_Important\Camera</Filter>
@@ -882,7 +884,9 @@
     <ClInclude Include="particlecannon.h">
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
-  </ItemGroup>
+    <ClInclude Include="collisionModel_Cylinder.h">
+      <Filter>12_Collision</Filter>
+    </ClInclude>  </ItemGroup>
   <ItemGroup>
     <None Include="data\Text\Shader\BlurFilter.fx">
       <Filter>06_Effect\Shader\FresnelWater\ShaderFile</Filter>

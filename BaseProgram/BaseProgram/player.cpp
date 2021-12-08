@@ -40,16 +40,16 @@
 #define PLAYER_SPEED			(10.0f)									// プレイヤーの移動量
 #define PLAYER_ROT_SPEED		(0.1f)									// キャラクターの回転する速度
 
-#define OBB_COLLISION_SIZE_100  (D3DXVECTOR3(300.0f,600.0f,300.0f)) //直方体当たり判定(100%)の大きさ
-#define OBB_COLLISION_SIZE_50   (D3DXVECTOR3(150.0f,300.0f,200.0f)) //直方体当たり判定(50%)の大きさ
-#define OBB_COLLISION_SIZE_0    (D3DXVECTOR3(50.0f,150.0f,100.0f))  //直方体当たり判定(0%)の大きさ
+#define OBB_COLLISION_SIZE_100  (D3DXVECTOR3(300.0f,600.0f,300.0f)) // 直方体当たり判定(100%)の大きさ
+#define OBB_COLLISION_SIZE_50   (D3DXVECTOR3(150.0f,300.0f,200.0f)) // 直方体当たり判定(50%)の大きさ
+#define OBB_COLLISION_SIZE_0    (D3DXVECTOR3(50.0f,150.0f,100.0f))  // 直方体当たり判定(0%)の大きさ
 
-#define CAPSULE_COLLISION_RADIUS_100    (150.0f)  //カプセル当たり判定(100%)の円の半径
-#define CAPSULE_COLLISION_LENGTH_100    (600.0f)  //カプセル当たり判定(100%)の長さ
-#define CAPSULE_COLLISION_RADIUS_50     (75.0f)   //カプセル当たり判定(50%)の円の半径
-#define CAPSULE_COLLISION_LENGTH_50     (300.0f)  //カプセル当たり判定(50%)の長さ
-#define CAPSULE_COLLISION_RADIUS_0      (25.0f)   //カプセル当たり判定(0%)の円の半径
-#define CAPSULE_COLLISION_LENGTH_0      (150.0f)  //カプセル当たり判定(0%)の長さ
+#define CAPSULE_COLLISION_RADIUS_100    (150.0f)  // カプセル当たり判定(100%)の円の半径
+#define CAPSULE_COLLISION_LENGTH_100    (600.0f)  // カプセル当たり判定(100%)の長さ
+#define CAPSULE_COLLISION_RADIUS_50     (75.0f)   // カプセル当たり判定(50%)の円の半径
+#define CAPSULE_COLLISION_LENGTH_50     (300.0f)  // カプセル当たり判定(50%)の長さ
+#define CAPSULE_COLLISION_RADIUS_0      (25.0f)   // カプセル当たり判定(0%)の円の半径
+#define CAPSULE_COLLISION_LENGTH_0      (150.0f)  // カプセル当たり判定(0%)の長さ
 
 #define PLAYER_INERTIA			(0.08f)									// 慣性の大きさ
 #define PLAYER_LITTLESIZE_VALUE (10)									// 最小サイズモデルの値

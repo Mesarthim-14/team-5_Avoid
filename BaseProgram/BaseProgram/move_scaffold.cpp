@@ -1,4 +1,4 @@
-//=============================================================================CMoveScaffold
+//=============================================================================
 //
 // 動く足場クラス [move_scaffold.cpp]
 // Author : Konishi Yuuto
@@ -17,14 +17,17 @@
 #include "xfile.h"
 #include "model_info.h"
 #include "player.h"
+#include "collision.h"
+#include "collisionModel_OBB.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_POS    (D3DXVECTOR3(-30637.0f, 0.0f, 8337.8f))
-#define TEST_ROT    (D3DXVECTOR3(0.0f, D3DXToRadian(135.0f), 0.0f))
-#define TURN_TIME   (800.0f)    // 反転までのカウント
-#define SPEED       (8.0f)
+#define TEST_POS        (D3DXVECTOR3(-30637.0f, 0.0f, 8337.8f))
+#define TEST_ROT        (D3DXVECTOR3(0.0f, D3DXToRadian(135.0f), 0.0f))
+#define TURN_TIME       (800.0f)    // 反転までのカウント
+#define SPEED           (8.0f)
+#define COLLISION_SIZE  (D3DXVECTOR3(2000.0f, 100.0f, 5000.0f)) // 当たり判定モデルの大きさ
 
 //=============================================================================
 // コンストラクタ
@@ -33,6 +36,7 @@ CMoveScaffold::CMoveScaffold(PRIORITY Priority) : CModel(Priority)
 {
     m_nTime = 0;
     m_fSpeed = SPEED;
+    m_pColModelOBB = nullptr;
 }
 
 //=============================================================================
@@ -74,6 +78,12 @@ HRESULT CMoveScaffold::Init()
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MOVE_SCAFFOLD);
     GetModelInfo()->SetModelStatus(TEST_POS, TEST_ROT, model);
 
+    // 当たり判定モデル(OBB)の生成
+    if (!m_pColModelOBB)
+    {
+        m_pColModelOBB = CCollisionModelOBB::Create(TEST_POS, COLLISION_SIZE, TEST_ROT);
+    }
+
     return S_OK;
 }
 
@@ -93,7 +103,17 @@ void CMoveScaffold::Update()
     // 移動処理
     Move();
 
+    // 更新処理
     CModel::Update();
+
+    // OBB同士の当たり判定
+    HitOBBs();
+
+    // 当たり判定モデル情報の設定
+    if (m_pColModelOBB)
+    {
+        m_pColModelOBB->SetInfo(GetPos(), COLLISION_SIZE, TEST_ROT);
+    }
 }
 
 //=============================================================================
@@ -102,6 +122,29 @@ void CMoveScaffold::Update()
 void CMoveScaffold::Draw()
 {
     CModel::Draw();
+}
+
+//=============================================================================
+// OBB同士の当たり判定
+//=============================================================================
+void CMoveScaffold::HitOBBs()
+{
+    // プレイヤーポインタの取得
+    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    if (!pPlayer)
+        return;
+
+    // プレイヤーの当たり判定モデルポインタの取得
+    CCollisionModelOBB* pPlayerColModelOBB = pPlayer->GetColOBBPtr();
+
+    if (m_pColModelOBB && pPlayerColModelOBB)
+    {
+        if (CCollision::ColOBBs(m_pColModelOBB->GetOBB(), pPlayerColModelOBB->GetOBB()))
+        {
+            // 着地の処理
+            pPlayer->Landing(m_pColModelOBB->GetOBB().info.pos.y + (m_pColModelOBB->GetOBB().info.size.y / 2) + (pPlayerColModelOBB->GetOBB().info.size.y / 2));
+        }
+    }
 }
 
 //=============================================================================

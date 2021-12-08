@@ -28,10 +28,10 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_POS        (ZeroVector3)
-#define TEST_ROT        (ZeroVector3)
-#define COLLISION_SIZE  (D3DXVECTOR3(900.0f, 900.0f, 900.0f))
-#define SPEED           (150.0f)
+#define TEST_POS            (ZeroVector3)
+#define TEST_ROT            (ZeroVector3)
+#define COLLISION_RADIUS    (900.0f)
+#define SPEED               (150.0f)
 
 //=============================================================================
 // コンストラクタ
@@ -75,7 +75,7 @@ HRESULT CBossBullet::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
     SetPos(pos);
     SetRot(rot);
-    SetSize(COLLISION_SIZE);
+    SetSize(D3DXVECTOR3(COLLISION_RADIUS * 2, COLLISION_RADIUS * 2, COLLISION_RADIUS * 2));
 
     // 初期化処理
     CBullet::Init();

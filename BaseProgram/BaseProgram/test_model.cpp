@@ -82,7 +82,7 @@ HRESULT CTestModel::Init()
     //当たり判定モデルの生成
     if (!m_pCollisionModelOBB)
     {
-        m_pCollisionModelOBB = CCollisionModelOBB::Create(GetModelInfo()->GetPos(), D3DXVECTOR3(5000.0f, 100.0f, 4200.0f), TEST_ROT);
+        //m_pCollisionModelOBB = CCollisionModelOBB::Create(GetModelInfo()->GetPos(), D3DXVECTOR3(5000.0f, 100.0f, 4200.0f), TEST_ROT);
     }
 
     // ガウスフィルター
@@ -121,6 +121,7 @@ void CTestModel::Update()
 //        m_pGaussFilter->UpdateWeight();
     }
     // 衝突判定
+    HitOBBs();
     Hit();
 }
 
@@ -183,26 +184,24 @@ void CTestModel::Hit()
 }
 
 //=============================================================================
-// OBB衝突判定
+// OBB同士の当たり判定
 //=============================================================================
-void CTestModel::OBBs()
+void CTestModel::HitOBBs()
 {
+    // プレイヤーポインタの取得
     CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    if (!pPlayer)
+        return;
 
-    if (pPlayer)
+    // プレイヤーの当たり判定モデルポインタの取得
+    CCollisionModelOBB* pPlayerColModelOBB = pPlayer->GetColOBBPtr();
+
+    if (m_pCollisionModelOBB && pPlayerColModelOBB)
     {
-        if (m_pCollisionModelOBB && pPlayer->GetColOBBPtr())
+        if (CCollision::ColOBBs(m_pCollisionModelOBB->GetOBB(), pPlayerColModelOBB->GetOBB()))
         {
-            if (CCollision::ColOBBs(m_pCollisionModelOBB->GetOBB(), pPlayer->GetColOBBPtr()->GetOBB()))
-            {
-                // 着地の処理
-                pPlayer->Landing(pPlayer->GetPos().y);
-            }
-            else
-            {
-                // 着地処理
-                pPlayer->SetLanding(false);
-            }
+            // 着地の処理
+            pPlayer->Landing(m_pCollisionModelOBB->GetOBB().info.pos.y + (m_pCollisionModelOBB->GetOBB().info.size.y / 2) + (pPlayerColModelOBB->GetOBB().info.size.y / 2));
         }
     }
 }

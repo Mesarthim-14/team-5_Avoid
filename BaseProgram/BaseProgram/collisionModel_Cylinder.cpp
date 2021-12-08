@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// 当たり判定モデル(直方体)の処理 [collisionModelOBB.cpp]
+// 当たり判定モデル(円柱)の処理 [collisionModel_Cylinder.cpp]
 // Author : Suzuki Mahiro
 //
 //=============================================================================
@@ -8,41 +8,40 @@
 //*****************************************************************************
 // インクルードファイル
 //*****************************************************************************
-#include "collisionModel_OBB.h"
+#include "collisionModel_Cylinder.h"
 #include "library.h"
 
 //*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
-CCollisionModelOBB::CCollisionModelOBB(PRIORITY Priority) :CCollisionModel(Priority)
+CCollisionModelCylinder::CCollisionModelCylinder(PRIORITY Priority) :CCollisionModel(Priority)
 {
-    memset(&m_DirVect, 0, sizeof(m_DirVect));
 }
 
 //*****************************************************************************
 // デストラクタ
 //*****************************************************************************
-CCollisionModelOBB::~CCollisionModelOBB()
+CCollisionModelCylinder::~CCollisionModelCylinder()
 {
 }
 
 //*****************************************************************************
 // 当たり判定モデルの生成
 //*****************************************************************************
-CCollisionModelOBB * CCollisionModelOBB::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size, const D3DXVECTOR3 &rot)
+CCollisionModelCylinder * CCollisionModelCylinder::Create(const D3DXVECTOR3 &pos, const float &radius, const float &length, const D3DXVECTOR3 &rot)
 {
-    CCollisionModelOBB *pCollisionModelOBB = new CCollisionModelOBB;
+    CCollisionModelCylinder *pCollisionModelCylinder = new CCollisionModelCylinder;
 
-    if (pCollisionModelOBB)
+    if (pCollisionModelCylinder)
     {
         //当たり判定モデル情報の設定
-        pCollisionModelOBB->SetInfo(pos, size, rot);
-        pCollisionModelOBB->SetType(TYPE_OBB);
+        pCollisionModelCylinder->SetInfo(pos, D3DXVECTOR3(radius * 2, radius * 2, length), rot);
+        pCollisionModelCylinder->SetType(TYPE_CYLINDER);
 
         //当たり判定モデルの初期化処理
-        pCollisionModelOBB->Init();
+        pCollisionModelCylinder->Init();
 
-        return pCollisionModelOBB;
+        return pCollisionModelCylinder;
     }
 
     return nullptr;
@@ -51,20 +50,9 @@ CCollisionModelOBB * CCollisionModelOBB::Create(const D3DXVECTOR3 &pos, const D3
 //*****************************************************************************
 // 初期化処理
 //*****************************************************************************
-HRESULT CCollisionModelOBB::Init()
+HRESULT CCollisionModelCylinder::Init()
 {
     CCollisionModel::Init();
-
-    //各軸の回転前座標の設定(回転していないXYZ軸に大きさだけを適応)
-    m_DirVect[0] = D3DXVECTOR3(GetInfo().size.x / 2, 0.0f, 0.0f);
-    m_DirVect[1] = D3DXVECTOR3(0.0f, GetInfo().size.y / 2, 0.0f);
-    m_DirVect[2] = D3DXVECTOR3(0.0f, 0.0f, GetInfo().size.z / 2);
-
-    //各軸の方向ベクトルの計算
-    for (int nCount = 0; nCount < AXIS_NUM_OBB; nCount++)
-    {
-        CLibrary::Rotate3D(m_DirVect[nCount], GetInfo().rot);
-    }
 
     return E_NOTIMPL;
 }
@@ -72,7 +60,7 @@ HRESULT CCollisionModelOBB::Init()
 //*****************************************************************************
 // 終了処理
 //*****************************************************************************
-void CCollisionModelOBB::Uninit()
+void CCollisionModelCylinder::Uninit()
 {
     CCollisionModel::Uninit();
 }
@@ -80,7 +68,7 @@ void CCollisionModelOBB::Uninit()
 //*****************************************************************************
 // 更新処理
 //*****************************************************************************
-void CCollisionModelOBB::Update()
+void CCollisionModelCylinder::Update()
 {
     CCollisionModel::Update();
 }
@@ -88,7 +76,7 @@ void CCollisionModelOBB::Update()
 //*****************************************************************************
 // 描画処理
 //*****************************************************************************
-void CCollisionModelOBB::Draw()
+void CCollisionModelCylinder::Draw()
 {
     CCollisionModel::Draw();
 }
