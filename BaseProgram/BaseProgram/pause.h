@@ -11,16 +11,12 @@
 // インクルードファイル
 //=====================================================================
 #include "scene.h"
-
-//=====================================================================
-// 前方宣言
-//=====================================================================
-class CPolygon;
+#include "polygon.h"
 
 //=====================================================================
 // クラス定義
 //=====================================================================
-class CPause
+class CPause : public CPolygon
 {
 public:
     enum MENU
@@ -42,12 +38,12 @@ public:
     void Update();
     void Draw();
 
-    inline bool SetMove(const bool &move) { m_bMove = move; }
+    inline bool SetPause(const bool &pause) { m_bPause = pause; }
 
 private:
     CPolygon * m_pPolygon[MAX];
     int m_nMenu;
-    bool m_bMove;
+    bool m_bPause;
 };
 
 

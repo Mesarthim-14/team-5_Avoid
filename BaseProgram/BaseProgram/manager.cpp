@@ -35,6 +35,7 @@
 #include "camera_game.h"
 #include "library.h"
 #include "player_editor.h"
+#include "pause.h"
 
 //=============================================================================
 //静的メンバ変数宣言
@@ -223,6 +224,7 @@ void CManager::Uninit()
 void CManager::Update()
 {
     CInputKeyboard* pKey = CManager::GetKeyboard();
+    m_bPause = CManager::GetInstance()->GetActivePause();
     if (m_pInput)
     {
         //入力処理クラスの更新処理呼び出し
@@ -240,40 +242,70 @@ void CManager::Update()
         //入力処理クラスの更新処理呼び出し
         m_pJoypad->Update();
     }
-
-    if (m_pRenderer)
-    {
-        //レンダラークラスの更新処理呼び出し
-        m_pRenderer->Update();
-    }
     if (m_pFade)
     {
         //フェードクラスの更新処理呼び出し
         m_pFade->Update();
     }
-
-    // モードの更新処理
-    if (m_pModeBase)
+    if (m_pRenderer)
     {
-        m_pModeBase->Update();
+        if (m_mode == MODE_TYPE_GAME)
+        {
+            // モードゲームのときポーズ画面の処理
+            if (pKey->GetTrigger(DIK_P))
+            {
+                if (m_pPause == NULL)
+                {
+                    // 生成
+                    m_pPause = CPause::Create();
+                }
+                // ポーズの切り替え
+                m_bPause ^= true;
+            }
+            if (!m_bPause)
+            {
+                // ポーズじゃないとき
+                if (m_pPause != NULL)
+                {
+                    m_pPause->Uninit();
+                    delete m_pPause;
+                    m_pPause = NULL;
+                }
+            }
+            else
+            {// ポーズ状態
+                if (m_pPause != NULL)
+                {
+                    // ポーズの更新処理
+                    m_pPause->Update(); 
+                }
+            }
+        }
+        //レンダラークラスの更新処理呼び出し
+        m_pRenderer->Update();
     }
-
-    // カメラの更新処理
-    if (m_pCamera)
+    if (!m_bPause)
     {
-        m_pCamera->Update();
-        m_pCamera->ShowInfo();
-    }
-
-    if (m_pLight)
-    {
-        //レンダラーで管理してるやつの情報
-        ImGui::Begin("DebugInfo");
-        m_pLight->ShowLightInfo();
-        ImGui::End();
+        // カメラの更新処理
+        if (m_pCamera)
+        {
+            m_pCamera->Update();
+            m_pCamera->ShowInfo();
+        }
+        if (m_pLight)
+        {
+            //レンダラーで管理してるやつの情報
+            ImGui::Begin("DebugInfo");
+            m_pLight->ShowLightInfo();
+            ImGui::End();
+        }
+        // モードの更新処理
+        if (m_pModeBase)
+        {
+            m_pModeBase->Update();
+        }
     }
 }
-
 //=============================================================================
 // 描画処理
 //=============================================================================

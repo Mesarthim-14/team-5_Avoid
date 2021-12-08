@@ -10,6 +10,7 @@
 //=============================================================================
 #include "wimp_enemy.h"
 #include "manager.h"
+#include "game.h"
 #include "player.h"
 #include "library.h"
 #include "collisionModel_OBB.h"
@@ -221,10 +222,11 @@ void CWimpEnemy::Collision()
 void CWimpEnemy::AffectPlayer(CPlayer* &pPlayer)
 {
     D3DXVECTOR3 pos = pPlayer->GetPos();
+    CGauge * pGauge = CManager::GetInstance()->GetGame()->GetGauge();
     // プレイヤーにダメージ
     pPlayer->SubLife(20);
-    CGauge::SetDown((float)20);
-    CGauge::SetHitDown(true);
+    pGauge->SetDown((float)20);
+    pGauge->SetHitDown(true);
     for (int nCntParticle = 0; nCntParticle <= 10; nCntParticle++)
     {
         CParticlePop::Create(pos);

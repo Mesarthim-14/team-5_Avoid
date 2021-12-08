@@ -152,6 +152,7 @@ void CBossBullet::Draw()
 void CBossBullet::Hit()
 {
     CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    CGauge * pGauge = CManager::GetInstance()->GetGame()->GetGauge();
     D3DXVECTOR3 pos = pPlayer->GetPos();
     if (!pPlayer)
     {
@@ -172,8 +173,8 @@ void CBossBullet::Hit()
                 pPlayer->ChangeState(CPlayerStateKnockback::Create(move));  // プレイヤーをノックバック
                 pPlayer->SubLife(20);                                       // 体力を減らす
                 // 自身の終了処理
-                CGauge::SetHitDown(true);
-                CGauge::SetDown(20);
+                pGauge->SetHitDown(true);
+                pGauge->SetDown(20);
                 // パーティクルの生成
                 for (int nCntParticle = 0; nCntParticle <= 20; nCntParticle++)
                 {

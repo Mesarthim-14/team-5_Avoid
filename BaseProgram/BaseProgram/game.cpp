@@ -58,6 +58,7 @@ CGame::CGame()
     m_pKraken = nullptr;
     m_pNpcFactory = nullptr;
     m_pPause = nullptr;
+    m_pGauge = nullptr;
 }
 
 //=======================================================================================
@@ -99,6 +100,11 @@ void CGame::Uninit()
     {
         m_pNpcFactory->Uninit();
         m_pNpcFactory = nullptr;
+    }
+    if (m_pGauge)
+    {
+        m_pGauge->Uninit();
+        m_pGauge = nullptr;
     }
 
     // デバッグ情報表示用フォントの破棄
@@ -164,11 +170,6 @@ void CGame::Update()
         }
     }
 
-    if (pKey->GetTrigger(DIK_P))
-    {
-        CPause::Create();
-    }
-
     ShowInfo();
 #endif // !_DEBUG
 }
@@ -178,7 +179,6 @@ void CGame::Update()
 //=======================================================================================
 void CGame::Draw()
 {
-
 }
 
 //=======================================================================================
@@ -287,11 +287,11 @@ void CGame::ShowInfo()
     {
         LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();    // デバイスの取得
 
-        // 重力の値
+        //重力の値
         ImGui::SliderFloat("Gravity", &m_fGravity, 0.0f, 50.0f);
         ImGui::Checkbox("Gauss", &m_bGaussFilter);
 
-        // ImGui::TreePop();
+         ImGui::TreePop();
     }
 
     ImGui::End();
@@ -328,6 +328,6 @@ void CGame::CreateFilter()
 //=======================================================================================
 void CGame::CreateUi()
 {
-    CGauge::Create();
+    m_pGauge = CGauge::Create();
     CGaugebar::Create();
 }
