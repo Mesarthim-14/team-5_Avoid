@@ -98,10 +98,11 @@ void CPlayerStateJump::Update()
 //=====================================================================
 void CPlayerStateJump::SubLife(CPlayer* &pPlayer)
 {
+    CGauge * pGauge = CManager::GetInstance()->GetGame()->GetGauge();
     // HpÁ”ï
     pPlayer->SubLife(HIGHJUMP_CONSUME);
-    CGauge::SetDown((float)HIGHJUMP_CONSUME);
-    CGauge::SetHitDown(true);
+    pGauge->SetDown((float)HIGHJUMP_CONSUME);
+    pGauge->SetHitDown(true);
 }
 
 //=====================================================================

@@ -22,9 +22,9 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_POS    (D3DXVECTOR3(-34328.4f, 200.0f, -6081.8f))
-#define TEST_ROT    (D3DXVECTOR3(0.0f, D3DXToRadian(0.0f), 0.0f))
-#define ROTATE_NUM  (D3DXToRadian(2.0f))                            // 回転の値
+#define TEST_POS            (D3DXVECTOR3(-34328.4f, 200.0f, -6081.8f))
+#define TEST_ROT            (D3DXVECTOR3(0.0f, D3DXToRadian(0.0f), 0.0f))
+#define ROTATE_NUM          (D3DXToRadian(2.0f))                            // 回転の値
 
 //=============================================================================
 // コンストラクタ
@@ -83,6 +83,7 @@ void CRotateBody::Update()
     // 回転させる
     Rotate();
 
+    // 更新処理
     CModel::Update();
 }
 

@@ -35,37 +35,37 @@ CCollisionModelCapsule::~CCollisionModelCapsule()
 //*****************************************************************************
 void CCollisionModelCapsule::Load()
 {
-    //デバイスの取得
+    // デバイスの取得
     LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-    //円柱の作成
+    // 円柱の作成
     D3DXCreateCylinder(
-        pDevice,        //デバイス情報
-        1.0f,           //手前の円の半径
-        1.0f,           //奥の円の半径
-        1.0f,           //円柱の長さ
-        10,             //スライス(円の超点数)
-        1,              //スタック(円柱の分割数)
-        &m_apMesh[0],       //メッシュ情報
-        &m_apBuffMat[0]);   //バッファ情報
+        pDevice,            // デバイス情報
+        0.5f,               // 手前の円の半径
+        0.5f,               // 奥の円の半径
+        1.0f,               // 円柱の長さ
+        10,                 // スライス(円の超点数)
+        1,                  // スタック(円柱の分割数)
+        &m_apMesh[0],       // メッシュ情報
+        &m_apBuffMat[0]);   // バッファ情報
 
-    //球の作成
+    // 球の作成
     D3DXCreateSphere(
-        pDevice,        //デバイス情報
-        1.0f,           //手前の円の半径
-        10,             //スライスの数
-        10,             //スタック数
-        &m_apMesh[1],       //メッシュ情報
-        &m_apBuffMat[1]);   //バッファ情報
+        pDevice,            // デバイス情報
+        0.5f,               // 半径
+        10,                 // スライスの数
+        10,                 // スタック数
+        &m_apMesh[1],       // メッシュ情報
+        &m_apBuffMat[1]);   // バッファ情報
 
-    //球の作成
+    // 球の作成
     D3DXCreateSphere(
-        pDevice,        //デバイス情報
-        1.0f,           //手前の円の半径
-        10,             //スライスの数
-        10,             //スタック数
-        &m_apMesh[2],       //メッシュ情報
-        &m_apBuffMat[2]);   //バッファ情報
+        pDevice,            // デバイス情報
+        0.5f,               // 半径
+        10,                 // スライスの数
+        10,                 // スタック数
+        &m_apMesh[2],       // メッシュ情報
+        &m_apBuffMat[2]);   // バッファ情報
 }
 
 //*****************************************************************************
@@ -94,7 +94,7 @@ void CCollisionModelCapsule::Unload()
 //*****************************************************************************
 // 当たり判定モデルの生成
 //*****************************************************************************
-CCollisionModelCapsule * CCollisionModelCapsule::Create(const D3DXVECTOR3 & pos, const float &radius, const float &length, const D3DXVECTOR3 & rot)
+CCollisionModelCapsule * CCollisionModelCapsule::Create(const D3DXVECTOR3 &pos, const float &radius, const float &length, const D3DXVECTOR3 &rot)
 {
     CCollisionModelCapsule *pCollisionModelSphere = new CCollisionModelCapsule;
 
@@ -294,14 +294,14 @@ void CCollisionModelCapsule::SetSize(const int &nCount)
     {
     case TYPE_CYLINDER:
 
-        scale = D3DXVECTOR3(m_info.radius, m_info.length - (m_info.radius * 2), m_info.radius);
+        scale = D3DXVECTOR3(m_info.radius * 2, m_info.length - (m_info.radius * 2), m_info.radius * 2);
 
         break;
 
     case TYPE_SPHERE_1:
     case TYPE_SPHERE_2:
 
-        scale = D3DXVECTOR3(m_info.radius, m_info.radius, m_info.radius);
+        scale = D3DXVECTOR3(m_info.radius * 2, m_info.radius * 2, m_info.radius * 2);
 
         break;
 

@@ -59,6 +59,7 @@ CGame::CGame()
     m_pNpcFactory = nullptr;
     m_pPause = nullptr;
     m_pMapFactory = nullptr;
+    m_pGauge = nullptr;
 }
 
 //=======================================================================================
@@ -101,6 +102,11 @@ void CGame::Uninit()
         m_pNpcFactory->Uninit();
         m_pNpcFactory = nullptr;
     }
+    if (m_pGauge)
+    {
+        m_pGauge->Uninit();
+        m_pGauge = nullptr;
+    }
 
     // デバッグ情報表示用フォントの破棄
     if (m_pFont)
@@ -131,13 +137,6 @@ void CGame::Uninit()
 //=======================================================================================
 void CGame::Update()
 {
-    CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
-
-    //if (pKey->GetTrigger(DIK_ESCAPE))
-    //{
-    //    m_pPause = CManager::GetInstance()->GetPause();
-    //    m_pPause->Create();
-    //}
     if (m_pGimmickFactory)
     {
         m_pGimmickFactory->Update();
@@ -154,7 +153,7 @@ void CGame::Update()
     }
 
 #ifdef _DEBUG
-    //CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
+    CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
     CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
 
     // タイトルに戻る
@@ -186,7 +185,6 @@ void CGame::Update()
 //=======================================================================================
 void CGame::Draw()
 {
-
 }
 
 //=======================================================================================
@@ -301,11 +299,11 @@ void CGame::ShowInfo()
     {
         LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();    // デバイスの取得
 
-        // 重力の値
+        //重力の値
         ImGui::SliderFloat("Gravity", &m_fGravity, 0.0f, 50.0f);
         ImGui::Checkbox("Gauss", &m_bGaussFilter);
 
-        // ImGui::TreePop();
+         ImGui::TreePop();
     }
 
     ImGui::End();
@@ -342,6 +340,6 @@ void CGame::CreateFilter()
 //=======================================================================================
 void CGame::CreateUi()
 {
-    CGauge::Create();
+    m_pGauge = CGauge::Create();
     CGaugebar::Create();
 }

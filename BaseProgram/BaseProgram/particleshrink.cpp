@@ -29,7 +29,7 @@ float CParticleShrink::m_fSize = 0.0f;
 #define RANDOM          (3.14f)
 #define LIFE            (40)
 #define COLOR           (D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
-#define TANGENT         (7.0f)
+#define TANGENT         (3.0f)
 
 //=====================================================================
 // コンストラクタ

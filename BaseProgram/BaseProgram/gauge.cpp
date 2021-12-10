@@ -15,10 +15,6 @@
 #include "resource_manager.h"
 #include "keyboard.h"
 
-float CGauge::m_fHP = 0.0f;
-float CGauge::m_fSave = 0.0f;
-bool CGauge::m_bHitDown = false;
-bool CGauge::m_bHitUp = false;
 //=====================================================================
 // É}ÉNÉçíËã`
 //=====================================================================
@@ -32,8 +28,11 @@ bool CGauge::m_bHitUp = false;
 CGauge::CGauge(PRIORITY priority) : CScene2D(priority)
 {
     m_fHP = 60.0f;
+    m_fSave = 0.0f;
     m_fDown = 0.0f;
     m_fUp = 0.0f;
+    m_bHitDown = false;
+    m_bHitUp = false;
 }
 
 //=====================================================================

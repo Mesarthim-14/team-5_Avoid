@@ -13,6 +13,11 @@
 #include "model.h"
 
 //=========================================================================
+// 前方宣言
+//=========================================================================
+class CCollisionModelOBB;
+
+//=========================================================================
 // クラス定義
 //=========================================================================
 class CMoveScaffold : public CModel
@@ -27,12 +32,16 @@ public:
     void Update();                  // 更新処理
     void Draw();                    // 描画
 
+    void HitOBBs(); // OBB同士の当たり判定
+
 private:
     // private関数
     void Move();    // 移動量
 
     int m_nTime;
     float m_fSpeed;
+
+    CCollisionModelOBB* m_pColModelOBB; // 当たり判定モデルポインタ(OBB)
 };
 
 #endif

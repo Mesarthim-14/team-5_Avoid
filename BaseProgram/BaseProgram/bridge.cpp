@@ -17,13 +17,20 @@
 #include "xfile.h"
 #include "model_info.h"
 #include "player.h"
+#include "collision.h"
+#include "collisionModel_OBB.h"
+
+//=============================================================================
+// マクロ定義
+//=============================================================================
+#define COLLISION_SIZE (D3DXVECTOR3(6000.0f, 80.0f, 500.0f))   // 当たり判定の大きさ
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CBridge::CBridge(PRIORITY Priority) : CModel(Priority)
 {
-
+    m_pColModelOBB = nullptr;
 }
 
 //=============================================================================
@@ -65,5 +72,46 @@ HRESULT CBridge::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_BRIDGE);
     GetModelInfo()->SetModelStatus(pos, rot, model);
 
+    // 当たり判定(OBB)の生成
+    if (!m_pColModelOBB)
+    {
+        m_pColModelOBB = CCollisionModelOBB::Create(pos, COLLISION_SIZE, rot);
+    }
+
     return S_OK;
+}
+
+//=============================================================================
+// 更新処理
+//=============================================================================
+void CBridge::Update()
+{
+    // 更新処理
+    CModel::Update();
+
+    // OBB同士の当たり判定
+    HitOBBs();
+}
+
+//=============================================================================
+// OBB同士の当たり判定
+//=============================================================================
+void CBridge::HitOBBs()
+{
+    // プレイヤーポインタの取得
+    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    if (!pPlayer)
+        return;
+
+    // プレイヤーの当たり判定モデルポインタの取得
+    CCollisionModelOBB* pPlayerColModelOBB = pPlayer->GetColOBBPtr();
+
+    if (m_pColModelOBB && pPlayerColModelOBB)
+    {
+        if (CCollision::ColOBBs(m_pColModelOBB->GetOBB(), pPlayerColModelOBB->GetOBB()))
+        {
+            // 着地の処理
+            pPlayer->Landing(m_pColModelOBB->GetOBB().info.pos.y + (m_pColModelOBB->GetOBB().info.size.y / 2) + (pPlayerColModelOBB->GetInfo().size.y / 2));
+        }
+    }
 }
