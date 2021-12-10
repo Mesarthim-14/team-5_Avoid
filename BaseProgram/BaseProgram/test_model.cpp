@@ -35,8 +35,6 @@
 CTestModel::CTestModel(PRIORITY Priority) : CModel(Priority)
 {
     m_pCollisionModelOBB = nullptr;
-    m_pSqu1Back = nullptr;
-    m_pGaussFilter = nullptr;
 }
 
 //=============================================================================
@@ -85,14 +83,6 @@ HRESULT CTestModel::Init()
         //m_pCollisionModelOBB = CCollisionModelOBB::Create(GetModelInfo()->GetPos(), D3DXVECTOR3(5000.0f, 100.0f, 4200.0f), TEST_ROT);
     }
 
-    // ガウスフィルター
-    if (!m_pGaussFilter)
-    {
-    //    m_pGaussFilter = new CGaussFilter(pDevice);
-    //    m_pGaussFilter->Load();
-    //    m_pGaussFilter->Restore();
-    }
-
     return S_OK;
 }
 
@@ -101,11 +91,6 @@ HRESULT CTestModel::Init()
 //=============================================================================
 void CTestModel::Uninit()
 {
-    if (m_pGaussFilter)
-    {
-        m_pGaussFilter->Uninit();
-        m_pGaussFilter = nullptr;
-    }
     CModel::Uninit();
 }
 
@@ -116,10 +101,6 @@ void CTestModel::Update()
 {
     CModel::Update();
 
-    if (m_pGaussFilter)
-    {
-//        m_pGaussFilter->UpdateWeight();
-    }
     // 衝突判定
     HitOBBs();
     Hit();
@@ -130,12 +111,6 @@ void CTestModel::Update()
 //=============================================================================
 void CTestModel::Draw()
 {
-    if (m_pGaussFilter)
-    {
-     //   m_pGaussFilter->BeginSurface();
-     //   m_pGaussFilter->Render(GetModelInfo()->GetModel(), mtxWorld);
-     //   m_pGaussFilter->DrawPolygon();
-    }
     CModel::Draw();
 }
 
