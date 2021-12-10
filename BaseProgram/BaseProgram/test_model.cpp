@@ -35,7 +35,7 @@
 CTestModel::CTestModel(PRIORITY Priority) : CModel(Priority)
 {
     m_pCollisionModelOBB = nullptr;
-    m_pGaussFilter = nullptr;}
+}
 
 //=============================================================================
 // デストラクタ
@@ -91,7 +91,7 @@ HRESULT CTestModel::Init()
 //=============================================================================
 void CTestModel::Uninit()
 {
-    }    CModel::Uninit();
+    CModel::Uninit();
 }
 
 //=============================================================================
@@ -101,7 +101,7 @@ void CTestModel::Update()
 {
     CModel::Update();
 
-    }    // 衝突判定
+    // 衝突判定
     HitOBBs();
     Hit();
 }
@@ -111,7 +111,7 @@ void CTestModel::Update()
 //=============================================================================
 void CTestModel::Draw()
 {
-    }    CModel::Draw();
+    CModel::Draw();
 }
 
 //=============================================================================
