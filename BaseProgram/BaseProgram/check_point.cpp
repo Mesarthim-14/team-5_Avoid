@@ -113,10 +113,12 @@ void CCheckPoint::Update(void)
 void CCheckPoint::CreateFlag()
 {
 	// ä¯ÇÃê∂ê¨
-	m_apChackFlag.push_back(CCheckFlag::Create(ZeroVector3));
-	m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(-3861.5f, 101.4f, -12821.2f)));
-	m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(-18772.6f, 1030.4f, -18250.0f)));
-	m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(-34715.7f, 981.2f, -13988.7f)));
-	m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(-32843.1f, 960.5f, 5418.3f)));
-	m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(-24373.2f, 107.3f, 14578.4f)));
+	m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(54500.0f, 1712.0f, 25500.0f)));
+
+	m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(48483.7f, 951.6f, -10885.5f)));
+	m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(21581.8f, 5057.4f, -48310.7f)));
+	m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(2572.5f, 5120.1f, -50047.8f)));
+	m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(-30587.8f, 5276.7f, -53817.8f)));
+	m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(-54192.9f, 5197.4f, -16407.5f)));
+    m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(734.8f, 2552.4f, 60978.5f)));
 }

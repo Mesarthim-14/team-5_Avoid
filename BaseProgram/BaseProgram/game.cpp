@@ -41,7 +41,7 @@
 #include "camera_game.h"
 #include "state_camera_descent.h"
 #include "pause.h"
-
+#include "map_factory.h"
 float CGame::m_fGravity = 1.5f;
 CGaussFilter* CGame::m_pGaussFilter = nullptr;
 bool CGame::m_bGaussFilter = true;
@@ -58,6 +58,7 @@ CGame::CGame()
     m_pKraken = nullptr;
     m_pNpcFactory = nullptr;
     m_pPause = nullptr;
+    m_pMapFactory = nullptr;
 }
 
 //=======================================================================================
@@ -117,6 +118,11 @@ void CGame::Uninit()
     {
         m_pGaussFilter->Uninit();
         m_pGaussFilter = nullptr;
+    }
+    if (m_pMapFactory)
+    {
+        m_pMapFactory->Uninit();
+        m_pMapFactory = nullptr;
     }
 }
 
@@ -219,7 +225,7 @@ void CGame::CreatePlayer()
     // プレイヤーの生成
     if (!m_pPlayer)
     {
-        m_pPlayer = CPlayer::Create(ZeroVector3, ZeroVector3);
+        m_pPlayer = CPlayer::Create(D3DXVECTOR3(54500.0f, 0.0f, 25500.0f), ZeroVector3);
         m_pPlayer->ChangeState(CPlayerStateNotMove::Create());
     }
 }
@@ -229,18 +235,18 @@ void CGame::CreatePlayer()
 //=======================================================================================
 void CGame::CreateEnemy()
 {
-    CShark::Create(D3DXVECTOR3(-13534.7f, 0.0f, -24998.2f), ZeroVector3);
-    CShark::Create(D3DXVECTOR3(-29145.5f, 0.0f, -14420.8f), ZeroVector3);
-    CShark::Create(D3DXVECTOR3(-30498.5f, 0.0f, -8135.1f), ZeroVector3);
-    CShark::Create(D3DXVECTOR3(-38483.3f, 0.0f, -5445.3f), ZeroVector3);
-    CShark::Create(D3DXVECTOR3(-47151.3f, 0.0f, -544.6f), ZeroVector3);
+    CShark::Create(D3DXVECTOR3(-61089.5f, 0.0f, -80828.8f), ZeroVector3);
+    CShark::Create(D3DXVECTOR3(-85253.0f, 0.0f, -20055.2f), ZeroVector3);
+    CShark::Create(D3DXVECTOR3(-51384.1f, 0.0f, -41619.3f), ZeroVector3);
+    CShark::Create(D3DXVECTOR3(-29624.6f, 0.0f, -89824.0f), ZeroVector3);
+    CShark::Create(D3DXVECTOR3(-26419.4f, 0.0f, -19081.0f), ZeroVector3);
 
-    CMarlin::Create(D3DXVECTOR3(-23991.0f, 0.0f, -21278.3f), ZeroVector3);
-    CMarlin::Create(D3DXVECTOR3(-42865.0f, 0.0f, -17226.5f), ZeroVector3);
-    CMarlin::Create(D3DXVECTOR3(-42473.7f, 0.0f, 1648.0f), ZeroVector3);
+    CMarlin::Create(D3DXVECTOR3(-82303.4f, 0.0f, -56239.8f), ZeroVector3);
+    CMarlin::Create(D3DXVECTOR3(-39297.0f, 0.0f, -12532.5f), ZeroVector3);
+    CMarlin::Create(D3DXVECTOR3(34013.9f, 0.0f, 3090.2f), ZeroVector3);
 
-    CGhost::Create(D3DXVECTOR3(-36078.3f, 200.0f, -25948.0f), ZeroVector3);
-    CGhost::Create(D3DXVECTOR3(-38673.9f, 2586.1f, 1478.9f), ZeroVector3);
+    CGhost::Create(D3DXVECTOR3(-1343.6f, 470.8f, -89167.2f), ZeroVector3);
+    CGhost::Create(D3DXVECTOR3(-66418.1f, 10247.0f, -52938.6f), ZeroVector3);
 
     // クラーケン
     if (!m_pKraken)
@@ -266,7 +272,13 @@ void CGame::CreateNPC()
 //=======================================================================================
 void CGame::CreateMap()
 {
-    CTestModel::Create();
+    if (!m_pMapFactory)
+    {
+        // マップ生成クラス
+        m_pMapFactory = CMapFactory::Create();
+    }
+
+//    CTestModel::Create();
     CWaterFresnel::Create();
     CSky::Create();
 

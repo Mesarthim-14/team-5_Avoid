@@ -436,6 +436,36 @@
     <ClCompile Include="particlecannon.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="npc_angry_info.cpp">
+      <Filter>04_Character\NPC\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="map_first_floor.cpp">
+      <Filter>08_Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="map_thin_floor.cpp">
+      <Filter>08_Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="map_square_floor.cpp">
+      <Filter>08_Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="map_thin_floor2.cpp">
+      <Filter>08_Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="map_square_floor2.cpp">
+      <Filter>08_Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="map_check_floor2.cpp">
+      <Filter>08_Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="map_big_floor2.cpp">
+      <Filter>08_Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="map_check_floor.cpp">
+      <Filter>08_Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="map_factory.cpp">
+      <Filter>08_Object\Map\Factory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -882,6 +912,36 @@
     <ClInclude Include="particlecannon.h">
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="npc_angry_info.h">
+      <Filter>04_Character\NPC\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="map_first_floor.h">
+      <Filter>08_Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="map_thin_floor.h">
+      <Filter>08_Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="map_square_floor.h">
+      <Filter>08_Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="map_thin_floor2.h">
+      <Filter>08_Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="map_square_floor2.h">
+      <Filter>08_Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="map_check_floor2.h">
+      <Filter>08_Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="map_big_floor2.h">
+      <Filter>08_Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="map_check_floor.h">
+      <Filter>08_Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="map_factory.h">
+      <Filter>08_Object\Map\Factory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\Text\Shader\BlurFilter.fx">
@@ -1077,6 +1137,12 @@
     </Filter>
     <Filter Include="06_Effect\Shader\Gauss\ShaderFile">
       <UniqueIdentifier>{1251a179-3895-4a2f-bca3-bd2c03cf2b55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object\Map">
+      <UniqueIdentifier>{ea6a3524-8528-4cad-9a71-8fb73c0faf67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object\Map\Factory">
+      <UniqueIdentifier>{363f5782-f304-4c47-9ca7-409f30e29e9c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

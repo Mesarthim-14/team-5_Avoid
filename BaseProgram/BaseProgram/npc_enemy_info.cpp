@@ -14,11 +14,12 @@
 #include "resource_manager.h"
 #include "library.h"
 #include "game.h"
+#include "npc_text_enemy.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define POS     (D3DXVECTOR3(1893.3f, 111.0f, 908.5f))
+#define POS     (D3DXVECTOR3(61180.0f, 1331.6f, 25369.3f))
 #define ROT     (D3DXVECTOR3(D3DXToRadian(90.0f), D3DXToRadian(180.0f), 0.0f))
 
 //=============================================================================
@@ -88,4 +89,16 @@ void CNpcEnemyInfo::Update()
 void CNpcEnemyInfo::Draw()
 {
     CNonPlayerCharacter::Draw();
+}
+
+//=============================================================================
+// お話の生成
+//=============================================================================
+void CNpcEnemyInfo::Talk()
+{
+    if (!GetTextPtr())
+    {
+        // 話の生成
+        CreateTalk(CNpcTextEnemy::Create());
+    }
 }

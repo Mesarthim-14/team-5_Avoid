@@ -10,13 +10,17 @@
 //=============================================================================
 //インクルード
 //=============================================================================
-#include "billboard.h"
+#include "scene2D.h"
 
+//=============================================================================
+// 前方宣言
+//=============================================================================
 class CPolygon;
+
 //=============================================================================
 // クラス定義
 //=============================================================================
-class CNpcSentenceEnemy1 : public CBillboard
+class CNpcSentenceEnemy1 : public CScene2D
 {
 public:
     CNpcSentenceEnemy1();    // コンストラクタ
@@ -27,11 +31,9 @@ public:
     void Uninit();                          // 終了処理
     void Update();                          // 更新処理
     void Draw();                            // 描画
+    void CreateSentence();                  // 文章の生成
 
 private:
-    //法線マップ
-    LPDIRECT3DTEXTURE9 m_pTexture;
-    LPDIRECT3DSURFACE9 m_pSurface;
-    vector<CPolygon*> m_pPolygon;
+    vector<CPolygon*> m_apSentence;  // 文章
 };
 #endif

@@ -17,7 +17,7 @@
 //=============================================================================
 class CSkinmeshModel;
 class CKeyE;
-class CNpcTextEnemy;
+class CNpcText;
 class CProductionNpcTalk;
 
 //=============================================================================
@@ -39,16 +39,20 @@ public:
     inline void SetRot(const D3DXVECTOR3& pos) { m_rot = pos; }
 
     // Get関数
-    inline D3DXVECTOR3 GetPos() { return m_pos; }
-    inline D3DXVECTOR3 GetRot() { return m_rot; }
+    inline D3DXVECTOR3 GetPos()const { return m_pos; }
+    inline D3DXVECTOR3 GetRot()const { return m_rot; }
+
+protected:
+    inline void CreateTalk(CNpcText* Ptr)   { m_pText = Ptr; }  // テキストの生成
+    inline CNpcText* GetTextPtr()const      { return m_pText; } // テキストのポインタ
 
 private:
     // private関数
     void CreateModel();                                                     // モデル生成
     void Collision();                                                       // 当たり判定
-    void Talk();                                                            // お話
     void BebinProduction(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot);   // 状態の開始
     void EndProduction();                                                   // 状態の終了
+    virtual void Talk() = 0;    // お話
 
     // メンバ変数
     D3DXVECTOR3 m_pos;                  // 座標
@@ -56,7 +60,7 @@ private:
     D3DXMATRIX m_mtxWorld;              // ワールドマトリックス
     CSkinmeshModel* m_pSkinmeshModel;   // スキンメッシュモデルポインタ
     CKeyE* m_pKeyE;                     // Eキー
-    CNpcTextEnemy* m_pText;             // テキストクラス
+    CNpcText* m_pText;                  // テキストクラス
     bool m_bDead;                       // 話さなくなる
     CProductionNpcTalk* m_pProduction;  // 演出のポインタ
 

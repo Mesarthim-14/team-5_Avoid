@@ -28,6 +28,7 @@ public:
     void Draw()override;            // •`‰æˆ—
 
 private:
+    void Talk();                    // ‚¨˜b
 
 };
 #endif

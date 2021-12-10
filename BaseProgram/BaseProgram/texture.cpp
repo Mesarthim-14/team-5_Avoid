@@ -71,6 +71,7 @@ HRESULT CTexture::SetTextureName()
         { "data/Texture/message_back.jpeg" },
         { "data/Texture/Warning.png" },
         { "data/Texture/Warning2.png" },
+        { "data/Texture/NPC1_1.png" },
     };
 
     // 分割テクスチャ

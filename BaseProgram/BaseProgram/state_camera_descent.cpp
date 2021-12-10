@@ -88,12 +88,11 @@ void CCameraStateDescent::Update()
     // カメラ座標
     float fDistance = pCamera->GetDistance();
     float fVartical = pCamera->GetVartical();
-    float fHorizontal = pCamera->GetHorizontal();                            // カメラの角度
+    float fHorizontal = pCamera->GetHorizontal();   // カメラの角度
 
     //キーボードクラス情報の取得
     CInputKeyboard *pKeyInput = CManager::GetInstance()->GetKeyboard();
     D3DXVECTOR3 VDest = ZeroVector3;
-
     // 角度の修正
     CLibrary::RotFix(fHorizontal);
 
@@ -102,21 +101,15 @@ void CCameraStateDescent::Update()
     pCamera->SetHorizontal(fHorizontal);
 
     // カメラの位置設定
-    VDest.x = PlayerPos.x + fDistance * sinf(fVartical) * sinf(fHorizontal);    // カメラ位置X設定
+    VDest.x = PlayerPos.x + fDistance * sinf(fVartical) * sinf(PlayerRot.y);    // カメラ位置X設定
     VDest.y = PlayerPos.y + fDistance * cosf(fVartical);                        // カメラ位置Y設定
-    VDest.z = PlayerPos.z + fDistance * sinf(fVartical) * cosf(fHorizontal);    // カメラ位置Z設定
+    VDest.z = PlayerPos.z + fDistance * sinf(fVartical) * cosf(PlayerRot.y);    // カメラ位置Z設定
 
     D3DXVECTOR3 posRDest = D3DXVECTOR3(PlayerPos.x, PlayerPos.y + PLAYER_HEIGHT, PlayerPos.z);    //注視点設定
 
-    //カメラPOSYの下限
-    if (VDest.y <= CAMERA_MIN_HIGHT)
-    {
-        VDest.y = CAMERA_MIN_HIGHT;    //限界値に戻す
-    }
-
     //設定値の反映
     pCamera->GetposV() += (VDest - pCamera->GetposV())*0.1f;
-    pCamera->GetposR() += (posRDest - pCamera->GetposR())*0.5f;
+    pCamera->GetposR() += (posRDest - pCamera->GetposR())*0.1f;
 
     m_nCount++;
     if (m_nCount >= STOP_LIMIT)

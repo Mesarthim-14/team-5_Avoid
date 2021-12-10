@@ -12,6 +12,7 @@
 #include "manager.h"
 #include "resource_manager.h"
 #include "npc_enemy_info.h"
+#include "npc_angry_info.h"
 
 //=======================================================================================
 // コンストラクタ
@@ -80,4 +81,5 @@ void CNpcFactory::Update()
 void CNpcFactory::CreateNPC()
 {
     m_pNPC.push_back(CNpcEnemyInfo::Create());
+    m_pNPC.push_back(CNpcAngryInfo::Create());
 }

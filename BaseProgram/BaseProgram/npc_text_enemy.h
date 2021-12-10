@@ -15,7 +15,7 @@
 //=============================================================================
 // 前方宣言
 //=============================================================================
-class CBillboard;
+class CScene2D;
 
 //=============================================================================
 // クラス定義
@@ -31,7 +31,7 @@ public:
     void Uninit();                  // 終了処理
     void Update();                  // 更新処理
 
-    inline bool GetEnd() { return m_bEnd; }
+    inline bool GetEnd()const { return m_bEnd; }
 
 private:
     void CreateSentence1();     // 文章の生成
@@ -44,6 +44,6 @@ private:
 
     int m_nCounter;         // カウンター
     bool m_bEnd;
-    CBillboard* m_pSentence;
+    CScene2D* m_pSentence;
 };
 #endif

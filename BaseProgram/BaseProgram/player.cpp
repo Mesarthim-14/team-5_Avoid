@@ -367,6 +367,7 @@ void CPlayer::ShowInfo()
 			// 移動量
 			D3DXVECTOR3 rot = GetRot();
 			ImGui::Text("Rot : %.1ff %.1ff %.1ff", rot.x, rot.y, rot.z);
+            ImGui::Text("D3DXToRadian(%f)", D3DXToDegree(rot.y));
 
 			// 移動量
 			D3DXVECTOR3 move = GetMove();
@@ -381,7 +382,7 @@ void CPlayer::ShowInfo()
 
 			// 移動量
 			float fSpeed = GetSpeed();
-			ImGui::SliderFloat("Speed", &fSpeed, 0.0f, 50.0f);
+			ImGui::SliderFloat("Speed", &fSpeed, 0.0f, 500.0f);
 			SetSpeed(fSpeed);
 
 			// ライフの値

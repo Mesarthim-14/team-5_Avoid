@@ -21,6 +21,7 @@ class CKraken;
 class CNpcFactory;
 class CGaussFilter;
 class CPause;
+class CMapFactory;
 
 //=======================================================================================
 // ゲームクラス
@@ -65,7 +66,7 @@ private:
     CNpcFactory* m_pNpcFactory;             // NPC生成クラスポインタ
     static bool m_bGaussFilter;             // フィルターのフラグ
     static CGaussFilter* m_pGaussFilter;    // ガウスフィルター
-
     CPause *m_pPause;
+    CMapFactory* m_pMapFactory;             // マップの生成クラス
 };
 #endif
