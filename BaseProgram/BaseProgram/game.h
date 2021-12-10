@@ -21,6 +21,7 @@ class CKraken;
 class CNpcFactory;
 class CGaussFilter;
 class CPause;
+class CGauge;
 
 //=======================================================================================
 // ゲームクラス
@@ -44,6 +45,8 @@ public:
     inline void GameEnd()                               { m_bGameEnd = true; }          // ゲーム終了フラグ
     inline CNpcFactory* GetNpcFactory()const            { return m_pNpcFactory; }       // NPCファクトリー
     inline void SetGaussFilter(const bool& bUse)        { m_bGaussFilter = bUse; }      // ガウスフィルタ―を設定
+    inline CGauge * GetGauge()const                     { return m_pGauge; }            // ゲージ情報取得
+    inline CPause * GetPause()const                     { return m_pPause; }            // ポーズ情報取得
 
 private:
     // private関数
@@ -65,7 +68,7 @@ private:
     CNpcFactory* m_pNpcFactory;             // NPC生成クラスポインタ
     static bool m_bGaussFilter;             // フィルターのフラグ
     static CGaussFilter* m_pGaussFilter;    // ガウスフィルター
-
-    CPause *m_pPause;
+    CGauge * m_pGauge;                      // ゲージポインタ
+    CPause *m_pPause;                       // ポーズポインタ
 };
 #endif

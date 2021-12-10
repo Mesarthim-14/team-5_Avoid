@@ -17,6 +17,7 @@
 #include "joypad.h"
 #include "texture.h"
 #include "resource_manager.h"
+#include "camera_game.h"
 
 //=====================================================================
 // マクロ定義
@@ -29,8 +30,8 @@
 #define RESTART_POS D3DXVECTOR3(SCREEN_WIDTH/2, 35 + BACK_POS.y,0.0f)                           // リスタート
 #define EXIT_POS       D3DXVECTOR3(SCREEN_WIDTH/2, 35 + BACK_POS.y + (STRING_SIZE.y + 25),0.0f)    // 終了
 
-#define MENU_ENTER_COL D3DXCOLOR(0.0f, 1.0f, 1.0f, 1.0f)     // 選んでるメニューの色
-#define MENU_NOT_ENTER_COL D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f) // 選んでないメニューの色
+#define MENU_ENTER_COL D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)     // 選んでるメニューの色
+#define MENU_NOT_ENTER_COL D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f) // 選んでないメニューの色
 
 //=====================================================================
 // コンストラクタ
@@ -69,14 +70,18 @@ CPause * CPause::Create()
 //=====================================================================
 HRESULT CPause::Init()
 {
+    CTexture* pTexture = GET_TEXTURE_PTR;
     // ポーズの背景
     m_pPolygon[BACK] = CPolygon::Create(BACK_POS, BACK_SIZE);
     // 続きから
     m_pPolygon[RESUME] = CPolygon::Create(RESUME_POS, STRING_SIZE);
+    m_pPolygon[RESUME]->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_E_KEY));
     // リスタート
     m_pPolygon[RESTART] = CPolygon::Create(RESTART_POS, STRING_SIZE);
+    m_pPolygon[RESTART]->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_E_KEY));
     // ゲーム終了
     m_pPolygon[EXIT] = CPolygon::Create(EXIT_POS, STRING_SIZE);
+    m_pPolygon[EXIT]->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_E_KEY));
     return S_OK;
 }
 
@@ -93,7 +98,7 @@ void CPause::Uninit()
             m_pPolygon[nCntTex]->Uninit();
             // メモリの解放
             delete m_pPolygon[nCntTex];
-            m_pPolygon[nCntTex] = NULL;
+            m_pPolygon[nCntTex] = nullptr;
         }
     }
 }

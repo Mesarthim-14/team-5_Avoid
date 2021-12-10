@@ -95,6 +95,7 @@ void CHeel::Update()
 {
     // プレイヤーの位置取得
     CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    CGauge * pGauge = CManager::GetInstance()->GetGame()->GetGauge();
     if (!pPlayer)
     {
         return;
@@ -108,8 +109,8 @@ void CHeel::Update()
         {
             // 回復
             CManager::GetInstance()->GetPlayer()->SubLife(-HEEL_NUM);
-            CGauge::SetDown((float)HEEL_NUM);
-            CGauge::SetHitUp(true);
+            pGauge->SetDown((float)HEEL_NUM);
+            pGauge->SetHitUp(true);
             // プレイヤーの位置にエフェクト生成
             CParticleHeel::Create(pos);
         }
