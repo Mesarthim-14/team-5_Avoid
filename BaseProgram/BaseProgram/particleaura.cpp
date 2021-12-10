@@ -15,6 +15,8 @@
 #include "library.h"
 #include "texture.h"
 #include "resource_manager.h"
+#include "ghost.h"
+#include "player.h"
 
 //=====================================================================
 // ƒ}ƒNƒ’è‹`
@@ -57,7 +59,6 @@ CParticleAura * CParticleAura::Create(const D3DXVECTOR3 &pos)
     if (pParticlePop)
     {
         pParticlePop->SetSceneInfo(pos, SIZE);
-
         pParticlePop->Init();
         return pParticlePop;
     }

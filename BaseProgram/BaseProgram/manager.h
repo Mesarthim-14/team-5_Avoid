@@ -70,7 +70,7 @@ public:
     static CManager* GetInstance();                                                                 // インスタンス情報
     CModeBase *GetModePtr();                                                                        // ゲームの情報
     CGame* GetGame()const;                                                                          // ゲーム情報
-    CPlayer* GetPlayer()const;                                                                      // プレイヤーの取得
+    CPlayer* GetPlayer()const;                                                                      // プレイヤーの取得z
     inline MODE_TYPE GetMode()const                         { return m_mode; }                      // モードの情報
     inline CRenderer *GetRenderer()const                    { return m_pRenderer.get(); }           // レンダラー情報
     inline CInputKeyboard *GetKeyboard()const               { return m_pInput.get(); }              // キーボード情報

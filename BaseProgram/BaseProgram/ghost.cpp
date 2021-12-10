@@ -13,6 +13,7 @@
 #include "library.h"
 #include "manager.h"
 #include "player.h"
+#include "particleaura.h"
 
 //=============================================================================
 // É}ÉNÉçíËã`
@@ -74,7 +75,7 @@ HRESULT CGhost::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
     SetAttackInfo(ATTACK_INTER, ATTACK_STR, ATTACK_POWER);
     SetCharacterInfo(pos, rot);
     SetSpeed(SPEED);
-
+    CParticleAura::Create(pos);
     CreateModel();
 
     return S_OK;
@@ -146,7 +147,7 @@ void CGhost::Move()
     if (m_bFollow)
     {
         // í«è]
-        if (Follow())
+         if (Follow())
         {
             // àÍíËÇÃãóó£Ç…ãﬂÇ√Ç¢ÇΩÇÁ
             if (CLibrary::CalDistance(
