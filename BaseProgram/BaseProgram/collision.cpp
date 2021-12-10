@@ -210,6 +210,7 @@ bool CCollision::ColSphereAndCapsule(const CCollisionModel::INFO &SphereInfo, co
     D3DXVECTOR3 V2 = ZeroVector3;       // カプセル線分の始点から球体の中心までのベクトル
     D3DXVECTOR3 norV1 = ZeroVector3;    // V1の単位ベクトル
     FLOAT fDot = 0.0f;                  // 2つのベクトルの内積
+    D3DXVECTOR3 ret = ZeroVector3;      // 線分上最近点
 
     // カプセル線分のベクトルを計算
     V1 = CapsuleInfo.P1 - CapsuleInfo.P0;
@@ -223,37 +224,40 @@ bool CCollision::ColSphereAndCapsule(const CCollisionModel::INFO &SphereInfo, co
     // 2つのベクトルの内積を計算
     fDot = D3DXVec3Dot(&norV1, &V2);
 
-    D3DXVECTOR3 ret = ZeroVector3;  // 線分上最近点
-    FLOAT ratio = 0.0f;             // 線分を0～1の範囲で表したときの線分上最近点の位置
-
     // 線分上最近点を計算
     ret = CapsuleInfo.P0 + D3DXVECTOR3(norV1.x * fDot, norV1.y * fDot, norV1.z * fDot);
 
-    // 線分を0～1の範囲で表したときの線分上最近点の位置を計算
-    ratio = D3DXVec3Dot(&norV1, &(ret - CapsuleInfo.P0)) / D3DXVec3Dot(&norV1, &V1);
+    // 「線分上最近点と球体の中心との距離」が球体の半径とカプセルの半径を足した値より小さいとき
+    if (D3DXVec3Length(&(SphereInfo.pos - ret)) <= (SphereInfo.size.x / 2) + (CapsuleInfo.radius / 2))
+    {
+        FLOAT ratio = 0.0f; // 線分を0～1の範囲で表したときの線分上最近点の位置
 
-    if (ratio >= 0.0f && ratio <= 1.0f)
-    { // ratioが0以上1以下のとき
-        // 「線分上最近点と球体の中心との距離」がカプセルと球体の半径を足した値より小さいとき
-        if (D3DXVec3Length(&(SphereInfo.pos - ret)) <= (SphereInfo.size.x / 2) + (CapsuleInfo.radius / 2))
-        {
-             return true;
+        // 線分を0～1の範囲で表したときの線分上最近点の位置を計算
+        ratio = D3DXVec3Dot(&norV1, &(ret - CapsuleInfo.P0)) / D3DXVec3Dot(&norV1, &V1);
+
+        if (ratio >= 0.0f && ratio <= 1.0f)
+        { // ratioが0以上1以下のとき
+            // 「線分上最近点と球体の中心との距離」がカプセルと球体の半径を足した値より小さいとき
+            if (D3DXVec3Length(&(SphereInfo.pos - ret)) <= (SphereInfo.size.x / 2) + (CapsuleInfo.radius / 2))
+            {
+                return true;
+            }
         }
-    }
-    else if (ratio > 1.0f)
-    { // ratioが1より大きいとき
-        // 「カプセル線分の終点から球体の中心までのベクトルの長さ」が球体の半径より小さいとき
-        if (D3DXVec3Length(&(SphereInfo.pos - CapsuleInfo.P1)) <= (SphereInfo.size.x / 2))
-        {
-            return true;
+        else if (ratio > 1.0f)
+        { // ratioが1より大きいとき
+            // 「カプセル線分の終点から球体の中心までのベクトルの長さ」が球体の半径より小さいとき
+            if (D3DXVec3Length(&(SphereInfo.pos - CapsuleInfo.P1)) <= (SphereInfo.size.x / 2))
+            {
+                return true;
+            }
         }
-    }
-    else if (ratio < 0.0f)
-    { // ratioが0より小さいとき
-        // V2の長さがカプセルと球体の半径より小さいとき
-        if (D3DXVec3Length(&(ret - CapsuleInfo.P0)) <= (SphereInfo.size.x / 2))
-        {
-            return true;
+        else if (ratio < 0.0f)
+        { // ratioが0より小さいとき
+            // V2の長さがカプセルと球体の半径より小さいとき
+            if (D3DXVec3Length(&(ret - CapsuleInfo.P0)) <= (SphereInfo.size.x / 2))
+            {
+                return true;
+            }
         }
     }
 

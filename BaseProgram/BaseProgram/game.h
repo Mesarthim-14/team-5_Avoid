@@ -21,6 +21,7 @@ class CKraken;
 class CNpcFactory;
 class CGaussFilter;
 class CPause;
+class CMapFactory;
 class CGauge;
 
 //=======================================================================================
@@ -70,5 +71,6 @@ private:
     static CGaussFilter* m_pGaussFilter;    // ガウスフィルター
     CGauge * m_pGauge;                      // ゲージポインタ
     CPause *m_pPause;                       // ポーズポインタ
+    CMapFactory* m_pMapFactory;             // マップの生成クラス
 };
 #endif

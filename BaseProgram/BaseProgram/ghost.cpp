@@ -21,8 +21,8 @@
 #define ATTACK_INTER        (150)                                   // 攻撃間隔
 #define ATTACK_STR          (20)                                    // 攻撃力
 #define ATTACK_POWER        (2.0f)                                  // 吹っ飛ばし力
-#define SPEED               (30.0f)                                 // スピード
-#define RISE_SPEED          (15.0f)                                 // 上昇速度
+#define SPEED               (50.0f)                                 // スピード
+#define RISE_SPEED          (30.0f)                                 // 上昇速度
 #define POS                 (D3DXVECTOR3(-3500.0f, -200.0f, 0.0f))  // 座標
 #define FOLLOW_END_DISTANCE (800.0f)                                // 追従を切る
 #define RISE_TIME           (120)                                   // 終了までの時間

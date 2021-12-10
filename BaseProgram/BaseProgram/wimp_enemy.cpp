@@ -23,8 +23,8 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define PERCEPTION_DISTANCE (6000.0f)   // 感知できる距離
-#define FOLLOW_TIME         (50)        // 重力がかからない時間
+#define PERCEPTION_DISTANCE (23000.0f)  // 感知できる距離
+#define FOLLOW_TIME         (100)       // 重力がかからない時間
 #define PLAYER_ADD_HEIGHT   (500.0f)    // プレイヤーを適当に量増し
 #define HIT_TIME_INTER      (300)       // 当たった後の間隔
 #define CAUTION_TIME        (60)        // 警告のタイム
@@ -232,8 +232,8 @@ void CWimpEnemy::AffectPlayer(CPlayer* &pPlayer)
         CParticlePop::Create(pos);
     }
     D3DXVECTOR3 move = GetMove();
-    move.x *= 0.8f;
-    move.x *= 1.5f;
-    move.z *= 0.8f;
+    move.x *= 0.4f;
+    move.x *= 0.7f;
+    move.z *= 0.4f;
     pPlayer->ChangeState(CPlayerStateKnockback::Create(move));
 }

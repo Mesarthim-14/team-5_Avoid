@@ -196,6 +196,15 @@
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
+    <ClCompile Include="map_big_floor2.cpp" />
+    <ClCompile Include="map_check_floor.cpp" />
+    <ClCompile Include="map_check_floor2.cpp" />
+    <ClCompile Include="map_factory.cpp" />
+    <ClCompile Include="map_first_floor.cpp" />
+    <ClCompile Include="map_square_floor.cpp" />
+    <ClCompile Include="map_square_floor2.cpp" />
+    <ClCompile Include="map_thin_floor.cpp" />
+    <ClCompile Include="map_thin_floor2.cpp" />
     <ClCompile Include="marlin.cpp" />
     <ClCompile Include="marlin_model.cpp" />
     <ClCompile Include="mask.cpp" />
@@ -208,6 +217,7 @@
     <ClCompile Include="motion.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="non_player_character.cpp" />
+    <ClCompile Include="npc_angry_info.cpp" />
     <ClCompile Include="npc_enemy_info.cpp" />
     <ClCompile Include="npc_factory.cpp" />
     <ClCompile Include="npc_sentence_enemy1.cpp" />
@@ -347,6 +357,15 @@
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
+    <ClInclude Include="map_big_floor2.h" />
+    <ClInclude Include="map_check_floor.h" />
+    <ClInclude Include="map_check_floor2.h" />
+    <ClInclude Include="map_factory.h" />
+    <ClInclude Include="map_first_floor.h" />
+    <ClInclude Include="map_square_floor.h" />
+    <ClInclude Include="map_square_floor2.h" />
+    <ClInclude Include="map_thin_floor.h" />
+    <ClInclude Include="map_thin_floor2.h" />
     <ClInclude Include="marlin.h" />
     <ClInclude Include="marlin_model.h" />
     <ClInclude Include="mask.h" />
@@ -359,6 +378,7 @@
     <ClInclude Include="motion.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="non_player_character.h" />
+    <ClInclude Include="npc_angry_info.h" />
     <ClInclude Include="npc_enemy_info.h" />
     <ClInclude Include="npc_factory.h" />
     <ClInclude Include="npc_sentence_enemy1.h" />

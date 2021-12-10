@@ -29,6 +29,7 @@
 //=====================================================================
 CCameraStateSelect::CCameraStateSelect()
 {
+
 }
 
 //=====================================================================
@@ -74,24 +75,6 @@ void CCameraStateSelect::Update()
         return;
     }
 
-    //    D3DXVECTOR3 posR = D3DXVECTOR3(0.0f, PLAYER_HEIGHT, 0.0f);
-    //    D3DXVECTOR3 posV = ZeroVector3;
-    //    float fDistance = GAME_CAMERA_DISTANCE;
-    //    float fVartical = GAME_CAMERA_DEFAULT_Fθ;
-    //    float fHorizontal = GAME_CAMERA_DEFAULT_Hθ;
-    //
-    //    SetDistance(fDistance);
-    //    SetVartical(fVartical);
-    //    SetHorizontal(fHorizontal);					// 初期値敵のほう向ける
-    //    GetposR() = posR;
-    //    GetposU() = D3DXVECTOR3(0.0f, 1.0f, 0.0f);	// 上方向ベクトル
-    //
-    //    posV.x = posR.x + fDistance * sinf(fVartical) * sinf(fHorizontal);	// カメラ位置X
-    //    posV.y = posR.z + fDistance * cosf(fVartical);						// カメラ位置Y
-    //    posV.z = posR.y + fDistance * sinf(fVartical) * cosf(fHorizontal);	// カメラ位置Z
-    //
-    //    GetposV() = posV;
-
     // カメラ座標
     D3DXVECTOR3 VDest = ZeroVector3;
     D3DXVECTOR3 posRDest = pCamera->GetposRDest();  // 目的の角度
@@ -99,9 +82,14 @@ void CCameraStateSelect::Update()
     D3DXVECTOR3 rot = ZeroVector3;                  // 角度
     rot.y += D3DXToRadian(90.0f);
 
-    float fDistance = DISTANCE;                     // 距離
-    float fVartical = pCamera->GetVartical();       // 角度
-    float fHorizontal = pCamera->GetHorizontal();   // 角度
+    // 回転
+    float fHorizontal = pCamera->GetHorizontal();
+    fHorizontal += D3DXToRadian(0.2f);
+    CLibrary::RotFix(fHorizontal);
+    pCamera->SetHorizontal(fHorizontal);
+
+    float fDistance = DISTANCE;                 // 距離
+    float fVartical = pCamera->GetVartical();   // 角度
 
     posRDest = D3DXVECTOR3(pos.x, pos.y + HEIGHT, pos.z);    //注視点設定
 
@@ -112,6 +100,4 @@ void CCameraStateSelect::Update()
 
     //設定値の反映
     pCamera->GetposV() += (VDest - pCamera->GetposV());
-    //    pCamera->GetposR() += (posRDest - pCamera->GetposR());
-
 }

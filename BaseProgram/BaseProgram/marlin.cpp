@@ -17,7 +17,7 @@
 #define ATTACK_INTER    (150)                                   // 攻撃間隔
 #define ATTACK_STR      (20)                                    // 攻撃力
 #define ATTACK_POWER    (2.0f)                                  // 吹っ飛ばし力
-#define SPEED           (130.0f)                                // スピード
+#define SPEED           (350.0f)                                // スピード
 #define POS             (D3DXVECTOR3(-3500.0f, -200.0f, 0.0f))  // 座標
 #define COLLISION_SIZE  (D3DXVECTOR3(m_fCollisionSize, m_fCollisionSize, m_fCollisionSize))
 

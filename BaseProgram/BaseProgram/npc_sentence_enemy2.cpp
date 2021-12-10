@@ -65,7 +65,7 @@ HRESULT CNpcSentenceEnemy2::Init()
     pos.y += 1000.0f;
     SetSceneInfo(pos, SIZE);
 
-    CBillboard::Init();
+    CScene2D::Init();
     BindTexture(nullptr);
 
     return S_OK;
@@ -76,7 +76,7 @@ HRESULT CNpcSentenceEnemy2::Init()
 //=============================================================================
 void CNpcSentenceEnemy2::Uninit()
 {
-    CBillboard::Uninit();
+    CScene2D::Uninit();
 }
 
 //=============================================================================
@@ -84,5 +84,5 @@ void CNpcSentenceEnemy2::Uninit()
 //=============================================================================
 void CNpcSentenceEnemy2::Update()
 {
-    CBillboard::Update();
+    CScene2D::Update();
 }

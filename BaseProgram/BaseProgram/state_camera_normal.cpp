@@ -31,7 +31,7 @@
 //=====================================================================
 CCameraStateNormal::CCameraStateNormal()
 {
-    m_bMouseCountrol = true;
+    m_bMouseCountrol = false;
 }
 
 //=====================================================================

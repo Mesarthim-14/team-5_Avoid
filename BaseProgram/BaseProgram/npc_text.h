@@ -25,7 +25,9 @@ public:
     virtual void Uninit();      // I—¹ˆ—
     virtual void Update();      // XVˆ—
     virtual void Draw() {}      // •`‰æˆ—
+    virtual bool GetEnd()const = 0;
 
 private:
 };
+
 #endif

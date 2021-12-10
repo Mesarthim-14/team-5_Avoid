@@ -20,8 +20,8 @@
 //=====================================================================
 // マクロ定義
 //=====================================================================
-#define DISTANCE        (2000.0f)               // 距離
-#define HEIGHT          (500.0f)                // 高さ
+#define DISTANCE        (600.0f)                // 距離
+#define HEIGHT          (200.0f)                // 高さ
 #define SHIFT_ANGLE     (D3DXToRadian(30.0f))   // ずらす角度
 #define ANGLE_POS       (800.0f)                // 視点の高さ
 
@@ -96,11 +96,11 @@ void CCameraStateTalk::TrackingTalker(CCamera* &pCamera)
     float rotY = m_rot.y-D3DXToRadian(90.0f);
 
     // カメラの位置設定
-    VDest.x = m_pos.x + fDistance * sinf(fVartical) * -sinf(rotY - SHIFT_ANGLE); // カメラ位置X設定
+    VDest.x = m_pos.x + fDistance * sinf(fVartical) * -sinf(rotY - SHIFT_ANGLE);    // カメラ位置X設定
     VDest.y = m_pos.y /*+ CANNON_HEIGHT*/ + ANGLE_POS * cosf(fVartical);            // カメラ位置Y設定
-    VDest.z = m_pos.z + fDistance * sinf(fVartical) * -cosf(rotY - SHIFT_ANGLE); // カメラ位置Z設定
+    VDest.z = m_pos.z + fDistance * sinf(fVartical) * -cosf(rotY - SHIFT_ANGLE);    // カメラ位置Z設定
 
-    posRDest = D3DXVECTOR3(m_pos.x, m_pos.y + HEIGHT, m_pos.z);              // 注視点設定
+    posRDest = D3DXVECTOR3(m_pos.x, m_pos.y + HEIGHT, m_pos.z); // 注視点設定
 
     //設定値の反映
     pCamera->GetposV() += (VDest - pCamera->GetposV())*0.1f;

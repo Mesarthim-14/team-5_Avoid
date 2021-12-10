@@ -123,10 +123,11 @@ void CHeel::Update()
 void CHeel::CreateHeelPoint()
 {
     // ä¯ÇÃê∂ê¨
-    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-1546.4f, 100.0f, -0.0f)));
-    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-4587.7f, 87.3f, -12224.9f)));
-    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-19864.6f, 1030.4f, -18272.0f)));
-    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-34715.7f, 981.2f, -13988.7f)));
-    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-32146.7f, 1006.5f, 5995.2f)));
-    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-23408.0f, 107.3f, 15867.4f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(57761.4f, 1562.4f, 27879.0f)));
+//    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-23408.0f, 107.3f, 15867.4f)));
+
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(7223.2f, 5473.4f, -50789.8f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-28757.1f, 5430.9f, -55027.8f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-58786.7f, 5518.4f, -23108.5f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(1908.0f, 2439.5f, 67083.5f)));
 }

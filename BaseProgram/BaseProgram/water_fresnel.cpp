@@ -639,7 +639,7 @@ void CWaterFresnel::Draw()
         m_pLambert->SetAmbient(&m_LambertPlayerAmbiend);
         m_pLambert->SetZEnable(false);
         m_pLambert->BeginPass(0);
-        map.pMesh->DrawSubset(0);
+//        map.pMesh->DrawSubset(0);
         m_pLambert->EndPass();
 //
 //        //‹óƒŒƒ“ƒ_ƒŠƒ“ƒO

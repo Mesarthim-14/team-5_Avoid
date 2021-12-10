@@ -348,6 +348,28 @@ D3DXVECTOR3 CLibrary::FollowMoveXZ(const D3DXVECTOR3 &This, const D3DXVECTOR3 &T
 }
 
 //=============================================================================
+// ワールド座標からスクリーン座標に変換
+//=============================================================================
+D3DXVECTOR3 CLibrary::ConvWorldToScreen(const D3DXVECTOR3& pos, const D3DXMATRIX& mtxView, const D3DXMATRIX& mtxProj)
+{
+    D3DXVECTOR3 WorldPos = ZeroVector3;
+    D3DXMATRIX mtxScreen =
+    {
+        SCREEN_WIDTH*0.5f, 0, 0, 0,
+        0, -SCREEN_HEIGHT*0.5f, 0, 0,
+        0, 0, 1, 0,
+        SCREEN_WIDTH*0.5f, SCREEN_HEIGHT*0.5f, 0, 1
+    };//スクリーン座標行列
+
+    //ビュー座標からプロジェクション、プロジェクションからスクリーン座標に変換
+    D3DXVec3TransformCoord(&WorldPos, &pos, &mtxView);
+    D3DXVec3TransformCoord(&WorldPos, &WorldPos, &mtxProj);
+    D3DXVec3TransformCoord(&WorldPos, &WorldPos, &mtxScreen);
+
+    return WorldPos;
+}
+
+//=============================================================================
 // jsonのファイルロード
 //=============================================================================
 picojson::value CLibrary::JsonLoadFile(const string &FileName)
