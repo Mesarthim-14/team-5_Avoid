@@ -466,10 +466,10 @@
     <ClCompile Include="map_factory.cpp">
       <Filter>08_Object\Map\Factory</Filter>
     </ClCompile>
-  </ItemGroup>
     <ClCompile Include="collisionModel_Cylinder.cpp">
       <Filter>12_Collision</Filter>
-    </ClCompile>  </ItemGroup>
+    </ClCompile> 
+   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
       <Filter>00_Important\Camera</Filter>
@@ -945,10 +945,10 @@
     <ClInclude Include="map_factory.h">
       <Filter>08_Object\Map\Factory</Filter>
     </ClInclude>
-  </ItemGroup>
     <ClInclude Include="collisionModel_Cylinder.h">
       <Filter>12_Collision</Filter>
-    </ClInclude>  </ItemGroup>
+    </ClInclude> 
+   </ItemGroup>
   <ItemGroup>
     <None Include="data\Text\Shader\BlurFilter.fx">
       <Filter>06_Effect\Shader\FresnelWater\ShaderFile</Filter>
