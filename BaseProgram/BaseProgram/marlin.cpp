@@ -93,6 +93,7 @@ void CMarlin::Update()
     if (m_pMarlinModel)
     {
         m_pMarlinModel->SetPos(GetPos());
+        m_pMarlinModel->SetRot(GetRot());
     }
 }
 

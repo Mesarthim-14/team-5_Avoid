@@ -15,12 +15,19 @@
 #include "model_info.h"
 #include "skinmesh.h"
 #include "animation_skinmesh.h"
+#include "toon_shader.h"
+#include "edge_filter.h"
+#include "library.h"
+#include "texture.h"
+#include "resource_manager.h"
+#include "camera.h"
+#include "light.h"
 
 const char * CSkinmeshModel::m_aParam[MODEL_MAX] =
 {
     "data/Model/Hierarchy/player/slime_10.x",
-    "data/Model/Hierarchy/player/slime_50.x",
-    "data/Model/Hierarchy/player/slime_100.x",
+    "data/Model/Hierarchy/player/slime_50_tex.x",
+    "data/Model/Hierarchy/player/slime_100_tex.x",
     "data/Model/Hierarchy/enemy/boss/takohead.x",
 };
 
@@ -41,6 +48,7 @@ CSkinmeshModel::CSkinmeshModel(PRIORITY Priority) : CScene(Priority)
     m_HLcontroller = nullptr;
     m_ModelNum = MODEL_PLAYER_100;
     m_bIsDraw = true;
+    m_ToonAmbient = D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f);
 
 }
 
@@ -106,20 +114,30 @@ HRESULT CSkinmeshModel::Init()
     //メッシュコンテナ取得関数
     SkinMesh::getMeshContainer(m_pRootFrame, &m_cont);
 
-	// ブレンド行列インデックス作成
-	SkinMesh::BlendIndex* pBlendIndex;
-
     for (unsigned int i = 0; i < m_cont.size(); i++)
     {
-		m_combs.push_back((D3DXBONECOMBINATION*)m_cont[i]->boneCombinationTable->GetBufferPointer());
+        m_combs.push_back((D3DXBONECOMBINATION*)m_cont[i]->boneCombinationTable->GetBufferPointer());
 
-		m_cont[i]->pSkinInfo->ConvertToBlendedMesh(m_cont[i]->MeshData.pMesh, 0, 0, 0, 0, 0, &m_cont[i]->maxFaceInfl, &m_cont[i]->numBoneCombinations, &m_cont[i]->boneCombinationTable, &m_cont[i]->MeshData.pMesh);
+        m_cont[i]->pSkinInfo->ConvertToBlendedMesh(
+            m_cont[i]->MeshData.pMesh,
+            0,
+            0,
+            0,
+            0,
+            0,
+            &m_cont[i]->maxFaceInfl,
+            &m_cont[i]->numBoneCombinations,
+            &m_cont[i]->boneCombinationTable,
+            &m_cont[i]->MeshData.pMesh);
 
-		// フレーム内にボーンIDとオフセット行列を埋め込む
-		SkinMesh::setFrameId(m_pRootFrame, m_cont[i]->pSkinInfo);
+        // フレーム内にボーンIDとオフセット行列を埋め込む
+        SkinMesh::setFrameId(m_pRootFrame, m_cont[i]->pSkinInfo);
 
-		SkinMesh::createBlendIndex(&pBlendIndex, (D3DXBONECOMBINATION*)m_cont[i]->boneCombinationTable->GetBufferPointer(), m_cont[i]->numBoneCombinations);
-	}
+        SkinMesh::createBlendIndex(
+            &m_pBlendIndex,
+            (D3DXBONECOMBINATION*)m_cont[i]->boneCombinationTable->GetBufferPointer(),
+            m_cont[i]->numBoneCombinations);
+    }
 
     return S_OK;
 }
@@ -132,7 +150,6 @@ void CSkinmeshModel::Uninit()
     // 影の終了処理
     HasPtrDelete();
 
-    
     //オブジェクトの破棄
     Release();
 }
@@ -140,30 +157,13 @@ void CSkinmeshModel::Uninit()
 //=============================================================================
 // モデルクラスの更新処理
 //=============================================================================
-void CSkinmeshModel::Update(void)
+void CSkinmeshModel::Update()
 {
     // 寿命を減らす
     m_nLife--;
 
     // 座標の更新
     m_pModelInfo->GetPos() += m_move;
-
-    ////仮
-    ////アニメーション変更
-    ////m_HLcontroller->ChangeAnimation(0);
-    ////ループ時間
-    //m_HLcontroller->SetLoopTime(1, 60);
-    //m_HLcontroller->SetLoopTime(0, 60);
-
-    //////アニメーション変更
-    ////m_HLcontroller->ChangeAnimation(0);
-
-    ////アニメーションのシフトにかかる時間
-    //m_HLcontroller->SetShiftTime(1, 10);
-    //m_HLcontroller->SetShiftTime(0, 10);
-
-    ////m_HLcontroller->ChangeAnimation(1);
-    
 }
 
 //=============================================================================
@@ -173,77 +173,83 @@ void CSkinmeshModel::Draw()
 {
     if (m_bIsDraw)
     {
+        CToonShader* pToonShader = CManager::GetInstance()->GetRenderer()->GetToonShader();
+
+        CTexture *pTexture = GET_TEXTURE_PTR;
+        D3DXVECTOR3 CameraPos = CManager::GetInstance()->GetCamera()->GetposV();
+        D3DXVECTOR4 EyePos = D3DXVECTOR4(CameraPos, 1.0f);
+        D3DXVECTOR4 LightDir = D3DXVECTOR4(CManager::GetInstance()->GetLight()->GetLightDir(), 0.0f);
+
         //デバイス情報の取得
         LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
         D3DMATERIAL9 matDef;
-        D3DXMATRIX mtxRot, mtxTrans, mtxScale, mtxWorld;
+        D3DXMATRIX mtxWorld;
         D3DXVECTOR3 pos = m_pModelInfo->GetPos();
         D3DXVECTOR3 rot = m_pModelInfo->GetRot();
+        D3DXMATRIX *worldMatAry[4] = {};
+        LightDir.x = sinf(rot.y);
+        LightDir.y = cosf(rot.y);
 
-        //現在のマテリアルを取得する
-        pDevice->GetMaterial(&matDef);
-        //ワールドマトリックスの初期化
-        D3DXMatrixIdentity(&mtxWorld);
+        // マトリクスの設定
+        CLibrary::ConfigMatrix(&mtxWorld, pos, rot);
 
-        // 拡大率を反映
-        D3DXMatrixScaling(&mtxScale, m_scale.x, m_scale.y, m_scale.z);
-        D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxScale);
+        D3DXMATRIX mtxProj = CManager::GetInstance()->GetCamera()->GetMtxProj();
+        D3DXMATRIX mtxView = CManager::GetInstance()->GetCamera()->GetMtxView();
 
-        //向きを反映
-        D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);
-        D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
-
-        //位置を反映
-        D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
-        D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTrans);
-
-        //現在フレーム(fps)のワールド変換行列
-        std::map<DWORD, D3DXMATRIX> combMatrixMap;
-
-        //// 時間を進めて姿勢更新
-        //m_pAnimetionController->AdvanceTime(0.0001f, 0);
-        //m_pAnimetionController->SetTrackAnimationSet(0, 0);
         //アニメーション更新
         m_HLcontroller->AdvanceTime(1);
 
+        pToonShader->BeginSurface();
+        //オブジェクトのテクスチャーをステージ０にセットする
+        pDevice->SetTexture(0, pTexture->GetTexture(CTexture::TEXTURE_NUM_WHITE));
+
+        //現在フレーム(fps)のワールド変換行列
+        std::map<DWORD, D3DXMATRIX> combMatrixMap;
         SkinMesh::updateCombMatrix(combMatrixMap, mtxWorld, m_pRootFrame);
 
         for (DWORD BCombiId = 0; BCombiId < m_cont.size(); BCombiId++)
         {
+            // シェーダ開始
+            pToonShader->Begin();
+
             for (DWORD AttribId = 0; AttribId < m_cont[BCombiId]->numBoneCombinations; AttribId++)
             {
-                DWORD boneCount = 0;
-
-                for (DWORD Count = 0; Count < m_cont[BCombiId]->maxFaceInfl; Count++)
+                SkinMesh::BlendIndex& blendIndex = m_pBlendIndex[AttribId];
+                pDevice->SetRenderState(D3DRS_VERTEXBLEND, blendIndex.boneNum - 1);
+                for (int b = 0; b < blendIndex.boneNum; b++)
                 {
-                    //ボーンコンビネーションテーブルからボーンIDを抽出
-                    DWORD BoneId = m_combs[BCombiId][AttribId].BoneId[Count];
-
-                    //ボーンIDが存在している
-                    if (BoneId != UINT_MAX)
-                    {
-                        // インデックス付きワールドマトリックスの設定
-                        pDevice->SetTransform(D3DTS_WORLDMATRIX(Count), &combMatrixMap[BoneId]);
-                        boneCount++;
-                    }
+                    worldMatAry[b] = &combMatrixMap[blendIndex.index[b]];
+                }
+                for (int b = blendIndex.boneNum; b < 4; b++)
+                {
+                    worldMatAry[b] = &mtxWorld;
                 }
 
-                pDevice->SetRenderState(D3DRS_VERTEXBLEND, boneCount - 1);
+                pToonShader->SetVertexBlendInfo(
+                    worldMatAry, mtxView, mtxProj, blendIndex.boneNum);
 
-                m_cont[BCombiId]->pMaterials->MatD3D.Ambient = WhiteColor;
-                pDevice->SetMaterial(&m_cont[BCombiId]->pMaterials->MatD3D);
-                //メッシュコンテナ内のメッシュデータ
+                D3DXVECTOR4 Diffuse = ZeroVector4;
+                Diffuse.x = m_cont[BCombiId]->pMaterials[AttribId].MatD3D.Diffuse.r;
+                Diffuse.y = m_cont[BCombiId]->pMaterials[AttribId].MatD3D.Diffuse.g;
+                Diffuse.z = m_cont[BCombiId]->pMaterials[AttribId].MatD3D.Diffuse.b;
+                Diffuse.w = m_cont[BCombiId]->pMaterials[AttribId].MatD3D.Diffuse.a;
+
+                pDevice->SetTexture(0, pTexture->GetTexture(CTexture::TEXTURE_NUM_SLIME));
+                pToonShader->SetDiffuse(Diffuse);
+                pToonShader->Begin(CToonShader::TOON_PASS_SKINMESH_TEX, mtxWorld, &LightDir);
+
                 m_cont[BCombiId]->MeshData.pMesh->DrawSubset(AttribId);
-
+                pToonShader->EndPass();
             }
+
+            pToonShader->End();
         }
 
         //保持していたマテリアルを戻す
         pDevice->SetMaterial(&matDef);
         pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
 
-        // 影の描画
-        m_pModelInfo->ShadowDraw(rot);
+        pToonShader->DrawEdgeFilter();
     }
 }
 

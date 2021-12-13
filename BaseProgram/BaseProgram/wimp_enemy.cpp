@@ -41,6 +41,7 @@ CWimpEnemy::CWimpEnemy(PRIORITY Priority) : CEnemy(Priority)
     m_bHit = false;
     m_pCaution = nullptr;
     m_nCautionCounter = 0;
+    m_bLook = false;
 }
 
 //=============================================================================
@@ -85,6 +86,7 @@ void CWimpEnemy::Update()
         {
             m_pCaution = CCautionWimpAttack::Create(GetPos());
             m_nCautionCounter = 0;
+            m_bLook = true;
         }
     }
 
@@ -92,12 +94,21 @@ void CWimpEnemy::Update()
     if (m_pCaution)
     {
         m_nCautionCounter++;
+
         if (m_nCautionCounter == CAUTION_TIME)
         {
             m_pCaution->Uninit();
+            m_bLook = false;
             Attack();
         }
     }
+
+    if (m_bLook)
+    {
+        // プレイヤーを見る処理
+        LookAtPlayer();
+    }
+
     if (isRush)
     {
         // 当たり判定
@@ -148,6 +159,22 @@ bool CWimpEnemy::Search()
     }
 
     return false;
+}
+
+//=============================================================================
+// プレイヤーを見る処理
+//=============================================================================
+void CWimpEnemy::LookAtPlayer()
+{
+    // プレイヤーの情報
+    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();		// メモリ確保
+    if (pPlayer)
+    {
+        D3DXVECTOR3 Ppos = pPlayer->GetPos();   // プレイヤーの座標取得
+        D3DXVECTOR3 Epos = GetPos();            // 自身の座標
+        D3DXVECTOR3 rot = GetRot();             // 角度取得
+        SetRot(D3DXVECTOR3(rot.x, CLibrary::LookTarget(Epos, Ppos), rot.z));
+    }
 }
 
 //=============================================================================

@@ -503,7 +503,7 @@ void CWaterFresnel::Draw()
         pDevice->SetTexture(0, pTexture->GetTexture(CTexture::TEXTURE_NUM_TEST));
         m_pReflect->SetAmbient(&m_ReflectPlayerAmbiend);
         m_pReflect->BeginPass();
-        map.pMesh->DrawSubset(0);
+//        map.pMesh->DrawSubset(0);
         m_pReflect->EndPass();
 //        D3DXVECTOR3 playerPos = pPlayer->GetPos();
 //        D3DXVECTOR3 playerRot = pPlayer->GetRot();

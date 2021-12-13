@@ -42,6 +42,7 @@ private:
     virtual void Attack() = 0;          // 攻撃
     void GravitySwitch();               // 重力の切り替え
     bool Search();                      // プレイヤーを探す
+    void LookAtPlayer();                // プレイヤーを見る
 
     // メンバ変数
     int m_nRushCount;                   // 飛んだカウント
@@ -49,6 +50,7 @@ private:
     int m_nCautionCounter;              // 警告のカウント
     bool isRush;                        // 飛んだらtrue
     bool m_bHit;                        // 当たったフラグ
+    bool m_bLook;                       // 見るフラグ
     CCollisionModelOBB* m_pCollision;   // 当たり判定
     CCautionWimpAttack* m_pCaution;     // 攻撃警告
 };

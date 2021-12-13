@@ -66,6 +66,10 @@ CXfile::CXfile()
         { "data/Model/Normal/Map/05_floor_sq_2f.x" },           // マップ正方形
         { "data/Model/Normal/Map/00_floor_big.x" },             // マップ最初の床
         { "data/Model/Normal/Map/07_floor_thin_2f.x" },         // マップ長方形
+        { "data/Model/Normal/Enemy/same.x" },                   // サメ
+        { "data/Model/Normal/Enemy/kajiki_Kai.x" },             // カジキ
+        { "data/Model/Normal/Enemy/obake.x" },                  // ゴースト
+
     };
     
     // 階層構造モデル
@@ -437,7 +441,6 @@ void CXfile::LoadAll()
 //=============================================================================
 // 全てのアンロード
 //=============================================================================
-
 void CXfile::UnLoadAll()
 {
     ModelUnLoad();
@@ -447,7 +450,6 @@ void CXfile::UnLoadAll()
 //=============================================================================
 // モデルに使用するテクスチャ情報
 //=============================================================================
-
 LPDIRECT3DTEXTURE9 *CXfile::GetXfileTexture(const XFILE_NUM &TexNum)
 {
     if (TexNum < XFILE_NUM_MAX)

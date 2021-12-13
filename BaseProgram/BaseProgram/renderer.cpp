@@ -19,6 +19,7 @@
 #include "shadow.h"
 #include "library.h"
 #include "pause.h"
+#include "toon_shader.h"
 
 //=============================================================================
 // マクロ定義
@@ -32,6 +33,7 @@ CRenderer::CRenderer()
 {
 	m_pD3D = nullptr;			// Direct3Dオブジェクト
 	m_fillMode = D3DFILL_SOLID;
+    m_pToonShader = nullptr;
 }
 
 //=============================================================================
@@ -157,14 +159,26 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 	m_pD3DDevice->SetMaterial(&material);
 	m_pD3DDevice->SetRenderState(D3DRS_AMBIENT, 0x44444444);
 
+    // トゥーンシェーダ
+    if (!m_pToonShader)
+    {
+        m_pToonShader = new CToonShader(m_pD3DDevice);
+        m_pToonShader->Init();
+    }
 	return S_OK;
 }
 
 //=============================================================================
 // レンダリングクラスの終了処理
 //=============================================================================
-void CRenderer::Uninit(void)
+void CRenderer::Uninit()
 {
+    if (m_pToonShader)
+    {
+        m_pToonShader->Uninit();
+        m_pToonShader = nullptr;
+    }
+
 	// デバイスの破棄
 	if (m_pD3DDevice != nullptr)
 	{
@@ -183,7 +197,7 @@ void CRenderer::Uninit(void)
 //=============================================================================
 // レンダリングクラスの更新処理
 //=============================================================================
-void CRenderer::Update(void)
+void CRenderer::Update()
 {
 #ifdef _DEBUG
 
@@ -240,7 +254,7 @@ void CRenderer::Update(void)
 //=============================================================================
 // レンダリングクラスの描画処理
 //=============================================================================
-void CRenderer::Draw(void)
+void CRenderer::Draw()
 {
 	m_pD3DDevice->Clear(0, 
 		nullptr, 
@@ -324,12 +338,4 @@ void CRenderer::Draw(void)
 
 	// バックバッファとフロントバッファの入れ替え
 	m_pD3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
-}
-
-//=============================================================================
-// デバイスの取得処理
-//=============================================================================
-LPDIRECT3DDEVICE9 CRenderer::GetDevice(void)
-{
-	return m_pD3DDevice;
 }

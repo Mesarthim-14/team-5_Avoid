@@ -158,6 +158,7 @@
     <ClCompile Include="cannon.cpp" />
     <ClCompile Include="cannon_bullet.cpp" />
     <ClCompile Include="cannon_manager.cpp" />
+    <ClCompile Include="canvas.cpp" />
     <ClCompile Include="caution_boss_bullet_ui.cpp" />
     <ClCompile Include="caution_wimp_attack.cpp" />
     <ClCompile Include="character.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="collisionModel_Cylinder.cpp" />
     <ClCompile Include="collisionModel_OBB.cpp" />
     <ClCompile Include="collisionModel_Sphere.cpp" />
+    <ClCompile Include="edge_filter.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="fresnel_lambert.cpp" />
@@ -295,6 +297,7 @@
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="texture_animation.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="toon_shader.cpp" />
     <ClCompile Include="translation.cpp" />
     <ClCompile Include="water_fresnel.cpp" />
     <ClCompile Include="wave.cpp" />
@@ -316,6 +319,7 @@
     <ClInclude Include="cannon.h" />
     <ClInclude Include="cannon_bullet.h" />
     <ClInclude Include="cannon_manager.h" />
+    <ClInclude Include="canvas.h" />
     <ClInclude Include="caution_boss_bullet_ui.h" />
     <ClInclude Include="caution_wimp_attack.h" />
     <ClInclude Include="character.h" />
@@ -327,6 +331,7 @@
     <ClInclude Include="collisionModel_Cylinder.h" />
     <ClInclude Include="collisionModel_OBB.h" />
     <ClInclude Include="collisionModel_Sphere.h" />
+    <ClInclude Include="edge_filter.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="fresnel_lambert.h" />
@@ -456,6 +461,7 @@
     <ClInclude Include="texture.h" />
     <ClInclude Include="texture_animation.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="toon_shader.h" />
     <ClInclude Include="translation.h" />
     <ClInclude Include="water_fresnel.h" />
     <ClInclude Include="wave.h" />
@@ -484,6 +490,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="data\Text\Shader\gauss_filter.fx">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\Text\Shader\Canvas.fx">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="data\Text\Shader\EdgeFilter.fx">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="data\Text\Shader\ToonShader.fx">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

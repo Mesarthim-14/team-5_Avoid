@@ -13,6 +13,11 @@
 #include "main.h"
 
 //=============================================================================
+// 前方宣言
+//=============================================================================
+class CToonShader;
+
+//=============================================================================
 // レンダラークラス
 //=============================================================================
 class CRenderer
@@ -29,14 +34,16 @@ public:
     inline void SetDispImGuiInfo(const bool &ImGuiInfo) { m_bDispImGuiInfo = ImGuiInfo; };          // Imgui表示非表示設定
     bool CheckShowImGuiInfo()const                      { return m_bDispImGuiInfo; };               // Imgui情報表示してるか確認
     
-    LPDIRECT3DDEVICE9 GetDevice();      // デバイス情報
+    inline LPDIRECT3DDEVICE9 GetDevice()const   { return m_pD3DDevice; }    // デバイス情報
+    inline CToonShader* GetToonShader()const    { return m_pToonShader; }   // シェーダ情報
 
 private:
-    LPDIRECT3DDEVICE9 m_pD3DDevice;         // Deviceオブジェクト(描画に必要)
-    LPDIRECT3D9	m_pD3D;                     // Direct3Dオブジェクト
-    LPDIRECT3D9 m_pD3DInterface;            // DirectXインターフェース
-    D3DFILLMODE m_fillMode;                 // ワイヤーフレーム
-    bool m_bDispImGuiInfo;                  //Imgui描画するかどうか
+    LPDIRECT3DDEVICE9 m_pD3DDevice; // Deviceオブジェクト(描画に必要)
+    LPDIRECT3D9	m_pD3D;             // Direct3Dオブジェクト
+    LPDIRECT3D9 m_pD3DInterface;    // DirectXインターフェース
+    D3DFILLMODE m_fillMode;         // ワイヤーフレーム
+    bool m_bDispImGuiInfo;          //Imgui描画するかどうか
+    CToonShader* m_pToonShader;     // トゥーンシェーダ
 
 };
 

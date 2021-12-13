@@ -36,9 +36,9 @@ public:
     inline void SetUpdateFlag(const bool &bFlag)            { m_bUpdate = bFlag; }                      // 更新のフラグ設定
 
     // Get関数
-    D3DXVECTOR2 GetTex(const int &nCount)   { return m_tex[nCount]; }   // テクスチャ座標の情報
-    bool GetEnd()const                      { return m_bEnd; }          // 終了フラグ
-    bool GetUpdate()const                   { return m_bUpdate; }       // 更新されたかのフラグ
+    inline D3DXVECTOR2 GetTex(const int &nCount)   { return m_tex[nCount]; }   // テクスチャ座標の情報
+    inline bool GetEnd()const                      { return m_bEnd; }          // 終了フラグ
+    inline bool GetUpdate()const                   { return m_bUpdate; }       // 更新されたかのフラグ
 
 private:
     D3DXVECTOR2 m_tex[NUM_VERTEX];  // 頂点数分のテクスチャ情報

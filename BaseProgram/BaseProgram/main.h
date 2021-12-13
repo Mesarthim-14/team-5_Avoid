@@ -70,8 +70,9 @@
 #define NUM_POLYGON         (2)                                                     // ポリゴン数
 
 // 初期化用マクロ変数
-#define ZeroVector2         (D3DXVECTOR2(0.0f, 0.0f))                                   // 二つの値
-#define ZeroVector3         (D3DXVECTOR3(0.0f, 0.0f, 0.0f))                             // 三つの値
+#define ZeroVector2         (D3DXVECTOR2(0.0f, 0.0f))                                   // 2つの値
+#define ZeroVector3         (D3DXVECTOR3(0.0f, 0.0f, 0.0f))                             // 3つの値
+#define ZeroVector4         (D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f))                             // 4つの値
 #define WhiteColor          (D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f))                         // 白色
 #define BlackColor          (D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f))                         // 黒色
 #define HALF_SCREEN_POS     (D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f))    // 真ん中の座標
