@@ -11,6 +11,9 @@
 //=====================================================================
 #include "particle_info.h"
 #include "scene3D.h"
+#include "manager.h"
+#include "player.h"
+#include "library.h"
 
 #define MOVE    (D3DXVECTOR3(0.0f,0.0f,0.0f))
 //=====================================================================
@@ -131,4 +134,47 @@ void CParticleInfo::Gravitymini()
 void CParticleInfo::Erase()
 {
     Uninit();
+}
+
+//=============================================================================
+// プレイヤーを探す処理
+//=============================================================================
+bool CParticleInfo::Search()
+{
+    // メモリ取得
+    D3DXVECTOR3 pos = CManager::GetInstance()->GetPlayer()->GetPos();
+
+    float fDistance = CLibrary::CalDistance(pos, GetPos());
+    if (fDistance <= 23000.0f)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+//=====================================================================
+// パーティクルの追従
+// Author : toshiki
+//=====================================================================
+bool CParticleInfo::Follow()
+{
+    // メモリ取得
+    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    if (pPlayer)
+    {
+        D3DXVECTOR3 Ppos = pPlayer->GetPos();
+        Ppos.y += 500.0f;
+        float fSpeed = 50.0f;
+        // 2点間のベクトルを求める（終点[目標地点] - 始点[自身の位置]）
+        D3DXVECTOR3 Vector = Ppos - GetPos();
+        Vector = *D3DXVec3Normalize(&Vector, &Vector);
+        Vector *= fSpeed;
+
+        // 移動量の設定
+        SetMove(Vector);
+        return true;
+    }
+
+    return false;
 }

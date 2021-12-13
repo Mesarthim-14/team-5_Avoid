@@ -188,7 +188,7 @@ bool CWimpEnemy::Follow()
     {
         D3DXVECTOR3 Ppos = pPlayer->GetPos();
         Ppos.y += PLAYER_ADD_HEIGHT;
-        float fSpeed = GetSpeed();
+         float fSpeed = GetSpeed();
         // 2点間のベクトルを求める（終点[目標地点] - 始点[自身の位置]）
         D3DXVECTOR3 Vector = Ppos - GetPos();
         Vector = *D3DXVec3Normalize(&Vector, &Vector);
@@ -196,7 +196,7 @@ bool CWimpEnemy::Follow()
 
         // 移動量の設定
         SetMove(Vector);
-        return true;
+        return true;  
     }
 
     return false;

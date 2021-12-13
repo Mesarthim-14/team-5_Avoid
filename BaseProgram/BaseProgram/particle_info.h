@@ -38,7 +38,9 @@ public:
     inline void SetGravity(const bool &set)         { m_bGravitySet = set; }
     inline void SetGravityMini(const bool &set)     { m_bGravityMiniSet = set; }
     inline void SetLife(const bool &set)            { m_LifeSet = set; }
-
+protected:
+    bool Follow();
+    bool Search();
 private:
     void Gravity();
     void Gravitymini();
@@ -51,6 +53,7 @@ private:
     bool m_bGravitySet;
     bool m_bGravityMiniSet;
     bool m_LifeSet;
+    bool m_bCaution;
 };
 
 #endif
