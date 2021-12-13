@@ -32,6 +32,7 @@ public:
         TOON_PASS_EDGE_FILTER,      // アウトライン
         TOON_PASS_MODEL,            // モデル
         TOON_PASS_SKINMESH_DIFFUSE, // スキンメッシュ(テクスチャ無し)
+        TOON_PASS_MODEL_DIFFUSE,    // スキンメッシュ(テクスチャ無し)
     };
 
     CToonShader(LPDIRECT3DDEVICE9 pd3dDevice);  // コンストラクタ

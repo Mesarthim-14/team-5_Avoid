@@ -989,6 +989,15 @@
     <None Include="data\Text\Shader\gauss_filter.fx">
       <Filter>06_Effect\Shader\Gauss\ShaderFile</Filter>
     </None>
+    <None Include="data\Text\Shader\Canvas.fx">
+      <Filter>06_Effect\Shader\Canvas\Fx</Filter>
+    </None>
+    <None Include="data\Text\Shader\ToonShader.fx">
+      <Filter>06_Effect\Shader\ToonEffect\Fx</Filter>
+    </None>
+    <None Include="data\Text\Shader\EdgeFilter.fx">
+      <Filter>06_Effect\Shader\ToonEffect\Fx</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="00_Important">
@@ -1180,16 +1189,5 @@
     <Filter Include="06_Effect\Shader\Canvas\Fx">
       <UniqueIdentifier>{6b93a0d9-19c0-41e1-bb54-16f9686c91cd}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="data\Text\Shader\EdgeFilter.fx">
-      <Filter>06_Effect\Shader\ToonEffect\Fx</Filter>
-    </FxCompile>
-    <FxCompile Include="data\Text\Shader\ToonShader.fx">
-      <Filter>06_Effect\Shader\ToonEffect\Fx</Filter>
-    </FxCompile>
-    <FxCompile Include="data\Text\Shader\Canvas.fx">
-      <Filter>06_Effect\Shader\Canvas\Fx</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

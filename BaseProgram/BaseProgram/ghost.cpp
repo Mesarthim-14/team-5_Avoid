@@ -147,6 +147,9 @@ void CGhost::Move()
     // 追従フラグ
     if (m_bFollow)
     {
+        // プレイヤーの方を向く処理
+        LookAtPlayer();
+
         // 追従
          if (Follow())
         {

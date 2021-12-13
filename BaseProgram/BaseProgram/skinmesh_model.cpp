@@ -176,8 +176,6 @@ void CSkinmeshModel::Draw()
         CToonShader* pToonShader = CManager::GetInstance()->GetRenderer()->GetToonShader();
 
         CTexture *pTexture = GET_TEXTURE_PTR;
-        D3DXVECTOR3 CameraPos = CManager::GetInstance()->GetCamera()->GetposV();
-        D3DXVECTOR4 EyePos = D3DXVECTOR4(CameraPos, 1.0f);
         D3DXVECTOR4 LightDir = D3DXVECTOR4(CManager::GetInstance()->GetLight()->GetLightDir(), 0.0f);
 
         //デバイス情報の取得
@@ -201,7 +199,7 @@ void CSkinmeshModel::Draw()
 
         pToonShader->BeginSurface();
         //オブジェクトのテクスチャーをステージ０にセットする
-        pDevice->SetTexture(0, pTexture->GetTexture(CTexture::TEXTURE_NUM_WHITE));
+//        pDevice->SetTexture(0, pTexture->GetTexture(CTexture::TEXTURE_NUM_WHITE));
 
         //現在フレーム(fps)のワールド変換行列
         std::map<DWORD, D3DXMATRIX> combMatrixMap;

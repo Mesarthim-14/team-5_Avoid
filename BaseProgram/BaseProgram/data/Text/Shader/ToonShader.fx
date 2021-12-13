@@ -141,7 +141,7 @@ PS_OUTPUT ps_not_tex(VS_OUTPUT In) : COLOR0
     //色情報をテクセルのＵ成分とし、トゥーンマップテクスチャーから光の反射率を取得する
     float4 Col = tex2D(tex1, float2(p, 0.0f));
     Out = Col * m_Diffuse;
-
+    
     //色情報をRGBに格納する
     ps.Col1 = Out * m_Diffuse;
     
@@ -151,10 +151,9 @@ PS_OUTPUT ps_not_tex(VS_OUTPUT In) : COLOR0
     
     ps.Canvas = max((float4)0, canvas);
     ps.Canvas.a = 1.0f;
-
+    
     return ps;
 }
-
 
 //=============================================================================
 // 構造体
@@ -207,6 +206,7 @@ float4 EdgePS(EdgeVS_OUTPUT In) : COLOR0
 	return Col;
 }
 
+
 //=============================================================================
 // 頂点シェーダ
 //=============================================================================
@@ -231,7 +231,7 @@ VS_OUTPUT NormalVS(float4 Pos : POSITION,
 //=============================================================================
 technique TShader
 {
-	// トゥーンシェーダ
+	// スキンメッシュ(テクスチャあり)
 	pass P0
 	{
 		VertexShader = compile vs_1_1 VS();
@@ -244,18 +244,22 @@ technique TShader
 		VertexShader = compile vs_1_1 EdgeVS();
 		PixelShader = compile ps_2_0 EdgePS();
 	}
-    // エッジシェーダ
+    // 通常モデル
     pass P2
     {
         VertexShader = compile vs_1_1 NormalVS();
         PixelShader = compile ps_2_0 PS();
     }
-    // 
+    // スキンメッシュ(テクスチャ無し)
     pass P3
     {
         VertexShader = compile vs_1_1 VS();
         PixelShader = compile ps_2_0 ps_not_tex();
-
     }
-
+    // 通常モデル()
+    pass P4
+    {
+        VertexShader = compile vs_1_1 NormalVS();
+        PixelShader = compile ps_2_0 ps_not_tex();
+    }
 }

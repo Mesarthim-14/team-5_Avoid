@@ -15,6 +15,9 @@
 #include "model_info.h"
 #include "player.h"
 #include "library.h"
+#include "toon_shader.h"
+#include "resource_manager.h"
+#include "texture.h"
 
 //=============================================================================
 // コンストラクタ
@@ -128,6 +131,7 @@ void CModel::Draw()
     D3DXMATRIX mtxRot, mtxTrans, mtxScale, mtxWorld;
     D3DXVECTOR3 pos = m_pModelInfo->GetPos();
     D3DXVECTOR3 rot = m_pModelInfo->GetRot();
+    CToonShader* pToonShader = CManager::GetInstance()->GetRenderer()->GetToonShader();
 
     //ワールドマトリックスの初期化
     D3DXMatrixIdentity(&mtxWorld);
@@ -151,38 +155,11 @@ void CModel::Draw()
     //現在のマテリアルを取得する
     pDevice->GetMaterial(&matDef);
 
-    //マテリアルデータへのポインタを取得
-    CXfile::MODEL model = m_pModelInfo->GetModel();
-    D3DXMATERIAL* pMat = (D3DXMATERIAL*)m_pModelInfo->GetBuffMat()->GetBufferPointer();
-    for (int nCntMat = 0; nCntMat < (int)model.dwNumMat; nCntMat++)
-    {
-        //マテリアルのアンビエントにディフューズカラーを設定
-        pMat[nCntMat].MatD3D.Ambient = pMat[nCntMat].MatD3D.Diffuse;
-
-        //マテリアルの設定
-        pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
-
-        // テクスチャの設定
-        if (model.apTexture[nCntMat])
-        {
-            pDevice->SetTexture(0, model.apTexture[nCntMat]);
-        }
-        else
-        {
-            pDevice->SetTexture(0, nullptr);
-        }
-        
-        //モデルパーツの描画
-        model.pMesh->DrawSubset(nCntMat);
-        pDevice->SetTexture(0, nullptr);
-    }
+    // トゥーンシェーダ
+    pToonShader->Begin(CToonShader::TOON_PASS_MODEL, mtxWorld, m_pModelInfo->GetModel());
 
     //保持していたマテリアルを戻す
     pDevice->SetMaterial(&matDef);
-    pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
-
-    // 影の描画
-    m_pModelInfo->ShadowDraw(rot);
 }
 
 //=============================================================================
