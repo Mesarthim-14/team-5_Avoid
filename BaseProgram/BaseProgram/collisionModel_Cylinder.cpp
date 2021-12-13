@@ -12,6 +12,11 @@
 #include "library.h"
 
 //*****************************************************************************
+// マクロ定義
+//*****************************************************************************
+#define ROT (D3DXVECTOR3(D3DXToRadian(90), 0.0f, 0.0f))
+
+//*****************************************************************************
 // コンストラクタ
 //*****************************************************************************
 CCollisionModelCylinder::CCollisionModelCylinder(PRIORITY Priority) :CCollisionModel(Priority)
@@ -35,7 +40,7 @@ CCollisionModelCylinder * CCollisionModelCylinder::Create(const D3DXVECTOR3 &pos
     if (pCollisionModelCylinder)
     {
         //当たり判定モデル情報の設定
-        pCollisionModelCylinder->SetInfo(pos, D3DXVECTOR3(radius * 2, radius * 2, length), rot);
+        pCollisionModelCylinder->SetInfo(pos, D3DXVECTOR3(radius * 2, radius * 2, length), ROT + rot);
         pCollisionModelCylinder->SetType(TYPE_CYLINDER);
 
         //当たり判定モデルの初期化処理
