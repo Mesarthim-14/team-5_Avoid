@@ -26,7 +26,7 @@ D3DXVECTOR3 CParticleNormal::m_Rot = ZeroVector3;
 #define SPEED       (7.0f)
 #define RANDOM      (3.14f)
 #define LIFE        (200)
-#define COLOR       (D3DXCOLOR(1.0f,1.0f,1.0f,0.8f))
+#define COLOR       (D3DXCOLOR(1.0f,1.0f,1.0f,m_fColor))
 
 //=====================================================================
 // コンストラクタ
@@ -36,6 +36,8 @@ CParticleNormal::CParticleNormal()
 {
     m_fAngle = 0.0f;
     m_fSpeed = 0.0f;
+    m_fColor = 0.5f;
+    m_nCnt = 0;
 }
 
 //=====================================================================
@@ -92,6 +94,7 @@ void CParticleNormal::Update(void)
 void CParticleNormal::Uninit(void)
 {
     CParticleInfo::Uninit();
+    SetParticleColor();
 }
 
 //=====================================================================
@@ -121,7 +124,22 @@ void CParticleNormal::SetParticle(void)
     // 移動情報を設定
     SetMove(move);
     // 色の設定
-    SetColor(COLOR);
     // パーティクルが消える時間の設定
     SetLife(LIFE);
+}
+
+//=====================================================================
+// パーティクルを徐々に消す処理
+// Author : toshiki
+//=====================================================================
+void CParticleNormal::SetParticleColor(void)
+{
+    m_nCnt++;
+    // 徐々に消えていく処理
+    if (m_nCnt >= 5)
+    {
+        m_fColor -= 0.01f;
+        m_nCnt = 0;
+    }
+    SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_fColor));
 }
