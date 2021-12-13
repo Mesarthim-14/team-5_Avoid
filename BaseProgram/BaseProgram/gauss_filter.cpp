@@ -264,7 +264,7 @@ void CGaussFilter::BeginSurface()
     // レンダリングターゲットのクリア
     m_pd3dDevice->Clear(0L, NULL
         , D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER
-        , 0xffffffff, 1.0f, 0L);
+        , D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 1.0f, 0L);
 
     m_pd3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
     m_pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
@@ -279,7 +279,6 @@ void CGaussFilter::BeginSurface()
 //=============================================================================
 void CGaussFilter::DrawPolygon()
 {   
-
     // 飛行モデルの描画
     m_pd3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
     m_pd3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);

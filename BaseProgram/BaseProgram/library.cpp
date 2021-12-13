@@ -370,6 +370,14 @@ D3DXVECTOR3 CLibrary::ConvWorldToScreen(const D3DXVECTOR3& pos, const D3DXMATRIX
 }
 
 //=============================================================================
+// 指定したターゲットに向く処理
+//=============================================================================
+float CLibrary::LookTarget(const D3DXVECTOR3& This, const D3DXVECTOR3& Target)
+{
+    return atan2f(This.x - Target.x, This.z - Target.z);
+}
+
+//=============================================================================
 // jsonのファイルロード
 //=============================================================================
 picojson::value CLibrary::JsonLoadFile(const string &FileName)

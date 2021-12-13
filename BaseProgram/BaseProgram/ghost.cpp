@@ -105,6 +105,7 @@ void CGhost::Update()
     if (m_pGhostModel)
     {
         m_pGhostModel->SetPos(GetPos());
+        m_pGhostModel->SetRot(GetRot());
     }
 
     // ˆÚ“®ˆ—

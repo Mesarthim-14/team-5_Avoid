@@ -66,7 +66,7 @@ HRESULT CSharkModel::Init(const D3DXVECTOR3 &pos)
     CModel::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
-    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ENEMY_BOX);
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ENEMY_SHARK);
     GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
     return S_OK;
@@ -86,12 +86,4 @@ void CSharkModel::Update()
 void CSharkModel::Draw()
 {
     CModel::Draw();
-}
-
-//=============================================================================
-// À•WÝ’è
-//=============================================================================
-void CSharkModel::SetPos(const D3DXVECTOR3 &pos)
-{
-    GetModelInfo()->SetPos(pos);
 }

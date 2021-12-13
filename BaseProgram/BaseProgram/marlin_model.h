@@ -25,7 +25,6 @@ public:
     HRESULT Init(const D3DXVECTOR3 &pos);               // ‰Šú‰»ˆ—
     void Draw();                                        // •`‰æ
 
-    void SetPos(const D3DXVECTOR3 &pos);
 private:
 };
 
