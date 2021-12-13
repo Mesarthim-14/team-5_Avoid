@@ -1,8 +1,8 @@
-#ifndef _CANVAS_H_
-#define _CANVAS_H_
+#ifndef _EDGE_FILTER_H_
+#define _EDGE_FILTER_H_
 //=============================================================================
 //
-// 線画調シェーダクラス [canvas.h]
+// エッジフィルタークラス [edge_filter.h]
 // Author : Konishi Yuuto
 //
 //=============================================================================
@@ -15,22 +15,27 @@
 //=============================================================================
 // クラス定義
 //=============================================================================
-class CCanvas : public CShaderSquare
+class CEdgeFilter : public CShaderSquare
 {
+
 public:
-    CCanvas(LPDIRECT3DDEVICE9 pd3dDevice, D3DPRESENT_PARAMETERS* pd3dParameters);
-    CCanvas(LPDIRECT3DDEVICE9 pd3dDevice, UINT Width, UINT Height);				// コンストラクタ
-    ~CCanvas();
+    CEdgeFilter(LPDIRECT3DDEVICE9 pd3dDevice, D3DPRESENT_PARAMETERS* pd3dParameters);
+    CEdgeFilter(LPDIRECT3DDEVICE9 pd3dDevice, UINT Width, UINT Height);
+    ~CEdgeFilter();
     void Invalidate();
     void Restore();
     HRESULT Load();
-    void Render(LPDIRECT3DTEXTURE9 pBackBuffer, LPDIRECT3DTEXTURE9 pMaterial, LPDIRECT3DTEXTURE9 pCanvas, bool isTex);
+    void SetParameters(D3DXVECTOR2* pTexel, float pLimit);
+    void Render(LPDIRECT3DTEXTURE9 pBackBuffer, LPDIRECT3DTEXTURE9 pZBuffer);
     BOOL IsOK();
     inline LPD3DXEFFECT GetEffect()const { return m_pEffect; };
 
 private:
     LPD3DXEFFECT m_pEffect;
-    D3DXHANDLE m_pTechnique;
+    D3DXHANDLE m_pTechnique, m_pTexel, m_pLimit, m_pWVP, m_pLightDir;
     LPDIRECT3DDEVICE9 m_pd3dDevice;
+    D3DPRESENT_PARAMETERS* m_pd3dParameters;
+
 };
+
 #endif

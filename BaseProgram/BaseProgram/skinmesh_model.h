@@ -87,5 +87,8 @@ private:
     IHighLevelAnimController * m_HLcontroller;          //ハイレベルアニメーションコントローラー
     static const char* m_aParam[MODEL_MAX];             //モデルパス名
     MODEL m_ModelNum;                                   // モデルの名前
+    SkinMesh::BlendIndex* m_pBlendIndex;
+
+    D3DXVECTOR4 m_ToonAmbient;
 };
 #endif 

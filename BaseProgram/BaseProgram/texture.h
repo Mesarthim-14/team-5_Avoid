@@ -43,6 +43,8 @@ public:
         TEXTURE_NUM_WARNING,                // ボスの弾の警告
         TEXTURE_NUM_WARNING2,               // ボスの弾の警告
         TEXTURE_NUM_ENEMY_SENTENCE1,        // ボスの弾の警告
+        TEXTURE_NUM_WHITE,                  // テストテクスチャ
+        TEXTURE_NUM_SLIME,                  // テストテクスチャ
         TEXTURE_NUM_MAX                     
     };
 

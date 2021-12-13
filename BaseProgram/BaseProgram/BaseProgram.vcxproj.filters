@@ -468,8 +468,17 @@
     </ClCompile>
     <ClCompile Include="collisionModel_Cylinder.cpp">
       <Filter>12_Collision</Filter>
-    </ClCompile> 
-   </ItemGroup>
+    </ClCompile>
+    <ClCompile Include="toon_shader.cpp">
+      <Filter>06_Effect\Shader\ToonEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="edge_filter.cpp">
+      <Filter>06_Effect\Shader\ToonEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="canvas.cpp">
+      <Filter>06_Effect\Shader\Canvas</Filter>
+    </ClCompile>
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
       <Filter>00_Important\Camera</Filter>
@@ -947,8 +956,17 @@
     </ClInclude>
     <ClInclude Include="collisionModel_Cylinder.h">
       <Filter>12_Collision</Filter>
-    </ClInclude> 
-   </ItemGroup>
+    </ClInclude>
+    <ClInclude Include="toon_shader.h">
+      <Filter>06_Effect\Shader\ToonEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="edge_filter.h">
+      <Filter>06_Effect\Shader\ToonEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="canvas.h">
+      <Filter>06_Effect\Shader\Canvas</Filter>
+    </ClInclude>
+  </ItemGroup>
   <ItemGroup>
     <None Include="data\Text\Shader\BlurFilter.fx">
       <Filter>06_Effect\Shader\FresnelWater\ShaderFile</Filter>
@@ -1150,5 +1168,28 @@
     <Filter Include="08_Object\Map\Factory">
       <UniqueIdentifier>{363f5782-f304-4c47-9ca7-409f30e29e9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06_Effect\Shader\ToonEffect">
+      <UniqueIdentifier>{b00128d7-d33f-4fff-a629-a57c182a1067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_Effect\Shader\ToonEffect\Fx">
+      <UniqueIdentifier>{c48d601a-eaf8-4b01-8354-0460d247ce81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_Effect\Shader\Canvas">
+      <UniqueIdentifier>{72d3d0d5-7b83-4be2-81e7-be9aa456c832}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_Effect\Shader\Canvas\Fx">
+      <UniqueIdentifier>{6b93a0d9-19c0-41e1-bb54-16f9686c91cd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="data\Text\Shader\EdgeFilter.fx">
+      <Filter>06_Effect\Shader\ToonEffect\Fx</Filter>
+    </FxCompile>
+    <FxCompile Include="data\Text\Shader\ToonShader.fx">
+      <Filter>06_Effect\Shader\ToonEffect\Fx</Filter>
+    </FxCompile>
+    <FxCompile Include="data\Text\Shader\Canvas.fx">
+      <Filter>06_Effect\Shader\Canvas\Fx</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
