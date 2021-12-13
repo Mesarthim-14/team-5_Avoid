@@ -68,7 +68,7 @@ HRESULT CGhostModel::Init(const D3DXVECTOR3 &pos)
     CModel::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
-    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ENEMY_BOX);
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ENEMY_GHOST);
     GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
     return S_OK;
@@ -80,12 +80,4 @@ HRESULT CGhostModel::Init(const D3DXVECTOR3 &pos)
 void CGhostModel::Draw()
 {
     CModel::Draw();
-}
-
-//=============================================================================
-// À•WÝ’è
-//=============================================================================
-void CGhostModel::SetPos(const D3DXVECTOR3 &pos)
-{
-    GetModelInfo()->SetPos(pos);
 }

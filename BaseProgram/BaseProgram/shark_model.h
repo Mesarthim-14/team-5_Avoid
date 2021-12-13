@@ -26,7 +26,6 @@ public:
     void Update();                                      // XVˆ—
     void Draw();                                        // •`‰æ
 
-    void SetPos(const D3DXVECTOR3 &pos);
 private:
 };
 

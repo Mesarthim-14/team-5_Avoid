@@ -75,6 +75,9 @@ public:
         XFILE_NUM_MAP_SQUARE_FLOOR2,    // マップ
         XFILE_NUM_MAP_THIN_FLOOR,       // マップ
         XFILE_NUM_MAP_THIN_FLOOR2,      // マップ
+        XFILE_NUM_ENEMY_SHARK,          // サメ
+        XFILE_NUM_ENEMY_MARLIN,         // カジキ
+        XFILE_NUM_ENEMY_GHOST,          // ゴースト
     	XFILE_NUM_MAX
     };
     

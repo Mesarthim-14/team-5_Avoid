@@ -95,6 +95,7 @@ void CShark::Update()
     if (m_pSharkModel)
     {
         m_pSharkModel->SetPos(GetPos());
+        m_pSharkModel->SetRot(GetRot());
     }
 }
 

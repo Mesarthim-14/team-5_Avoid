@@ -33,6 +33,10 @@ public:
     virtual void Draw();                                                    // 描画処理
     static CModel *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);  // インスタンス生成
 
+    // Set関数
+    void SetPos(const D3DXVECTOR3& pos);
+    void SetRot(const D3DXVECTOR3& rot);
+
     // Get関数
     D3DXVECTOR3 GetPos()const;
     D3DXVECTOR3 GetRot()const;
