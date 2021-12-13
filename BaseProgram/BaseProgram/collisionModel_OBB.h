@@ -30,6 +30,15 @@ public:
         D3DXVECTOR3 DirVect[AXIS_NUM_OBB];  // 方向ベクトル
     };
 
+    // 当たった面の列挙型
+    enum SURFACE
+    {
+        SURFACE_NONE = -1,
+        SURFACE_UP,         // 上面
+        SURFACE_SIDE,       // 側面
+        SURFACE_MAX
+    };
+
     CCollisionModelOBB(PRIORITY = PRIORITY_COLLISION); // コンストラクタ
     ~CCollisionModelOBB();                             // デストラクタ
 

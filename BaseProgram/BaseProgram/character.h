@@ -60,6 +60,7 @@ public:
     virtual void Update();              // 更新処理
     virtual void Draw();                // 描画処理
     void Landing(const float &fHeight); // 着地
+    void Fall();                        // 落下
 
     // Get関数
     inline D3DXVECTOR3 GetPos()const                            { return m_pos; }                       // 現在の座標情報

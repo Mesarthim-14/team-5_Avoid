@@ -223,7 +223,7 @@ void CGame::CreatePlayer()
     // ƒvƒŒƒCƒ„[‚Ì¶¬
     if (!m_pPlayer)
     {
-        m_pPlayer = CPlayer::Create(D3DXVECTOR3(54500.0f, 0.0f, 25500.0f), ZeroVector3);
+        m_pPlayer = CPlayer::Create(D3DXVECTOR3(54500.0f, 1000.0f, 25500.0f), ZeroVector3);
         m_pPlayer->ChangeState(CPlayerStateNotMove::Create());
     }
 }
