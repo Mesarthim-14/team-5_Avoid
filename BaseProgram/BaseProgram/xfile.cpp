@@ -38,37 +38,43 @@ CXfile::CXfile()
     // Xファイルネームを取得
     m_aXfileName =
     {
-        { "data/Model/Normal/block.x" },                        // テストブロック
-        { "data/Model/Normal/mapmapmap3.x" },                   // マップ
-        { "data/Model/Normal/Map/checkpoint.x" },                    // チェックポイント
-        { "data/Model/Normal/plane.x" },                        // 平面
-        { "data/Model/Normal/sky.x" },                          // 空
-        { "data/Model/Normal/enemy_box.x" },                    // 仮エネミー
-        { "data/Model/Normal/susumuashiba.x" },                 // 進む足場
-        { "data/Model/Normal/Rubble1.x" },                      // 瓦礫
-        { "data/Model/Normal/Rubble2.x" },                      // 瓦礫
-        { "data/Model/Normal/kaitenyuka_shita.x" },             // 回転床
-        { "data/Model/Normal/kaitenyuka_ue.x" },                // 回転床
-        { "data/Model/Normal/Cylinder.x" },                     // 酒樽
-        { "data/Model/Normal/Slope.x" },                        // 坂道
-        { "data/Model/Normal/HeelPoint.x" },                    // 回復ポイント
-        { "data/Model/Normal/Cannon.x" },                       // 大砲
-        { "data/Model/Normal/hashiwatashi.x" },                 // 橋
-        { "data/Model/Normal/CannonBullet.x" },                 // 大砲の弾
-        { "data/Model/Normal/ugokuashiba.x" },                  // 渦の足場
-        { "data/Model/Normal/sky_blue5.x" },                    // お空
-        { "data/Model/Normal/Kraken_Bullet.x" },                // クラーケンの弾
-        { "data/Model/Normal/Map/06_floor_thin.x" },            // マップ長方形
-        { "data/Model/Normal/Map/01_floor_big_2f.x" },          // マップ最初の床
-        { "data/Model/Normal/Map/02_floor_checkpoint.x" },      // マップ最初の床
-        { "data/Model/Normal/Map/03_floor_checkpoint_2f.x" },   // マップ最初の床
-        { "data/Model/Normal/Map/04_floor_sq.x" },              // マップ正方形
-        { "data/Model/Normal/Map/05_floor_sq_2f.x" },           // マップ正方形
-        { "data/Model/Normal/Map/00_floor_big.x" },             // マップ最初の床
-        { "data/Model/Normal/Map/07_floor_thin_2f.x" },         // マップ長方形
-        { "data/Model/Normal/Enemy/same.x" },                   // サメ
-        { "data/Model/Normal/Enemy/kajiki_Kai.x" },             // カジキ
-        { "data/Model/Normal/Enemy/obake.x" },                  // ゴースト
+        { "data/Model/Normal/block.x" },                            // テストブロック
+        { "data/Model/Normal/mapmapmap3.x" },                       // マップ
+        { "data/Model/Normal/Map/checkpoint.x" },                   // チェックポイント
+        { "data/Model/Normal/plane.x" },                            // 平面
+        { "data/Model/Normal/sky.x" },                              // 空
+        { "data/Model/Normal/enemy_box.x" },                        // 仮エネミー
+        { "data/Model/Normal/susumuashiba.x" },                     // 進む足場
+        { "data/Model/Normal/Rubble1.x" },                          // 瓦礫
+        { "data/Model/Normal/Rubble2.x" },                          // 瓦礫
+        { "data/Model/Normal/kaitenyuka_shita.x" },                 // 回転床
+        { "data/Model/Normal/kaitenyuka_ue.x" },                    // 回転床
+        { "data/Model/Normal/Cylinder.x" },                         // 酒樽
+        { "data/Model/Normal/Slope.x" },                            // 坂道
+        { "data/Model/Normal/Gimmick/kaihuku.x" },                  // 回復ポイント
+        { "data/Model/Normal/gimmick_cannon.x" },                   // 大砲
+        { "data/Model/Normal/hashiwatashi.x" },                     // 橋
+        { "data/Model/Normal/CannonBullet.x" },                     // 大砲の弾
+        { "data/Model/Normal/ugokuashiba.x" },                      // 渦の足場
+        { "data/Model/Normal/sky_blue5.x" },                        // お空
+        { "data/Model/Normal/Kraken_Bullet.x" },                    // クラーケンの弾
+        { "data/Model/Normal/Map/06_floor_thin.x" },                // マップ長方形
+        { "data/Model/Normal/Map/01_floor_big_2f.x" },              // マップ最初の床
+        { "data/Model/Normal/Map/02_floor_checkpoint.x" },          // マップ最初の床
+        { "data/Model/Normal/Map/03_floor_checkpoint_2f.x" },       // マップ最初の床
+        { "data/Model/Normal/Map/04_floor_sq.x" },                  // マップ正方形
+        { "data/Model/Normal/Map/05_floor_sq_2f.x" },               // マップ正方形
+        { "data/Model/Normal/Map/00_floor_big.x" },                 // マップ最初の床
+        { "data/Model/Normal/Map/07_floor_thin_2f.x" },             // マップ長方形
+        { "data/Model/Normal/Enemy/same.x" },                       // サメ
+        { "data/Model/Normal/Enemy/kajiki_Kai.x" },                 // カジキ
+        { "data/Model/Normal/Enemy/obake.x" },                      // おばけ
+        { "data/Model/Normal/Gimmick/00_gimmick_barrel.x" },        // 酒樽
+        { "data/Model/Normal/Gimmick/01_gimmick_hasi.x" },          // 橋
+        { "data/Model/Normal/Gimmick/02_gimmick_sloop.x" },         // 坂
+        { "data/Model/Normal/Gimmick/03_gimmick_spinfloor.x" },     // 回る足場
+        { "data/Model/Normal/Gimmick/04_gimmick_spinship_mast.x" }, // 上
+        { "data/Model/Normal/Gimmick/05_gimmick_spinship_ship.x" }, // 下
 
     };
     

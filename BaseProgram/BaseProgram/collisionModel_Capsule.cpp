@@ -154,69 +154,69 @@ void CCollisionModelCapsule::Update()
 void CCollisionModelCapsule::Draw()
 {
 #ifdef _DEBUG
-//    //デバイスの取得
-//    LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
-//
-//    for (int nCount = 0; nCount < TYPE_MAX; nCount++)
-//    {
-//        //色の設定
-//        D3DXMATERIAL* mat = (D3DXMATERIAL*)m_apBuffMat[nCount]->GetBufferPointer();
-//        mat->MatD3D.Ambient = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
-//        mat->MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
-//        mat->MatD3D.Specular = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
-//        mat->MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
-//
-//        //ワイヤーフレームで描画
-//        pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-//
-//        //ワールドマトリックスの初期化
-//        D3DXMatrixIdentity(&m_mtxWorld);
-//
-//        // 角度の設定
-//        SetRot(nCount);
-//
-//        // 大きさの設定
-//        SetSize(nCount);
-//
-//        // 位置の設定
-//        SetPos(nCount);
-//
-//        //ワールドマトリックスの設定
-//        pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
-//
-//        D3DMATERIAL9 matDef;    //現在のマテリアル保持用
-//        memset(&matDef, 0, sizeof(matDef));
-//
-//        //現在のマテリアルを取得する
-//        pDevice->GetMaterial(&matDef);
-//
-//        //マテリアルデータへのポインタ
-//        D3DXMATERIAL*pMat = nullptr;
-//
-//        //マテリアルデータへのポインタを取得
-//        pMat = (D3DXMATERIAL*)m_apBuffMat[nCount]->GetBufferPointer();
-//
-//        //マテリアルのアンビエントにディフューズカラーを設定
-//        pMat->MatD3D.Ambient = pMat->MatD3D.Diffuse;
-//
-//        //マテリアルの設定
-//        pDevice->SetMaterial(&pMat->MatD3D);
-//
-//        if (m_apMesh)
-//        {
-//            //モデルパーツの描画
-//            m_apMesh[nCount]->DrawSubset(0);
-//        }
-//
-//        pDevice->SetTexture(0, nullptr);
-//
-//        //保持していたマテリアルを戻す
-//        pDevice->SetMaterial(&matDef);
-//        pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
-//    }
-//
-//    //ワイヤーフレームをもどす
-//    pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+    //デバイスの取得
+    LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+
+    for (int nCount = 0; nCount < TYPE_MAX; nCount++)
+    {
+        //色の設定
+        D3DXMATERIAL* mat = (D3DXMATERIAL*)m_apBuffMat[nCount]->GetBufferPointer();
+        mat->MatD3D.Ambient = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
+        mat->MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
+        mat->MatD3D.Specular = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
+        mat->MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
+
+        //ワイヤーフレームで描画
+        pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+        //ワールドマトリックスの初期化
+        D3DXMatrixIdentity(&m_mtxWorld);
+
+        // 角度の設定
+        SetRot(nCount);
+
+        // 大きさの設定
+        SetSize(nCount);
+
+        // 位置の設定
+        SetPos(nCount);
+
+        //ワールドマトリックスの設定
+        pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
+
+        D3DMATERIAL9 matDef;    //現在のマテリアル保持用
+        memset(&matDef, 0, sizeof(matDef));
+
+        //現在のマテリアルを取得する
+        pDevice->GetMaterial(&matDef);
+
+        //マテリアルデータへのポインタ
+        D3DXMATERIAL*pMat = nullptr;
+
+        //マテリアルデータへのポインタを取得
+        pMat = (D3DXMATERIAL*)m_apBuffMat[nCount]->GetBufferPointer();
+
+        //マテリアルのアンビエントにディフューズカラーを設定
+        pMat->MatD3D.Ambient = pMat->MatD3D.Diffuse;
+
+        //マテリアルの設定
+        pDevice->SetMaterial(&pMat->MatD3D);
+
+        if (m_apMesh)
+        {
+            //モデルパーツの描画
+            m_apMesh[nCount]->DrawSubset(0);
+        }
+
+        pDevice->SetTexture(0, nullptr);
+
+        //保持していたマテリアルを戻す
+        pDevice->SetMaterial(&matDef);
+        pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+    }
+
+    //ワイヤーフレームをもどす
+    pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 #endif
 }
 

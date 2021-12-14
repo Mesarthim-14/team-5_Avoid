@@ -83,6 +83,7 @@ HRESULT CKraken::Init()
     {
         m_pCurrentState = CKrakenStateNormal::Create();
     }
+
     return S_OK;
 }
 

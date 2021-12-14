@@ -68,7 +68,7 @@ HRESULT CSwirlScaffold::Init(const D3DXVECTOR3 &pos)
     CModel::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
-    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_SWIRL_SCAFFOLD);
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_GIMMICK_SPINFLOOR);
     GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
     return S_OK;
