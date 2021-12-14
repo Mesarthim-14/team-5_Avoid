@@ -29,8 +29,8 @@
 //=====================================================================
 CPlayerStateAvoid::CPlayerStateAvoid()
 {
-    m_fAvoidValueY = 20.0f;
-    m_fAvoidValueXZ = 25.0f;
+    m_fAvoidValueY = 60.0f;
+    m_fAvoidValueXZ = 100.0f;
 }
 
 //=====================================================================

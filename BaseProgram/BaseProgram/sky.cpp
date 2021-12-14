@@ -100,5 +100,5 @@ void CSky::Draw()
     CModel::Draw();
 
     // ƒ‰ƒCƒgŒø‰Ê‚ð•t‚¯‚é
-    pDevice->SetRenderState(D3DRS_LIGHTING, true);
+   pDevice->SetRenderState(D3DRS_LIGHTING, true);
 }

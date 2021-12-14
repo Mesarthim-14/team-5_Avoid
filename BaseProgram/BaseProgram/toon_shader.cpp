@@ -288,7 +288,7 @@ void CToonShader::Begin(int nNum, D3DXMATRIX& mtxWorld, CXfile::MODEL model)
 
         // シェーダ開始
         m_pEffect->Begin(NULL, 0);
-        SetAmbient(&D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
+//        SetAmbient(&D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
         SetMatrix(&mtxWorld, &LightDir, &EyePos);
         for (int nCntMat = 0; nCntMat < (int)model.dwNumMat; nCntMat++)
         {
@@ -395,7 +395,7 @@ HRESULT CToonShader::Load()
 void CToonShader::TextureLoad()
 {
     D3DXCreateTextureFromFileEx(m_pd3dDevice,
-        "data/Texture/ToonMap.bmp",		//トゥーンマップテクスチャーファイル名
+        "data/Texture/ToonMap5.bmp",		//トゥーンマップテクスチャーファイル名
         D3DX_DEFAULT,
         D3DX_DEFAULT,
         1,
