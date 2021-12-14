@@ -24,7 +24,7 @@
 #define SPEED               (50.0f)                                 // スピード
 #define RISE_SPEED          (30.0f)                                 // 上昇速度
 #define POS                 (D3DXVECTOR3(-3500.0f, -200.0f, 0.0f))  // 座標
-#define FOLLOW_END_DISTANCE (800.0f)                                // 追従を切る
+#define FOLLOW_END_DISTANCE (1200.0f)                                // 追従を切る
 #define RISE_TIME           (120)                                   // 終了までの時間
 #define END_TIME            (250)                                   // 終了までの時間
 #define COLLISION_SIZE  (D3DXVECTOR3(m_fCollisionSize, m_fCollisionSize, m_fCollisionSize))
@@ -147,6 +147,9 @@ void CGhost::Move()
     // 追従フラグ
     if (m_bFollow)
     {
+        // プレイヤーの方を向く処理
+        LookAtPlayer();
+
         // 追従
          if (Follow())
         {

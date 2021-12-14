@@ -74,7 +74,7 @@ HRESULT CLight::Init()
     m_Light.Specular = WhiteColor;
 
     //ライト方向の指定
-    m_vecDir = D3DXVECTOR3(1.0f, -1.0f, 1.0f);
+    m_vecDir = D3DXVECTOR3(-0.086f, -1.0f, 0.593f);
 
     //正規化する（大きさ1のベクトルにする必要がある）
     D3DXVec3Normalize(&m_vecDir, &m_vecDir);

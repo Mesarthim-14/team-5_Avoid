@@ -195,7 +195,8 @@ void CPlayerState::MoveByKeyboard(CPlayer* &pPlayer)
 
     // Šµ«
     D3DXVECTOR3 move = pPlayer->GetMove();
-    move += (Inertia - move) * pPlayer->GetInertiaNum();
+    move.x += (Inertia.x - move.x) * pPlayer->GetInertiaNum();
+    move.z += (Inertia.z - move.z) * pPlayer->GetInertiaNum();
 
     pPlayer->SetMove(move);
     pPlayer->SetRotDest(rotDest);

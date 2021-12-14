@@ -31,7 +31,8 @@
 #define TEST_POS            (ZeroVector3)
 #define TEST_ROT            (ZeroVector3)
 #define COLLISION_RADIUS    (900.0f)
-#define SPEED               (150.0f)
+#define SPEED               (400.0f)
+#define LIFE                (300)
 
 //=============================================================================
 // コンストラクタ
@@ -85,7 +86,7 @@ HRESULT CBossBullet::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_KRAKEN_BULLET);
     m_pModel->GetModelInfo()->SetModelStatus(pos, rot, model);
     FollowPlayer();
-    SetLife(200);
+    SetLife(LIFE);
     if (!m_pCaution)
     {
         m_pCaution = CCautionBossBulletUi::Create();

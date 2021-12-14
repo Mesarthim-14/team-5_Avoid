@@ -32,17 +32,17 @@ public:
     virtual void Update();      // 更新処理
 
 protected:
-    void Rush();            // 突進
-    bool Follow();          // 追従
-    void Collision();       // 当たり判定
-    void AffectPlayer(CPlayer* &pPlayer);    // プレイヤーに影響を与える
+    void Rush();                            // 突進
+    bool Follow();                          // 追従
+    void Collision();                       // 当たり判定
+    void AffectPlayer(CPlayer* &pPlayer);   // プレイヤーに影響を与える
+    void LookAtPlayer();                    // プレイヤーを見る
 
 private:
     // private関数
-    virtual void Attack() = 0;          // 攻撃
-    void GravitySwitch();               // 重力の切り替え
-    bool Search();                      // プレイヤーを探す
-    void LookAtPlayer();                // プレイヤーを見る
+    virtual void Attack() = 0;  // 攻撃
+    void GravitySwitch();       // 重力の切り替え
+    bool Search();              // プレイヤーを探す
 
     // メンバ変数
     int m_nRushCount;                   // 飛んだカウント

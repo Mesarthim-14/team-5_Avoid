@@ -288,23 +288,31 @@ void CToonShader::Begin(int nNum, D3DXMATRIX& mtxWorld, CXfile::MODEL model)
 
         // シェーダ開始
         m_pEffect->Begin(NULL, 0);
-        SetAmbient(&D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
+//        SetAmbient(&D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
         SetMatrix(&mtxWorld, &LightDir, &EyePos);
         for (int nCntMat = 0; nCntMat < (int)model.dwNumMat; nCntMat++)
         {
-            m_pd3dDevice->SetTexture(0, pTexture->GetTexture(CTexture::TEXTURE_NUM_WHITE));
-
             // テクスチャの設定
-            //if (model.apTexture[nCntMat])
-            //{
-            //    m_pd3dDevice->SetTexture(0, model.apTexture[nCntMat]);
-            //}
-            //else
-            //{
-            //    m_pd3dDevice->SetTexture(0, nullptr);
-            //}
+            if (model.apTexture[nCntMat])
+            {
+                m_pd3dDevice->SetTexture(0, model.apTexture[nCntMat]);
+                BeginPass(CToonShader::TOON_PASS_MODEL);
 
-            BeginPass(nNum);
+            }
+            else
+            {
+                D3DXMATERIAL* pMat = (D3DXMATERIAL*)model.pBuffMat->GetBufferPointer();
+                D3DXVECTOR4 Diffuse = ZeroVector4;
+                Diffuse.x = pMat[nCntMat].MatD3D.Diffuse.r;
+                Diffuse.y = pMat[nCntMat].MatD3D.Diffuse.g;
+                Diffuse.z = pMat[nCntMat].MatD3D.Diffuse.b;
+                Diffuse.w = pMat[nCntMat].MatD3D.Diffuse.a;
+
+                m_pd3dDevice->SetTexture(0, nullptr);
+                SetDiffuse(Diffuse);
+                BeginPass(CToonShader::TOON_PASS_MODEL_DIFFUSE);
+            }
+
             //モデルパーツの描画
             model.pMesh->DrawSubset(nCntMat);
             EndPass();
@@ -320,16 +328,18 @@ void CToonShader::Begin(int nNum, D3DXMATRIX& mtxWorld, CXfile::MODEL model)
 //=============================================================================
 void CToonShader::Begin(int nNum, D3DXMATRIX& mtxWorld, D3DXVECTOR4* LightDir)
 {
-    if (m_pEffect)
+ //   if (m_pEffect)
     {
         D3DXVECTOR3 CameraPos = CManager::GetInstance()->GetCamera()->GetposV();
         D3DXVECTOR4 EyePos = D3DXVECTOR4(CameraPos, 1.0f);      // カメラの座標
 
-        BeginPass(nNum);
         // マトリクス、ライト方向、カメラ座標設定
         SetMatrix(&mtxWorld, LightDir, &EyePos);
         //トゥーンマップテクスチャーをステージ１にセットする
         m_pd3dDevice->SetTexture(1, m_pToonMap);
+
+        BeginPass(nNum);
+
     }
 }
 
@@ -385,7 +395,7 @@ HRESULT CToonShader::Load()
 void CToonShader::TextureLoad()
 {
     D3DXCreateTextureFromFileEx(m_pd3dDevice,
-        "data/Texture/ToonMap.bmp",		//トゥーンマップテクスチャーファイル名
+        "data/Texture/ToonMap5.bmp",		//トゥーンマップテクスチャーファイル名
         D3DX_DEFAULT,
         D3DX_DEFAULT,
         1,

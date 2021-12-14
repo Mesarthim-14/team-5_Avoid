@@ -69,7 +69,7 @@ HRESULT CRotateBody::Init(const D3DXVECTOR3 &pos)
     CModel::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
-    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ROTATE_BODY);
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_GIMMICK_SPINSHIP_MAST);
     GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
     return S_OK;

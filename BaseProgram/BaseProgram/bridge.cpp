@@ -69,7 +69,7 @@ HRESULT CBridge::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
     CModel::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
-    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_BRIDGE);
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_GIMMICK_BRIDGE);
     GetModelInfo()->SetModelStatus(pos, rot, model);
 
     // “–‚½‚è”»’è(OBB)‚Ì¶¬

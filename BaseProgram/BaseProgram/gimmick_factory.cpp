@@ -173,9 +173,8 @@ void CGimmickFactory::CreateMoveScaffold()
 //=======================================================================================
 void CGimmickFactory::CreateRotateGimmick()
 {
-    CRotateGimmick::Create(D3DXVECTOR3(-12126.1f, 810.0f, -16003.8f));
-    CRotateGimmick::Create(D3DXVECTOR3(-31838.1f, 800.0f, -17180.4f));
-
+    CRotateGimmick::Create(D3DXVECTOR3(-10676.8f, 2000.0f, -47242.9f));
+ //   CRotateGimmick::Create(D3DXVECTOR3(-31838.1f, 800.0f, -17180.4f));
 }
 
 //=======================================================================================
@@ -183,8 +182,10 @@ void CGimmickFactory::CreateRotateGimmick()
 //=======================================================================================
 void CGimmickFactory::CreateSlope()
 {
-    CSlope::Create(D3DXVECTOR3(-6562.7f, -200.0f, -13120.3f), D3DXVECTOR3(0.0f, D3DXToRadian(-75.0f), 0.0f));
-    CSlope::Create(D3DXVECTOR3(-9662.7f, -200.0f, -23596.1f), D3DXVECTOR3(0.0f, D3DXToRadian(-15.0f), 0.0f));
+    CSlope::Create(D3DXVECTOR3(-12503.1f, 2700.0f, -74892.9f), D3DXVECTOR3(0.0f, D3DXToRadian(278.0f), 0.0f));
+    CSlope::Create(D3DXVECTOR3(53587.5f, 2200.0f, -35282.7f), D3DXVECTOR3(0.0f, D3DXToRadian(243.0f), 0.0f));
+    CSlope::Create(D3DXVECTOR3(2961.4f, 2700.0f, -62761.8f), D3DXVECTOR3(0.0f, D3DXToRadian(6.0f), 0.0f));
+    CSlope::Create(D3DXVECTOR3(11661.5f, 2700.0f, 58025.7f), D3DXVECTOR3(0.0f, D3DXToRadian(118.0f), 0.0f));
 }
 
 //=======================================================================================
@@ -203,7 +204,7 @@ void CGimmickFactory::CreateCannon()
 //=======================================================================================
 void CGimmickFactory::CreateBridge()
 {
-    CBridge::Create(D3DXVECTOR3(-25423.0f, 1000.0f, -18907.5f), D3DXVECTOR3(0.0f, D3DXToRadian(0.0f), 0.0f));
+    CBridge::Create(D3DXVECTOR3(13890.0f, 5512.5f, -49270.0f), D3DXVECTOR3(0.0f, D3DXToRadian(7.0f), 0.0f));
 }
 
 //=======================================================================================
@@ -211,5 +212,6 @@ void CGimmickFactory::CreateBridge()
 //=======================================================================================
 void CGimmickFactory::CreateSwirl()
 {
-    CSwirlScaffold::Create(D3DXVECTOR3(-5788.6f, 0.0f, -22500.4f));
+    CSwirlScaffold::Create(D3DXVECTOR3(50244.2f, 0.0f, -18862.9f));
+    CSwirlScaffold::Create(D3DXVECTOR3(57719.1f, 0.0f, -23549.7f));
 }

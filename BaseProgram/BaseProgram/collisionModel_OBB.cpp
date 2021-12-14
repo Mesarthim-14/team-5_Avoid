@@ -90,5 +90,5 @@ void CCollisionModelOBB::Update()
 //*****************************************************************************
 void CCollisionModelOBB::Draw()
 {
-//    CCollisionModel::Draw();
+    CCollisionModel::Draw();
 }
