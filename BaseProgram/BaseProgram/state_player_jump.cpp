@@ -156,7 +156,6 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
         m_nChargeJumpCount = 0;
         pPlayer->SetLanding(false);
     }
-
     // ˆÚ“®—Ê‚ÌÝ’è
     pPlayer->SetMove(move);
 }

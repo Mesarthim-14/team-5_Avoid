@@ -35,6 +35,7 @@ private:
     void Move();               // ˆÚ“®ˆ—
     void Rise();               // ã¸
     void Attack();
+    void Tracking();
     //==================
     // ƒƒ“ƒo•Ï”
     //==================

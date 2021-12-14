@@ -85,6 +85,7 @@ HRESULT CParticleNormal::Init(void)
 void CParticleNormal::Update(void)
 {
     CParticleInfo::Update();
+    SetParticleColor();
 }
 
 //=====================================================================
@@ -94,7 +95,6 @@ void CParticleNormal::Update(void)
 void CParticleNormal::Uninit(void)
 {
     CParticleInfo::Uninit();
-    SetParticleColor();
 }
 
 //=====================================================================
@@ -123,7 +123,6 @@ void CParticleNormal::SetParticle(void)
     D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 1.5f, 0.0f);
     // 移動情報を設定
     SetMove(move);
-    // 色の設定
     // パーティクルが消える時間の設定
     SetLife(LIFE);
 }

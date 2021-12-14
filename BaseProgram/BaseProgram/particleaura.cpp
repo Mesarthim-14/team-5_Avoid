@@ -22,7 +22,7 @@
 // マクロ定義
 // Author : toshiki
 //=====================================================================
-#define SIZE         (D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f))
+#define SIZE         (D3DXVECTOR3(1500.0f, 1500.0f, 1500.0f))
 #define ANGLE        (3.0f)
 #define SPEED        (5.0f)
 #define RANDOM       (3.14f)
@@ -93,25 +93,8 @@ HRESULT CParticleAura::Init()
 void CParticleAura::Update()
 {
     CParticleInfo::Update();
-
-    if (Search())
-    {
-        if (!m_bCaution)
-        {
-            m_bCaution = true;
-            m_nCautionCounter = 0;
-        }
-    }
-    // 警告が出てるとき
-    if (m_bCaution)
-    {
-        m_nCautionCounter++;
-        if (m_nCautionCounter == 60)
-        {
-            m_bCaution = false;
-            Attack();
-        }
-    }
+    // プレイヤーを探す処理
+    Tracking();
     // 移動処理
     Move();
 }
@@ -208,5 +191,31 @@ void CParticleAura::Attack()
     if (!m_bFollow && !m_bEnd)
     {
         m_bFollow = true;
+    }
+}
+
+//=====================================================================
+// パーティクルの追従設定
+// Author : toshiki
+//=====================================================================
+void CParticleAura::Tracking()
+{
+    if (Search())
+    {
+        if (!m_bCaution)
+        {
+            m_bCaution = true;
+            m_nCautionCounter = 0;
+        }
+    }
+    // 警告が出てるとき
+    if (m_bCaution)
+    {
+        m_nCautionCounter++;
+        if (m_nCautionCounter == 60)
+        {
+            m_bCaution = false;
+            Attack();
+        }
     }
 }
