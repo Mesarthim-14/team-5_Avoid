@@ -93,7 +93,7 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	m_fRotationSpeed = 0.1f;
 	m_fAngleSpeed = 0.0f;
 	m_SlimeState = SLIME_LARGESIZE;
-	m_nHP = 60;
+	m_nHP = 100;
 	m_fAngle = 0.0f;
 	m_ActionState = ACTION_NONE;
 	for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
@@ -103,7 +103,6 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	memset(m_nMaxAction, 0, sizeof(m_nMaxAction));
 	m_pCurrentState = nullptr;
 	m_pNextState = nullptr;
-
 	m_pColModelOBB = nullptr;
     m_pColModelCapsule = nullptr;
     m_bCollision = true;
@@ -193,9 +192,17 @@ void CPlayer::Update()
 	// リスポーン
 	ReSporn();
 
-	//モデル位置向き反映(いずれcharacterに移動させたい）
-	m_pSkinmeshModel[m_SlimeState]->SetPos(GetPos());
-	m_pSkinmeshModel[m_SlimeState]->SetRot(GetRot());
+    D3DXVECTOR3 pos = GetPos();
+    D3DXVECTOR3 rot = GetRot();
+    for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
+    {
+        if (m_pSkinmeshModel[nCount])
+        {
+            // 各モデルの座標と角度の設定
+            m_pSkinmeshModel[nCount]->SetPos(pos);
+            m_pSkinmeshModel[nCount]->SetRot(rot);
+        }
+    }
 
 	// 更新処理
 	UpdateRot();
@@ -203,11 +210,11 @@ void CPlayer::Update()
     // 当たり判定モデル情報の更新処理
 	if (m_pColModelOBB)
 	{
-        m_pColModelOBB->SetInfo(GetPos(), m_pColModelOBB->GetInfo().size, GetRot());
+        m_pColModelOBB->SetInfo(pos, m_pColModelOBB->GetInfo().size, rot);
 	}
     if (m_pColModelCapsule)
     {
-        m_pColModelCapsule->SetInfo(GetPos(), m_pColModelCapsule->GetInfo().radius, m_pColModelCapsule->GetInfo().length, GetRot());
+        m_pColModelCapsule->SetInfo(pos, m_pColModelCapsule->GetInfo().radius, m_pColModelCapsule->GetInfo().length, rot);
     }
 
 	ShowInfo();

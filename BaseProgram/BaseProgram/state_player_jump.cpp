@@ -83,14 +83,15 @@ void CPlayerStateJump::Update()
         return;
     }
 
-    // ジャンプ処理
-    JumpProcess(pPlayer);
-
     // 着地時の処理
     if (pPlayer->GetLanding() && m_bJumpCheck)
     {
         pPlayer->ChangeState(CPlayerStateNormal::Create());
     }
+
+    // ジャンプ処理
+    JumpProcess(pPlayer);
+
 }
 
 //=====================================================================
@@ -115,45 +116,41 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
     D3DXVECTOR3 move = pPlayer->GetMove();
     D3DXVECTOR3 pos = pPlayer->GetPos();
 
-    if (CLibrary::KeyboardPress(DIK_SPACE))
+    if (CLibrary::KeyboardPress(DIK_SPACE) && !m_bJumpCheck)
     {
         m_nChargeJumpCount++;
         // エフェクトの発生時間
         if (m_nChargeJumpCount >= PARTICLE_STRAT)
         {
-            // 溜めエフェクト生成
-            if (m_nChargeJumpCount < CHARGEJUMP_MAX && !m_bJumpCheck)
-            {
-                CParticleShrink::Create(pos);
-            }
+            CParticleShrink::Create(pos);
         }
+    }
+
+    if (CLibrary::KeyboardRelease(DIK_SPACE) && !m_bJumpCheck)//通常ジャンプ
+    {
         //エフェクト発生
         if (m_nChargeJumpCount >= CHARGEJUMP_MAX)
         {
             m_bIsReadyChargeJump = true;
             pPlayer->SetLanding(false);
+
+            m_bJumpCheck = true;
+            move.y += m_fJumpValue * 3;
+            move.x += move.x * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
+            move.z += move.z * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
+            //    pPlayer->SetState(CPlayer::STATE_JUMP);
+            m_nChargeJumpCount = 0;
+            m_bIsReadyChargeJump = false;
+
+            // ライフの減算
+            SubLife(pPlayer);
         }
-    }
-
-    if (CLibrary::KeyboardPress(DIK_SPACE) && m_bIsReadyChargeJump)//ため状態で離したら
-    {
-        m_bJumpCheck = true;
-        move.y += m_fJumpValue * 3;
-        move.x += move.x * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
-        move.z += move.z * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
-        //    pPlayer->SetState(CPlayer::STATE_JUMP);
-        m_nChargeJumpCount = 0;
-        m_bIsReadyChargeJump = false;
-
-        // ライフの減算
-        SubLife(pPlayer);
-    }
-
-    else if (CLibrary::KeyboardRelease(DIK_SPACE))//通常ジャンプ
-    {
-        m_bJumpCheck = true;
-        move.y += m_fJumpValue;
-        m_nChargeJumpCount = 0;
+        else
+        {
+            m_bJumpCheck = true;
+            move.y += m_fJumpValue;
+            m_nChargeJumpCount = 0;
+        }
         pPlayer->SetLanding(false);
     }
     // 移動量の設定
