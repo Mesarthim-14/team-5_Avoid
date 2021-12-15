@@ -148,9 +148,6 @@
     <ClCompile Include="particleaura.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="particlecollective.cpp">
-      <Filter>06_Effect\Particle</Filter>
-    </ClCompile>
     <ClCompile Include="particleshrink.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
@@ -643,9 +640,6 @@
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
     <ClInclude Include="particlenormal.h">
-      <Filter>06_Effect\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="particlecollective.h">
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
     <ClInclude Include="shadow_volume.h">

@@ -79,6 +79,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -228,7 +230,6 @@
     <ClCompile Include="npc_text_enemy.cpp" />
     <ClCompile Include="particleaura.cpp" />
     <ClCompile Include="particlecannon.cpp" />
-    <ClCompile Include="particlecollective.cpp" />
     <ClCompile Include="particlenormal.cpp" />
     <ClCompile Include="particlepop.cpp" />
     <ClCompile Include="particleshrink.cpp" />
@@ -392,7 +393,6 @@
     <ClInclude Include="npc_text_enemy.h" />
     <ClInclude Include="particleaura.h" />
     <ClInclude Include="particlecannon.h" />
-    <ClInclude Include="particlecollective.h" />
     <ClInclude Include="particlenormal.h" />
     <ClInclude Include="particlepop.h" />
     <ClInclude Include="particleshrink.h" />
