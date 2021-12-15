@@ -33,7 +33,7 @@ CBullet::CBullet(PRIORITY Priority) : CScene(Priority)
 	m_pos = ZeroVector3;						// 座標
 	m_move = ZeroVector3;						// 移動量
 	m_rot = ZeroVector3;						// 現在の回転
-	m_size = ZeroVector3;						// サイズ
+    m_ColRadius = 0.0f;					        // 当たり判定サイズ
 	m_nLife = 0;							    // 生存時間
 	m_fSpeed = 0.0f;							// スピード
 	m_nDamage = 0;							        // ダメージ量
@@ -77,7 +77,7 @@ HRESULT CBullet::Init()
     // 当たり判定モデル(球体)の生成
     if (!m_pCollisionModelSphere)
     {
-        m_pCollisionModelSphere = CCollisionModelSphere::Create(m_pos, m_size.x, m_rot);
+        m_pCollisionModelSphere = CCollisionModelSphere::Create(m_pos, m_ColRadius, m_rot);
     }
 
 	return S_OK;
@@ -106,7 +106,7 @@ void CBullet::Update()
     // 当たり判定モデルの更新
     if (m_pCollisionModelSphere)
     {
-        m_pCollisionModelSphere->SetInfo(m_pos, m_size, m_rot);
+        m_pCollisionModelSphere->SetInfo(m_pos, D3DXVECTOR3(m_ColRadius, m_ColRadius, m_ColRadius), m_rot);
     }
 
 	// 位置更新

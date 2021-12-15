@@ -31,7 +31,7 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CMapThinFloor2::CMapThinFloor2(PRIORITY Priority) : CModel(Priority)
+CMapThinFloor2::CMapThinFloor2(PRIORITY Priority) : CMap(Priority)
 {
 }
 
@@ -98,7 +98,10 @@ void CMapThinFloor2::Update()
     CModel::Update();
 
     // 当たり判定
-    HitCol();
+    if (m_pColModelOBB)
+    {
+        HitColOBBs(m_pColModelOBB);
+    }
 }
 
 //=============================================================================
@@ -107,58 +110,4 @@ void CMapThinFloor2::Update()
 void CMapThinFloor2::Draw()
 {
     CModel::Draw();
-}
-
-//=============================================================================
-// 当たり判定
-//=============================================================================
-void CMapThinFloor2::HitCol()
-{
-    // プレイヤーポインタの取得
-    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
-    if (!pPlayer)
-        return;
-
-    // プレイヤーの当たり判定モデルポインタの取得
-    CCollisionModelOBB* pPlayerColModelOBB = pPlayer->GetColOBBPtr();
-
-    // プレイヤーの当たり判定ポインタの取得
-    CCollisionModelOBB::OBB playerObb;
-    if (pPlayerColModelOBB)
-    {
-        playerObb = pPlayerColModelOBB->GetOBB();
-    }
-    else
-        return;
-
-    if (m_pColModelOBB[CCollisionModelOBB::SURFACE_UP])
-    {
-        // 上面の当たり判定ポインタの取得
-        CCollisionModelOBB::OBB surfaceUpObb = m_pColModelOBB[CCollisionModelOBB::SURFACE_UP]->GetOBB();
-
-        if (CCollision::ColOBBs(surfaceUpObb, playerObb))
-        {
-            // 着地の処理
-            pPlayer->Landing(surfaceUpObb.info.pos.y + (surfaceUpObb.info.size.y / 2) + (playerObb.info.size.y / 2));
-            return;
-        }
-        else
-        {
-            // 着地判定の設定
-            pPlayer->SetLanding(false);
-        }
-    }
-
-    if (m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE])
-    {
-        // 側面の当たり判定ポインタの取得
-        CCollisionModelOBB::OBB surfaceSizeObb = m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE]->GetOBB();
-
-        if (CCollision::ColOBBs(surfaceSizeObb, playerObb))
-        {
-            // 落下の処理
-            pPlayer->Fall();
-            return;
-        }
-    }
 }

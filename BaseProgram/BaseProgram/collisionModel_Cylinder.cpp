@@ -21,6 +21,8 @@
 //*****************************************************************************
 CCollisionModelCylinder::CCollisionModelCylinder(PRIORITY Priority) :CCollisionModel(Priority)
 {
+    float m_radius = 0.0f;
+    float m_length = 0.0f;
 }
 
 //*****************************************************************************
@@ -35,18 +37,20 @@ CCollisionModelCylinder::~CCollisionModelCylinder()
 //*****************************************************************************
 CCollisionModelCylinder * CCollisionModelCylinder::Create(const D3DXVECTOR3 &pos, const float &radius, const float &length, const D3DXVECTOR3 &rot)
 {
-    CCollisionModelCylinder *pCollisionModelCylinder = new CCollisionModelCylinder;
+    CCollisionModelCylinder *pColModelCylinder = new CCollisionModelCylinder;
 
-    if (pCollisionModelCylinder)
+    if (pColModelCylinder)
     {
         //“–‚½‚è”»’èƒ‚ƒfƒ‹î•ñ‚ÌÝ’è
-        pCollisionModelCylinder->SetInfo(pos, D3DXVECTOR3(radius * 2, radius * 2, length), ROT + rot);
-        pCollisionModelCylinder->SetType(TYPE_CYLINDER);
+        pColModelCylinder->m_radius = radius;
+        pColModelCylinder->m_length = length;
+        pColModelCylinder->SetInfo(pos, D3DXVECTOR3(radius * 2, radius * 2, length), ROT + rot);
+        pColModelCylinder->SetType(TYPE_CYLINDER);
 
         //“–‚½‚è”»’èƒ‚ƒfƒ‹‚Ì‰Šú‰»ˆ—
-        pCollisionModelCylinder->Init();
+        pColModelCylinder->Init();
 
-        return pCollisionModelCylinder;
+        return pColModelCylinder;
     }
 
     return nullptr;

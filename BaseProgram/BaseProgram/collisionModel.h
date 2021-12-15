@@ -52,9 +52,8 @@ public:
     inline void SetInfo(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size, const D3DXVECTOR3 &rot)
     { m_info.pos = pos; m_info.size = size; m_info.rot = rot; }     // 位置/大きさ/角度の設定
 
-    INFO GetInfo()const { return m_info; }  // 位置/大きさ/角度情報
-
 protected:
+    inline INFO GetInfo()const { return m_info; }               // 位置/大きさ/角度情報
     inline void SetType(const TYPE &type) { m_type = type; }    // 当たり判定タイプの設定
 
 private:

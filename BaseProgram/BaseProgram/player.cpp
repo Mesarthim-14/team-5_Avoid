@@ -203,7 +203,7 @@ void CPlayer::Update()
     // 当たり判定モデル情報の更新処理
 	if (m_pColModelOBB)
 	{
-        m_pColModelOBB->SetInfo(GetPos(), m_pColModelOBB->GetInfo().size, GetRot());
+        m_pColModelOBB->SetInfo(GetPos(), m_pColModelOBB->GetOBB().info.size, GetRot());
 	}
     if (m_pColModelCapsule)
     {

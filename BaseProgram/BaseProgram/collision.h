@@ -14,6 +14,8 @@
 #include "model.h"
 #include "collisionModel_OBB.h"
 #include "collisionModel_Capsule.h"
+#include "collisionModel_Cylinder.h"
+#include "collisionModel_Sphere.h"
 
 //=============================================================================
 // 当たり判定クラス
@@ -33,9 +35,9 @@ public:
     // 当たり判定(OBBとOBB)
     static bool ColOBBs(const CCollisionModelOBB::OBB &obb1, const CCollisionModelOBB::OBB &obb2);
     // 当たり判定(球体とカプセル)
-    static bool ColSphereAndCapsule(const CCollisionModel::INFO &SphereInfo, const CCollisionModelCapsule::INFO &CapsuleInfo);
+    static bool ColSphereAndCapsule(const CCollisionModelSphere::SPHERE &SphereInfo, const CCollisionModelCapsule::INFO &CapsuleInfo);
     // 当たり判定(球体と円柱)
-    static void ColSphereAndCylinder(bool &bHit, SURFACE &surface, const CCollisionModel::INFO &SphereInfo, const CCollisionModel::INFO &CylinderInfo);
+    static void ColSphereAndCylinder(bool &bHit, SURFACE &surface, const CCollisionModelSphere::SPHERE &SphereInfo, const CCollisionModelCylinder::CYLINDER &CylinderInfo);
     // 当たり判定(矩形と矩形)
     static bool ColRectangleAndRectangle(const D3DXVECTOR3 &pos1, const D3DXVECTOR3 &pos2, const D3DXVECTOR3 &size1, const D3DXVECTOR3 &size2);
     // 当たり判定(円形と円形)

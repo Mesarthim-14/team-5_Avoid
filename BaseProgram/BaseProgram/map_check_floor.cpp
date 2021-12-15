@@ -32,7 +32,7 @@
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CMapCheckFloor::CMapCheckFloor(PRIORITY Priority) : CModel(Priority)
+CMapCheckFloor::CMapCheckFloor(PRIORITY Priority) : CMap(Priority)
 {
     m_pColModelCylinder = false;
 }
@@ -98,7 +98,7 @@ void CMapCheckFloor::Update()
     CModel::Update();
 
     // 当たり判定
-    HitCol();
+    HitColSphereAndCylinder(m_pColModelCylinder);
 }
 
 //=============================================================================
@@ -107,62 +107,4 @@ void CMapCheckFloor::Update()
 void CMapCheckFloor::Draw()
 {
     CModel::Draw();
-}
-
-//=============================================================================
-// 当たり判定
-//=============================================================================
-void CMapCheckFloor::HitCol()
-{
-    // プレイヤーポインタの取得
-    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
-    if (!pPlayer)
-        return;
-
-    // プレイヤーの当たり判定モデルポインタの取得
-    CCollisionModelCapsule* pPlayerColModelCapsule = pPlayer->GetColCapsulePtr();
-    if (!pPlayerColModelCapsule)
-        return;
-
-    // プレイヤーの当たり判定モデル(カプセル)の情報取得
-    CCollisionModelCapsule::INFO PlayerColModelCapsuleInfo = pPlayerColModelCapsule->GetInfo();
-
-    // プレイヤーの当たり判定モデル(カプセル)情報から球体の情報を設定
-    CCollisionModel::INFO PlayerColModelSphereInfo =
-    {
-        PlayerColModelCapsuleInfo.P1,
-        D3DXVECTOR3(PlayerColModelCapsuleInfo.radius * 2, PlayerColModelCapsuleInfo.radius * 2, PlayerColModelCapsuleInfo.radius * 2),
-        PlayerColModelCapsuleInfo.rot
-    };
-
-    // 当たり判定モデル(円柱)情報の取得
-    CCollisionModel::INFO colCylinderInfo;
-    if (m_pColModelCylinder)
-    {
-        colCylinderInfo = m_pColModelCylinder->GetInfo();
-    }
-    else
-        return;
-
-    bool bHit = false;                                      // 当たったかの判定
-    CCollision::SURFACE surface = CCollision::SURFACE_NONE; // 当たった面
-
-    // 当たり判定(球体と円柱)
-    CCollision::ColSphereAndCylinder(bHit, surface, PlayerColModelSphereInfo, colCylinderInfo);
-
-    if (bHit)
-    {
-        if (surface == CCollision::SURFACE_UP)
-        {
-            // 着地の処理
-            pPlayer->Landing(colCylinderInfo.pos.y + (colCylinderInfo.size.z / 2) + (PlayerColModelCapsuleInfo.length / 2));
-            return;
-        }
-        else if (surface == CCollision::SURFACE_SIDE)
-        {
-            // 落下の処理
-            pPlayer->Fall();
-            return;
-        }
-    }
 }

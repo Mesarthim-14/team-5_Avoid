@@ -49,7 +49,7 @@ public:
     void Update();  // 更新処理
     void Draw();    // 描画処理
 
-    OBB GetOBB()const { return{ GetInfo(), {m_DirVect[0], m_DirVect[1], m_DirVect[2] } }; }    // OBBの取得
+    inline OBB GetOBB()const { return{ GetInfo(), {m_DirVect[0], m_DirVect[1], m_DirVect[2] } }; }    // OBBの取得
 
 private:
     D3DXVECTOR3 m_DirVect[AXIS_NUM_OBB];  // 方向ベクトル

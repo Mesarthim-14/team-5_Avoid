@@ -197,10 +197,10 @@ bool CCollision::ColOBBs(const CCollisionModelOBB::OBB &obb1, const CCollisionMo
 //=============================================================================
 // 当たり判定(球体とカプセル)
 //=============================================================================
-bool CCollision::ColSphereAndCapsule(const CCollisionModel::INFO &SphereInfo, const CCollisionModelCapsule::INFO &CapsuleInfo)
+bool CCollision::ColSphereAndCapsule(const CCollisionModelSphere::SPHERE &SphereInfo, const CCollisionModelCapsule::INFO &CapsuleInfo)
 {
     // 当たり判定モデル同士の距離
-    D3DXVECTOR3 Interval = SphereInfo.pos - CapsuleInfo.pos;
+    D3DXVECTOR3 Interval = SphereInfo.info.pos - CapsuleInfo.pos;
     if (D3DXVec3Length(&Interval) > (FLOAT)OBB_INTERVAL)
     { // OBB_INTERVALより離れているとき、当たり判定を行わない
         return false;
@@ -219,7 +219,7 @@ bool CCollision::ColSphereAndCapsule(const CCollisionModel::INFO &SphereInfo, co
     D3DXVec3Normalize(&norV1, &V1);
 
     // カプセル線分の始点から球体の中心までのベクトルの計算
-    V2 = SphereInfo.pos - CapsuleInfo.P0;
+    V2 = SphereInfo.info.pos - CapsuleInfo.P0;
 
     // 2つのベクトルの内積を計算
     fDot = D3DXVec3Dot(&norV1, &V2);
@@ -228,7 +228,7 @@ bool CCollision::ColSphereAndCapsule(const CCollisionModel::INFO &SphereInfo, co
     ret = CapsuleInfo.P0 + D3DXVECTOR3(norV1.x * fDot, norV1.y * fDot, norV1.z * fDot);
 
     // 「線分上最近点と球体の中心との距離」が球体の半径とカプセルの半径を足した値より小さいとき
-    if (D3DXVec3Length(&(SphereInfo.pos - ret)) <= (SphereInfo.size.x / 2) + (CapsuleInfo.radius / 2))
+    if (D3DXVec3Length(&(SphereInfo.info.pos - ret)) <= SphereInfo.radius + CapsuleInfo.radius)
     {
         FLOAT ratio = 0.0f; // 線分を0～1の範囲で表したときの線分上最近点の位置
 
@@ -238,7 +238,7 @@ bool CCollision::ColSphereAndCapsule(const CCollisionModel::INFO &SphereInfo, co
         if (ratio >= 0.0f && ratio <= 1.0f)
         { // ratioが0以上1以下のとき
             // 「線分上最近点と球体の中心との距離」がカプセルと球体の半径を足した値より小さいとき
-            if (D3DXVec3Length(&(SphereInfo.pos - ret)) <= (SphereInfo.size.x / 2) + (CapsuleInfo.radius / 2))
+            if (D3DXVec3Length(&(SphereInfo.info.pos - ret)) <= SphereInfo.radius + CapsuleInfo.radius)
             {
                 return true;
             }
@@ -246,7 +246,7 @@ bool CCollision::ColSphereAndCapsule(const CCollisionModel::INFO &SphereInfo, co
         else if (ratio > 1.0f)
         { // ratioが1より大きいとき
             // 「カプセル線分の終点から球体の中心までのベクトルの長さ」が球体の半径より小さいとき
-            if (D3DXVec3Length(&(SphereInfo.pos - CapsuleInfo.P1)) <= (SphereInfo.size.x / 2))
+            if (D3DXVec3Length(&(SphereInfo.info.pos - CapsuleInfo.P1)) <= SphereInfo.radius)
             {
                 return true;
             }
@@ -254,7 +254,7 @@ bool CCollision::ColSphereAndCapsule(const CCollisionModel::INFO &SphereInfo, co
         else if (ratio < 0.0f)
         { // ratioが0より小さいとき
             // V2の長さがカプセルと球体の半径より小さいとき
-            if (D3DXVec3Length(&(ret - CapsuleInfo.P0)) <= (SphereInfo.size.x / 2))
+            if (D3DXVec3Length(&(ret - CapsuleInfo.P0)) <= SphereInfo.radius)
             {
                 return true;
             }
@@ -267,10 +267,10 @@ bool CCollision::ColSphereAndCapsule(const CCollisionModel::INFO &SphereInfo, co
 //=============================================================================
 // 当たり判定(球体と円柱)
 //=============================================================================
-void CCollision::ColSphereAndCylinder(bool &bHit, SURFACE &surface, const CCollisionModel::INFO & SphereInfo, const CCollisionModel::INFO & CylinderInfo)
+void CCollision::ColSphereAndCylinder(bool &bHit, SURFACE &surface, const CCollisionModelSphere::SPHERE &SphereInfo, const CCollisionModelCylinder::CYLINDER &CylinderInfo)
 {
     // 当たり判定モデル同士の距離
-    D3DXVECTOR3 Interval = SphereInfo.pos - CylinderInfo.pos;
+    D3DXVECTOR3 Interval = SphereInfo.info.pos - CylinderInfo.info.pos;
     if (D3DXVec3Length(&Interval) > (FLOAT)OBB_INTERVAL)
     { // OBB_INTERVALより離れているとき、当たり判定を行わない
         bHit = false;
@@ -285,11 +285,11 @@ void CCollision::ColSphereAndCylinder(bool &bHit, SURFACE &surface, const CColli
     FLOAT fDot = 0.0f;                  // 2つのベクトルの内積
 
     // 円柱線分の始点座標を計算
-    P0 = D3DXVECTOR3(CylinderInfo.pos.x, CylinderInfo.pos.y + (CylinderInfo.size.z / 2), CylinderInfo.pos.z);
+    P0 = D3DXVECTOR3(CylinderInfo.info.pos.x, CylinderInfo.info.pos.y + (CylinderInfo.length / 2), CylinderInfo.info.pos.z);
     //CLibrary::Rotate3D(P0, CylinderInfo.rot);
 
     // 円柱線分の終点座標を計算
-    P1 = D3DXVECTOR3(CylinderInfo.pos.x, CylinderInfo.pos.y - (CylinderInfo.size.z / 2), CylinderInfo.pos.z);
+    P1 = D3DXVECTOR3(CylinderInfo.info.pos.x, CylinderInfo.info.pos.y - (CylinderInfo.length / 2), CylinderInfo.info.pos.z);
     //CLibrary::Rotate3D(P1, CylinderInfo.rot);
 
     // 円柱線分のベクトルを計算
@@ -299,7 +299,7 @@ void CCollision::ColSphereAndCylinder(bool &bHit, SURFACE &surface, const CColli
     D3DXVec3Normalize(&norV1, &V1);
 
     // 円柱線分の始点から球体の中心までのベクトルの計算
-    V2 = SphereInfo.pos - P0;
+    V2 = SphereInfo.info.pos - P0;
 
     // 2つのベクトルの内積を計算
     fDot = D3DXVec3Dot(&norV1, &V2);
@@ -308,10 +308,10 @@ void CCollision::ColSphereAndCylinder(bool &bHit, SURFACE &surface, const CColli
     FLOAT ratio = 0.0f;             // 線分を0～1の範囲で表したときの線分上最近点の位置
 
     // 線分上最近点を計算
-    ret = P0 + D3DXVECTOR3(norV1.x * fDot, norV1.y * fDot, norV1.z * fDot);
+     ret = P0 + D3DXVECTOR3(norV1.x * fDot, norV1.y * fDot, norV1.z * fDot);
 
     // 「線分上最近点と球体の中心との距離」が円柱と球体の半径を足した値より小さいとき
-    if (D3DXVec3Length(&(SphereInfo.pos - ret)) <= (SphereInfo.size.x / 2) + (CylinderInfo.size.x / 2))
+    if (D3DXVec3Length(&(SphereInfo.info.pos - ret)) <= SphereInfo.radius + CylinderInfo.radius)
     {
         // 線分を0～1の範囲で表したときの線分上最近点の位置を計算
         ratio = D3DXVec3Dot(&norV1, &(ret - P0)) / D3DXVec3Dot(&norV1, &V1);
@@ -324,7 +324,7 @@ void CCollision::ColSphereAndCylinder(bool &bHit, SURFACE &surface, const CColli
         }
 
         // 「円柱線分の中心から線分上最近点までの長さ」が「円柱線分の半分の長さ + 球体の半径」より小さいとき
-        if (D3DXVec3Length(&(ret - CylinderInfo.pos)) <= (CylinderInfo.size.z / 2) + (SphereInfo.size.x / 2))
+        if (D3DXVec3Length(&(ret - CylinderInfo.info.pos)) <= (CylinderInfo.length / 2) + SphereInfo.radius)
         {
             if (ratio < 0.0f)
             { // ratioが0より小さいとき

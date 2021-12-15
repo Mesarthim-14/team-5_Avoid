@@ -326,11 +326,8 @@ void CRenderer::Draw()
 
 			//ワイヤーフレーム描画の時は元に戻す
 			CLibrary::CheckWireMode();
-
-#endif	//DEBUG
-
 		}
-
+#endif	//DEBUG
 
 		// Direct3Dによる描画の終了
 		m_pD3DDevice->EndScene();

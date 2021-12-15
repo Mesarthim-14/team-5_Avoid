@@ -478,6 +478,9 @@
     <ClCompile Include="canvas.cpp">
       <Filter>06_Effect\Shader\Canvas</Filter>
     </ClCompile>
+    <ClCompile Include="map.cpp">
+      <Filter>08_Object\Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -965,6 +968,9 @@
     </ClInclude>
     <ClInclude Include="canvas.h">
       <Filter>06_Effect\Shader\Canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>08_Object\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
