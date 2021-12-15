@@ -256,11 +256,11 @@ void CRenderer::Update()
 //=============================================================================
 void CRenderer::Draw()
 {
-    m_pD3DDevice->Clear(0, 
-        nullptr, 
-        (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), 
-        D3DCOLOR_RGBA(0, 255, 255, 0), 
-        1.0f, 
+    m_pD3DDevice->Clear(0,
+        nullptr,
+        (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER),
+        D3DCOLOR_RGBA(0, 255, 255, 0),
+        1.0f,
         0);
 
     m_pD3DDevice->Clear(0,
@@ -326,13 +326,15 @@ void CRenderer::Draw()
 
             //ワイヤーフレーム描画の時は元に戻す
             CLibrary::CheckWireMode();
+
         }
-		}
 #endif	//DEBUG
+
 
         // Direct3Dによる描画の終了
         m_pD3DDevice->EndScene();
     }
 
-	m_pD3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
+    // バックバッファとフロントバッファの入れ替え
+    m_pD3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
 }
