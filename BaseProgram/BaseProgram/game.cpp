@@ -303,7 +303,7 @@ void CGame::ShowInfo()
         ImGui::SliderFloat("Gravity", &m_fGravity, 0.0f, 50.0f);
         ImGui::Checkbox("Gauss", &m_bGaussFilter);
 
-         ImGui::TreePop();
+//         ImGui::TreePop();
     }
 
     ImGui::End();
@@ -319,7 +319,6 @@ void CGame::CreateObject()
     CreatePlayer();
     CreateEnemy();
     CreateNPC();
-
 }
 
 //=======================================================================================

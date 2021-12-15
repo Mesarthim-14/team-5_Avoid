@@ -231,7 +231,7 @@ void CCameraStateNormal::KeyBoardMove(CCamera* &pCamera)
 //=====================================================================
 void CCameraStateNormal::ShowInfo()
 {
-#ifdef DEBUG
+#ifdef _DEBUG
     ImGui::Begin("DebugInfo");
 
     if (ImGui::CollapsingHeader("CameraState"))
