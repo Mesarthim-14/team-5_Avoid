@@ -69,7 +69,7 @@ HRESULT CSky::Init()
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_SKY_BLUE);
     GetModelInfo()->SetModelStatus(TEST_POS, TEST_ROT, model);
-
+    SetShaderFlag(false);
     return S_OK;
 }
 

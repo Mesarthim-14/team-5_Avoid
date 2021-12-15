@@ -152,16 +152,7 @@ void CGame::Update()
         }
     }
 
-#ifdef _DEBUG
     CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
-    CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
-
-    // タイトルに戻る
-    if (pKey->GetTrigger(DIK_TAB) && mode == CFade::FADE_MODE_NONE)
-    {
-        CFade *pFade = CManager::GetInstance()->GetFade();
-        pFade->SetFade(CManager::MODE_TYPE_TITLE);
-    }
     // タイトルに戻る
     if (pKey->GetTrigger(DIK_RETURN))
     {
@@ -176,6 +167,15 @@ void CGame::Update()
         }
     }
 
+#ifdef _DEBUG
+    CFade::FADE_MODE mode = CManager::GetInstance()->GetFade()->GetFade();
+
+    // タイトルに戻る
+    if (pKey->GetTrigger(DIK_TAB) && mode == CFade::FADE_MODE_NONE)
+    {
+        CFade *pFade = CManager::GetInstance()->GetFade();
+        pFade->SetFade(CManager::MODE_TYPE_TITLE);
+    }
     ShowInfo();
 #endif // !_DEBUG
 }
