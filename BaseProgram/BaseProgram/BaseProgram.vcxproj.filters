@@ -478,6 +478,9 @@
     <ClCompile Include="canvas.cpp">
       <Filter>06_Effect\Shader\Canvas</Filter>
     </ClCompile>
+    <ClCompile Include="swirl_scaffold_object.cpp">
+      <Filter>08_Object\Gimmick\Swirl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -965,6 +968,9 @@
     </ClInclude>
     <ClInclude Include="canvas.h">
       <Filter>06_Effect\Shader\Canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="swirl_scaffold_object.h">
+      <Filter>08_Object\Gimmick\Swirl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

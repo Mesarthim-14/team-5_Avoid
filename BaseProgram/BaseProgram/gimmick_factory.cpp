@@ -183,7 +183,7 @@ void CGimmickFactory::CreateRotateGimmick()
 void CGimmickFactory::CreateSlope()
 {
     CSlope::Create(D3DXVECTOR3(-12503.1f, 2700.0f, -74892.9f), D3DXVECTOR3(0.0f, D3DXToRadian(278.0f), 0.0f));
-    CSlope::Create(D3DXVECTOR3(53587.5f, 2200.0f, -35282.7f), D3DXVECTOR3(0.0f, D3DXToRadian(243.0f), 0.0f));
+    CSlope::Create(D3DXVECTOR3(53518.3f, 2200.0f, -36190.0f), D3DXVECTOR3(D3DXToRadian(-4.0f), D3DXToRadian(243.0f), 0.0f));
     CSlope::Create(D3DXVECTOR3(2961.4f, 2700.0f, -62761.8f), D3DXVECTOR3(0.0f, D3DXToRadian(6.0f), 0.0f));
     CSlope::Create(D3DXVECTOR3(11661.5f, 2700.0f, 58025.7f), D3DXVECTOR3(0.0f, D3DXToRadian(118.0f), 0.0f));
 }
@@ -204,7 +204,7 @@ void CGimmickFactory::CreateCannon()
 //=======================================================================================
 void CGimmickFactory::CreateBridge()
 {
-    CBridge::Create(D3DXVECTOR3(13890.0f, 5512.5f, -49270.0f), D3DXVECTOR3(0.0f, D3DXToRadian(7.0f), 0.0f));
+    CBridge::Create(D3DXVECTOR3(13890.0f, 4700.0f, -49270.0f), D3DXVECTOR3(0.0f, D3DXToRadian(7.0f), 0.0f));
 }
 
 //=======================================================================================
@@ -213,5 +213,5 @@ void CGimmickFactory::CreateBridge()
 void CGimmickFactory::CreateSwirl()
 {
     CSwirlScaffold::Create(D3DXVECTOR3(50244.2f, 0.0f, -18862.9f));
-    CSwirlScaffold::Create(D3DXVECTOR3(57719.1f, 0.0f, -23549.7f));
+    CSwirlScaffold::Create(D3DXVECTOR3(59435.2f, 0.0f, -23429.4f));
 }
