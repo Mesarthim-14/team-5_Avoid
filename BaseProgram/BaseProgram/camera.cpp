@@ -109,6 +109,7 @@ void CCamera::SetCamera()
 //=============================================================================
 void CCamera::ShowInfo()
 {
+#ifdef _DEBUG
     ImGui::Begin("DebugInfo");
 
     if (ImGui::CollapsingHeader("CameraInfo"))
@@ -123,4 +124,5 @@ void CCamera::ShowInfo()
     }
 
     ImGui::End();
+#endif
 }

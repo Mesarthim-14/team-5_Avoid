@@ -51,11 +51,13 @@ protected:
     inline void SetTexPattern(const int &TexPattern)    { m_nTexPattern = TexPattern; } // テクスチャのパターン
     inline void SetLife(const int &nLife)               { m_nLife = nLife; }            // ライフの設定
     inline void SetScale(const D3DXVECTOR3 &scale)      { m_scale = scale; }            // 拡大率
+    inline void SetShaderFlag(const bool& bFlag)        { m_bUseShader = bFlag; }       // シェーダを使うフラグ
 
-    inline D3DXVECTOR3 &GetMove()       { return m_move; }          // 移動量の情報
-    inline D3DXVECTOR3 GetSize()const   { return m_size; }          // サイズの設定
-    inline int GetTexPattern()const     { return m_nTexPattern; }   // テクスチャ
-    inline int GetLife()const           { return m_nLife; }         // ライフの設定
+    // Get関数
+    inline D3DXVECTOR3 &GetMove()                       { return m_move; }          // 移動量の情報
+    inline D3DXVECTOR3 GetSize()const                   { return m_size; }          // サイズの設定
+    inline int GetTexPattern()const                     { return m_nTexPattern; }   // テクスチャ
+    inline int GetLife()const                           { return m_nLife; }         // ライフの設定
 
 private:
     // private関数
@@ -69,5 +71,6 @@ private:
     D3DXVECTOR3 m_scale;        // 拡大率
     int m_nTexPattern;          // テクスチャのパターン数
     int m_nLife;                // ライフ
+    bool m_bUseShader;          // シェーダを使うかどうかのフラグ
 };
 #endif 

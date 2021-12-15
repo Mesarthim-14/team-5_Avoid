@@ -24,7 +24,7 @@
 #define POS             (D3DXVECTOR3(SCREEN_WIDTH / 2 ,SCREEN_HEIGHT / 2 ,0.0f))    // 座標
 #define SIZE            (D3DXVECTOR3(150.0f, 150.0f, 0.0f))                         // サイズ
 #define DISTANCE        (200.0f)                                                    // 距離
-#define BLINK_DISTANCE  (6000.0f)                                                   // 消える距離
+#define BLINK_DISTANCE  (25000.0f)                                                  // 点滅距離
 #define VIEWING_ANGLE   (0.5f)                                                      // 視野角
 
 //=====================================================================

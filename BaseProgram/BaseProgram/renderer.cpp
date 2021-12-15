@@ -327,12 +327,12 @@ void CRenderer::Draw()
             //ワイヤーフレーム描画の時は元に戻す
             CLibrary::CheckWireMode();
         }
+		}
 #endif	//DEBUG
 
         // Direct3Dによる描画の終了
         m_pD3DDevice->EndScene();
     }
 
-    // バックバッファとフロントバッファの入れ替え
-    m_pD3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
+	m_pD3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
 }

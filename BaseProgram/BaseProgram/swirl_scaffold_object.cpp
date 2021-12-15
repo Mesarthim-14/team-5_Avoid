@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// 空クラス [sky.cpp]
+// 渦ギミックの床クラス [swirl_scaffold.object.cpp]
 // Author : Konishi Yuuto
 //
 //=============================================================================
@@ -8,7 +8,7 @@
 //=============================================================================
 // インクルード
 //=============================================================================
-#include "sky.h"
+#include "swirl_scaffold_object.h"
 #include "manager.h"
 #include "renderer.h"
 #include "game.h"
@@ -17,42 +17,41 @@
 #include "xfile.h"
 #include "model_info.h"
 #include "player.h"
+#include "library.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_POS        (ZeroVector3)
-#define TEST_ROT        (ZeroVector3)
+#define TEST_ROT    (D3DXVECTOR3(0.0f, D3DXToRadian(90.0f), 0.0f))   // 角度
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CSky::CSky(PRIORITY Priority) : CModel(Priority)
+CSwirlScaffoldObject::CSwirlScaffoldObject(PRIORITY Priority) : CModel(Priority)
 {
-
 }
 
 //=============================================================================
 // デストラクタ
 //=============================================================================
-CSky::~CSky()
+CSwirlScaffoldObject::~CSwirlScaffoldObject()
 {
 }
 
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CSky * CSky::Create()
+CSwirlScaffoldObject * CSwirlScaffoldObject::Create(const D3DXVECTOR3 &pos)
 {
     // メモリ確保
-    CSky *pTestModel = new CSky(PRIORITY_TEST_MODEL);
+    CSwirlScaffoldObject *pRotatebody = new CSwirlScaffoldObject(PRIORITY_TEST_MODEL);
 
     // !nullcheck
-    if (pTestModel)
+    if (pRotatebody)
     {
         // 初期化処理
-        pTestModel->Init();
-        return pTestModel;
+        pRotatebody->Init(pos);
+        return pRotatebody;
     }
 
     return nullptr;
@@ -61,44 +60,22 @@ CSky * CSky::Create()
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CSky::Init()
+HRESULT CSwirlScaffoldObject::Init(const D3DXVECTOR3 &pos)
 {
     // 初期化処理
     CModel::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
-    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_SKY_BLUE);
-    GetModelInfo()->SetModelStatus(TEST_POS, TEST_ROT, model);
-    SetShaderFlag(false);
-    return S_OK;
-}
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_GIMMICK_SPINFLOOR);
+    GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
-//=============================================================================
-// 終了処理
-//=============================================================================
-void CSky::Uninit()
-{
-    CModel::Uninit();
+    return S_OK;
 }
 
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CSky::Update()
+void CSwirlScaffoldObject::Update()
 {
     CModel::Update();
-}
-
-//=============================================================================
-// 描画処理
-//=============================================================================
-void CSky::Draw()
-{
-    LPDIRECT3DDEVICE9 pDevice = GET_RENDERER_DEVICE;
-    pDevice->SetRenderState(D3DRS_LIGHTING, false);
-
-    CModel::Draw();
-
-    // ライト効果を付ける
-   pDevice->SetRenderState(D3DRS_LIGHTING, true);
 }

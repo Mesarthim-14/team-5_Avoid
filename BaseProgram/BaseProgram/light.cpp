@@ -108,6 +108,9 @@ void CLight::Update()
 //=============================================================================
 void CLight::ShowLightInfo()
 {
+#ifdef _DEBUG
+    ImGui::Begin("DebugInfo");
+
     if (ImGui::CollapsingHeader("LightInfo"))
     {
         LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();    // デバイスの取得
@@ -123,6 +126,8 @@ void CLight::ShowLightInfo()
             ImGui::TreePop();
         }
     }
+    ImGui::End();
+#endif
 }
 
 //=============================================================================

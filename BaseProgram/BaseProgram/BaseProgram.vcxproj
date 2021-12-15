@@ -292,6 +292,7 @@
     <ClCompile Include="state_player_not_move.cpp" />
     <ClCompile Include="state_player_stun.cpp" />
     <ClCompile Include="swirl_scaffold.cpp" />
+    <ClCompile Include="swirl_scaffold_object.cpp" />
     <ClCompile Include="test_2d.cpp" />
     <ClCompile Include="test_character.cpp" />
     <ClCompile Include="test_model.cpp" />
@@ -455,6 +456,7 @@
     <ClInclude Include="state_player_not_move.h" />
     <ClInclude Include="state_player_stun.h" />
     <ClInclude Include="swirl_scaffold.h" />
+    <ClInclude Include="swirl_scaffold_object.h" />
     <ClInclude Include="test_2d.h" />
     <ClInclude Include="test_character.h" />
     <ClInclude Include="test_model.h" />
