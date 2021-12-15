@@ -27,7 +27,7 @@
 //=====================================================================
 CGauge::CGauge(PRIORITY priority) : CScene2D(priority)
 {
-    m_fHP = 60.0f;
+    m_fHP = MAX_GAUGE;
     m_fSave = 0.0f;
     m_fDown = 0.0f;
     m_fUp = 0.0f;

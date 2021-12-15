@@ -117,7 +117,7 @@ void CCannonBullet::Update()
 
     if (m_pCollision)
     {
-        m_pCollision->SetInfo(GetPos(), m_pCollision->GetInfo().size, GetRot());
+        m_pCollision->SetInfo(GetPos(), m_pCollision->GetOBB().info.size, GetRot());
     }
 
     Collision();

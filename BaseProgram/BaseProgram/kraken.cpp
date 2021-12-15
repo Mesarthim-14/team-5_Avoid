@@ -115,7 +115,7 @@ void CKraken::Update()
     Attack();
     if (m_pCollision)
     {
-        m_pCollision->SetInfo(GetPos(), m_pCollision->GetInfo().size, GetRot());
+        m_pCollision->SetInfo(GetPos(), m_pCollision->GetOBB().info.size, GetRot());
     }
 
     // ‘Ì—Í‚ª–³‚­‚È‚Á‚½‚ç

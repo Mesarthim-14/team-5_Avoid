@@ -36,6 +36,7 @@ public:
         TEXTURE_NUM_TEST,                   // テストテクスチャ
         TEXTURE_NUM_PARTICLE,               // パーティクルテクスチャ
         TEXTURE_NUM_SMOKE,                  // cannonの煙
+        TEXTURE_NUM_POP,                    // 吹っ飛ぶときに出るパーティクル
         TEXTURE_NUM_GAUGE,                  // ゲージ
         TEXTURE_NUM_GAUGEBAR,               // ゲージバー
         TEXTURE_NUM_BACK,                   // ポーズの背景

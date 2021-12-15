@@ -30,7 +30,7 @@
 //=============================================================================
 #define TEST_POS            (ZeroVector3)
 #define TEST_ROT            (ZeroVector3)
-#define COLLISION_RADIUS    (900.0f)
+#define COLLISION_RADIUS    (1800.0f)
 #define SPEED               (400.0f)
 #define LIFE                (300)
 
@@ -76,7 +76,7 @@ HRESULT CBossBullet::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
     SetPos(pos);
     SetRot(rot);
-    SetSize(D3DXVECTOR3(COLLISION_RADIUS * 2, COLLISION_RADIUS * 2, COLLISION_RADIUS * 2));
+    SetColRadius(COLLISION_RADIUS);
 
     // èâä˙âªèàóù
     CBullet::Init();
@@ -164,7 +164,7 @@ void CBossBullet::Hit()
     {
         if (GetColSpherePtr() && pPlayer->GetColCapsulePtr())
         {
-            if (CCollision::ColSphereAndCapsule(GetColSpherePtr()->GetInfo(), pPlayer->GetColCapsulePtr()->GetInfo()))
+            if (CCollision::ColSphereAndCapsule(GetColSpherePtr()->GetSphere(), pPlayer->GetColCapsulePtr()->GetInfo()))
             {
                 // êÅÇ¡îÚÇ‘íl
                 D3DXVECTOR3 move = GetMove();

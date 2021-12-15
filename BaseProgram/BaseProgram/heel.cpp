@@ -33,6 +33,7 @@
 CHeel::CHeel()
 {
     m_apHeelPoint.clear();
+    m_nCount = 0;
 }
 
 //=============================================================================
@@ -107,12 +108,17 @@ void CHeel::Update()
         // 当たり判定
         if (HeelPoint->Collision())
         {
+            m_nCount++;
             // 回復
             CManager::GetInstance()->GetPlayer()->SubLife(-HEEL_NUM);
             pGauge->SetDown((float)HEEL_NUM);
             pGauge->SetHitUp(true);
-            // プレイヤーの位置にエフェクト生成
-            CParticleHeel::Create(pos);
+            if (m_nCount >= 10)
+            {
+                // プレイヤーの位置にエフェクト生成
+                CParticleHeel::Create(pos);
+                m_nCount = 0;
+            }
         }
     }
 }

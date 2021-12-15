@@ -91,12 +91,12 @@ void CRotateFloor::Update()
     if (m_pColModelCylinder)
     {
         // “–‚½‚è”»’èƒ‚ƒfƒ‹(‰~’Œ)‚Ìî•ñŽæ“¾
-        CCollisionModel::INFO ColModelCylinderInfo = m_pColModelCylinder->GetInfo();
+        CCollisionModelCylinder::CYLINDER ColModelCylinderInfo = m_pColModelCylinder->GetCylinder();
 
         // “–‚½‚è”»’èƒ‚ƒfƒ‹(‰~’Œ)‚ÌÝ’è
         m_pColModelCylinder->SetInfo(GetPos(),
-            ColModelCylinderInfo.size,
-            D3DXVECTOR3(ColModelCylinderInfo.rot.x, GetRot().y, ColModelCylinderInfo.rot.z));
+            ColModelCylinderInfo.info.size,
+            D3DXVECTOR3(ColModelCylinderInfo.info.rot.x, GetRot().y, ColModelCylinderInfo.info.rot.z));
     }
 
     // ‰~’Œ‚Æ‹…‘Ì‚Ì“–‚½‚è”»’è
@@ -121,15 +121,18 @@ void CRotateFloor::HitCylinderAndSphere()
 
     if (m_pColModelCylinder && pPlayerColModelCapsule)
     {
-        CCollisionModel::INFO PlayerColModelSphereInfo =
+        CCollisionModelSphere::SPHERE PlayerColModelSphereInfo =
         {
-            PlayerColModelCapsuleInfo.P1,
-            D3DXVECTOR3(PlayerColModelCapsuleInfo.radius * 2, PlayerColModelCapsuleInfo.radius * 2, PlayerColModelCapsuleInfo.radius * 2),
-            PlayerColModelCapsuleInfo.rot
+            {
+                PlayerColModelCapsuleInfo.P1,
+                D3DXVECTOR3(PlayerColModelCapsuleInfo.radius * 2, PlayerColModelCapsuleInfo.radius * 2, PlayerColModelCapsuleInfo.radius * 2),
+                PlayerColModelCapsuleInfo.rot
+            },
+            PlayerColModelCapsuleInfo.radius
         };
 
         // “–‚½‚è”»’èƒ‚ƒfƒ‹(‰~’Œ)‚Ìî•ñŽæ“¾
-        CCollisionModel::INFO ColModelCylinderInfo = m_pColModelCylinder->GetInfo();
+        CCollisionModelCylinder::CYLINDER ColModelCylinderInfo = m_pColModelCylinder->GetCylinder();
 
         // “–‚½‚è”»’è—p•Ï”
         bool bHit = false;                                      // Õ“Ë”»’è
@@ -144,7 +147,7 @@ void CRotateFloor::HitCylinderAndSphere()
             if (surface == CCollision::SURFACE_UP)
             {
                 // ’…’n‚Ìˆ—
-                pPlayer->Landing(ColModelCylinderInfo.pos.y + (ColModelCylinderInfo.size.z / 2) + (PlayerColModelCapsuleInfo.length / 2));
+                pPlayer->Landing(ColModelCylinderInfo.info.pos.y + (ColModelCylinderInfo.length / 2) + (PlayerColModelCapsuleInfo.length / 2));
             }
             else
             {

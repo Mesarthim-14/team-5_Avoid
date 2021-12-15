@@ -65,6 +65,7 @@ HRESULT CTexture::SetTextureName()
         { "data/Texture/test.jpg" },                // ƒeƒXƒg
         { "data/Texture/star.png" },
         { "data/Texture/smoke.png" },
+        { "data/Texture/slime_ball.png" },
         { "data/Texture/Gauge.png" },
         { "data/Texture/Gauge_Frame.png" },
         { "data/Texture/BACK.png" },

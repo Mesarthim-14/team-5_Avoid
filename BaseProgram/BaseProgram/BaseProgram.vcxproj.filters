@@ -148,9 +148,6 @@
     <ClCompile Include="particleaura.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="particlecollective.cpp">
-      <Filter>06_Effect\Particle</Filter>
-    </ClCompile>
     <ClCompile Include="particleshrink.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
@@ -478,6 +475,9 @@
     <ClCompile Include="canvas.cpp">
       <Filter>06_Effect\Shader\Canvas</Filter>
     </ClCompile>
+    <ClCompile Include="map.cpp">
+      <Filter>08_Object\Map</Filter>
+    </ClCompile>
     <ClCompile Include="swirl_scaffold_object.cpp">
       <Filter>08_Object\Gimmick\Swirl</Filter>
     </ClCompile>
@@ -646,9 +646,6 @@
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
     <ClInclude Include="particlenormal.h">
-      <Filter>06_Effect\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="particlecollective.h">
       <Filter>06_Effect\Particle</Filter>
     </ClInclude>
     <ClInclude Include="shadow_volume.h">
@@ -968,6 +965,9 @@
     </ClInclude>
     <ClInclude Include="canvas.h">
       <Filter>06_Effect\Shader\Canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>08_Object\Map</Filter>
     </ClInclude>
     <ClInclude Include="swirl_scaffold_object.h">
       <Filter>08_Object\Gimmick\Swirl</Filter>

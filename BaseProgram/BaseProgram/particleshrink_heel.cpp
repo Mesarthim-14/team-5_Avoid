@@ -60,8 +60,8 @@ CParticleHeel * CParticleHeel::Create(const D3DXVECTOR3 &pos)
 
     if (pParticle != nullptr)
     {
-        m_fAngleX = CLibrary::Random(400.0f);
-        m_fAngleZ = CLibrary::Random(400.0f);
+        m_fAngleX = CLibrary::Random(600.0f);
+        m_fAngleZ = CLibrary::Random(600.0f);
         m_fSize = CLibrary::Random(30.0f, 100.0f);
         pParticle->SetSceneInfo(D3DXVECTOR3(pos.x + m_fAngleX, pos.y, pos.z + m_fAngleZ), SIZE);
 
@@ -120,9 +120,8 @@ void CParticleHeel::SetParticle(void)
     BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_PARTICLE));
     // スピードの値を設定
     m_fSpeed = SPEED;
-    float fTangent = atan2f(ShrinkPos.z - m_fAngleX, ShrinkPos.x - m_fAngleZ);
     // 移動させるための処理
-    D3DXVECTOR3 move = D3DXVECTOR3(sinf(fTangent) * m_fSpeed, TANGENT, cosf(fTangent) * m_fSpeed);
+    D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 8.0f, 0.0f);
     // 移動情報を設定
     SetMove(move);
     // 色の設定

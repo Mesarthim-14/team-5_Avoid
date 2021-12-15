@@ -42,6 +42,7 @@ private:
     D3DXVECTOR3 m_PointPos;             // 座標の取得
     vector<CHeelPoint*> m_apHeelPoint;  // 旗のポインタ
     int m_nPointNum;                    // 現在の番号
+    int m_nCount;
 };
 
 #endif

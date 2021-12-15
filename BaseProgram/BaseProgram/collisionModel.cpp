@@ -158,7 +158,6 @@ void CCollisionModel::Update()
 //*****************************************************************************
 void CCollisionModel::Draw()
 {
-#ifdef _DEBUG
     // デバイスの取得
     LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
@@ -222,5 +221,4 @@ void CCollisionModel::Draw()
 
     // ワイヤーフレームをもどす
     pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-#endif
 }

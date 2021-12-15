@@ -192,6 +192,7 @@ void CPlayer::Update()
 	// リスポーン
 	ReSporn();
 
+
     D3DXVECTOR3 pos = GetPos();
     D3DXVECTOR3 rot = GetRot();
     for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
@@ -210,10 +211,12 @@ void CPlayer::Update()
     // 当たり判定モデル情報の更新処理
 	if (m_pColModelOBB)
 	{
+
         m_pColModelOBB->SetInfo(pos, m_pColModelOBB->GetInfo().size, rot);
 	}
     if (m_pColModelCapsule)
     {
+
         m_pColModelCapsule->SetInfo(pos, m_pColModelCapsule->GetInfo().radius, m_pColModelCapsule->GetInfo().length, rot);
     }
 

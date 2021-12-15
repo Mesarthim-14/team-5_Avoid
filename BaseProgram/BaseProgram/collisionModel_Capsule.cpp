@@ -123,6 +123,18 @@ HRESULT CCollisionModelCapsule::Init()
     // ロード処理
     Load();
 
+    for (int nCount = 0; nCount < TYPE_MAX; nCount++)
+    {
+        // 角度の設定
+        SetRot(nCount);
+
+        // 大きさの設定
+        SetSize(nCount);
+
+        // 位置の設定
+        SetPos(nCount);
+    }
+
     return E_NOTIMPL;
 }
 
@@ -172,14 +184,16 @@ void CCollisionModelCapsule::Draw()
         //ワールドマトリックスの初期化
         D3DXMatrixIdentity(&m_mtxWorld);
 
-        // 角度の設定
-        SetRot(nCount);
+        D3DXMATRIX mtxTrans, mtxScale, mtxRot;
+        memset(&mtxTrans, 0, sizeof(mtxTrans));
+        memset(&mtxScale, 0, sizeof(mtxScale));
+        memset(&mtxRot, 0, sizeof(mtxRot));
 
-        // 大きさの設定
-        SetSize(nCount);
+        //ワールドマトリックスの初期化
+        D3DXMatrixIdentity(&m_mtxWorld);
 
-        // 位置の設定
-        SetPos(nCount);
+        // ワールドマトリックスの設定
+        SetMtx(nCount);
 
         //ワールドマトリックスの設定
         pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
@@ -221,52 +235,70 @@ void CCollisionModelCapsule::Draw()
 }
 
 //*****************************************************************************
+// 位置/半径/長さ/角度の設定
+//*****************************************************************************
+void CCollisionModelCapsule::SetInfo(const D3DXVECTOR3 &pos, const float &radius, const float &length, const D3DXVECTOR3 &rot)
+{
+    m_info.pos = pos;
+    m_info.radius = radius;
+    m_info.length = length;
+    m_info.rot = rot;
+
+    for (int nCount = 0; nCount < TYPE_MAX; nCount++)
+    {
+        // 角度の設定
+        SetRot(nCount);
+
+        // 大きさの設定
+        SetSize(nCount);
+
+        // 位置の設定
+        SetPos(nCount);
+    }
+}
+
+//*****************************************************************************
 // 位置の設定
 //*****************************************************************************
 void CCollisionModelCapsule::SetPos(const int &nCount)
 {
-    D3DXMATRIX mtxTrans;
-    memset(&mtxTrans, 0, sizeof(mtxTrans));
-
-    D3DXVECTOR3 pos = ZeroVector3;  // 当たり判定モデルの位置
-
     switch (nCount)
     {
     case TYPE_CYLINDER:
 
-        pos = D3DXVECTOR3(m_info.pos.x, m_info.pos.y, m_info.pos.z);
+        m_info.detail.cylinder.pos = D3DXVECTOR3(m_info.pos.x, m_info.pos.y, m_info.pos.z);
 
         break;
 
     case TYPE_SPHERE_1:
 
         // 回転量が0のときの座標を原点を中心に設定
-        pos = D3DXVECTOR3(0.0f, ((m_info.length / 2) - m_info.radius), 0.0f);
+        m_info.detail.sphere1.pos = D3DXVECTOR3(0.0f, ((m_info.length / 2) - m_info.radius), 0.0f);
 
         // 点の三次元回転処理
-        CLibrary::Rotate3D(pos, m_info.rot);
+        CLibrary::Rotate3D(m_info.detail.sphere1.pos, m_info.rot);
 
         // 円柱の座標に足して、正確な位置に設定する
-        pos += m_info.pos;
+        m_info.detail.sphere1.pos += m_info.pos;
 
         // 線分の始点の設定
-        m_info.P0 = pos;
+        m_info.P0 = m_info.detail.sphere1.pos;
 
         break;
 
     case TYPE_SPHERE_2:
 
         // 回転量が0のときの座標を原点を中心に設定
-        pos = D3DXVECTOR3(0.0f, -((m_info.length / 2) - m_info.radius), 0.0f);
+        m_info.detail.sphere2.pos = D3DXVECTOR3(0.0f, -((m_info.length / 2) - m_info.radius), 0.0f);
 
         // 点の三次元回転処理
-        CLibrary::Rotate3D(pos, m_info.rot);
+        CLibrary::Rotate3D(m_info.detail.sphere2.pos, m_info.rot);
 
         // 円柱の座標に足して、正確な位置に設定する
-        pos += m_info.pos;
+        m_info.detail.sphere2.pos += m_info.pos;
 
         // 線分の終点の設定
-        m_info.P1 = pos;
+        m_info.P1 = m_info.detail.sphere2.pos;
 
         break;
 
@@ -274,10 +306,6 @@ void CCollisionModelCapsule::SetPos(const int &nCount)
 
         break;
     }
-
-    //位置を反映
-    D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
-    D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 }
 
 //*****************************************************************************
@@ -285,23 +313,24 @@ void CCollisionModelCapsule::SetPos(const int &nCount)
 //*****************************************************************************
 void CCollisionModelCapsule::SetSize(const int &nCount)
 {
-    D3DXMATRIX mtxScale;
-    memset(&mtxScale, 0, sizeof(mtxScale));
-
-    D3DXVECTOR3 scale = ZeroVector3;
-
     switch (nCount)
     {
     case TYPE_CYLINDER:
 
-        scale = D3DXVECTOR3(m_info.radius * 2, m_info.length - (m_info.radius * 2), m_info.radius * 2);
+        m_info.detail.cylinder.radius = m_info.radius * 2;
+        m_info.detail.cylinder.length = m_info.length - (m_info.radius * 2);
 
         break;
 
     case TYPE_SPHERE_1:
+
+        m_info.detail.sphere1.radius = m_info.radius;
+
+        break;
+
     case TYPE_SPHERE_2:
 
-        scale = D3DXVECTOR3(m_info.radius * 2, m_info.radius * 2, m_info.radius * 2);
+        m_info.detail.sphere2.radius = m_info.radius;
 
         break;
 
@@ -309,10 +338,6 @@ void CCollisionModelCapsule::SetSize(const int &nCount)
 
         break;
     }
-
-    // 拡大率を反映
-    D3DXMatrixScaling(&mtxScale, scale.x, scale.y, scale.z);
-    D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxScale);
 }
 
 //*****************************************************************************
@@ -320,23 +345,23 @@ void CCollisionModelCapsule::SetSize(const int &nCount)
 //*****************************************************************************
 void CCollisionModelCapsule::SetRot(const int &nCount)
 {
-    D3DXMATRIX mtxRot;
-    memset(&mtxRot, 0, sizeof(mtxRot));
-
-    D3DXVECTOR3 rot = ZeroVector3;
-
     switch (nCount)
     {
     case TYPE_CYLINDER:
 
-        rot = D3DXVECTOR3(m_info.rot.x + D3DXToRadian(90.0f), m_info.rot.y, m_info.rot.z);
+        m_info.detail.cylinder.rot = D3DXVECTOR3(m_info.rot.x + D3DXToRadian(90.0f), m_info.rot.y, m_info.rot.z);
 
         break;
 
     case TYPE_SPHERE_1:
+
+        m_info.detail.sphere1.rot = D3DXVECTOR3(m_info.rot.x, m_info.rot.y, m_info.rot.z);
+
+        break;
+
     case TYPE_SPHERE_2:
 
-        rot = D3DXVECTOR3(m_info.rot.x, m_info.rot.y, m_info.rot.z);
+        m_info.detail.sphere2.rot = D3DXVECTOR3(m_info.rot.x, m_info.rot.y, m_info.rot.z);
 
         break;
 
@@ -344,8 +369,70 @@ void CCollisionModelCapsule::SetRot(const int &nCount)
 
         break;
     }
+}
 
-    //向きを反映
-    D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);
-    D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
+//*****************************************************************************
+// ワールドマトリックスの設定
+//*****************************************************************************
+void CCollisionModelCapsule::SetMtx(const int &nCount)
+{
+    D3DXMATRIX mtxTrans, mtxScale, mtxRot;
+    memset(&mtxTrans, 0, sizeof(mtxTrans));
+    memset(&mtxScale, 0, sizeof(mtxScale));
+    memset(&mtxRot, 0, sizeof(mtxRot));
+
+    switch (nCount)
+    {
+    case TYPE_CYLINDER:
+
+        //向きを反映
+        D3DXMatrixRotationYawPitchRoll(&mtxRot, m_info.detail.cylinder.rot.y, m_info.detail.cylinder.rot.x, m_info.detail.cylinder.rot.z);
+        D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
+
+        // 拡大率を反映
+        D3DXMatrixScaling(&mtxScale, m_info.detail.cylinder.radius, m_info.detail.cylinder.length, m_info.detail.cylinder.radius);
+        D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxScale);
+
+        //位置を反映
+        D3DXMatrixTranslation(&mtxTrans, m_info.detail.cylinder.pos.x, m_info.detail.cylinder.pos.y, m_info.detail.cylinder.pos.z);
+        D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
+
+        break;
+
+    case TYPE_SPHERE_1:
+
+        //向きを反映
+        D3DXMatrixRotationYawPitchRoll(&mtxRot, m_info.detail.sphere1.rot.y, m_info.detail.sphere1.rot.x, m_info.detail.sphere1.rot.z);
+        D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
+
+        // 拡大率を反映
+        D3DXMatrixScaling(&mtxScale, m_info.detail.sphere1.radius * 2, m_info.detail.sphere1.radius * 2, m_info.detail.sphere1.radius * 2);
+        D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxScale);
+
+        //位置を反映
+        D3DXMatrixTranslation(&mtxTrans, m_info.detail.sphere1.pos.x, m_info.detail.sphere1.pos.y, m_info.detail.sphere1.pos.z);
+        D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
+
+        break;
+
+    case TYPE_SPHERE_2:
+
+        //向きを反映
+        D3DXMatrixRotationYawPitchRoll(&mtxRot, m_info.detail.sphere2.rot.y, m_info.detail.sphere2.rot.x, m_info.detail.sphere2.rot.z);
+        D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
+
+        // 拡大率を反映
+        D3DXMatrixScaling(&mtxScale, m_info.detail.sphere2.radius * 2, m_info.detail.sphere2.radius * 2, m_info.detail.sphere2.radius * 2);
+        D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxScale);
+
+        //位置を反映
+        D3DXMatrixTranslation(&mtxTrans, m_info.detail.sphere2.pos.x, m_info.detail.sphere2.pos.y, m_info.detail.sphere2.pos.z);
+        D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
+
+        break;
+
+    default:
+
+        break;
+    }
 }

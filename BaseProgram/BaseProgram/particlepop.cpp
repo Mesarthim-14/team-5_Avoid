@@ -22,7 +22,7 @@ float CParticlePop::m_fSize = 0.0f;
 // Author : toshiki
 //=====================================================================
 #define SIZE		(D3DXVECTOR3(m_fSize, m_fSize, m_fSize))
-#define ANGLE		(50.0f)
+#define ANGLE		(100.0f)
 #define SPEED		(100.0f)
 #define RANDOM		(3.14f)
 #define LIFE		(90)
@@ -112,7 +112,7 @@ void CParticlePop::SetParticle()
 {
     // テクスチャの設定
     CTexture *pTexture = GET_TEXTURE_PTR;
-    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_PARTICLE));
+    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_POP));
     // スピードの値を設定
     m_fSpeed = SPEED;
     // パーティクルの出る角度の設定

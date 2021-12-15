@@ -90,5 +90,7 @@ void CCollisionModelOBB::Update()
 //*****************************************************************************
 void CCollisionModelOBB::Draw()
 {
+#ifdef _DEBUG
     CCollisionModel::Draw();
+#endif
 }

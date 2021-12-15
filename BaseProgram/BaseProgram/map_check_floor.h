@@ -10,7 +10,7 @@
 //=========================================================================
 // インクルード
 //=========================================================================
-#include "model.h"
+#include "map.h"
 
 //=========================================================================
 // 前方宣言
@@ -20,7 +20,7 @@ class CCollisionModelCylinder;
 //=========================================================================
 // クラス定義
 //=========================================================================
-class CMapCheckFloor : public CModel
+class CMapCheckFloor : public CMap
 {
 public:
     CMapCheckFloor(PRIORITY = PRIORITY_TEST_MODEL); // コンストラクタ
@@ -31,8 +31,6 @@ public:
     void Uninit()override;                                                          // 初期化処理
     void Update()override;                                                          // 更新処理
     void Draw()override;                                                            // 描画
-
-    void HitCol();  // 当たり判定
 
 private:
     CCollisionModelCylinder* m_pColModelCylinder;   // 当たり判定ポインタ

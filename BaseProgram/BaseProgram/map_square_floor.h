@@ -10,13 +10,13 @@
 //=========================================================================
 // インクルード
 //=========================================================================
-#include "model.h"
+#include "map.h"
 #include "collisionModel_OBB.h"
 
 //=========================================================================
 // クラス定義
 //=========================================================================
-class CMapSquareFloor : public CModel
+class CMapSquareFloor : public CMap
 {
 public:
     CMapSquareFloor(PRIORITY = PRIORITY_TEST_MODEL); // コンストラクタ
@@ -27,8 +27,6 @@ public:
     void Uninit()override;                                                          // 初期化処理
     void Update()override;                                                          // 更新処理
     void Draw()override;                                                            // 描画
-
-    void HitCol();  // 当たり判定
 
 private:
     CCollisionModelOBB* m_pColModelOBB[CCollisionModelOBB::SURFACE_MAX];    // 当たり判定ポインタ配列

@@ -16,6 +16,7 @@
 //*****************************************************************************
 CCollisionModelSphere::CCollisionModelSphere(PRIORITY Priority) :CCollisionModel(Priority)
 {
+    m_radius = 0.0f;
 }
 
 //*****************************************************************************
@@ -35,7 +36,8 @@ CCollisionModelSphere * CCollisionModelSphere::Create(const D3DXVECTOR3 &pos, co
     if (pCollisionModelSphere)
     {
         //“–‚½‚è”»’èƒ‚ƒfƒ‹î•ñ‚ÌÝ’è
-        pCollisionModelSphere->SetInfo(pos, D3DXVECTOR3(radius, radius, radius), rot);
+        pCollisionModelSphere->m_radius = radius;
+        pCollisionModelSphere->SetInfo(pos, D3DXVECTOR3(radius * 2, radius * 2, radius * 2), rot);
         pCollisionModelSphere->SetType(TYPE_SPHERE);
 
         //“–‚½‚è”»’èƒ‚ƒfƒ‹‚Ì‰Šú‰»ˆ—

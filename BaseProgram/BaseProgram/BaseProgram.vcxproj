@@ -200,6 +200,7 @@
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
+    <ClCompile Include="map.cpp" />
     <ClCompile Include="map_big_floor2.cpp" />
     <ClCompile Include="map_check_floor.cpp" />
     <ClCompile Include="map_check_floor2.cpp" />
@@ -230,7 +231,6 @@
     <ClCompile Include="npc_text_enemy.cpp" />
     <ClCompile Include="particleaura.cpp" />
     <ClCompile Include="particlecannon.cpp" />
-    <ClCompile Include="particlecollective.cpp" />
     <ClCompile Include="particlenormal.cpp" />
     <ClCompile Include="particlepop.cpp" />
     <ClCompile Include="particleshrink.cpp" />
@@ -365,6 +365,7 @@
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
+    <ClInclude Include="map.h" />
     <ClInclude Include="map_big_floor2.h" />
     <ClInclude Include="map_check_floor.h" />
     <ClInclude Include="map_check_floor2.h" />
@@ -395,7 +396,6 @@
     <ClInclude Include="npc_text_enemy.h" />
     <ClInclude Include="particleaura.h" />
     <ClInclude Include="particlecannon.h" />
-    <ClInclude Include="particlecollective.h" />
     <ClInclude Include="particlenormal.h" />
     <ClInclude Include="particlepop.h" />
     <ClInclude Include="particleshrink.h" />
