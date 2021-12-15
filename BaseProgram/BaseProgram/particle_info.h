@@ -36,14 +36,12 @@ public:
     inline void SetMove(const D3DXVECTOR3 &move)    { m_move = move; }
     inline void SetLife(const int &life)            { m_nLife = life; }
     inline void SetGravity(const bool &set)         { m_bGravitySet = set; }
-    inline void SetGravityMini(const bool &set)     { m_bGravityMiniSet = set; }
     inline void SetLife(const bool &set)            { m_LifeSet = set; }
 protected:
     bool Follow();
     bool Search();
 private:
     void Gravity();
-    void Gravitymini();
     void Erase();
     //==================
     // メンバ変数
@@ -51,7 +49,6 @@ private:
     D3DXVECTOR3 m_move;         // パーティクルの移動量
     int m_nLife;                // パーティクルのライフ
     bool m_bGravitySet;
-    bool m_bGravityMiniSet;
     bool m_LifeSet;
     bool m_bCaution;
 };

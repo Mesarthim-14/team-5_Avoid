@@ -187,6 +187,7 @@ void CSkinmeshModel::Draw()
         D3DXMATRIX *worldMatAry[4] = {};
         LightDir.x = sinf(rot.y);
         LightDir.y = cosf(rot.y);
+        LightDir.z = 1.0f;
 
         // マトリクスの設定
         CLibrary::ConfigMatrix(&mtxWorld, pos, rot);

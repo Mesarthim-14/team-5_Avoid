@@ -14,6 +14,7 @@
 #include "manager.h"
 #include "player.h"
 #include "library.h"
+#include "collision.h"
 
 #define MOVE    (D3DXVECTOR3(0.0f,0.0f,0.0f))
 //=====================================================================
@@ -25,7 +26,6 @@ CParticleInfo::CParticleInfo()
     m_move = ZeroVector3;
     m_nLife = 0;
     m_bGravitySet = false;
-    m_bGravityMiniSet = false;
     m_LifeSet = true;
 }
 
@@ -64,10 +64,6 @@ void CParticleInfo::Update()
     if (m_bGravitySet)
     {
         Gravity();
-    }
-    else if (m_bGravityMiniSet)
-    {
-        Gravitymini();
     }
 
     if (m_LifeSet)
@@ -109,20 +105,7 @@ void CParticleInfo::Gravity()
 {
     // À•Wî•ñ‚ğæ“¾
     D3DXVECTOR3 pos = GetPos();
-    m_move.y -= 2.0f;
-    // ˆÚ“®—Ê‚ğ‰ÁZ
-    pos.y += m_move.y;
-}
-
-//=====================================================================
-// d—Í
-// Author : toshiki
-//=====================================================================
-void CParticleInfo::Gravitymini()
-{
-    // À•Wî•ñ‚ğæ“¾
-    D3DXVECTOR3 pos = GetPos();
-    m_move.y += 0.09f;
+    m_move.y -= 5.0f;
     // ˆÚ“®—Ê‚ğ‰ÁZ
     pos.y += m_move.y;
 }

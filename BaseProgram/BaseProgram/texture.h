@@ -35,9 +35,14 @@ public:
         TEXTURE_NUM_NONE = -1,              // 初期値 使うとき-1にしてください
         TEXTURE_NUM_TEST,                   // テストテクスチャ
         TEXTURE_NUM_PARTICLE,               // パーティクルテクスチャ
-        TEXTURE_NUM_SMOKE,
-        TEXTURE_NUM_GAUGE,                  
-        TEXTURE_NUM_GAUGEBAR,               
+        TEXTURE_NUM_SMOKE,                  // cannonの煙
+        TEXTURE_NUM_POP,                    // 吹っ飛ぶときに出るパーティクル
+        TEXTURE_NUM_GAUGE,                  // ゲージ
+        TEXTURE_NUM_GAUGEBAR,               // ゲージバー
+        TEXTURE_NUM_BACK,                   // ポーズの背景
+        TEXTURE_NUM_RESUME,                 // 続ける
+        TEXTURE_NUM_RESTART,                // リスタート
+        TEXTURE_NUM_EXIT,                   // 終了
         TEXTURE_NUM_E_KEY,                  // Eキー
         TEXTURE_NUM_MESSAGE_BACK,           // メッセージ背景
         TEXTURE_NUM_WARNING,                // ボスの弾の警告

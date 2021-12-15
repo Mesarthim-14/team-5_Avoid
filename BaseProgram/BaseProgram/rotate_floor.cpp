@@ -68,7 +68,7 @@ HRESULT CRotateFloor::Init(const D3DXVECTOR3 &pos)
     CModel::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
-    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ROTATE_FLOOR);
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_GIMMICK_SPINSHIP_SHIP);
     GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
     // “–‚½‚è”»’èƒ‚ƒfƒ‹(‰~’Œ)‚Ì¶¬

@@ -256,43 +256,43 @@ void CRenderer::Update()
 //=============================================================================
 void CRenderer::Draw()
 {
-	m_pD3DDevice->Clear(0, 
-		nullptr, 
-		(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), 
-		D3DCOLOR_RGBA(0, 255, 255, 0), 
-		1.0f, 
-		0);
+    m_pD3DDevice->Clear(0,
+        nullptr,
+        (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER),
+        D3DCOLOR_RGBA(0, 255, 255, 0),
+        1.0f,
+        0);
 
-	m_pD3DDevice->Clear(0,
-		nullptr,
-		D3DCLEAR_STENCIL,
-		D3DCOLOR_XRGB(0, 0, 0),
-		1.0f,
-		0);
+    m_pD3DDevice->Clear(0,
+        nullptr,
+        D3DCLEAR_STENCIL,
+        D3DCOLOR_XRGB(0, 0, 0),
+        1.0f,
+        0);
 
-	// Direct3Dによる描画の開始
-	if (SUCCEEDED(m_pD3DDevice->BeginScene()))
-	{
-		// 射影行列/ビュー/ワールド
-		D3DXMATRIX matProj, matView, matWorld;
-		D3DXMATRIX trans;
+    // Direct3Dによる描画の開始
+    if (SUCCEEDED(m_pD3DDevice->BeginScene()))
+    {
+        // 射影行列/ビュー/ワールド
+        D3DXMATRIX matProj, matView, matWorld;
+        D3DXMATRIX trans;
 
-		if (CManager::GetInstance()->GetCamera() != nullptr)
-		{
-			// カメラのポインタ取得
-			CCamera *pCamera = CManager::GetInstance()->GetCamera();
+        if (CManager::GetInstance()->GetCamera() != nullptr)
+        {
+            // カメラのポインタ取得
+            CCamera *pCamera = CManager::GetInstance()->GetCamera();
 
-			// カメラが使われていたら
-			if (pCamera != nullptr)
-			{
-				pCamera->SetCamera();
-			}
-		}
+            // カメラが使われていたら
+            if (pCamera != nullptr)
+            {
+                pCamera->SetCamera();
+            }
+        }
 
         // フィルタの開始
         CGame::BeginGauss();
 
-		//オブジェクトクラスの全描画処理呼び出し
+        //オブジェクトクラスの全描画処理呼び出し
         CScene::DrawAll3D();
 
         // フィルタの終了
@@ -300,13 +300,13 @@ void CRenderer::Draw()
 
         CScene::DrawAll2D();
 
-		CFade *pFade = CManager::GetInstance()->GetFade();
+        CFade *pFade = CManager::GetInstance()->GetFade();
 
-		if (pFade != nullptr)
-		{
-			// 描画処理
-			pFade->Draw();
-		}
+        if (pFade != nullptr)
+        {
+            // 描画処理
+            pFade->Draw();
+        }
         // ポーズ状態の時
         if (CManager::GetInstance()->GetMode() == CManager::MODE_TYPE_GAME&&CManager::GetActivePause())
         {
@@ -314,25 +314,26 @@ void CRenderer::Draw()
             CManager::GetInstance()->GetPause()->Draw();
         }
 #ifdef _DEBUG
-		//ImGuiの情報表示する時
-		if (m_bDispImGuiInfo)
-		{
-			//通常描画
-			m_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+        //ImGuiの情報表示する時
+        if (m_bDispImGuiInfo)
+        {
+            //通常描画
+            m_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
-			//ImGui描画
-			ImGui::Render();
-			ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
+            //ImGui描画
+            ImGui::Render();
+            ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 
-			//ワイヤーフレーム描画の時は元に戻す
-			CLibrary::CheckWireMode();
-		}
+            //ワイヤーフレーム描画の時は元に戻す
+            CLibrary::CheckWireMode();
+        }
 #endif	//DEBUG
 
-		// Direct3Dによる描画の終了
-		m_pD3DDevice->EndScene();
-	}
 
-	// バックバッファとフロントバッファの入れ替え
-	m_pD3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
+        // Direct3Dによる描画の終了
+        m_pD3DDevice->EndScene();
+    }
+
+    // バックバッファとフロントバッファの入れ替え
+    m_pD3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
 }

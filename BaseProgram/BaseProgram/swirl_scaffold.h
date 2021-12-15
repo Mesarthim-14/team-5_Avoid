@@ -10,24 +10,43 @@
 //=========================================================================
 // インクルード
 //=========================================================================
-#include "model.h"
+#include "scene.h"
+
+//=========================================================================
+// 前方宣言
+//=========================================================================
+class CSwirlScaffoldObject;
 
 //=========================================================================
 // クラス定義
 //=========================================================================
-class CSwirlScaffold : public CModel
+class CSwirlScaffold : public CScene
 {
 public:
+
     CSwirlScaffold(PRIORITY = PRIORITY_TEST_MODEL); // コンストラクタ
     ~CSwirlScaffold();                              // デストラクタ
 
     static CSwirlScaffold *Create(const D3DXVECTOR3 &pos);  // インスタンス生成
-    HRESULT Init(const D3DXVECTOR3 &pos);                   // 初期化処理
+    HRESULT Init();                                         // 初期化処理
+    void Uninit();                                          // 終了処理
     void Update();                                          // 更新処理
+    void Draw();                                            // 描画処理
 
 private:
-    void Rotate();  // 回転
-    float m_fRotateNum;
+    enum
+    {
+        MAX_OBJECT = 2,    // 出すオブジェクトの最大数
+    };
+
+    // private関数
+    void RotateObject();                        // 回転
+    void CreateObject();  // オブジェクトの生成
+
+    // メンバ変数
+    CSwirlScaffoldObject* m_pObject[MAX_OBJECT];
+    D3DXVECTOR3 m_pos;
+    float m_fAngle;
 };
 
 #endif

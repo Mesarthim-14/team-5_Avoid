@@ -33,6 +33,7 @@
 CHeel::CHeel()
 {
     m_apHeelPoint.clear();
+    m_nCount = 0;
 }
 
 //=============================================================================
@@ -107,12 +108,17 @@ void CHeel::Update()
         // 当たり判定
         if (HeelPoint->Collision())
         {
+            m_nCount++;
             // 回復
             CManager::GetInstance()->GetPlayer()->SubLife(-HEEL_NUM);
             pGauge->SetDown((float)HEEL_NUM);
             pGauge->SetHitUp(true);
-            // プレイヤーの位置にエフェクト生成
-            CParticleHeel::Create(pos);
+            if (m_nCount >= 10)
+            {
+                // プレイヤーの位置にエフェクト生成
+                CParticleHeel::Create(pos);
+                m_nCount = 0;
+            }
         }
     }
 }
@@ -123,11 +129,11 @@ void CHeel::Update()
 void CHeel::CreateHeelPoint()
 {
     // 旗の生成
-    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(57761.4f, 1562.4f, 27879.0f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(57761.4f, 1370.0f, 27879.0f)));
 //    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-23408.0f, 107.3f, 15867.4f)));
 
-    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(7223.2f, 5473.4f, -50789.8f)));
-    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-28757.1f, 5430.9f, -55027.8f)));
-    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-58786.7f, 5518.4f, -23108.5f)));
-    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(1908.0f, 2439.5f, 67083.5f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(7223.2f, 5140.0f, -50789.8f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-28757.1f, 5310.0f, -55027.8f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-58786.7f, 5050.0f, -23108.5f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(1908.0f, 1750.0f, 67083.5f)));
 }

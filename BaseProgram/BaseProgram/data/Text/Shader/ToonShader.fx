@@ -96,9 +96,13 @@ PS_OUTPUT PS(VS_OUTPUT In) : COLOR0
 	p = p * 0.5f + 0.5f;
 	p = p * p;
 	
+    //float canvas = dot(In.Normal, -m_LightDir.xyz);
+    //canvas = canvas * 1.0f + 0.6f;
+    //canvas = canvas * canvas;
     float canvas = dot(In.Normal, -m_LightDir.xyz);
-    canvas = canvas * 1.0f + 0.6f;
+    canvas = canvas * 0.5f + 0.5f;
     canvas = canvas * canvas;
+
 
 	//****************************************************************
 	// トゥーンシェーダー処理

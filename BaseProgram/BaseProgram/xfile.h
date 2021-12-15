@@ -46,38 +46,44 @@ public:
     enum XFILE_NUM
     {
     
-    	XFILE_NUM_NONE = -1,            // 初期値
-    	XFILE_NUM_TEST_BLOCK,           // テストブロック
-    	XFILE_NUM_MAP,                  // マップ
-    	XFILE_NUM_CHECK_FLAG,           // チェックポイントのフラグ
-    	XFILE_NUM_PLANE,                // 平面
-    	XFILE_NUM_SKY,                  // 空
-    	XFILE_NUM_ENEMY_BOX,            // box
-    	XFILE_NUM_MOVE_SCAFFOLD,        // 進む足場
-    	XFILE_NUM_MOVE_RUBBLE1,         // 瓦礫
-    	XFILE_NUM_MOVE_RUBBLE2,         // 瓦礫
-    	XFILE_NUM_ROTATE_FLOOR,         // 回転床
-    	XFILE_NUM_ROTATE_BODY,          // 回転本体
-    	XFILE_NUM_CYLINDER,             // 酒樽
-    	XFILE_NUM_SLOPE,                // 坂道
-    	XFILE_NUM_RECOVER,              // 回復ポイント
-    	XFILE_NUM_CANNON,               // 大砲
-    	XFILE_NUM_BRIDGE,               // 橋
-    	XFILE_NUM_CANNON_BULLET,        // 大砲の弾
-    	XFILE_NUM_SWIRL_SCAFFOLD,       // 渦の足場
-        XFILE_NUM_SKY_BLUE,             // 空
-        XFILE_NUM_KRAKEN_BULLET,        // クラーケンの弾
-        XFILE_NUM_MAP_FIRST_FLOOR,      // マップ
-        XFILE_NUM_MAP_FIRST_FLOOR2,     // マップ
-        XFILE_NUM_MAP_CHECK_FLOOR,      // マップ
-        XFILE_NUM_MAP_CHECK_FLOOR2,     // マップ
-        XFILE_NUM_MAP_SQUARE_FLOOR,     // マップ
-        XFILE_NUM_MAP_SQUARE_FLOOR2,    // マップ
-        XFILE_NUM_MAP_THIN_FLOOR,       // マップ
-        XFILE_NUM_MAP_THIN_FLOOR2,      // マップ
-        XFILE_NUM_ENEMY_SHARK,          // サメ
-        XFILE_NUM_ENEMY_MARLIN,         // カジキ
-        XFILE_NUM_ENEMY_GHOST,          // ゴースト
+    	XFILE_NUM_NONE = -1,                // 初期値
+    	XFILE_NUM_TEST_BLOCK,               // テストブロック
+    	XFILE_NUM_MAP,                      // マップ
+    	XFILE_NUM_CHECK_FLAG,               // チェックポイントのフラグ
+    	XFILE_NUM_PLANE,                    // 平面
+    	XFILE_NUM_SKY,                      // 空
+    	XFILE_NUM_ENEMY_BOX,                // box
+    	XFILE_NUM_MOVE_SCAFFOLD,            // 進む足場
+    	XFILE_NUM_MOVE_RUBBLE1,             // 瓦礫
+    	XFILE_NUM_MOVE_RUBBLE2,             // 瓦礫
+    	XFILE_NUM_ROTATE_FLOOR,             // 回転床
+    	XFILE_NUM_ROTATE_BODY,              // 回転本体
+    	XFILE_NUM_CYLINDER,                 // 酒樽
+    	XFILE_NUM_SLOPE,                    // 坂道
+    	XFILE_NUM_RECOVER,                  // 回復ポイント
+    	XFILE_NUM_CANNON,                   // 大砲
+    	XFILE_NUM_BRIDGE,                   // 橋
+    	XFILE_NUM_CANNON_BULLET,            // 大砲の弾
+    	XFILE_NUM_SWIRL_SCAFFOLD,           // 渦の足場
+        XFILE_NUM_SKY_BLUE,                 // 空
+        XFILE_NUM_KRAKEN_BULLET,            // クラーケンの弾
+        XFILE_NUM_MAP_FIRST_FLOOR,          // マップ
+        XFILE_NUM_MAP_FIRST_FLOOR2,         // マップ
+        XFILE_NUM_MAP_CHECK_FLOOR,          // マップ
+        XFILE_NUM_MAP_CHECK_FLOOR2,         // マップ
+        XFILE_NUM_MAP_SQUARE_FLOOR,         // マップ
+        XFILE_NUM_MAP_SQUARE_FLOOR2,        // マップ
+        XFILE_NUM_MAP_THIN_FLOOR,           // マップ
+        XFILE_NUM_MAP_THIN_FLOOR2,          // マップ
+        XFILE_NUM_ENEMY_SHARK,              // サメ
+        XFILE_NUM_ENEMY_MARLIN,             // カジキ
+        XFILE_NUM_ENEMY_GHOST,            // ゴースト
+        XFILE_NUM_GIMMICK_BARREL,           // 酒樽
+        XFILE_NUM_GIMMICK_BRIDGE,           // 橋
+        XFILE_NUM_GIMMICK_SLOOP,            // 坂
+        XFILE_NUM_GIMMICK_SPINFLOOR,        // 回る足場
+        XFILE_NUM_GIMMICK_SPINSHIP_MAST,    // 上
+        XFILE_NUM_GIMMICK_SPINSHIP_SHIP,    // 下
     	XFILE_NUM_MAX
     };
     

@@ -295,9 +295,7 @@ void CManager::Update()
         if (m_pLight)
         {
             //レンダラーで管理してるやつの情報
-            ImGui::Begin("DebugInfo");
             m_pLight->ShowLightInfo();
-            ImGui::End();
         }
         // モードの更新処理
         if (m_pModeBase)

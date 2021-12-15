@@ -23,8 +23,8 @@ class CCollisionModelSphere;
 class CBullet : public CScene
 {
 public:
-	CBullet(PRIORITY = PRIORITY_TEST_MODEL);	// コンストラクタ
-	~CBullet();								// デストラクタ
+	CBullet(PRIORITY = PRIORITY_TEST_MODEL);    // コンストラクタ
+	~CBullet();                                 // デストラクタ
 
 	static CBullet *Create();   // インスタンス生成
 	virtual HRESULT Init();     // 初期化処理

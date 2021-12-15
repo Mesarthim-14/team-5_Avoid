@@ -18,6 +18,7 @@
 #include "mouse.h"
 #include "state_player_normal.h"
 #include "state_player_stun.h"
+#include "gauge.h"
 
 //=====================================================================
 // ƒ}ƒNƒ’è‹`
@@ -29,8 +30,8 @@
 //=====================================================================
 CPlayerStateAvoid::CPlayerStateAvoid()
 {
-    m_fAvoidValueY = 20.0f;
-    m_fAvoidValueXZ = 25.0f;
+    m_fAvoidValueY = 60.0f;
+    m_fAvoidValueXZ = 100.0f;
 }
 
 //=====================================================================
@@ -92,6 +93,7 @@ void CPlayerStateAvoid::Update()
 void CPlayerStateAvoid::SetMove()
 {
     CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    CGauge *pGauge = CManager::GetInstance()->GetGame()->GetGauge();
     if (!pPlayer)
     {
         return;
@@ -107,4 +109,6 @@ void CPlayerStateAvoid::SetMove()
     pPlayer->SetLanding(false);
 
     pPlayer->SubLife(AVOID_CONSUME);
+    pGauge->SetDown((float)AVOID_CONSUME);
+    pGauge->SetHitDown(true);
 }

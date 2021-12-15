@@ -93,7 +93,7 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	m_fRotationSpeed = 0.1f;
 	m_fAngleSpeed = 0.0f;
 	m_SlimeState = SLIME_LARGESIZE;
-	m_nHP = 60;
+	m_nHP = 100;
 	m_fAngle = 0.0f;
 	m_ActionState = ACTION_NONE;
 	for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
