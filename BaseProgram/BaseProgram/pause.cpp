@@ -22,10 +22,10 @@
 //=====================================================================
 // マクロ定義
 //=====================================================================
-#define BACK_SIZE D3DXVECTOR3(300.0f,400.0f,0.0f)                   // 背面サイズ
+#define BACK_SIZE D3DXVECTOR3(350.0f,400.0f,0.0f)                   // 背面サイズ
 #define BACK_POS D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0.0f)   // 背面座標
 
-#define STRING_SIZE D3DXVECTOR3(200.0f,70.0f,0.0f)                                              // 文字列
+#define STRING_SIZE D3DXVECTOR3(250.0f,70.0f,0.0f)                                              // 文字列
 #define RESUME_POS  D3DXVECTOR3(SCREEN_WIDTH/2, 35 + BACK_POS.y - (STRING_SIZE.y + 25),0.0f)    // 続ける
 #define RESTART_POS D3DXVECTOR3(SCREEN_WIDTH/2, 35 + BACK_POS.y,0.0f)                           // リスタート
 #define EXIT_POS       D3DXVECTOR3(SCREEN_WIDTH/2, 35 + BACK_POS.y + (STRING_SIZE.y + 25),0.0f)    // 終了
@@ -73,15 +73,16 @@ HRESULT CPause::Init()
     CTexture* pTexture = GET_TEXTURE_PTR;
     // ポーズの背景
     m_pPolygon[BACK] = CPolygon::Create(BACK_POS, BACK_SIZE);
+    m_pPolygon[BACK]->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_BACK));
     // 続きから
     m_pPolygon[RESUME] = CPolygon::Create(RESUME_POS, STRING_SIZE);
-    m_pPolygon[RESUME]->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_E_KEY));
+    m_pPolygon[RESUME]->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_RESUME));
     // リスタート
     m_pPolygon[RESTART] = CPolygon::Create(RESTART_POS, STRING_SIZE);
-    m_pPolygon[RESTART]->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_E_KEY));
+    m_pPolygon[RESTART]->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_RESTART));
     // ゲーム終了
     m_pPolygon[EXIT] = CPolygon::Create(EXIT_POS, STRING_SIZE);
-    m_pPolygon[EXIT]->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_E_KEY));
+    m_pPolygon[EXIT]->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_EXIT));
     return S_OK;
 }
 
