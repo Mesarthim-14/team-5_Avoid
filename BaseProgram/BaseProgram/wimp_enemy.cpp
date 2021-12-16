@@ -162,22 +162,6 @@ bool CWimpEnemy::Search()
 }
 
 //=============================================================================
-// プレイヤーを見る処理
-//=============================================================================
-void CWimpEnemy::LookAtPlayer()
-{
-    // プレイヤーの情報
-    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();		// メモリ確保
-    if (pPlayer)
-    {
-        D3DXVECTOR3 Ppos = pPlayer->GetPos();   // プレイヤーの座標取得
-        D3DXVECTOR3 Epos = GetPos();            // 自身の座標
-        D3DXVECTOR3 rot = GetRot();             // 角度取得
-        SetRot(D3DXVECTOR3(rot.x, CLibrary::LookTarget(Epos, Ppos), rot.z));
-    }
-}
-
-//=============================================================================
 // 追従
 //=============================================================================
 bool CWimpEnemy::Follow()

@@ -42,6 +42,7 @@
 #include "state_camera_descent.h"
 #include "pause.h"
 #include "map_factory.h"
+
 float CGame::m_fGravity = 1.5f;
 CGaussFilter* CGame::m_pGaussFilter = nullptr;
 bool CGame::m_bGaussFilter = true;

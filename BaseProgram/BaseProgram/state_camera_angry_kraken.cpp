@@ -21,9 +21,9 @@
 //=====================================================================
 // マクロ定義
 //=====================================================================
-#define KRAKEN_HEIGHT   (800.0f)    // クラーケンの高さ
-#define DISTANCE        (8000.0f)   // 距離
-#define ANGLE_POS       (1200.0f)   // 視点の高さ
+#define KRAKEN_HEIGHT   (10000.0f)    // クラーケンの高さ
+#define DISTANCE        (70000.0f)    // 距離
+#define ANGLE_POS       (10000.0f)   // 視点の高さ
 
 //=====================================================================
 // コンストラクタ
@@ -105,9 +105,9 @@ void CCameraStateAngryKraken::ViewKraken(CCamera* &pCamera)
     posRDest = D3DXVECTOR3(pos.x, pos.y + KRAKEN_HEIGHT, pos.z);    //注視点設定
 
     // カメラの位置設定
-    VDest.x = pos.x + fDistance * sinf(fVartical) * sinf(rot.y + fHorizontal);  // カメラ位置X設定
+    VDest.x = pos.x + fDistance * sinf(fVartical) * sinf(-rot.y + fHorizontal);  // カメラ位置X設定
     VDest.y = pos.y + ANGLE_POS * cosf(fVartical);                              // カメラ位置Y設定
-    VDest.z = pos.z + fDistance * sinf(fVartical) * cosf(rot.y + fHorizontal);  // カメラ位置Z設定
+    VDest.z = pos.z + fDistance * sinf(fVartical) * cosf(-rot.y + fHorizontal);  // カメラ位置Z設定
 
     //設定値の反映
     pCamera->GetposV() += (VDest - pCamera->GetposV());

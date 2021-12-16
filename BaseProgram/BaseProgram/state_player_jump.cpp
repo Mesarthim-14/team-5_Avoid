@@ -105,6 +105,7 @@ void CPlayerStateJump::Update()
 void CPlayerStateJump::SubLife(CPlayer* &pPlayer)
 {
     CGauge * pGauge = CManager::GetInstance()->GetGame()->GetGauge();
+
     // Hp消費
     pPlayer->SubLife(HIGHJUMP_CONSUME);
     pGauge->SetDown((float)HIGHJUMP_CONSUME);
@@ -131,7 +132,7 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
         }
     }
 
-    if (CLibrary::KeyboardRelease(DIK_SPACE) && !m_bJumpCheck)//通常ジャンプ
+    if (CLibrary::KeyboardRelease(DIK_SPACE) /*&& !m_bJumpCheck*/)//通常ジャンプ
     {
         //エフェクト発生
         if (m_nChargeJumpCount >= CHARGEJUMP_MAX)

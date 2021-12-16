@@ -28,7 +28,8 @@ const char * CSkinmeshModel::m_aParam[MODEL_MAX] =
     "data/Model/Hierarchy/player/slime_10.x",
     "data/Model/Hierarchy/player/slime_50_tex.x",
     "data/Model/Hierarchy/player/slime_100_tex.x",
-    "data/Model/Hierarchy/enemy/boss/takohead.x",
+    "data/Model/Hierarchy/enemy/boss/takohead_3.x",
+    "data/Model/Hierarchy/enemy/boss/takoasi.x",
 };
 
 
@@ -46,10 +47,9 @@ CSkinmeshModel::CSkinmeshModel(PRIORITY Priority) : CScene(Priority)
     m_pAnimetionController = 0;
     m_pRootFrame = 0;
     m_HLcontroller = nullptr;
-    m_ModelNum = MODEL_PLAYER_100;
+    m_ModelNum = MODEL_NONE;
     m_bIsDraw = true;
-    m_ToonAmbient = D3DXVECTOR4(0.0f, 0.0f, 0.0f, 0.0f);
-
+    memset(m_apTexture, 0, sizeof(m_apTexture));
 }
 
 //=============================================================================
@@ -139,6 +139,9 @@ HRESULT CSkinmeshModel::Init()
             m_cont[i]->numBoneCombinations);
     }
 
+    // テクスチャの設定
+    SetTexture();
+
     return S_OK;
 }
 
@@ -199,8 +202,6 @@ void CSkinmeshModel::Draw()
         m_HLcontroller->AdvanceTime(1);
 
         pToonShader->BeginSurface();
-        //オブジェクトのテクスチャーをステージ０にセットする
-//        pDevice->SetTexture(0, pTexture->GetTexture(CTexture::TEXTURE_NUM_WHITE));
 
         //現在フレーム(fps)のワールド変換行列
         std::map<DWORD, D3DXMATRIX> combMatrixMap;
@@ -233,7 +234,7 @@ void CSkinmeshModel::Draw()
                 Diffuse.z = m_cont[BCombiId]->pMaterials[AttribId].MatD3D.Diffuse.b;
                 Diffuse.w = m_cont[BCombiId]->pMaterials[AttribId].MatD3D.Diffuse.a;
 
-                pDevice->SetTexture(0, pTexture->GetTexture(CTexture::TEXTURE_NUM_SLIME));
+                pDevice->SetTexture(0, m_apTexture[m_ModelNum]);
                 pToonShader->SetDiffuse(Diffuse);
                 pToonShader->Begin(CToonShader::TOON_PASS_SKINMESH_TEX, mtxWorld, &LightDir);
 
@@ -272,6 +273,22 @@ void CSkinmeshModel::CreateInfoPtr()
     if (!m_pModelInfo)
     {
         m_pModelInfo = CModelInfo::Create(CModelInfo::MODEL_TYPE_NONE);
+    }
+}
+
+//=============================================================================
+// テクスチャの設定
+//=============================================================================
+void CSkinmeshModel::SetTexture()
+{
+    CTexture *pTexture = GET_TEXTURE_PTR;
+    if (pTexture)
+    {
+        m_apTexture[MODEL_PLAYER_10] = pTexture->GetTexture(CTexture::TEXTURE_NUM_SLIME);
+        m_apTexture[MODEL_PLAYER_50] = pTexture->GetTexture(CTexture::TEXTURE_NUM_SLIME);
+        m_apTexture[MODEL_PLAYER_100] = pTexture->GetTexture(CTexture::TEXTURE_NUM_SLIME);
+        m_apTexture[MODEL_ENEMY_KRAKEN_HEAD] = pTexture->GetTexture(CTexture::TEXTURE_NUM_KRAKEN);
+        m_apTexture[MODEL_ENEMY_KRAKEN_HEAD] = pTexture->GetTexture(CTexture::TEXTURE_NUM_KRAKEN);
     }
 }
 

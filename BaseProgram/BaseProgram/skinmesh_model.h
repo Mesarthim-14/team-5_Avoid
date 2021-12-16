@@ -31,10 +31,12 @@ public:
     //モデル名前
     enum MODEL
     {
-        MODEL_PLAYER_10 = 0,        //スライム１０％の状態
-        MODEL_PLAYER_50,            //スライム５０％の状態
-        MODEL_PLAYER_100,           //スライム１００％の状態
-        MODEL_ENEMY_KRAKEN_HEAD,    // クラーケン
+        MODEL_NONE = -1,
+        MODEL_PLAYER_10,                // スライム１０％の状態
+        MODEL_PLAYER_50,                // スライム５０％の状態
+        MODEL_PLAYER_100,               // スライム１００％の状態
+        MODEL_ENEMY_KRAKEN_HEAD,        // クラーケン
+        MODEL_ENEMY_KRAKEN_TENTACLESD,  // クラーケンの触手
         MODEL_MAX
     };
     CSkinmeshModel(PRIORITY Priority = PRIORITY_EFFECT);    // コンストラクタ
@@ -71,6 +73,7 @@ private:
     // private関数
     void HasPtrDelete();    // 保持ポインタの開放処理
     void CreateInfoPtr();   // 情報のポインタ生成
+    void SetTexture();      // テクスチャの設定
 
     // メンバ変数
     CModelInfo* m_pModelInfo;                           // モデルの情報
@@ -88,7 +91,6 @@ private:
     static const char* m_aParam[MODEL_MAX];             //モデルパス名
     MODEL m_ModelNum;                                   // モデルの名前
     SkinMesh::BlendIndex* m_pBlendIndex;
-
-    D3DXVECTOR4 m_ToonAmbient;
+    LPDIRECT3DTEXTURE9 m_apTexture[MODEL_MAX];          // テクスチャ情報
 };
 #endif 

@@ -196,6 +196,7 @@
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="key_e.cpp" />
     <ClCompile Include="kraken.cpp" />
+    <ClCompile Include="kraken_tentacles.cpp" />
     <ClCompile Include="library.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
@@ -281,6 +282,7 @@
     <ClCompile Include="state_camera_select.cpp" />
     <ClCompile Include="state_camera_talk.cpp" />
     <ClCompile Include="state_kraken.cpp" />
+    <ClCompile Include="state_kraken_damage.cpp" />
     <ClCompile Include="state_kraken_normal.cpp" />
     <ClCompile Include="state_kraken_not_attack.cpp" />
     <ClCompile Include="state_object.cpp" />
@@ -361,6 +363,7 @@
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="key_e.h" />
     <ClInclude Include="kraken.h" />
+    <ClInclude Include="kraken_tentacles.h" />
     <ClInclude Include="library.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
@@ -446,6 +449,7 @@
     <ClInclude Include="state_camera_select.h" />
     <ClInclude Include="state_camera_talk.h" />
     <ClInclude Include="state_kraken.h" />
+    <ClInclude Include="state_kraken_damage.h" />
     <ClInclude Include="state_kraken_normal.h" />
     <ClInclude Include="state_kraken_not_attack.h" />
     <ClInclude Include="state_object.h" />

@@ -24,12 +24,13 @@
 #include "particlecannon.h"
 #include "collision.h"
 #include "particlenormal.h"
+#include "state_kraken_damage.h"
 
 //=============================================================================
 // ƒ}ƒNƒ’è‹`
 //=============================================================================
-#define SPEED       (100.0f)
-#define SPEED_Y     (50.0f)
+#define SPEED       (300.0f)
+#define SPEED_Y     (100.0f)
 #define POS_FIX     (1000.0f)
 #define POS_FIX_Y   (700.0f)
 #define GRAVITY_NUM (0.65f)
@@ -171,6 +172,7 @@ void CCannonBullet::Collision()
         if (CCollision::ColOBBs(m_pCollision->GetOBB(), pKraken->GetCollosion()->GetOBB()))
         {
             pKraken->SubLife();
+            pKraken->ChangeState(CKrakenStateDamage::Create());
             m_bHit = true;
             for (int nCnt = 0; nCnt <= 20; nCnt++)
             {

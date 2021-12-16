@@ -19,6 +19,7 @@
 class CSkinmeshModel;
 class CCollisionModelOBB;
 class CState;
+class CKrakenTentacles;
 
 //=============================================================================
 // クラス定義
@@ -26,6 +27,17 @@ class CState;
 class CKraken : public CEnemy, public CStateObject
 {
 public:
+    enum MOTION
+    {
+        MOTION_NONE = -1,   // 初期値
+        MOTION_IDOL,        // 通常
+        MOTION_DEATH,       // 死んだとき
+        MOTION_DAMAGE,      // ダメージ
+        MOTION_ATTACK,      // 攻撃
+        MOTION_ANGRY,       // 怒ったとき
+        MOTION_MAX
+    };
+
     CKraken(PRIORITY Priority = PRIORITY_CHARACTER);    // コンストラクタ
     ~CKraken();                                         // デストラクタ
 
@@ -42,19 +54,19 @@ public:
 
 private:
     // private関数
-    void CreateModel(); // モデルの生成
-    void UpdateState(); // プレイヤーの状態
-    void Attack();      // 攻撃処理
+    void CreateModel();     // モデルの生成
+    void UpdateState();     // プレイヤーの状態
+    void Attack();          // 攻撃処理
+    void CreateTentacles(); // 触手の生成
 
     // メンバ変数
-    CSkinmeshModel *m_pSkinmeshModel;   // スキンメッシュモデルポインタ
-    CCollisionModelOBB* m_pCollision;   // 当たり判定
-    int m_nBulletCount;                 // 発射カウント
-    int m_nLife;                        // ライフ
-    bool m_bDead;                       // 死んだフラグ
-
-    // 状態のポインタ
-    CState* m_pCurrentState;  // 現在の状態ポインタ
-    CState* m_pNextState;     // 次の状態ポインタ
+    CSkinmeshModel *m_pSkinmeshModel;           // スキンメッシュモデルポインタ
+    CCollisionModelOBB* m_pCollision;           // 当たり判定
+    CState* m_pCurrentState;                    // 現在の状態ポインタ
+    CState* m_pNextState;                       // 次の状態ポインタ
+    vector<CKrakenTentacles*> m_apTentacles;    // 触手
+    int m_nBulletCount;                         // 発射カウント
+    int m_nLife;                                // ライフ
+    bool m_bDead;                               // 死んだフラグ
 };
 #endif
