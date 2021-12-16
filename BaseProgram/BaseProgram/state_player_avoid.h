@@ -25,6 +25,7 @@ public:
     void Init();                        // 初期化処理
     void Update()override;              // 更新処理
     void SetMove();                     // 移動量の設定
+
 private:
     float m_fAvoidValueY;   // 回避移動量（上方向）
     float m_fAvoidValueXZ;  // 回避移動量（横方向）

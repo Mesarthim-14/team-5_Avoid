@@ -34,6 +34,7 @@ private:
     // private関数
     void SubLife(CPlayer* &pPlayer);        // ライフの減算
     void JumpProcess(CPlayer* &pPlayer);    // ジャンプ中の処理
+    void Avoidance(CPlayer* &pPlayer);
 
     float m_fJumpTimeCount;     // ジャンプ時間カウント
     float m_fJumpValue;         // ジャンプ量

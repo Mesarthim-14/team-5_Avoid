@@ -18,6 +18,8 @@
 #include "state_player_normal.h"
 #include "gauge.h"
 #include "particleshrink.h"
+#include "mouse.h"
+#include "state_player_avoid.h"
 
 //=====================================================================
 // マクロ定義
@@ -87,11 +89,14 @@ void CPlayerStateJump::Update()
     if (pPlayer->GetLanding() && m_bJumpCheck)
     {
         pPlayer->ChangeState(CPlayerStateNormal::Create());
+        return;
     }
 
     // ジャンプ処理
     JumpProcess(pPlayer);
 
+    // ジャンプ処理
+    Avoidance(pPlayer);
 }
 
 //=====================================================================
@@ -155,4 +160,19 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
     }
     // 移動量の設定
     pPlayer->SetMove(move);
+}
+
+//=====================================================================
+// 回避処理
+//=====================================================================
+void CPlayerStateJump::Avoidance(CPlayer* &pPlayer)
+{
+    CMouse *pMouse = CManager::GetInstance()->GetMouse();   // マウス
+    if (pMouse->GetButtonTrigger(CMouse::MOUSE_LEFT))//回避
+    {
+        if (pPlayer->GetSlimeState() != CPlayer::SLIME_LITTLESIZE)
+        {
+            pPlayer->ChangeState(CPlayerStateAvoid::Create());
+        }
+    }
 }
