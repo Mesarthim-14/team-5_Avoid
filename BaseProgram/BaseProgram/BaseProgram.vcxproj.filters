@@ -487,6 +487,9 @@
     <ClCompile Include="state_kraken_damage.cpp">
       <Filter>10_State\KrakenState</Filter>
     </ClCompile>
+    <ClCompile Include="state_player_respawn.cpp">
+      <Filter>10_State\PlayerState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -983,6 +986,9 @@
     </ClInclude>
     <ClInclude Include="state_kraken_damage.h">
       <Filter>10_State\KrakenState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_player_respawn.h">
+      <Filter>10_State\PlayerState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

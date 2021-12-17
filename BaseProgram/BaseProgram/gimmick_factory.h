@@ -19,6 +19,7 @@ class CCheckPoint;
 class CBarrelFactory;
 class CHeel;
 class CCannonManager;
+class CMoveScaffold;
 
 //=======================================================================================
 // ゲームクラス
@@ -37,6 +38,7 @@ public:
     // Get関数
     inline CCheckPoint *GetCheckPoint()const        { return m_pCheckPoint; }       // チェックポイント
     inline CCannonManager* GetCannonManager()const  { return m_pCannonManager; }    // 大砲管理クラス
+    inline CMoveScaffold* GetMoveScaffold()const    { return m_pMoveScaffold; }     // 移動する床
 
 private:
     // private関数
@@ -54,5 +56,6 @@ private:
     CBarrelFactory *m_pBarrelFactory;   // 樽の生成
     CHeel *m_pHeel;                     // 回復クラス
     CCannonManager *m_pCannonManager;   // 大砲管理クラス
+    CMoveScaffold* m_pMoveScaffold;       // 移動する床
 };
 #endif

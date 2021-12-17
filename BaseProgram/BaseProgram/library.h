@@ -31,7 +31,7 @@ public:
     static float Random(const float &fNum);                                                                             // ƒ‰ƒ“ƒ_ƒ€•Ï”
     static float Random(const float &fMin, const float &fMax);                                                          // ƒ‰ƒ“ƒ_ƒ€•Ï”
     static void Rotate3D(D3DXVECTOR3 &PointPos, const D3DXVECTOR3 &rot);                                                // “_‚ÌOŸŒ³‰ñ“]ˆ—
-    static float CalDistance(const D3DXVECTOR3 &pos1, const D3DXVECTOR3 &pos2);                                         // “ñ“_‚Ì‹——£‚ğŒvZ
+    static float CalDistance(const D3DXVECTOR3 &Target, const D3DXVECTOR3 &This);                                         // “ñ“_‚Ì‹——£‚ğŒvZ
     static float LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 = 0);         // •ª—£²‚É“Š‰e‚³‚ê‚½²¬•ª‚©‚ç“Š‰eü•ª’·‚ğZo
     static D3DXVECTOR3 MultiplyVector3(const D3DXVECTOR3 &vector1, const D3DXVECTOR3 &vector2);                         // vector3“¯m‚ÌæZ
     static D3DXVECTOR3 DivisionVector3(const D3DXVECTOR3 &vector1, const D3DXVECTOR3 &vector2);                         // vector3“¯m‚ÌœZ

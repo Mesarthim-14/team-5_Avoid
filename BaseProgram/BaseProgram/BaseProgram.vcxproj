@@ -293,6 +293,7 @@
     <ClCompile Include="state_player_knockback.cpp" />
     <ClCompile Include="state_player_normal.cpp" />
     <ClCompile Include="state_player_not_move.cpp" />
+    <ClCompile Include="state_player_respawn.cpp" />
     <ClCompile Include="state_player_stun.cpp" />
     <ClCompile Include="swirl_scaffold.cpp" />
     <ClCompile Include="swirl_scaffold_object.cpp" />
@@ -460,6 +461,7 @@
     <ClInclude Include="state_player_knockback.h" />
     <ClInclude Include="state_player_normal.h" />
     <ClInclude Include="state_player_not_move.h" />
+    <ClInclude Include="state_player_respawn.h" />
     <ClInclude Include="state_player_stun.h" />
     <ClInclude Include="swirl_scaffold.h" />
     <ClInclude Include="swirl_scaffold_object.h" />

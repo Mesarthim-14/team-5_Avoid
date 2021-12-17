@@ -31,6 +31,5 @@ public:
     void Update()override;                  // XVˆ—
     void TrackingCannon(CPlayer* &pPlayer); // ‘å–C‚ÌŒã‚ë‚Ö’Ç]
 private:
-    int m_nStunCount;
 };
 #endif

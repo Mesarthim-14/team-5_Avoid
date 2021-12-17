@@ -28,6 +28,7 @@ CPlayerState::CPlayerState()
 {
     m_fAngleSpeed = 0.6f;
     memset(m_bMove, 0, sizeof(m_bMove));
+    m_nCounter = 0;
 }
 
 //=====================================================================

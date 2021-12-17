@@ -97,7 +97,7 @@ private:
     void UpdateState(); // プレイヤーの状態
     void UpdateRot();   // 角度の更新処理
     void ChangeModel(); // モデルチェンジ
-    void ReSporn();     // リスポーン
+    void Respawn();     // リスポーン
     void CreateModel(); // モデル生成
 
     // メンバ変数

@@ -84,6 +84,9 @@ public:
         XFILE_NUM_GIMMICK_SPINFLOOR,        // âÒÇÈë´èÍ
         XFILE_NUM_GIMMICK_SPINSHIP_MAST,    // è„
         XFILE_NUM_GIMMICK_SPINSHIP_SHIP,    // â∫
+        XFILE_NUM_GIMMICK_PARTY_BASE,       // ÉxÅ[ÉX
+        XFILE_NUM_GIMMICK_PARTY_RUBBLE1,    // ä¢‚I
+        XFILE_NUM_GIMMICK_PARTY_RUBBLE2,    // ä¢‚I
     	XFILE_NUM_MAX
     };
     

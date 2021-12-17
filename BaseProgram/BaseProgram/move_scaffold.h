@@ -26,13 +26,14 @@ public:
     CMoveScaffold(PRIORITY = PRIORITY_TEST_MODEL);  // コンストラクタ
     ~CMoveScaffold();                               // デストラクタ
 
-    static CMoveScaffold *Create(); // インスタンス生成
-    HRESULT Init();                 // 初期化処理
-    void Uninit();                  // 初期化処理
-    void Update();                  // 更新処理
-    void Draw();                    // 描画
+    static CMoveScaffold *Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot); // インスタンス生成
+    HRESULT Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot);                 // 初期化処理
+    void Uninit()override;                                                        // 初期化処理
+    void Update()override;                                                        // 更新処理
+    void Draw()override;                                                          // 描画
 
     void HitOBBs(); // OBB同士の当たり判定
+    void Respawn(); // リスポーン時の処理
 
 private:
     // private関数
@@ -42,6 +43,9 @@ private:
     float m_fSpeed;
 
     CCollisionModelOBB* m_pColModelOBB; // 当たり判定モデルポインタ(OBB)
+    D3DXVECTOR3 m_StartPos;             // 始まりの位置
+    D3DXVECTOR3 m_GoalPos;              // ゴールの位置
+    bool m_bMove;                       // 移動のフラグ
 };
 
 #endif

@@ -39,7 +39,7 @@ CXfile::CXfile()
     m_aXfileName =
     {
         { "data/Model/Normal/block.x" },                                // テストブロック
-        { "data/Model/Normal/mapmapmap3.x" },                           // マップ
+        { "data/Model/Normal/Gimmick/amap.x" },                           // マップ
         { "data/Model/Normal/Map/checkpoint.x" },                       // チェックポイント
         { "data/Model/Normal/plane.x" },                                // 平面
         { "data/Model/Normal/sky.x" },                                  // 空
@@ -75,6 +75,9 @@ CXfile::CXfile()
         { "data/Model/Normal/Gimmick/kaiten_yuka_2.x" },                // 回る足場
         { "data/Model/Normal/Gimmick/04_gimmick_spinship_mast2.x" },    // 上
         { "data/Model/Normal/Gimmick/05_gimmick_spinship_ship.x" },     // 下
+        { "data/Model/Normal/Gimmick/06_gimmick_susumu.x" },            // ベース
+        { "data/Model/Normal/Gimmick/07_Rubble1.x" },                   // がれき
+        { "data/Model/Normal/Gimmick/08_Rubble2.x" },                   // がれき
 
     };
     

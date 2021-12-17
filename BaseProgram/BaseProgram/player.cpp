@@ -25,14 +25,13 @@
 #include "animation_skinmesh.h"
 #include "collisionModel_OBB.h"
 #include "collisionModel_Capsule.h"
-#include "check_point.h"
-#include "gimmick_factory.h"
 #include "state_player.h"
 #include "state_player_avoid.h"
 #include "state_player_jump.h"
 #include "state_player_normal.h"
 #include "gauge.h"
 #include "texture.h"
+#include "state_player_respawn.h"
 
 //=============================================================================
 // マクロ定義
@@ -185,7 +184,7 @@ void CPlayer::Update()
 	CCharacter::Update();
 
 	// リスポーン
-	ReSporn();
+	Respawn();
 
     D3DXVECTOR3 pos = GetPos();
     D3DXVECTOR3 rot = GetRot();
@@ -209,7 +208,6 @@ void CPlayer::Update()
 	}
     if (m_pColModelCapsule)
     {
-
         m_pColModelCapsule->SetInfo(pos, m_pColModelCapsule->GetInfo().radius, m_pColModelCapsule->GetInfo().length, rot);
     }
 
@@ -491,7 +489,7 @@ void CPlayer::SubLife(const int &nDamage)
 // リスポーン
 // Author : Konishi Yuuto
 //=============================================================================
-void CPlayer::ReSporn()
+void CPlayer::Respawn()
 {
 	// 一定以下の座標になったら
 	if (RESPORN_POS_Y > GetPos().y)
@@ -499,10 +497,8 @@ void CPlayer::ReSporn()
 		CGame* pGame = (CGame*)CManager::GetInstance()->GetModePtr();
 		if (pGame)
 		{
-			// 座標の取得
-			SetPos(pGame->GetGimmickFactory()->GetCheckPoint()->GetPointPos());
-			SetMove(ZeroVector3);
-            ChangeState(CPlayerStateNormal::Create());
+            // リスポーン状態
+            ChangeState(CPlayerStateRespawn::Create());
 		}
 	}
 }
