@@ -25,7 +25,7 @@ class CCollisionModelOBB;
 class CKrakenTentacles : public CScene
 {
 public:
-    CKrakenTentacles(PRIORITY Priority = PRIORITY_CHARACTER);    // コンストラクタ
+    CKrakenTentacles(PRIORITY Priority = PRIORITY_MODEL);    // コンストラクタ
     ~CKrakenTentacles();                                         // デストラクタ
 
     static CKrakenTentacles *Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot);    // インスタンス生成

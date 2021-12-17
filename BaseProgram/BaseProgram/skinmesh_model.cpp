@@ -49,7 +49,7 @@ CSkinmeshModel::CSkinmeshModel(PRIORITY Priority) : CScene(Priority)
     m_HLcontroller = nullptr;
     m_ModelNum = MODEL_NONE;
     m_bIsDraw = true;
-    memset(m_apTexture, 0, sizeof(m_apTexture));
+    m_pTexture = nullptr;
 }
 
 //=============================================================================
@@ -138,9 +138,6 @@ HRESULT CSkinmeshModel::Init()
             (D3DXBONECOMBINATION*)m_cont[i]->boneCombinationTable->GetBufferPointer(),
             m_cont[i]->numBoneCombinations);
     }
-
-    // テクスチャの設定
-    SetTexture();
 
     return S_OK;
 }
@@ -234,7 +231,7 @@ void CSkinmeshModel::Draw()
                 Diffuse.z = m_cont[BCombiId]->pMaterials[AttribId].MatD3D.Diffuse.b;
                 Diffuse.w = m_cont[BCombiId]->pMaterials[AttribId].MatD3D.Diffuse.a;
 
-                pDevice->SetTexture(0, m_apTexture[m_ModelNum]);
+                pDevice->SetTexture(0, m_pTexture);
                 pToonShader->SetDiffuse(Diffuse);
                 pToonShader->Begin(CToonShader::TOON_PASS_SKINMESH_TEX, mtxWorld, &LightDir);
 
@@ -273,22 +270,6 @@ void CSkinmeshModel::CreateInfoPtr()
     if (!m_pModelInfo)
     {
         m_pModelInfo = CModelInfo::Create(CModelInfo::MODEL_TYPE_NONE);
-    }
-}
-
-//=============================================================================
-// テクスチャの設定
-//=============================================================================
-void CSkinmeshModel::SetTexture()
-{
-    CTexture *pTexture = GET_TEXTURE_PTR;
-    if (pTexture)
-    {
-        m_apTexture[MODEL_PLAYER_10] = pTexture->GetTexture(CTexture::TEXTURE_NUM_SLIME);
-        m_apTexture[MODEL_PLAYER_50] = pTexture->GetTexture(CTexture::TEXTURE_NUM_SLIME);
-        m_apTexture[MODEL_PLAYER_100] = pTexture->GetTexture(CTexture::TEXTURE_NUM_SLIME);
-        m_apTexture[MODEL_ENEMY_KRAKEN_HEAD] = pTexture->GetTexture(CTexture::TEXTURE_NUM_KRAKEN);
-        m_apTexture[MODEL_ENEMY_KRAKEN_HEAD] = pTexture->GetTexture(CTexture::TEXTURE_NUM_KRAKEN);
     }
 }
 

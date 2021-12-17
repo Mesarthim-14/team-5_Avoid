@@ -11,6 +11,9 @@
 #include "kraken_tentacles.h"
 #include "animation_skinmesh.h"
 #include "skinmesh_model.h"
+#include "manager.h"
+#include "texture.h"
+#include "resource_manager.h"
 
 //=============================================================================
 // マクロ定義
@@ -40,7 +43,7 @@ CKrakenTentacles::~CKrakenTentacles()
 CKrakenTentacles * CKrakenTentacles::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // メモリ確保
-    CKrakenTentacles *pTentacles = new CKrakenTentacles;
+    CKrakenTentacles *pTentacles = new CKrakenTentacles(PRIORITY_MODEL);
     if (pTentacles)
     {
         pTentacles->SetTentaclesInfo(pos, rot);
@@ -72,6 +75,8 @@ void CKrakenTentacles::Uninit()
         m_pSkinmeshModel->Uninit();
         m_pSkinmeshModel = nullptr;
     }
+
+    Release();
 }
 
 //=============================================================================
@@ -93,12 +98,18 @@ void CKrakenTentacles::Update()
 void CKrakenTentacles::CreateModel()
 {
     m_pSkinmeshModel = CSkinmeshModel::Create(m_pos, m_rot, CSkinmeshModel::MODEL_ENEMY_KRAKEN_TENTACLESD);
-    m_pSkinmeshModel->IsDraw(true);
+    if (m_pSkinmeshModel)
+    {
+        CTexture* pTexture = GET_TEXTURE_PTR;
+        m_pSkinmeshModel->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_KRAKEN));
+        m_pSkinmeshModel->IsDraw(true);
 
-    // モデルの情報分からない
-    m_pSkinmeshModel->GetHLcontroller()->ChangeAnimation(0);
-    m_pSkinmeshModel->GetHLcontroller()->SetLoopTime(0, 60);
-    m_pSkinmeshModel->GetHLcontroller()->SetShiftTime(0, 60);
+        // モデルの情報分からない
+        m_pSkinmeshModel->GetHLcontroller()->ChangeAnimation(0);
+        m_pSkinmeshModel->GetHLcontroller()->SetLoopTime(0, 60);
+        m_pSkinmeshModel->GetHLcontroller()->SetShiftTime(0, 60);
+    }
+
 }
 
 //=============================================================================

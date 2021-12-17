@@ -23,9 +23,9 @@
 //=====================================================================
 // ƒ}ƒNƒ’è‹`
 //=====================================================================
-#define DISTANCE        (10000.0f)               // ‹——£
-#define CANNON_HEIGHT   (2000.0f)               // ‘å–C‚Ì‚‚³
-#define SHIFT_ANGLE     (D3DXToRadian(20.0f))   // ‚¸‚ç‚·Šp“x
+#define DISTANCE        (15000.0f)              // ‹——£
+#define CANNON_HEIGHT   (3000.0f)               // ‘å–C‚Ì‚‚³
+#define SHIFT_ANGLE     (D3DXToRadian(10.0f))   // ‚¸‚ç‚·Šp“x
 #define ANGLE_POS       (6000.0f)               // Ž‹“_‚Ì‚‚³
 
 //=====================================================================
@@ -90,6 +90,11 @@ void CCameraStateCannon::Update()
 void CCameraStateCannon::TrackingCannon(CCamera* &pCamera)
 {
     CCannon* pCannon = CManager::GetInstance()->GetGame()->GetGimmickFactory()->GetCannonManager()->GetCurrentCannon();
+    if (!pCannon)
+    {
+        return;
+    }
+
     D3DXVECTOR3 CannonPos = pCannon->GetPos();
     D3DXVECTOR3 CannonRot = pCannon->GetRot();
     float fDistance = DISTANCE;

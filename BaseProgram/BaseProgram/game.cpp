@@ -316,9 +316,9 @@ void CGame::ShowInfo()
 //=======================================================================================
 void CGame::CreateObject()
 {
-    CreateMap();
     CreatePlayer();
     CreateEnemy();
+    CreateMap();
     CreateNPC();
 }
 

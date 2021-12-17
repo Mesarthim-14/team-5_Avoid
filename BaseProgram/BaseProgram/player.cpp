@@ -32,6 +32,7 @@
 #include "state_player_jump.h"
 #include "state_player_normal.h"
 #include "gauge.h"
+#include "texture.h"
 
 //=============================================================================
 // マクロ定義
@@ -133,12 +134,6 @@ HRESULT CPlayer::Init()
 
 	SetType(CHARACTER_TYPE_PLAYER);	// プレイヤー
 
-	if (!m_pCurrentState)
-	{
-		// インスタンス生成
-		m_pCurrentState = CPlayerStateNormal::Create();
-	}
-
 	LoadInfo();
 
 	//当たり判定モデル(直方体)の生成
@@ -191,7 +186,6 @@ void CPlayer::Update()
 
 	// リスポーン
 	ReSporn();
-
 
     D3DXVECTOR3 pos = GetPos();
     D3DXVECTOR3 rot = GetRot();
@@ -252,7 +246,16 @@ CSkinmeshModel *CPlayer::GetCurrentSkinMeshPtr()
 //=============================================================================
 void CPlayer::ChangeState(CState *pPlayerState)
 {
-	m_pNextState = pPlayerState;
+    if (!m_pNextState)
+    {
+        m_pNextState = pPlayerState;
+    }
+    else
+    {
+        delete m_pNextState;
+        m_pNextState = nullptr;
+        m_pNextState = pPlayerState;
+    }
 }
 
 //=============================================================================
@@ -514,6 +517,9 @@ void CPlayer::CreateModel()
 	for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
 	{
 		m_pSkinmeshModel[nCount] = CSkinmeshModel::Create(GetPos(), GetRot(), CSkinmeshModel::MODEL(nCount));
+        CTexture* pTexture = GET_TEXTURE_PTR;
+        m_pSkinmeshModel[nCount]->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_SLIME));
+
 		if (int(m_SlimeState) != nCount)
 		{
 			m_pSkinmeshModel[nCount]->IsDraw(false);

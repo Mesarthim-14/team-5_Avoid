@@ -37,6 +37,7 @@ CEnemy::~CEnemy()
 HRESULT CEnemy::Init()
 {
     CCharacter::Init();
+    SetType(CHARACTER_TYPE_ENEMY);
 
     return S_OK;
 }

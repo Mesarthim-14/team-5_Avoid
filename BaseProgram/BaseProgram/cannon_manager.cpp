@@ -127,11 +127,11 @@ void CCannonManager::Update()
 //=============================================================================
 void CCannonManager::CreateCannon()
 {
-    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(50368.0f, 1008.6f, -6183.7f), D3DXVECTOR3(0.0f, D3DXToRadian(-60.0f), 0.0f)));
-    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(24750.4f, 5073.4f, -48617.6f), D3DXVECTOR3(0.0f, D3DXToRadian(-0.0f), 0.0f)));
-    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(-58195.2f, 5000.4f, -16188.7f), D3DXVECTOR3(0.0f, D3DXToRadian(100.0f), 0.0f)));
-    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(9972.3f, 800.4f, 47141.2f), D3DXVECTOR3(0.0f, D3DXToRadian(190.0f), 0.0f)));
-    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(39101.1f, 800.4f, 28695.7f), D3DXVECTOR3(0.0f, D3DXToRadian(220.0f), 0.0f)));
+    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(50368.0f, 1008.6f, -6183.7f)));
+    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(24750.4f, 5073.4f, -48617.6f)));
+    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(-58195.2f, 5000.4f, -16188.7f)));
+    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(9972.3f, 800.4f, 47141.2f)));
+    m_apCannon.push_back(CCannon::Create(D3DXVECTOR3(39101.1f, 800.4f, 28695.7f)));
 }
 
 //=============================================================================
