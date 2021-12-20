@@ -25,7 +25,7 @@
 //=====================================================================
 #define DISTANCE    (10.0f)     // 距離
 #define SPEED       (15.0f)     // 速度
-#define POS_FIX     (100.0f)    // 座標の修正
+#define POS_FIX     (-800.0f)   // 座標の修正
 
 //=====================================================================
 // コンストラクタ
@@ -73,6 +73,7 @@ void CPlayerStateCannon::Init()
     pPlayer->SetCollision(false);
     // アニメーション設定
     SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_IDOL), 60);
+    TrackingCannon(pPlayer);
 }
 
 //=====================================================================
@@ -87,7 +88,7 @@ void CPlayerStateCannon::Update()
         return;
     }
 
-    TrackingCannon(pPlayer);
+//    TrackingCannon(pPlayer);
 }
 
 //=====================================================================
@@ -101,21 +102,24 @@ void CPlayerStateCannon::TrackingCannon(CPlayer* &pPlayer)
     float fDistance = DISTANCE;
 
     D3DXVECTOR3 pos = D3DXVECTOR3(
-        CannonPos.x + (sinf(CannonRot.y)*POS_FIX),
+        CannonPos.x + (sinf(CannonRot.y))*POS_FIX,
         pPlayer->GetPos().y,
-        CannonPos.z + (cos(CannonRot.y)*POS_FIX));
+        CannonPos.z + (cos(CannonRot.y))*POS_FIX);
 
-    D3DXVECTOR3 move = ZeroVector3;
-    if (fDistance <= CLibrary::CalDistance(pPlayer->GetPos(), pos))
-    {
-        D3DXVECTOR3 move = CLibrary::FollowMoveXZ(pPlayer->GetPos(), pos, SPEED);
-    }
+    pPlayer->SetPos(pos);
+    pPlayer->SetMove(ZeroVector3);
 
-    pPlayer->SetMove(move);
+    //D3DXVECTOR3 move = ZeroVector3;
+    //if (fDistance <= CLibrary::CalDistance(pPlayer->GetPos(), pos))
+    //{
+    //    D3DXVECTOR3 move = CLibrary::FollowMoveXZ(pPlayer->GetPos(), pos, SPEED);
+    //}
 
-    // 角度設定
-    D3DXVECTOR3 rot = pPlayer->GetRot();
-    rot.y = D3DXToRadian(180.0f)+CannonRot.y;
-    CLibrary::RotFix(rot.y);
-    pPlayer->SetRotDest(rot);
+    //pPlayer->SetMove(move);
+
+    //// 角度設定
+    //D3DXVECTOR3 rot = pPlayer->GetRot();
+    //rot.y = D3DXToRadian(180.0f)+CannonRot.y;
+    //CLibrary::RotFix(rot.y);
+    //pPlayer->SetRotDest(rot);
 }

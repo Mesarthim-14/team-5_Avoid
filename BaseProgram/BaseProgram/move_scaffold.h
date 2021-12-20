@@ -37,14 +37,15 @@ public:
 
 private:
     // private関数
-    void Move();    // 移動量
+    void Move();        // 移動量
+    void CarryPlayer(); // プレイヤーを運ぶ
 
-    int m_nTime;
-    float m_fSpeed;
-
+    // メンバ変数
     CCollisionModelOBB* m_pColModelOBB; // 当たり判定モデルポインタ(OBB)
     D3DXVECTOR3 m_StartPos;             // 始まりの位置
     D3DXVECTOR3 m_GoalPos;              // ゴールの位置
+    int m_nTime;                        // 時間
+    float m_fSpeed;                     // 速度
     bool m_bMove;                       // 移動のフラグ
 };
 
