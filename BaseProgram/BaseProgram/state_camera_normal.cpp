@@ -143,13 +143,13 @@ void CCameraStateNormal::MouseUpdate(CCamera* &pCamera)
 
     D3DXVECTOR3 rot = pCamera->GetRot();
     //カメラが地面を貫通してしまう場合地面に這わせるように
-    if (fRotateCenter.y + sinf(D3DXToRadian(rot.x)) * CAMERA_DISTANCE > 0)
+    if (fRotateCenter.y + sinf(D3DXToRadian(rot.x)) * CAMERA_DISTANCE > 1000.0f)
     {
         pCamera->SetposV(fRotateCenter + D3DXVECTOR3(sinf(D3DXToRadian(-rot.y)) * cosf(D3DXToRadian(rot.x)) * CAMERA_DISTANCE, sinf(D3DXToRadian(rot.x)) * CAMERA_DISTANCE, cosf(D3DXToRadian(-rot.y)) * cosf(D3DXToRadian(rot.x)) * CAMERA_DISTANCE));
     }
     else
     {
-        pCamera->SetposV(fRotateCenter + D3DXVECTOR3(sinf(D3DXToRadian(-rot.y)) * cosf(D3DXToRadian(rot.x))* CAMERA_DISTANCE, -fRotateCenter.y + 1, cosf(D3DXToRadian(-rot.y)) * cosf(D3DXToRadian(rot.x))* CAMERA_DISTANCE));
+        pCamera->SetposV(fRotateCenter + D3DXVECTOR3(sinf(D3DXToRadian(-rot.y)) * cosf(D3DXToRadian(rot.x))* CAMERA_DISTANCE, -fRotateCenter.y + 1000.0f, cosf(D3DXToRadian(-rot.y)) * cosf(D3DXToRadian(rot.x))* CAMERA_DISTANCE));
     }
 
     //注視点を中心にあわせる

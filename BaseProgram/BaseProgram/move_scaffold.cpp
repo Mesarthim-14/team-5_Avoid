@@ -20,6 +20,7 @@
 #include "collision.h"
 #include "collisionModel_OBB.h"
 #include "library.h"
+#include "player.h"
 
 //=============================================================================
 // マクロ定義
@@ -183,4 +184,19 @@ void CMoveScaffold::Move()
         SetMove(ZeroVector3);
     }
 
+    CarryPlayer();
+
+}
+
+//=============================================================================
+// プレイヤーを運ぶ
+//=============================================================================
+void CMoveScaffold::CarryPlayer()
+{
+    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    if (pPlayer)
+    {
+        D3DXVECTOR3 move = pPlayer->GetPos() + GetMove();
+        pPlayer->SetPos(move);
+    }
 }

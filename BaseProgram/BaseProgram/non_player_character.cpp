@@ -20,6 +20,7 @@
 #include "key_e.h"
 #include "npc_text_enemy.h"
 #include "production_npc_talk.h"
+#include "texture.h"
 
 //=============================================================================
 // ƒ}ƒNƒ’è‹`
@@ -124,7 +125,9 @@ void CNonPlayerCharacter::Draw()
 void CNonPlayerCharacter::CreateModel()
 {
     m_pSkinmeshModel = CSkinmeshModel::Create(m_pos, m_rot, CSkinmeshModel::MODEL_PLAYER_50);
-    
+    CTexture* pTexture = GET_TEXTURE_PTR;
+    m_pSkinmeshModel->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_SLIME));
+
     m_pSkinmeshModel->GetHLcontroller()->ChangeAnimation(0);
     m_pSkinmeshModel->GetHLcontroller()->SetLoopTime(0, 60);
     m_pSkinmeshModel->GetHLcontroller()->SetShiftTime(0, 60);

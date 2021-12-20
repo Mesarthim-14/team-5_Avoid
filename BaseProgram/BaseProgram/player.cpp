@@ -56,7 +56,7 @@
 #define PLAYER_MIDLLESIZE_VALUE (50)									// 中サイズモデルの値
 #define PLAYER_LARGESIZE_VALUE  (100)									// 最大サイズモデルの値
 
-#define RESPORN_POS_Y			(-3000.0f)								// リスポーンの値
+#define RESPORN_POS_Y			(-2000.0f)								// リスポーンの値
 
 //=============================================================================
 // 生成処理関数
