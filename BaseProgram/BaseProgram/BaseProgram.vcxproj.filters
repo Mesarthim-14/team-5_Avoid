@@ -505,6 +505,12 @@
     <ClCompile Include="particle_water.cpp">
       <Filter>06_Effect\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="state_kraken_angry.cpp">
+      <Filter>10_State\KrakenState</Filter>
+    </ClCompile>
+    <ClCompile Include="state_kraken_dead.cpp">
+      <Filter>10_State\KrakenState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -1019,6 +1025,12 @@
     </ClInclude>
     <ClInclude Include="particle_water.h">
       <Filter>06_Effect\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="state_kraken_angry.h">
+      <Filter>10_State\KrakenState</Filter>
+    </ClInclude>
+    <ClInclude Include="state_kraken_dead.h">
+      <Filter>10_State\KrakenState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -24,15 +24,17 @@
 #include "caution_boss_bullet_ui.h"
 #include "gauge.h"
 #include "particlepop.h"
+#include "kraken.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
 #define TEST_POS            (ZeroVector3)
 #define TEST_ROT            (ZeroVector3)
-#define COLLISION_RADIUS    (1800.0f)
+#define COLLISION_RADIUS    (7500.0f)
 #define SPEED               (400.0f)
 #define LIFE                (300)
+#define FIX_POS             (-15000.0f)
 
 //=============================================================================
 // コンストラクタ
@@ -74,7 +76,7 @@ CBossBullet * CBossBullet::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot
 //=============================================================================
 HRESULT CBossBullet::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
-    SetPos(pos);
+    FixPos(pos);
     SetRot(rot);
     SetColRadius(COLLISION_RADIUS);
 
@@ -208,9 +210,19 @@ void CBossBullet::FollowPlayer()
 }
 
 //=============================================================================
-// 情報のポインタ生成
+// 座標の修正
 //=============================================================================
-void CBossBullet::Move()
+void CBossBullet::FixPos(const D3DXVECTOR3& pos)
 {
+    CKraken* pKraken = CManager::GetInstance()->GetGame()->GetKraken();
+    if (pKraken)
+    {
+        D3DXVECTOR3 rot = pKraken->GetRot();
+        D3DXVECTOR3 FixPos = D3DXVECTOR3(
+            pos.x +(sinf(rot.y))*FIX_POS,
+            pos.y,
+            pos.z + (cosf(rot.y))*FIX_POS);
 
+        SetPos(FixPos);
+    }
 }

@@ -72,5 +72,6 @@ private:
     CGauge * m_pGauge;                      // ゲージポインタ
     CPause *m_pPause;                       // ポーズポインタ
     CMapFactory* m_pMapFactory;             // マップの生成クラス
+    bool m_bTitle;                          // タイトルのフラグ
 };
 #endif

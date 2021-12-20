@@ -287,7 +287,9 @@
     <ClCompile Include="state_camera_select.cpp" />
     <ClCompile Include="state_camera_talk.cpp" />
     <ClCompile Include="state_kraken.cpp" />
+    <ClCompile Include="state_kraken_angry.cpp" />
     <ClCompile Include="state_kraken_damage.cpp" />
+    <ClCompile Include="state_kraken_dead.cpp" />
     <ClCompile Include="state_kraken_normal.cpp" />
     <ClCompile Include="state_kraken_not_attack.cpp" />
     <ClCompile Include="state_object.cpp" />
@@ -460,7 +462,9 @@
     <ClInclude Include="state_camera_select.h" />
     <ClInclude Include="state_camera_talk.h" />
     <ClInclude Include="state_kraken.h" />
+    <ClInclude Include="state_kraken_angry.h" />
     <ClInclude Include="state_kraken_damage.h" />
+    <ClInclude Include="state_kraken_dead.h" />
     <ClInclude Include="state_kraken_normal.h" />
     <ClInclude Include="state_kraken_not_attack.h" />
     <ClInclude Include="state_object.h" />

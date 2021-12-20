@@ -61,6 +61,7 @@ CGame::CGame()
     m_pPause = nullptr;
     m_pMapFactory = nullptr;
     m_pGauge = nullptr;
+    m_bTitle = true;
 }
 
 //=======================================================================================
@@ -158,9 +159,8 @@ void CGame::Update()
 
     CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
     // ƒ^ƒCƒgƒ‹‚É–ß‚é
-    if (pKey->GetTrigger(DIK_RETURN))
+    if (pKey->GetTrigger(DIK_RETURN) && m_bTitle)
     {
-
 
         if (m_pGaussFilter)
         {
@@ -174,6 +174,7 @@ void CGame::Update()
             pSound->Play(CSound::SOUND_SE_SELECT);
             pSound->Play(CSound::SOUND_BGM_GAME);
             pSound->Stop(CSound::SOUND_BGM_TITLE);
+            m_bTitle = false;
         }
     }
 

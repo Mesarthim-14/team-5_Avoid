@@ -186,7 +186,6 @@ void CKraken::CreateModel()
         m_pSkinmeshModel->GetHLcontroller()->ChangeAnimation(0);
         m_pSkinmeshModel->GetHLcontroller()->SetLoopTime(0, 60);
         m_pSkinmeshModel->GetHLcontroller()->SetShiftTime(0, 60);
-
     }
 }
 

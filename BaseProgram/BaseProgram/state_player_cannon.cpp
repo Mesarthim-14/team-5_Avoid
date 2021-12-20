@@ -19,6 +19,7 @@
 #include "gimmick_factory.h"
 #include "cannon_manager.h"
 #include "cannon.h"
+#include "kraken.h"
 
 //=====================================================================
 // マクロ定義
@@ -88,7 +89,6 @@ void CPlayerStateCannon::Update()
         return;
     }
 
-//    TrackingCannon(pPlayer);
 }
 
 //=====================================================================
@@ -109,17 +109,14 @@ void CPlayerStateCannon::TrackingCannon(CPlayer* &pPlayer)
     pPlayer->SetPos(pos);
     pPlayer->SetMove(ZeroVector3);
 
-    //D3DXVECTOR3 move = ZeroVector3;
-    //if (fDistance <= CLibrary::CalDistance(pPlayer->GetPos(), pos))
-    //{
-    //    D3DXVECTOR3 move = CLibrary::FollowMoveXZ(pPlayer->GetPos(), pos, SPEED);
-    //}
+    CKraken* pKraken = CManager::GetInstance()->GetGame()->GetKraken();
+    D3DXVECTOR3 rot = pPlayer->GetRot();
 
-    //pPlayer->SetMove(move);
-
-    //// 角度設定
-    //D3DXVECTOR3 rot = pPlayer->GetRot();
-    //rot.y = D3DXToRadian(180.0f)+CannonRot.y;
-    //CLibrary::RotFix(rot.y);
-    //pPlayer->SetRotDest(rot);
+    // 角度設定
+    if (pKraken)
+    {
+        rot.y = CLibrary::LookTarget(pos, pKraken->GetPos());
+    }
+    CLibrary::RotFix(rot.y);
+    pPlayer->SetRotDest(rot);
 }

@@ -35,8 +35,8 @@ public:
 	void Hit();						// 衝突判定
 
 private:
-    void FollowPlayer(); // 移動量の設定
-	void Move();
+    void FollowPlayer();                    // 移動量の設定
+    void FixPos(const D3DXVECTOR3& pos);    // 座標の修正
 
 	// メンバ変数
 	CModel * m_pModel;					// モデルポインタ
