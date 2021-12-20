@@ -19,6 +19,7 @@
 #include "gauge.h"
 #include "particlepop.h"
 #include "caution_wimp_attack.h"
+#include "sound.h"
 
 //=============================================================================
 // É}ÉNÉçíËã`
@@ -87,6 +88,7 @@ void CWimpEnemy::Update()
             m_pCaution = CCautionWimpAttack::Create(GetPos());
             m_nCautionCounter = 0;
             m_bLook = true;
+            CLibrary::SetSound(CSound::SOUND_SE_ENEMY_NOTICED);
         }
     }
 

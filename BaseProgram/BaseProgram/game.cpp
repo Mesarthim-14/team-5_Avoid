@@ -13,7 +13,6 @@
 #include "renderer.h"
 #include "player.h"
 #include "joypad.h"
-#include "sound.h"
 #include "keyboard.h"
 #include "resource_manager.h"
 #include "fade.h"
@@ -42,6 +41,7 @@
 #include "state_camera_descent.h"
 #include "pause.h"
 #include "map_factory.h"
+#include "sound.h"
 
 float CGame::m_fGravity = 1.5f;
 CGaussFilter* CGame::m_pGaussFilter = nullptr;
@@ -79,6 +79,9 @@ HRESULT CGame::Init()
 {
     CreateFilter();
     CreateObject();
+
+    CLibrary::SetSound(CSound::SOUND_BGM_TITLE);
+
     return S_OK;
 }
 
@@ -157,6 +160,8 @@ void CGame::Update()
     // タイトルに戻る
     if (pKey->GetTrigger(DIK_RETURN))
     {
+
+
         if (m_pGaussFilter)
         {
             // ガウスのフェードに以降
@@ -165,6 +170,10 @@ void CGame::Update()
             // カメラの種類を変える
             CCameraGame* pCamera = (CCameraGame*)CManager::GetInstance()->GetCamera();
             pCamera->ChangeState(CCameraStateDescent::Create());
+            CSound* pSound = GET_SOUND_PTR;
+            pSound->Play(CSound::SOUND_SE_SELECT);
+            pSound->Play(CSound::SOUND_BGM_GAME);
+            pSound->Stop(CSound::SOUND_BGM_TITLE);
         }
     }
 

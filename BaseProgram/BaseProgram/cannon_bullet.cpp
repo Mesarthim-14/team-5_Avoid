@@ -25,6 +25,7 @@
 #include "collision.h"
 #include "particlenormal.h"
 #include "state_kraken_damage.h"
+#include "sound.h"
 
 //=============================================================================
 // É}ÉNÉçíËã`
@@ -103,6 +104,8 @@ HRESULT CCannonBullet::Init(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &Can
     {
         m_pCollision = CCollisionModelOBB::Create(pos, SIZE, ZeroVector3);
     }
+
+    CLibrary::SetSound(CSound::SOUND_SE_CANNON_FIRING);
     return S_OK;
 }
 
@@ -178,6 +181,7 @@ void CCannonBullet::Collision()
             {
                 CParticleCannon::Create(pos);
             }
+            CLibrary::SetSound(CSound::SOUND_SE_HIT_CANNON);
             Uninit();
         }
     }

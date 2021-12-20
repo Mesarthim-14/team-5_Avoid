@@ -457,7 +457,6 @@ void CPlayer::SaveInfo()
 	CLibrary::JsonSetState(FileName, "Player", "INERTIA_NUM", m_fInertiaNum);		// 慣性
 	CLibrary::JsonSetState(FileName, "Player", "ROTATION_SPEED", m_fRotationSpeed);	// 回転の速度
 	CLibrary::JsonSetState(FileName, "Player", "ANGLE_SPEED", m_fAngleSpeed);	// 回転遅さの速度
-
 }
 
 //=============================================================================
@@ -469,7 +468,6 @@ void CPlayer::SubLife(const int &nDamage)
 	if (m_nHP > 0)
 	{
 		m_nHP -= nDamage;
-
 		if (m_nHP < 0)
 		{
 			m_nHP = 0;
@@ -491,6 +489,11 @@ void CPlayer::SubLife(const int &nDamage)
 //=============================================================================
 void CPlayer::Respawn()
 {
+    if (0.0f >= GetPos().y)
+    {
+        CLibrary::SetSound(CSound::SOUND_SE_WATER_FELL);
+    }
+
 	// 一定以下の座標になったら
 	if (RESPORN_POS_Y > GetPos().y)
 	{

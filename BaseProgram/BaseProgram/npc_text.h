@@ -28,6 +28,7 @@ public:
     virtual bool GetEnd()const = 0;
 
 private:
+    int m_nCounter;
 };
 
 #endif

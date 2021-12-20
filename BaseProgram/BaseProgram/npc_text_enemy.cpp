@@ -74,6 +74,9 @@ void CNpcTextEnemy::Uninit()
 //=============================================================================
 void CNpcTextEnemy::Update()
 {
+    // テキストの更新処理
+    CNpcText::Update();
+
     if (CLibrary::KeyboardTrigger(DIK_E))
     {
         // 演出のステップが演出数を上回っていたら

@@ -66,6 +66,8 @@ void CProductionAngryKraken::Init()
 
     CreateState(pPlayer, CPlayerStateNotMove::Create());
     CreateState(pCamera, CCameraStateAngryKraken::Create());
+
+    CLibrary::SetSound(CSound::SOUND_SE_SCREAM);
 }
 
 //=======================================================================================

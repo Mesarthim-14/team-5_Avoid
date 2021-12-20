@@ -1,7 +1,7 @@
 //=====================================================================
 //
-//    プレイヤーの状態管理クラス [state_player.h]
-//    Author : Konishi Yuuto
+// プレイヤーの状態管理クラス [state_player.h]
+// Author : Konishi Yuuto
 //
 //=====================================================================
 
@@ -22,13 +22,18 @@
 #include "gauge.h"
 
 //=====================================================================
+// マクロ定義
+//=====================================================================
+#define SOUND_INTER (30)    // 音
+
+//=====================================================================
 // コンストラクタ
 //=====================================================================
 CPlayerState::CPlayerState()
 {
     m_fAngleSpeed = 0.6f;
     memset(m_bMove, 0, sizeof(m_bMove));
-    m_nCounter = 0;
+    m_nCounter = SOUND_INTER;
 }
 
 //=====================================================================
@@ -179,6 +184,12 @@ void CPlayerState::MoveByKeyboard(CPlayer* &pPlayer)
         }
     }
 
+    if (pPlayer->GetLanding())
+    {
+        // 音
+        SoundUpdate();
+    }
+
     //角度補正
     while (fCameraRot - fAngle > D3DXToRadian(180))
     {
@@ -201,4 +212,24 @@ void CPlayerState::MoveByKeyboard(CPlayer* &pPlayer)
 
     pPlayer->SetMove(move);
     pPlayer->SetRotDest(rotDest);
+}
+
+//=====================================================================
+// 音の更新処理
+//=====================================================================
+void CPlayerState::SoundUpdate()
+{
+    if (m_bMove[0])
+    {
+        if (CLibrary::CounterLimit(SOUND_INTER, m_nCounter))
+        {
+            CLibrary::SetSound(CSound::SOUND_SE_WALK);
+            m_nCounter = 0;
+        }
+    }
+    else
+    {
+        m_nCounter = SOUND_INTER;
+
+    }
 }

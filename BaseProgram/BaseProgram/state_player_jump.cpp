@@ -21,6 +21,7 @@
 #include "plane_jumpreservoir.h"
 #include "mouse.h"
 #include "state_player_avoid.h"
+#include "sound.h"
 
 //=====================================================================
 // マクロ定義
@@ -28,6 +29,7 @@
 #define CHARGEJUMP_MAX      (100)   // タメカウント最大
 #define PARTICLE_STRAT      (30)    // 溜めエフェクト発生開始までの時間
 #define HIGHJUMP_CONSUME    (1)     // ためジャンプした時のライフ減少量
+#define SOUND_INTER         (60)    // 音の間隔
 
 //=====================================================================
 // コンストラクタ
@@ -128,6 +130,7 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
     if (CLibrary::KeyboardPress(DIK_SPACE) && !m_bJumpCheck)
     {
         m_nChargeJumpCount++;
+
         // エフェクトの発生時間
         if (m_nChargeJumpCount >= PARTICLE_STRAT && m_bJumpEffect)
         {
@@ -137,6 +140,12 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
         if (!m_bJumpEffect)
         {
             JumpEffect();
+        }
+
+        // 音の再生
+        if (m_nChargeJumpCount % SOUND_INTER == 0)
+        {
+            CLibrary::SetSound(CSound::SOUND_SE_JUMP_CHARGE);
         }
     }
 
@@ -159,12 +168,15 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
 
             // ライフの減算
             SubLife(pPlayer);
+
+            CLibrary::SetSound(CSound::SOUND_SE_SUPER_JUMP);
         }
         else
         {
             m_bJumpCheck = true;
             move.y += m_fJumpValue;
             m_nChargeJumpCount = 0;
+            CLibrary::SetSound(CSound::SOUND_SE_JUMP);
         }
         pPlayer->SetLanding(false);
     }

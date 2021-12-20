@@ -41,6 +41,8 @@ protected:
     };
 
 private:
+    void SoundUpdate();                                                 // 音の
+
     float m_fAngleSpeed;    // 目標向きまで向かうスピード 
     int m_nCounter;         // カウンタ
     bool m_bMove[2];        // 移動のフラグ

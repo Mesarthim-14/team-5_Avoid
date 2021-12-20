@@ -89,5 +89,6 @@ void CKrakenStateNormal::ShotBullet(CKraken* &pKraken)
     {
         CBossBullet::Create(pKraken->GetPos(), ZeroVector3);
         m_nBulletCount = 0;
+        CLibrary::SetSound(CSound::SOUND_SE_KRAKEN_BULLET_MITING);
     }
 }

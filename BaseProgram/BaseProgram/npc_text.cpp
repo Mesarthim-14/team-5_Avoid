@@ -14,13 +14,19 @@
 #include "resource_manager.h"
 #include "library.h"
 #include "game.h"
+#include "sound.h"
+
+//=============================================================================
+// マクロ定義
+//=============================================================================
+#define SOUND_INTER (60)    // 感覚
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CNpcText::CNpcText(PRIORITY priority):CScene(priority)
 {
-
+    m_nCounter = SOUND_INTER;
 }
 
 //=============================================================================
@@ -54,5 +60,16 @@ void CNpcText::Uninit()
 //=============================================================================
 void CNpcText::Update()
 {
+    // サウンド再生の式
+    function<void(const int&, int&)> SetSound = [](const int& nLimit, int& nCounter)
+    {
+        nCounter++;
+        if (nLimit <= nCounter)
+        {
+            CLibrary::SetSound(CSound::SOUND_SE_TEXT);
+            nCounter = 0;
+        }
+    };
 
+    SetSound(SOUND_INTER, m_nCounter);
 }

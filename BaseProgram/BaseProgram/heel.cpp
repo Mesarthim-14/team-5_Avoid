@@ -118,6 +118,7 @@ void CHeel::Update()
                 // プレイヤーの位置にエフェクト生成
                 CParticleHeel::Create(pos);
                 m_nCount = 0;
+                CLibrary::SetSound(CSound::SOUND_SE_HEEL);
             }
         }
     }
