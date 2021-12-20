@@ -70,6 +70,8 @@ HRESULT CTexture::SetTextureName()
         { "data/Texture/uzusio_1.png" },
         { "data/Texture/uzusio_2.png" },
         { "data/Texture/tame.png" },
+        { "data/Texture/water.png" },
+        { "data/Texture/water_effect_tex.png" },
         { "data/Texture/slime_drop.png" },
         { "data/Texture/Gauge.png" },
         { "data/Texture/Gauge_Frame.png" },

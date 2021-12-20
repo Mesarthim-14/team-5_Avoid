@@ -101,10 +101,11 @@ void CHeel::Update()
     {
         return;
     }
-    D3DXVECTOR3 pos = pPlayer->GetPos();
 
     for (auto &HeelPoint : m_apHeelPoint)
     {
+        // 回復ポイントの位置を取得
+        D3DXVECTOR3 pos = HeelPoint->GetPos();
         // 当たり判定
         if (HeelPoint->Collision())
         {

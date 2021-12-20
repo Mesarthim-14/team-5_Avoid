@@ -239,6 +239,7 @@
     <ClCompile Include="particle_info.cpp" />
     <ClCompile Include="move_scaffold.cpp" />
     <ClCompile Include="parallax_mapping2.cpp" />
+    <ClCompile Include="particle_water.cpp" />
     <ClCompile Include="pause.cpp" />
     <ClCompile Include="plane.cpp" />
     <ClCompile Include="plane_jump.cpp" />
@@ -411,6 +412,7 @@
     <ClInclude Include="particle_info.h" />
     <ClInclude Include="move_scaffold.h" />
     <ClInclude Include="parallax_mapping2.h" />
+    <ClInclude Include="particle_water.h" />
     <ClInclude Include="pause.h" />
     <ClInclude Include="plane.h" />
     <ClInclude Include="plane_jump.h" />

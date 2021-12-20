@@ -1,7 +1,7 @@
 //=====================================================================
 //
-//	パーティクル処理[particle.h]
-//	Author : toshiki
+//    パーティクル処理[particlepop.h]
+//    Author : toshiki
 //
 //=====================================================================
 
@@ -9,43 +9,40 @@
 // インクルードファイル
 // Author : toshiki
 //=====================================================================
-#include "particleshrink_heel.h"
+#include "particle_water.h"
 #include "manager.h"
 #include "renderer.h"
 #include "library.h"
 #include "texture.h"
 #include "resource_manager.h"
 
-float CParticleHeel::m_fAngleX = 0.0f;
-float CParticleHeel::m_fAngleZ = 0.0f;
-float CParticleHeel::m_fSize = 0.0f;
+float CParticleWater::m_fSize = 0.0f;
 //=====================================================================
 // マクロ定義
 // Author : toshiki
 //=====================================================================
-#define PARTICLE_POS    ((D3DXVECTOR3(m_fAngleX, 5.0f, m_fAngleZ)))
-#define SIZE            (D3DXVECTOR3(m_fSize, m_fSize, m_fSize))
-#define SPEED           (5.0f)
-#define RANDOM          (3.14f)
-#define LIFE            (40)
-#define COLOR           (D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
-#define TANGENT         (7.0f)
+#define SIZE		(D3DXVECTOR3(m_fSize, m_fSize, m_fSize))
+#define ANGLE		(70.0f)
+#define SPEED		(80.0f)
+#define RANDOM		(3.14f)
+#define LIFE		(90)
+#define COLOR		(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
 
 //=====================================================================
 // コンストラクタ
 // Author : toshiki
 //=====================================================================
-CParticleHeel::CParticleHeel()
+CParticleWater::CParticleWater()
 {
-    m_fSpeed = 0.0f;
-    ShrinkPos = ZeroVector3;
+    m_fAngle = 0.0f;
+    m_nLife = 0;
 }
 
 //=====================================================================
 // デストラクタ
 // Author : toshiki
 //=====================================================================
-CParticleHeel::~CParticleHeel()
+CParticleWater::~CParticleWater()
 {
 
 }
@@ -54,19 +51,17 @@ CParticleHeel::~CParticleHeel()
 // 生成処理
 // Author : toshiki
 //=====================================================================
-CParticleHeel * CParticleHeel::Create(const D3DXVECTOR3 &pos)
+CParticleWater * CParticleWater::Create(const D3DXVECTOR3 &pos)
 {
-    CParticleHeel * pParticle = new CParticleHeel;
+    CParticleWater * pParticleWater = new CParticleWater;
 
-    if (pParticle != nullptr)
+    if (pParticleWater)
     {
-        m_fAngleX = CLibrary::Random(600.0f);
-        m_fAngleZ = CLibrary::Random(600.0f);
-        m_fSize = CLibrary::Random(30.0f, 100.0f);
-        pParticle->SetSceneInfo(D3DXVECTOR3(pos.x + m_fAngleX, pos.y, pos.z + m_fAngleZ), SIZE);
+        m_fSize = CLibrary::Random(50.0f, 100.0f);
+        pParticleWater->SetSceneInfo(pos, SIZE);
 
-        pParticle->Init();
-        return pParticle;
+        pParticleWater->Init();
+        return pParticleWater;
     }
     return nullptr;
 }
@@ -75,7 +70,7 @@ CParticleHeel * CParticleHeel::Create(const D3DXVECTOR3 &pos)
 // 初期化処理
 // Author : toshiki
 //=====================================================================
-HRESULT CParticleHeel::Init(void)
+HRESULT CParticleWater::Init()
 {
     CParticleInfo::Init();
     SetParticle();
@@ -86,7 +81,7 @@ HRESULT CParticleHeel::Init(void)
 // 更新処理
 // Author : toshiki
 //=====================================================================
-void CParticleHeel::Update(void)
+void CParticleWater::Update()
 {
     CParticleInfo::Update();
 }
@@ -95,7 +90,7 @@ void CParticleHeel::Update(void)
 // 終了処理
 // Author : toshiki
 //=====================================================================
-void CParticleHeel::Uninit(void)
+void CParticleWater::Uninit()
 {
     CParticleInfo::Uninit();
 }
@@ -104,24 +99,28 @@ void CParticleHeel::Uninit(void)
 // 描画処理
 // Author : toshiki
 //=====================================================================
-void CParticleHeel::Draw(void)
+void CParticleWater::Draw()
 {
     CParticleInfo::Draw();
 }
 
 //=====================================================================
-// パーティクルを出す処理
+// パーティクルの設定
 // Author : toshiki
 //=====================================================================
-void CParticleHeel::SetParticle(void)
+void CParticleWater::SetParticle()
 {
     // テクスチャの設定
     CTexture *pTexture = GET_TEXTURE_PTR;
-    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_HEEL));
+    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_WATER));
     // スピードの値を設定
     m_fSpeed = SPEED;
+    // パーティクルの出る角度の設定
+    m_fAngle = CLibrary::Random(RANDOM);
+    // 重力をつける
+    CParticleInfo::SetGravity(true);
     // 移動させるための処理
-    D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 8.0f, 0.0f);
+    D3DXVECTOR3 move = D3DXVECTOR3(sinf(m_fAngle) * m_fSpeed, ANGLE, cosf(m_fAngle) * m_fSpeed);
     // 移動情報を設定
     SetMove(move);
     // 色の設定

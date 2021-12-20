@@ -16,9 +16,7 @@
 #include "skinmesh_model.h"
 #include "animation_skinmesh.h"
 #include "camera.h"
-#include "particlepop.h"
-#include "particleshrink.h"
-#include "particleaura.h"
+#include "particle_water.h"
 #include "gauge.h"
 
 //=====================================================================
@@ -34,6 +32,7 @@ CPlayerState::CPlayerState()
     m_fAngleSpeed = 0.6f;
     memset(m_bMove, 0, sizeof(m_bMove));
     m_nCounter = SOUND_INTER;
+    m_Effect = true;
 }
 
 //=====================================================================
@@ -162,6 +161,19 @@ void CPlayerState::MoveByKeyboard(CPlayer* &pPlayer)
 		rotDest.y = atan2f(Inertia.x, Inertia.z) + D3DXToRadian(180.0f);
 		m_bMove[0] = true;
 	}
+
+    // 水に落ちた時に出るエフェクト生成
+    if (m_Effect)
+    {
+        if (pos.y <= 0.0f)
+        {
+            for (int nCnt = 0; nCnt <= 10; nCnt++)
+            {
+                CParticleWater::Create(pos);
+            }
+            m_Effect = false;
+        }
+    }
 
     // 座標設定
     pPlayer->SetPos(pos);
