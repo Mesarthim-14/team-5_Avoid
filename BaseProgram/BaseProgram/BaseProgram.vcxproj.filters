@@ -502,6 +502,9 @@
     <ClCompile Include="plane_vortex2.cpp">
       <Filter>06_Effect\Plane</Filter>
     </ClCompile>
+    <ClCompile Include="particle_water.cpp">
+      <Filter>06_Effect\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -1013,6 +1016,9 @@
     </ClInclude>
     <ClInclude Include="plane_vortex2.h">
       <Filter>06_Effect\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="particle_water.h">
+      <Filter>06_Effect\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
