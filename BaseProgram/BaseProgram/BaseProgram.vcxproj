@@ -241,6 +241,10 @@
     <ClCompile Include="parallax_mapping2.cpp" />
     <ClCompile Include="pause.cpp" />
     <ClCompile Include="plane.cpp" />
+    <ClCompile Include="plane_jump.cpp" />
+    <ClCompile Include="plane_jumpreservoir.cpp" />
+    <ClCompile Include="plane_vortex.cpp" />
+    <ClCompile Include="plane_vortex2.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="player_editor.cpp" />
     <ClCompile Include="polygon.cpp" />
@@ -409,6 +413,10 @@
     <ClInclude Include="parallax_mapping2.h" />
     <ClInclude Include="pause.h" />
     <ClInclude Include="plane.h" />
+    <ClInclude Include="plane_jump.h" />
+    <ClInclude Include="plane_jumpreservoir.h" />
+    <ClInclude Include="plane_vortex.h" />
+    <ClInclude Include="plane_vortex2.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="player_editor.h" />
     <ClInclude Include="polygon.h" />

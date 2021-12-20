@@ -44,12 +44,15 @@ private:
     // private関数
     void CreateCheckPoint();    // チェックポイントの設置
     void CreateGimmick();       // マップ生成
+    void CreateEffect();        // エフェクト生成
     void CreateMoveScaffold();  // 動く床ギミック
     void CreateRotateGimmick(); // 回転ギミック
     void CreateSlope();         // 坂道
     void CreateCannon();        // 大砲
     void CreateBridge();        // 橋
     void CreateSwirl();         // 渦
+    void CreateSwirlEffect();   // 渦の下のエフェクト
+
 
     // メンバ変数
     CCheckPoint *m_pCheckPoint;         // チェックポイントのフラグ
