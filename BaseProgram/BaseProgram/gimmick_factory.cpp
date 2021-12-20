@@ -24,6 +24,8 @@
 #include "bridge.h"
 #include "cannon_manager.h"
 #include "swirl_scaffold.h"
+#include "plane_vortex.h"
+#include "plane_vortex2.h"
 
 //=======================================================================================
 // コンストラクタ
@@ -65,6 +67,7 @@ HRESULT CGimmickFactory::Init()
 {
     CreateCheckPoint();
     CreateGimmick();
+    CreateEffect();
 
     return S_OK;
 }
@@ -165,6 +168,14 @@ void CGimmickFactory::CreateGimmick()
 }
 
 //=======================================================================================
+// エフェクト生成
+//=======================================================================================
+void CGimmickFactory::CreateEffect()
+{
+    CreateSwirlEffect();    // 渦エフェクト
+}
+
+//=======================================================================================
 // 動く床ギミック
 //=======================================================================================
 void CGimmickFactory::CreateMoveScaffold()
@@ -239,4 +250,15 @@ void CGimmickFactory::CreateSwirl()
 {
     CSwirlScaffold::Create(D3DXVECTOR3(50244.2f, 0.0f, -18862.9f));
     CSwirlScaffold::Create(D3DXVECTOR3(59435.2f, 0.0f, -23429.4f));
+}
+
+//=======================================================================================
+// 渦の下のエフェクト
+//=======================================================================================
+void CGimmickFactory::CreateSwirlEffect()
+{
+    CPlaneVortex::Create(D3DXVECTOR3(50244.2f, 0.0f, -18862.9f));
+    CPlaneVortex::Create(D3DXVECTOR3(59435.2f, 0.0f, -23429.4f));
+    CPlaneVortex2::Create(D3DXVECTOR3(50244.2f, 0.0f, -18862.9f));
+    CPlaneVortex2::Create(D3DXVECTOR3(59435.2f, 0.0f, -23429.4f));
 }

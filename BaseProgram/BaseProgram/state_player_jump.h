@@ -35,6 +35,7 @@ private:
     void SubLife(CPlayer* &pPlayer);        // ライフの減算
     void JumpProcess(CPlayer* &pPlayer);    // ジャンプ中の処理
     void Avoidance(CPlayer* &pPlayer);
+    void JumpEffect();
 
     float m_fJumpTimeCount;     // ジャンプ時間カウント
     float m_fJumpValue;         // ジャンプ量
@@ -42,5 +43,7 @@ private:
     int m_nChargeJumpCount;     // ためジャンプカウント
     bool m_bIsReadyChargeJump;  // ためジャンプ準備完了か
     bool m_bJumpCheck;          // ジャンプし始めたか
+    bool m_bJumpEffect;
+    int m_nCntEffect;
 };
 #endif

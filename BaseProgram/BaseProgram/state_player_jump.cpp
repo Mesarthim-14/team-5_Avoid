@@ -17,7 +17,8 @@
 #include "animation_skinmesh.h"
 #include "state_player_normal.h"
 #include "gauge.h"
-#include "particleshrink.h"
+#include "plane_jump.h"
+#include "plane_jumpreservoir.h"
 #include "mouse.h"
 #include "state_player_avoid.h"
 
@@ -39,6 +40,8 @@ CPlayerStateJump::CPlayerStateJump()
     m_bIsReadyChargeJump = false;
     m_fJumpValue = 40.0f;
     m_fDushJumpValue = 1.0f;
+    m_bJumpEffect = true;
+    m_nCntEffect = 0;
 }
 
 //=====================================================================
@@ -126,9 +129,14 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
     {
         m_nChargeJumpCount++;
         // エフェクトの発生時間
-        if (m_nChargeJumpCount >= PARTICLE_STRAT)
+        if (m_nChargeJumpCount >= PARTICLE_STRAT && m_bJumpEffect)
         {
-            CParticleShrink::Create(pos);
+            m_bJumpEffect = false;
+            CPlaneJumpReservoir::Create(pos);
+        }
+        if (!m_bJumpEffect)
+        {
+            JumpEffect();
         }
     }
 
@@ -140,6 +148,7 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
             m_bIsReadyChargeJump = true;
             pPlayer->SetLanding(false);
 
+            CPlaneJump::Create(D3DXVECTOR3(pos.x, pos.y, pos.z));
             m_bJumpCheck = true;
             move.y += m_fJumpValue * 3;
             move.x += move.x * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
@@ -175,5 +184,18 @@ void CPlayerStateJump::Avoidance(CPlayer* &pPlayer)
         {
             pPlayer->ChangeState(CPlayerStateAvoid::Create());
         }
+    }
+}
+
+//=====================================================================
+// エフェクト処理
+//=====================================================================
+void CPlayerStateJump::JumpEffect()
+{
+    m_nCntEffect++;
+    if (m_nCntEffect >= 20)
+    {
+        m_bJumpEffect = true;
+        m_nCntEffect = 0;
     }
 }

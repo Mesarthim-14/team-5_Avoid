@@ -258,6 +258,32 @@ void CScene3D::ScaleUp(const float &fScaleUp)
 }
 
 //=============================================================================
+// 縮小処理
+//=============================================================================
+void CScene3D::ScaleDown(const float & fScale)
+{
+    // サイズ取得
+    D3DXVECTOR3 size = GetSize();
+
+    m_fScaleNum += fScale;
+
+    LPDIRECT3DVERTEXBUFFER9 pVtxBuff = GetVtxBuff();    // バッファ取得
+    VERTEX_3D *pVtx = nullptr;                            //頂点情報へのポインタ
+
+                                                          //頂点データ範囲をロックし、頂点バッファへのポインタを所得
+    pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+    // 頂点座標の設定
+    pVtx[0].pos = D3DXVECTOR3(-(size.x / m_fScaleNum), +(size.y / m_fScaleNum), (size.z / m_fScaleNum));
+    pVtx[1].pos = D3DXVECTOR3(+(size.x / m_fScaleNum), +(size.y / m_fScaleNum), (size.z / m_fScaleNum));
+    pVtx[2].pos = D3DXVECTOR3(-(size.x / m_fScaleNum), -(size.y / m_fScaleNum), -(size.z / m_fScaleNum));
+    pVtx[3].pos = D3DXVECTOR3(+(size.x / m_fScaleNum), -(size.y / m_fScaleNum), -(size.z / m_fScaleNum));
+
+    //頂点データをアンロック
+    pVtxBuff->Unlock();
+}
+
+//=============================================================================
 // 透明度の減算
 //=============================================================================
 void CScene3D::SubAlpha(const float &fAlphaNum)
