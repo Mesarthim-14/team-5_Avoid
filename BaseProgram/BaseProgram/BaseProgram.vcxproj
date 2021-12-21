@@ -273,6 +273,7 @@
     <ClCompile Include="shadow_volume.cpp" />
     <ClCompile Include="shark.cpp" />
     <ClCompile Include="shark_model.cpp" />
+    <ClCompile Include="shock_blur.cpp" />
     <ClCompile Include="skinmesh.cpp" />
     <ClCompile Include="skinmesh_model.cpp" />
     <ClCompile Include="sky.cpp" />
@@ -448,6 +449,7 @@
     <ClInclude Include="shadow_volume.h" />
     <ClInclude Include="shark.h" />
     <ClInclude Include="shark_model.h" />
+    <ClInclude Include="shock_blur.h" />
     <ClInclude Include="skinmesh.h" />
     <ClInclude Include="skinmesh_model.h" />
     <ClInclude Include="sky.h" />
@@ -525,6 +527,11 @@
       <FileType>Document</FileType>
     </None>
     <None Include="data\Text\Shader\ToonShader.fx">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\Text\Shader\ShockBlur.fx">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

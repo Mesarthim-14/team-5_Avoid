@@ -42,6 +42,7 @@
 #include "pause.h"
 #include "map_factory.h"
 #include "sound.h"
+#include "shock_blur.h"
 
 float CGame::m_fGravity = 1.5f;
 CGaussFilter* CGame::m_pGaussFilter = nullptr;
@@ -158,6 +159,7 @@ void CGame::Update()
     }
 
     CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
+
     // ƒ^ƒCƒgƒ‹‚É–ß‚é
     if (pKey->GetTrigger(DIK_RETURN) && m_bTitle)
     {

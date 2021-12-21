@@ -20,6 +20,7 @@
 #include "library.h"
 #include "pause.h"
 #include "toon_shader.h"
+#include "shock_blur.h"
 
 //=============================================================================
 // マクロ定義
@@ -34,6 +35,9 @@ CRenderer::CRenderer()
 	m_pD3D = nullptr;			// Direct3Dオブジェクト
 	m_fillMode = D3DFILL_SOLID;
     m_pToonShader = nullptr;
+    m_pShockBlur = nullptr;
+    m_bShockBlur = false;
+
 }
 
 //=============================================================================
@@ -165,6 +169,11 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
         m_pToonShader = new CToonShader(m_pD3DDevice);
         m_pToonShader->Init();
     }
+    if (!m_pShockBlur)
+    {
+        m_pShockBlur = new CShockBlur(m_pD3DDevice, SCREEN_WIDTH, SCREEN_HEIGHT);
+        m_pShockBlur->Load();
+    }
 	return S_OK;
 }
 
@@ -178,7 +187,11 @@ void CRenderer::Uninit()
         m_pToonShader->Uninit();
         m_pToonShader = nullptr;
     }
-
+    if (m_pShockBlur)
+    {
+        m_pShockBlur->Uninit();
+        m_pShockBlur = nullptr;
+    }
 	// デバイスの破棄
 	if (m_pD3DDevice != nullptr)
 	{
@@ -259,7 +272,7 @@ void CRenderer::Draw()
     m_pD3DDevice->Clear(0,
         nullptr,
         (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER),
-        D3DCOLOR_RGBA(0, 255, 255, 0),
+        D3DCOLOR_RGBA(0, 0, 0, 0),
         1.0f,
         0);
 
@@ -289,11 +302,22 @@ void CRenderer::Draw()
             }
         }
 
+
         // フィルタの開始
         CGame::BeginGauss();
 
+        if (m_bShockBlur)
+        {
+            m_pShockBlur->Begin();
+        }
+
         //オブジェクトクラスの全描画処理呼び出し
         CScene::DrawAll3D();
+
+        if (m_bShockBlur)
+        {
+            m_pShockBlur->Draw();
+        }
 
         // フィルタの終了
         CGame::EndGauss();

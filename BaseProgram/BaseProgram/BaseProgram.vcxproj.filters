@@ -511,6 +511,9 @@
     <ClCompile Include="state_kraken_dead.cpp">
       <Filter>10_State\KrakenState</Filter>
     </ClCompile>
+    <ClCompile Include="shock_blur.cpp">
+      <Filter>06_Effect\Shader\ShockBlur</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -1032,6 +1035,9 @@
     <ClInclude Include="state_kraken_dead.h">
       <Filter>10_State\KrakenState</Filter>
     </ClInclude>
+    <ClInclude Include="shock_blur.h">
+      <Filter>06_Effect\Shader\ShockBlur</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\Text\Shader\BlurFilter.fx">
@@ -1063,6 +1069,9 @@
     </None>
     <None Include="data\Text\Shader\EdgeFilter.fx">
       <Filter>06_Effect\Shader\ToonEffect\Fx</Filter>
+    </None>
+    <None Include="data\Text\Shader\ShockBlur.fx">
+      <Filter>06_Effect\Shader\ShockBlur\fx</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1257,6 +1266,12 @@
     </Filter>
     <Filter Include="06_Effect\Plane">
       <UniqueIdentifier>{17b2aaa3-b2f2-413f-ac1e-3d48e7ef6b2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_Effect\Shader\ShockBlur">
+      <UniqueIdentifier>{d5788444-3d61-4258-ac0a-bdb69957baba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_Effect\Shader\ShockBlur\fx">
+      <UniqueIdentifier>{3bb0443b-5865-4143-8d38-0d1c19a92b16}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
