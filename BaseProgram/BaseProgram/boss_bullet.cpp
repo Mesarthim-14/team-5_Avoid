@@ -28,8 +28,8 @@
 //=============================================================================
 #define TEST_POS            (ZeroVector3)
 #define TEST_ROT            (ZeroVector3)
-#define COLLISION_RADIUS    (7500.0f)
-#define COLLISION_SIZE_OBB  (D3DXVECTOR3(15000.0f, 15000.0f, 15000.0f))
+#define COLLISION_RADIUS    (3750.0f)
+#define COLLISION_SIZE_OBB  (D3DXVECTOR3(7500.0f, 7500.0f, 7500.0f))
 #define SPEED               (400.0f)
 #define LIFE                (300)
 #define FIX_POS             (-15000.0f)
@@ -67,6 +67,7 @@ CBossBullet * CBossBullet::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot
         pBullet->SetRot(rot);
         pBullet->SetColRadius(COLLISION_RADIUS);
         pBullet->SetColSizeOBB(COLLISION_SIZE_OBB);
+        pBullet->FixPos(pos);
         pBullet->Init();
         return pBullet;
     }
@@ -79,7 +80,6 @@ CBossBullet * CBossBullet::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot
 //=============================================================================
 HRESULT CBossBullet::Init()
 {
-    FixPos(pos);
     // èâä˙âªèàóù
     CBullet::Init();
 

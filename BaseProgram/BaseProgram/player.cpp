@@ -32,6 +32,8 @@
 #include "gauge.h"
 #include "texture.h"
 #include "state_player_respawn.h"
+#include "gimmick_factory.h"
+#include "check_point.h"
 
 //=============================================================================
 // マクロ定義
