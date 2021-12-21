@@ -27,6 +27,8 @@ public:
 protected:
     void SetAttackInfo(const int &nInter, 
         const int &nSTR, const float &fPower);  // UŒ‚‚Ìî•ñİ’è
+    void LookAtPlayer();                        // ƒvƒŒƒCƒ„[‚ğŒ©‚é
+
 private:
     // privateŠÖ”
     virtual void Move();            // ˆÚ“®ˆ—

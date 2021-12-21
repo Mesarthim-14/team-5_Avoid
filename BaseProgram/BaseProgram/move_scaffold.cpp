@@ -19,15 +19,16 @@
 #include "player.h"
 #include "collision.h"
 #include "collisionModel_OBB.h"
+#include "library.h"
+#include "player.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TEST_POS        (D3DXVECTOR3(-30637.0f, 0.0f, 8337.8f))
-#define TEST_ROT        (D3DXVECTOR3(0.0f, D3DXToRadian(135.0f), 0.0f))
 #define TURN_TIME       (800.0f)    // 反転までのカウント
-#define SPEED           (8.0f)
+#define SPEED           (20.0f)
 #define COLLISION_SIZE  (D3DXVECTOR3(2000.0f, 100.0f, 5000.0f)) // 当たり判定モデルの大きさ
+#define STOP_DISTANCE   (2000.0f)                               // 止まる距離
 
 //=============================================================================
 // コンストラクタ
@@ -37,6 +38,9 @@ CMoveScaffold::CMoveScaffold(PRIORITY Priority) : CModel(Priority)
     m_nTime = 0;
     m_fSpeed = SPEED;
     m_pColModelOBB = nullptr;
+    m_StartPos = D3DXVECTOR3(-53522.5f, 0.0f, -12396.5f);
+    m_GoalPos = D3DXVECTOR3(-2309.0f, 0.0f, 60403.7f);
+    m_bMove = false;
 }
 
 //=============================================================================
@@ -49,7 +53,7 @@ CMoveScaffold::~CMoveScaffold()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CMoveScaffold * CMoveScaffold::Create()
+CMoveScaffold * CMoveScaffold::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // メモリ確保
     CMoveScaffold *pTestModel = new CMoveScaffold(PRIORITY_TEST_MODEL);
@@ -58,8 +62,7 @@ CMoveScaffold * CMoveScaffold::Create()
     if (pTestModel)
     {
         // 初期化処理
-        pTestModel->Init();
-
+        pTestModel->Init(pos, rot);
         return pTestModel;
     }
 
@@ -69,19 +72,19 @@ CMoveScaffold * CMoveScaffold::Create()
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CMoveScaffold::Init()
+HRESULT CMoveScaffold::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // 初期化処理
     CModel::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
-    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MOVE_SCAFFOLD);
-    GetModelInfo()->SetModelStatus(TEST_POS, TEST_ROT, model);
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_GIMMICK_PARTY_BASE);
+    GetModelInfo()->SetModelStatus(pos, rot, model);
 
     // 当たり判定モデル(OBB)の生成
     if (!m_pColModelOBB)
     {
-        m_pColModelOBB = CCollisionModelOBB::Create(TEST_POS, COLLISION_SIZE, TEST_ROT);
+        m_pColModelOBB = CCollisionModelOBB::Create(pos, COLLISION_SIZE, rot);
     }
 
     return S_OK;
@@ -100,8 +103,11 @@ void CMoveScaffold::Uninit()
 //=============================================================================
 void CMoveScaffold::Update()
 {
-    // 移動処理
-    Move();
+    if (m_bMove)
+    {
+        // 移動処理
+        Move();
+    }
 
     // 更新処理
     CModel::Update();
@@ -112,7 +118,7 @@ void CMoveScaffold::Update()
     // 当たり判定モデル情報の設定
     if (m_pColModelOBB)
     {
-        m_pColModelOBB->SetInfo(GetPos(), COLLISION_SIZE, TEST_ROT);
+        m_pColModelOBB->SetInfo(GetPos(), COLLISION_SIZE, GetRot());
     }
 }
 
@@ -143,7 +149,24 @@ void CMoveScaffold::HitOBBs()
         {
             // 着地の処理
             pPlayer->Landing(m_pColModelOBB->GetOBB().info.pos.y + (m_pColModelOBB->GetOBB().info.size.y / 2) + (pPlayerColModelOBB->GetOBB().info.size.y / 2));
+            if (!m_bMove)
+            {
+                m_bMove = true;
+            }
         }
+    }
+}
+
+//=============================================================================
+// リスポーン
+//=============================================================================
+void CMoveScaffold::Respawn()
+{
+    if (m_bMove)
+    {
+        m_bMove = false;
+        SetPos(m_StartPos);
+        SetMove(ZeroVector3);
     }
 }
 
@@ -152,22 +175,28 @@ void CMoveScaffold::HitOBBs()
 //=============================================================================
 void CMoveScaffold::Move()
 {
-    m_nTime++;
-    
-    float fAngle = GetModelInfo()->GetRot().y;
+    D3DXVECTOR3 pos = GetPos();
+    SetMove(CLibrary::FollowMoveXZ(pos, m_GoalPos, SPEED));
 
-    // 移動量設定
-    D3DXVECTOR3 move = D3DXVECTOR3(
-        cosf(D3DXToRadian(fAngle+45.0f))*m_fSpeed, 
-        0.0f, sinf(D3DXToRadian(fAngle + 45.0f))*m_fSpeed);
-
-    // 移動量設定
-    SetMove(move);
-
-    // 一定時間で
-    if (m_nTime >= TURN_TIME)
+    if (CLibrary::CalDistance(m_GoalPos, pos) <= STOP_DISTANCE)
     {
-        m_nTime = 0;
-        m_fSpeed *= -1;
+        m_bMove = false;
+        SetMove(ZeroVector3);
+    }
+
+    CarryPlayer();
+
+}
+
+//=============================================================================
+// プレイヤーを運ぶ
+//=============================================================================
+void CMoveScaffold::CarryPlayer()
+{
+    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    if (pPlayer)
+    {
+        D3DXVECTOR3 move = pPlayer->GetPos() + GetMove();
+        pPlayer->SetPos(move);
     }
 }

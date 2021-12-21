@@ -31,10 +31,12 @@ public:
     //モデル名前
     enum MODEL
     {
-        MODEL_PLAYER_10 = 0,        //スライム１０％の状態
-        MODEL_PLAYER_50,            //スライム５０％の状態
-        MODEL_PLAYER_100,           //スライム１００％の状態
-        MODEL_ENEMY_KRAKEN_HEAD,    // クラーケン
+        MODEL_NONE = -1,
+        MODEL_PLAYER_10,                // スライム１０％の状態
+        MODEL_PLAYER_50,                // スライム５０％の状態
+        MODEL_PLAYER_100,               // スライム１００％の状態
+        MODEL_ENEMY_KRAKEN_HEAD,        // クラーケン
+        MODEL_ENEMY_KRAKEN_TENTACLESD,  // クラーケンの触手
         MODEL_MAX
     };
     CSkinmeshModel(PRIORITY Priority = PRIORITY_EFFECT);    // コンストラクタ
@@ -46,19 +48,20 @@ public:
     void Draw();        // 描画処理
     static CSkinmeshModel *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, MODEL modelNum);    // インスタンス生成
     void SetModelNumber(MODEL model);
-    inline IHighLevelAnimController * GetHLcontroller()const    { return m_HLcontroller; };
     inline void SetPos(const D3DXVECTOR3 &pos)                  { m_pModelInfo->SetPos(pos); }  // 現在の座標情報
     inline void SetRot(const D3DXVECTOR3 &rot)                  { m_pModelInfo->SetRot(rot); }  // 角度情報
     inline void IsDraw(bool bIsDraw)                            { m_bIsDraw = bIsDraw; };       // 描画するか
+    inline void BindTexture(const LPDIRECT3DTEXTURE9& pTexture) { m_pTexture = pTexture; }  // テクスチャ設定
     inline UINT MaxAction()const                                { return m_pAnimetionController->GetMaxNumAnimationSets(); }
+    inline IHighLevelAnimController* GetHLcontroller()const     { return m_HLcontroller; };
 
 protected:
     // Set関数
-    inline void SetMove(const D3DXVECTOR3 &move)       { m_move = move; }              // 移動量の設定
-    inline void SetSize(const D3DXVECTOR3 &size)       { m_size = size; }              // サイズの設定
-    inline void SetTexPattern(const int &TexPattern)   { m_nTexPattern = TexPattern; } // テクスチャのパターン
-    inline void SetLife(const int &nLife)              { m_nLife = nLife; }            // ライフの設定
-    inline void SetScale(const D3DXVECTOR3 &scale)     { m_scale = scale; }            // 拡大率
+    inline void SetMove(const D3DXVECTOR3 &move)       { m_move = move; }               // 移動量の設定
+    inline void SetSize(const D3DXVECTOR3 &size)       { m_size = size; }               // サイズの設定
+    inline void SetTexPattern(const int &TexPattern)   { m_nTexPattern = TexPattern; }  // テクスチャのパターン
+    inline void SetLife(const int &nLife)              { m_nLife = nLife; }             // ライフの設定
+    inline void SetScale(const D3DXVECTOR3 &scale)     { m_scale = scale; }             // 拡大率
 
     // Get関数
     inline D3DXVECTOR3 &GetMove()              { return m_move; }           // 移動量の情報
@@ -87,8 +90,7 @@ private:
     IHighLevelAnimController * m_HLcontroller;          //ハイレベルアニメーションコントローラー
     static const char* m_aParam[MODEL_MAX];             //モデルパス名
     MODEL m_ModelNum;                                   // モデルの名前
-    SkinMesh::BlendIndex* m_pBlendIndex;
-
-    D3DXVECTOR4 m_ToonAmbient;
+    SkinMesh::BlendIndex* m_pBlendIndex;                // 頂点ブレンドインデックス
+    LPDIRECT3DTEXTURE9 m_pTexture;                      // テクスチャ情報
 };
 #endif 

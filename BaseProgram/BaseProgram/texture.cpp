@@ -64,21 +64,29 @@ HRESULT CTexture::SetTextureName()
     {
         { "data/Texture/test.jpg" },                // テスト
         { "data/Texture/star.png" },
+        { "data/Texture/effect_kaihuku.png" },
+        { "data/Texture/.png" },
         { "data/Texture/smoke.png" },
-        { "data/Texture/slime_ball.png" },
+        { "data/Texture/uzusio_1.png" },
+        { "data/Texture/uzusio_2.png" },
+        { "data/Texture/tame.png" },
+        { "data/Texture/water.png" },
+        { "data/Texture/water_effect_tex.png" },
+        { "data/Texture/slime_drop.png" },
         { "data/Texture/Gauge.png" },
         { "data/Texture/Gauge_Frame.png" },
         { "data/Texture/BACK.png" },
         { "data/Texture/RESUME.png" },
         { "data/Texture/RESTART.png" },
         { "data/Texture/END.png" },
-        { "data/Texture/E-key.png"},
+        { "data/Texture/E-key.png" },
         { "data/Texture/message_back.jpeg" },
         { "data/Texture/Warning.png" },
         { "data/Texture/Warning2.png" },
         { "data/Texture/NPC1_1.png" },
         { "data/Texture/white.png" },
         { "data/Texture/slime_50.png" },
+        { "data/Texture/takohead_tex.png" },
     };
 
     // 分割テクスチャ

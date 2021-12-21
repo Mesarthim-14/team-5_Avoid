@@ -36,7 +36,6 @@ protected:
     bool Follow();                          // 追従
     void Collision();                       // 当たり判定
     void AffectPlayer(CPlayer* &pPlayer);   // プレイヤーに影響を与える
-    void LookAtPlayer();                    // プレイヤーを見る
 
 private:
     // private関数

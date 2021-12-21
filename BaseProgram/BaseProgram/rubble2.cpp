@@ -19,12 +19,6 @@
 #include "player.h"
 
 //=============================================================================
-// マクロ定義
-//=============================================================================
-#define TEST_POS    (D3DXVECTOR3(-26654.3f, 0.0f, 10574.6f))
-#define TEST_ROT    (D3DXVECTOR3(0.0f, D3DXToRadian(-45.0f), 0.0f))
-
-//=============================================================================
 // コンストラクタ
 //=============================================================================
 CRubble2::CRubble2(PRIORITY Priority) : CModel(Priority)
@@ -42,7 +36,7 @@ CRubble2::~CRubble2()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CRubble2 * CRubble2::Create()
+CRubble2 * CRubble2::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // メモリ確保
     CRubble2 *pTestModel = new CRubble2(PRIORITY_TEST_MODEL);
@@ -51,7 +45,7 @@ CRubble2 * CRubble2::Create()
     if (pTestModel)
     {
         // 初期化処理
-        pTestModel->Init();
+        pTestModel->Init(pos, rot);
 
         return pTestModel;
     }
@@ -62,14 +56,14 @@ CRubble2 * CRubble2::Create()
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CRubble2::Init()
+HRESULT CRubble2::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // 初期化処理
     CModel::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
-    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MOVE_RUBBLE2);
-    GetModelInfo()->SetModelStatus(TEST_POS, TEST_ROT, model);
+    CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_GIMMICK_PARTY_RUBBLE2);
+    GetModelInfo()->SetModelStatus(pos, rot, model);
 
     return S_OK;
 }

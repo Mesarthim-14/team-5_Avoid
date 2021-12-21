@@ -27,7 +27,6 @@
 //=====================================================================
 CPlayerStateStun::CPlayerStateStun()
 {
-    m_nStunCount = 0;
 }
 
 //=====================================================================
@@ -74,7 +73,6 @@ void CPlayerStateStun::Update()
         return;
     }
 
-    m_nStunCount++;
     // 慣性
     D3DXVECTOR3 move = pPlayer->GetMove();
     if (abs(move.x) > 0.0f)//滑らせる
@@ -104,11 +102,9 @@ void CPlayerStateStun::Update()
     move += (pPlayer->GetInertia() - move) * pPlayer->GetInertiaNum();
     pPlayer->SetMove(move);
 
-    // 一定時間でスタン解除
-    if (m_nStunCount >= MAX_STAN_COUNT)
+    // 状態カウンタ
+    if (CounterFunc(MAX_STAN_COUNT, this))
     {
-        m_nStunCount = 0;
         pPlayer->ChangeState(CPlayerStateNormal::Create());// スタン状態解除（起き上がり）
     }
-
 }

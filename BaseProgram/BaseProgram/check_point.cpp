@@ -19,6 +19,7 @@
 #include "player.h"
 #include "check_flag.h"
 #include "library.h"
+#include "sound.h"
 
 //=============================================================================
 // マクロ定義
@@ -44,7 +45,7 @@ CCheckPoint::~CCheckPoint()
 //=============================================================================
 // インスタンス生成
 //=============================================================================
-CCheckPoint * CCheckPoint::Create(void)
+CCheckPoint * CCheckPoint::Create()
 {
 	// メモリ確保
 	CCheckPoint *pCheckPoint = new CCheckPoint;
@@ -63,7 +64,7 @@ CCheckPoint * CCheckPoint::Create(void)
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CCheckPoint::Init(void)
+HRESULT CCheckPoint::Init()
 {
 	// 旗の生成
 	CreateFlag();
@@ -74,7 +75,7 @@ HRESULT CCheckPoint::Init(void)
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CCheckPoint::Uninit(void)
+void CCheckPoint::Uninit()
 {
 	if (m_apChackFlag.size() > 0)
 	{
@@ -91,7 +92,7 @@ void CCheckPoint::Uninit(void)
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CCheckPoint::Update(void)
+void CCheckPoint::Update()
 {
 	size_t size = m_apChackFlag.size();
 	for (size_t nCount = m_nPointNum+1; nCount < size; nCount++)
@@ -101,10 +102,10 @@ void CCheckPoint::Update(void)
 		{
 			m_PointPos = m_apChackFlag.at(nCount)->GetPos();
 			m_nPointNum = nCount;
+            CLibrary::SetSound(CSound::SOUND_SE_CHECKPOINT);
 			break;
 		}
 	}
-
 }
 
 //=============================================================================

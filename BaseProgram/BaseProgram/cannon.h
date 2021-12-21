@@ -21,14 +21,18 @@ public:
     CCannon(PRIORITY = PRIORITY_TEST_MODEL);    // コンストラクタ
     ~CCannon();                                 // デストラクタ
 
-    static CCannon *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot); // インスタンス生成
-    HRESULT Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);           // 初期化処理
-    void Update();                                                          // 更新処理
-    bool Collision();                                                       // 当たり判定
+    static CCannon *Create(const D3DXVECTOR3 &pos); // インスタンス生成
+    HRESULT Init(const D3DXVECTOR3 &pos);           // 初期化処理
+    void Update();                                  // 更新処理
+    bool Collision();                               // 当たり判定
 
     inline void SetUseFlag() { m_bUse = true; } // 使用している状態にする
 
 private:
+    // private関数
+    D3DXVECTOR3 LookAtKraken(const D3DXVECTOR3 &pos);
+
+    // メンバ偏変数
     bool m_bUse;    // 使用したかどうか
 };
 

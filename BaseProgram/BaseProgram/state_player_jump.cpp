@@ -17,7 +17,11 @@
 #include "animation_skinmesh.h"
 #include "state_player_normal.h"
 #include "gauge.h"
-#include "particleshrink.h"
+#include "plane_jump.h"
+#include "plane_jumpreservoir.h"
+#include "mouse.h"
+#include "state_player_avoid.h"
+#include "sound.h"
 
 //=====================================================================
 // マクロ定義
@@ -25,6 +29,7 @@
 #define CHARGEJUMP_MAX      (100)   // タメカウント最大
 #define PARTICLE_STRAT      (30)    // 溜めエフェクト発生開始までの時間
 #define HIGHJUMP_CONSUME    (1)     // ためジャンプした時のライフ減少量
+#define SOUND_INTER         (60)    // 音の間隔
 
 //=====================================================================
 // コンストラクタ
@@ -37,6 +42,8 @@ CPlayerStateJump::CPlayerStateJump()
     m_bIsReadyChargeJump = false;
     m_fJumpValue = 40.0f;
     m_fDushJumpValue = 1.0f;
+    m_bJumpEffect = true;
+    m_nCntEffect = 0;
 }
 
 //=====================================================================
@@ -83,14 +90,18 @@ void CPlayerStateJump::Update()
         return;
     }
 
-    // ジャンプ処理
-    JumpProcess(pPlayer);
-
     // 着地時の処理
     if (pPlayer->GetLanding() && m_bJumpCheck)
     {
         pPlayer->ChangeState(CPlayerStateNormal::Create());
+        return;
     }
+
+    // ジャンプ処理
+    JumpProcess(pPlayer);
+
+    // ジャンプ処理
+    Avoidance(pPlayer);
 }
 
 //=====================================================================
@@ -99,6 +110,7 @@ void CPlayerStateJump::Update()
 void CPlayerStateJump::SubLife(CPlayer* &pPlayer)
 {
     CGauge * pGauge = CManager::GetInstance()->GetGame()->GetGauge();
+
     // Hp消費
     pPlayer->SubLife(HIGHJUMP_CONSUME);
     pGauge->SetDown((float)HIGHJUMP_CONSUME);
@@ -115,47 +127,87 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
     D3DXVECTOR3 move = pPlayer->GetMove();
     D3DXVECTOR3 pos = pPlayer->GetPos();
 
-    if (CLibrary::KeyboardPress(DIK_SPACE))
+    if (CLibrary::KeyboardPress(DIK_SPACE) && !m_bJumpCheck)
     {
         m_nChargeJumpCount++;
+
         // エフェクトの発生時間
-        if (m_nChargeJumpCount >= PARTICLE_STRAT)
+        if (m_nChargeJumpCount >= PARTICLE_STRAT && m_bJumpEffect)
         {
-            // 溜めエフェクト生成
-            if (m_nChargeJumpCount < CHARGEJUMP_MAX && !m_bJumpCheck)
-            {
-                CParticleShrink::Create(pos);
-            }
+            m_bJumpEffect = false;
+            CPlaneJumpReservoir::Create(pos);
         }
+        if (!m_bJumpEffect)
+        {
+            JumpEffect();
+        }
+
+        // 音の再生
+        if (m_nChargeJumpCount % SOUND_INTER == 0)
+        {
+            CLibrary::SetSound(CSound::SOUND_SE_JUMP_CHARGE);
+        }
+    }
+
+    if (CLibrary::KeyboardRelease(DIK_SPACE) /*&& !m_bJumpCheck*/)//通常ジャンプ
+    {
         //エフェクト発生
         if (m_nChargeJumpCount >= CHARGEJUMP_MAX)
         {
             m_bIsReadyChargeJump = true;
             pPlayer->SetLanding(false);
+
+            CPlaneJump::Create(D3DXVECTOR3(pos.x, pos.y, pos.z));
+            m_bJumpCheck = true;
+            move.y += m_fJumpValue * 3;
+            move.x += move.x * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
+            move.z += move.z * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
+            //    pPlayer->SetState(CPlayer::STATE_JUMP);
+            m_nChargeJumpCount = 0;
+            m_bIsReadyChargeJump = false;
+
+            // ライフの減算
+            SubLife(pPlayer);
+
+            CLibrary::SetSound(CSound::SOUND_SE_SUPER_JUMP);
         }
-    }
-
-    if (CLibrary::KeyboardPress(DIK_SPACE) && m_bIsReadyChargeJump)//ため状態で離したら
-    {
-        m_bJumpCheck = true;
-        move.y += m_fJumpValue * 3;
-        move.x += move.x * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
-        move.z += move.z * (m_fDushJumpValue * sinf(move.y / m_fJumpValue));
-        //    pPlayer->SetState(CPlayer::STATE_JUMP);
-        m_nChargeJumpCount = 0;
-        m_bIsReadyChargeJump = false;
-
-        // ライフの減算
-        SubLife(pPlayer);
-    }
-
-    else if (CLibrary::KeyboardRelease(DIK_SPACE))//通常ジャンプ
-    {
-        m_bJumpCheck = true;
-        move.y += m_fJumpValue;
-        m_nChargeJumpCount = 0;
+        else
+        {
+            m_bJumpCheck = true;
+            move.y += m_fJumpValue;
+            m_nChargeJumpCount = 0;
+            CLibrary::SetSound(CSound::SOUND_SE_JUMP);
+        }
         pPlayer->SetLanding(false);
     }
     // 移動量の設定
     pPlayer->SetMove(move);
+}
+
+//=====================================================================
+// 回避処理
+//=====================================================================
+void CPlayerStateJump::Avoidance(CPlayer* &pPlayer)
+{
+    CMouse *pMouse = CManager::GetInstance()->GetMouse();   // マウス
+    if (pMouse->GetButtonTrigger(CMouse::MOUSE_LEFT))//回避
+    {
+        if (pPlayer->GetSlimeState() != CPlayer::SLIME_LITTLESIZE)
+        {
+            pPlayer->ChangeState(CPlayerStateAvoid::Create());
+        }
+    }
+}
+
+//=====================================================================
+// エフェクト処理
+//=====================================================================
+void CPlayerStateJump::JumpEffect()
+{
+    m_nCntEffect++;
+    if (m_nCntEffect >= 20)
+    {
+        m_bJumpEffect = true;
+        m_nCntEffect = 0;
+    }
 }

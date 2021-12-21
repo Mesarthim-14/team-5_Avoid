@@ -49,4 +49,7 @@ void CPlane::Draw()
 
     // ライト有効
     pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+    // テクスチャの設定
+    pDevice->SetTexture(0, nullptr);
 }

@@ -60,7 +60,7 @@ CKrakenStateNormal * CKrakenStateNormal::Create()
 void CKrakenStateNormal::Init()
 {
     // アニメーション設定
-    SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_IDOL), 60);
+    SetAnimation(UINT((CKraken::MOTION_MAX - 1) - CKraken::MOTION_IDOL), 60);
 }
 
 //=====================================================================
@@ -89,5 +89,6 @@ void CKrakenStateNormal::ShotBullet(CKraken* &pKraken)
     {
         CBossBullet::Create(pKraken->GetPos(), ZeroVector3);
         m_nBulletCount = 0;
+        CLibrary::SetSound(CSound::SOUND_SE_KRAKEN_BULLET_MITING);
     }
 }

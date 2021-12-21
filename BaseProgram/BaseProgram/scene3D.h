@@ -34,6 +34,7 @@ protected:
     void InitAnimation(const int &nCounterAnim, const int &nPatternAnim, const int &nLoop); // アニメーション情報初期化
     void SetColor(const D3DXCOLOR &color);                                                  // カラーの設定
     void ScaleUp(const float &fScale);                                                      // 拡大処理
+    void ScaleDown(const float &fScale);                                                    // 縮小処理
     inline void SetMove(const D3DXVECTOR3 &move)        { m_move = move; }                  // 移動量
     inline void SetAlpha(const bool &bAlpha)            { m_bAlpha = bAlpha; }              // アルファテスト
     inline void SetAlphaNum(const int &nAlphaNum)       { m_nAlphaTestNum = nAlphaNum; }    // アルファテストの値

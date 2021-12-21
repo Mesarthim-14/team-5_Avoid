@@ -1,7 +1,7 @@
 //=====================================================================
 //
-//    プレイヤーの状態管理クラス [state_player.h]
-//    Author : Konishi Yuuto
+// プレイヤーの状態管理クラス [state_player.h]
+// Author : Konishi Yuuto
 //
 //=====================================================================
 
@@ -16,10 +16,13 @@
 #include "skinmesh_model.h"
 #include "animation_skinmesh.h"
 #include "camera.h"
-#include "particlepop.h"
-#include "particleshrink.h"
-#include "particleaura.h"
+#include "particle_water.h"
 #include "gauge.h"
+
+//=====================================================================
+// マクロ定義
+//=====================================================================
+#define SOUND_INTER (30)    // 音
 
 //=====================================================================
 // コンストラクタ
@@ -28,6 +31,8 @@ CPlayerState::CPlayerState()
 {
     m_fAngleSpeed = 0.6f;
     memset(m_bMove, 0, sizeof(m_bMove));
+    m_nCounter = SOUND_INTER;
+    m_Effect = true;
 }
 
 //=====================================================================
@@ -157,6 +162,19 @@ void CPlayerState::MoveByKeyboard(CPlayer* &pPlayer)
 		m_bMove[0] = true;
 	}
 
+    // 水に落ちた時に出るエフェクト生成
+    if (m_Effect)
+    {
+        if (pos.y <= 0.0f)
+        {
+            for (int nCnt = 0; nCnt <= 10; nCnt++)
+            {
+                CParticleWater::Create(pos);
+            }
+            m_Effect = false;
+        }
+    }
+
     // 座標設定
     pPlayer->SetPos(pos);
 
@@ -176,6 +194,12 @@ void CPlayerState::MoveByKeyboard(CPlayer* &pPlayer)
             // アニメーション設定
             SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_WALK), 60);
         }
+    }
+
+    if (pPlayer->GetLanding())
+    {
+        // 音
+        SoundUpdate();
     }
 
     //角度補正
@@ -200,4 +224,24 @@ void CPlayerState::MoveByKeyboard(CPlayer* &pPlayer)
 
     pPlayer->SetMove(move);
     pPlayer->SetRotDest(rotDest);
+}
+
+//=====================================================================
+// 音の更新処理
+//=====================================================================
+void CPlayerState::SoundUpdate()
+{
+    if (m_bMove[0])
+    {
+        if (CLibrary::CounterLimit(SOUND_INTER, m_nCounter))
+        {
+            CLibrary::SetSound(CSound::SOUND_SE_WALK);
+            m_nCounter = 0;
+        }
+    }
+    else
+    {
+        m_nCounter = SOUND_INTER;
+
+    }
 }

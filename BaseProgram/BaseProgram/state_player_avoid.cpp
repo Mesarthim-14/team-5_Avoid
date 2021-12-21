@@ -19,6 +19,7 @@
 #include "state_player_normal.h"
 #include "state_player_stun.h"
 #include "gauge.h"
+#include "sound.h"
 
 //=====================================================================
 // ƒ}ƒNƒ’è‹`
@@ -30,8 +31,8 @@
 //=====================================================================
 CPlayerStateAvoid::CPlayerStateAvoid()
 {
-    m_fAvoidValueY = 60.0f;
-    m_fAvoidValueXZ = 100.0f;
+    m_fAvoidValueY = 15.0f;
+    m_fAvoidValueXZ = 40.0f;
 }
 
 //=====================================================================
@@ -111,4 +112,5 @@ void CPlayerStateAvoid::SetMove()
     pPlayer->SubLife(AVOID_CONSUME);
     pGauge->SetDown((float)AVOID_CONSUME);
     pGauge->SetHitDown(true);
+    CLibrary::SetSound(CSound::SOUND_SE_AVOID);
 }

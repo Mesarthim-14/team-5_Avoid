@@ -35,7 +35,14 @@ public:
         TEXTURE_NUM_NONE = -1,              // 初期値 使うとき-1にしてください
         TEXTURE_NUM_TEST,                   // テストテクスチャ
         TEXTURE_NUM_PARTICLE,               // パーティクルテクスチャ
+        TEXTURE_NUM_HEEL,                   // 回復テクスチャ
+        TEXTURE_NUM_HEELAURA,               // 回復テクスチャ
         TEXTURE_NUM_SMOKE,                  // cannonの煙
+        TEXTURE_NUM_SWIRL1,                 // 渦1
+        TEXTURE_NUM_SWIRL2,                 // 渦2
+        TEXTURE_NUM_JUMP,                   // 渦2
+        TEXTURE_NUM_WATER,                  // 水に落ちた時
+        TEXTURE_NUM_WATERWALL,              // 水に落ちた時
         TEXTURE_NUM_POP,                    // 吹っ飛ぶときに出るパーティクル
         TEXTURE_NUM_GAUGE,                  // ゲージ
         TEXTURE_NUM_GAUGEBAR,               // ゲージバー
@@ -50,7 +57,8 @@ public:
         TEXTURE_NUM_ENEMY_SENTENCE1,        // ボスの弾の警告
         TEXTURE_NUM_WHITE,                  // テストテクスチャ
         TEXTURE_NUM_SLIME,                  // テストテクスチャ
-        TEXTURE_NUM_MAX                     
+        TEXTURE_NUM_KRAKEN,                  // テストテクスチャ
+        TEXTURE_NUM_MAX
     };
 
     // アニメーションを行うテクスチャの列挙型

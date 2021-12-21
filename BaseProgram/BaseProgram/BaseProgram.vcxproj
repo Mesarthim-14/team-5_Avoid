@@ -196,6 +196,7 @@
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="key_e.cpp" />
     <ClCompile Include="kraken.cpp" />
+    <ClCompile Include="kraken_tentacles.cpp" />
     <ClCompile Include="library.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
@@ -238,8 +239,13 @@
     <ClCompile Include="particle_info.cpp" />
     <ClCompile Include="move_scaffold.cpp" />
     <ClCompile Include="parallax_mapping2.cpp" />
+    <ClCompile Include="particle_water.cpp" />
     <ClCompile Include="pause.cpp" />
     <ClCompile Include="plane.cpp" />
+    <ClCompile Include="plane_jump.cpp" />
+    <ClCompile Include="plane_jumpreservoir.cpp" />
+    <ClCompile Include="plane_vortex.cpp" />
+    <ClCompile Include="plane_vortex2.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="player_editor.cpp" />
     <ClCompile Include="polygon.cpp" />
@@ -281,6 +287,9 @@
     <ClCompile Include="state_camera_select.cpp" />
     <ClCompile Include="state_camera_talk.cpp" />
     <ClCompile Include="state_kraken.cpp" />
+    <ClCompile Include="state_kraken_angry.cpp" />
+    <ClCompile Include="state_kraken_damage.cpp" />
+    <ClCompile Include="state_kraken_dead.cpp" />
     <ClCompile Include="state_kraken_normal.cpp" />
     <ClCompile Include="state_kraken_not_attack.cpp" />
     <ClCompile Include="state_object.cpp" />
@@ -291,6 +300,7 @@
     <ClCompile Include="state_player_knockback.cpp" />
     <ClCompile Include="state_player_normal.cpp" />
     <ClCompile Include="state_player_not_move.cpp" />
+    <ClCompile Include="state_player_respawn.cpp" />
     <ClCompile Include="state_player_stun.cpp" />
     <ClCompile Include="swirl_scaffold.cpp" />
     <ClCompile Include="swirl_scaffold_object.cpp" />
@@ -361,6 +371,7 @@
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="key_e.h" />
     <ClInclude Include="kraken.h" />
+    <ClInclude Include="kraken_tentacles.h" />
     <ClInclude Include="library.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
@@ -403,8 +414,13 @@
     <ClInclude Include="particle_info.h" />
     <ClInclude Include="move_scaffold.h" />
     <ClInclude Include="parallax_mapping2.h" />
+    <ClInclude Include="particle_water.h" />
     <ClInclude Include="pause.h" />
     <ClInclude Include="plane.h" />
+    <ClInclude Include="plane_jump.h" />
+    <ClInclude Include="plane_jumpreservoir.h" />
+    <ClInclude Include="plane_vortex.h" />
+    <ClInclude Include="plane_vortex2.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="player_editor.h" />
     <ClInclude Include="polygon.h" />
@@ -446,6 +462,9 @@
     <ClInclude Include="state_camera_select.h" />
     <ClInclude Include="state_camera_talk.h" />
     <ClInclude Include="state_kraken.h" />
+    <ClInclude Include="state_kraken_angry.h" />
+    <ClInclude Include="state_kraken_damage.h" />
+    <ClInclude Include="state_kraken_dead.h" />
     <ClInclude Include="state_kraken_normal.h" />
     <ClInclude Include="state_kraken_not_attack.h" />
     <ClInclude Include="state_object.h" />
@@ -456,6 +475,7 @@
     <ClInclude Include="state_player_knockback.h" />
     <ClInclude Include="state_player_normal.h" />
     <ClInclude Include="state_player_not_move.h" />
+    <ClInclude Include="state_player_respawn.h" />
     <ClInclude Include="state_player_stun.h" />
     <ClInclude Include="swirl_scaffold.h" />
     <ClInclude Include="swirl_scaffold_object.h" />

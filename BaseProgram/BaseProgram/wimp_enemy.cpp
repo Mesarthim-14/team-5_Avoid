@@ -19,6 +19,7 @@
 #include "gauge.h"
 #include "particlepop.h"
 #include "caution_wimp_attack.h"
+#include "sound.h"
 
 //=============================================================================
 // マクロ定義
@@ -87,6 +88,7 @@ void CWimpEnemy::Update()
             m_pCaution = CCautionWimpAttack::Create(GetPos());
             m_nCautionCounter = 0;
             m_bLook = true;
+            CLibrary::SetSound(CSound::SOUND_SE_ENEMY_NOTICED);
         }
     }
 
@@ -159,22 +161,6 @@ bool CWimpEnemy::Search()
     }
 
     return false;
-}
-
-//=============================================================================
-// プレイヤーを見る処理
-//=============================================================================
-void CWimpEnemy::LookAtPlayer()
-{
-    // プレイヤーの情報
-    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();		// メモリ確保
-    if (pPlayer)
-    {
-        D3DXVECTOR3 Ppos = pPlayer->GetPos();   // プレイヤーの座標取得
-        D3DXVECTOR3 Epos = GetPos();            // 自身の座標
-        D3DXVECTOR3 rot = GetRot();             // 角度取得
-        SetRot(D3DXVECTOR3(rot.x, CLibrary::LookTarget(Epos, Ppos), rot.z));
-    }
 }
 
 //=============================================================================

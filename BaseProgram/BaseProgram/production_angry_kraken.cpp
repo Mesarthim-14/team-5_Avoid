@@ -24,6 +24,7 @@
 #include "state_camera_angry_kraken.h"
 #include "kraken.h"
 #include "state_kraken_normal.h"
+#include "state_kraken_angry.h"
 
 //=======================================================================================
 // コンストラクタ
@@ -63,9 +64,12 @@ void CProductionAngryKraken::Init()
 {
     CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
     CCameraGame *pCamera = (CCameraGame*)CManager::GetInstance()->GetCamera();
+    CKraken* pKraken = CManager::GetInstance()->GetGame()->GetKraken();
 
     CreateState(pPlayer, CPlayerStateNotMove::Create());
     CreateState(pCamera, CCameraStateAngryKraken::Create());
+    CreateState(pKraken, CKrakenStateAngry::Create());
+    CLibrary::SetSound(CSound::SOUND_SE_SCREAM);
 }
 
 //=======================================================================================

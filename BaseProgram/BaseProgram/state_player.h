@@ -30,8 +30,22 @@ protected:
     virtual void SetAnimation(const UINT &animID, const FLOAT &time);   // アニメーション設定
     void MoveByKeyboard(CPlayer* &pPlayer);                             // 入力処理
 
+    // 終了フラグを返すラムダ式
+    function<bool(const int&, CPlayerState*)> CounterFunc = [](const int &nLimit, CPlayerState* pState)
+    {
+        if (nLimit <= pState->m_nCounter++)
+        {
+            return true;
+        }
+        return false;
+    };
+
 private:
-     float m_fAngleSpeed;   // 目標向きまで向かうスピード 
-     bool m_bMove[2];       // 移動のフラグ
+    void SoundUpdate();                                                 // 音の
+
+    float m_fAngleSpeed;    // 目標向きまで向かうスピード 
+    int m_nCounter;         // カウンタ
+    bool m_bMove[2];        // 移動のフラグ
+    bool m_Effect;
 };
 #endif

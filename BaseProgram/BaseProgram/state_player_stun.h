@@ -26,6 +26,5 @@ public:
     void Update()override;              // XVˆ—
 
 private:
-    int m_nStunCount;
 };
 #endif

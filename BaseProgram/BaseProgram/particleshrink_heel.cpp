@@ -117,7 +117,7 @@ void CParticleHeel::SetParticle(void)
 {
     // テクスチャの設定
     CTexture *pTexture = GET_TEXTURE_PTR;
-    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_PARTICLE));
+    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_HEEL));
     // スピードの値を設定
     m_fSpeed = SPEED;
     // 移動させるための処理

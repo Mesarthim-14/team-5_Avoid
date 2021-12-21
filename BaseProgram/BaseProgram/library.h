@@ -15,6 +15,7 @@
 #include "ImGui/imgui_impl_dx9.h"
 #include "ImGui/imgui_impl_win32.h"
 #include "json.h"
+#include "sound.h"
 
 //=============================================================================
 // 当たり判定クラス
@@ -31,7 +32,7 @@ public:
     static float Random(const float &fNum);                                                                             // ランダム変数
     static float Random(const float &fMin, const float &fMax);                                                          // ランダム変数
     static void Rotate3D(D3DXVECTOR3 &PointPos, const D3DXVECTOR3 &rot);                                                // 点の三次元回転処理
-    static float CalDistance(const D3DXVECTOR3 &pos1, const D3DXVECTOR3 &pos2);                                         // 二点の距離を計算
+    static float CalDistance(const D3DXVECTOR3 &Target, const D3DXVECTOR3 &This);                                         // 二点の距離を計算
     static float LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 = 0);         // 分離軸に投影された軸成分から投影線分長を算出
     static D3DXVECTOR3 MultiplyVector3(const D3DXVECTOR3 &vector1, const D3DXVECTOR3 &vector2);                         // vector3同士の乗算
     static D3DXVECTOR3 DivisionVector3(const D3DXVECTOR3 &vector1, const D3DXVECTOR3 &vector2);                         // vector3同士の除算
@@ -43,6 +44,9 @@ public:
     static D3DXVECTOR3 FollowMoveXZ(const D3DXVECTOR3 &This, const D3DXVECTOR3 &Target, const float &fSpeed);           // XZ(平面)の追従
     static D3DXVECTOR3 ConvWorldToScreen(const D3DXVECTOR3& pos, const D3DXMATRIX& mtxView, const D3DXMATRIX& mtxProj); // ワールド座標からスクリーン座標に変換
     static float LookTarget(const D3DXVECTOR3 &This, const D3DXVECTOR3 &Target);                                        // 指定したターゲットに向く処理
+    static void SetSound(const CSound::SOUND_LABEL &nLabel);                                                            // 音の再生
+    static void StopSound(const CSound::SOUND_LABEL &nLabel);                                                           // 音の再生
+    static bool CounterLimit(const int &nLimit, int &nCounter);                                                         // 一定までのカウンタ
 
     // ジェイソンのファイルロード
     static picojson::value JsonLoadFile(const string &FileName);

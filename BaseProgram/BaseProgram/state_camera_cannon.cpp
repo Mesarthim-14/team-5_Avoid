@@ -23,10 +23,10 @@
 //=====================================================================
 // マクロ定義
 //=====================================================================
-#define DISTANCE        (5000.0f)               // 距離
-#define CANNON_HEIGHT   (1000.0f)               // 大砲の高さ
-#define SHIFT_ANGLE     (D3DXToRadian(20.0f))   // ずらす角度
-#define ANGLE_POS       (4000.0f)               // 視点の高さ
+#define DISTANCE        (15000.0f)              // 距離
+#define CANNON_HEIGHT   (3000.0f)               // 大砲の高さ
+#define SHIFT_ANGLE     (D3DXToRadian(10.0f))   // ずらす角度
+#define ANGLE_POS       (6000.0f)               // 視点の高さ
 
 //=====================================================================
 // コンストラクタ
@@ -90,6 +90,11 @@ void CCameraStateCannon::Update()
 void CCameraStateCannon::TrackingCannon(CCamera* &pCamera)
 {
     CCannon* pCannon = CManager::GetInstance()->GetGame()->GetGimmickFactory()->GetCannonManager()->GetCurrentCannon();
+    if (!pCannon)
+    {
+        return;
+    }
+
     D3DXVECTOR3 CannonPos = pCannon->GetPos();
     D3DXVECTOR3 CannonRot = pCannon->GetRot();
     float fDistance = DISTANCE;

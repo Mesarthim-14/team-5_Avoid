@@ -24,12 +24,14 @@
 #include "particlecannon.h"
 #include "collision.h"
 #include "particlenormal.h"
+#include "state_kraken_damage.h"
+#include "sound.h"
 
 //=============================================================================
 // ƒ}ƒNƒ’è‹`
 //=============================================================================
-#define SPEED       (100.0f)
-#define SPEED_Y     (50.0f)
+#define SPEED       (300.0f)
+#define SPEED_Y     (100.0f)
 #define POS_FIX     (1000.0f)
 #define POS_FIX_Y   (700.0f)
 #define GRAVITY_NUM (0.65f)
@@ -102,6 +104,8 @@ HRESULT CCannonBullet::Init(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &Can
     {
         m_pCollision = CCollisionModelOBB::Create(pos, SIZE, ZeroVector3);
     }
+
+    CLibrary::SetSound(CSound::SOUND_SE_CANNON_FIRING);
     return S_OK;
 }
 
@@ -171,11 +175,13 @@ void CCannonBullet::Collision()
         if (CCollision::ColOBBs(m_pCollision->GetOBB(), pKraken->GetCollosion()->GetOBB()))
         {
             pKraken->SubLife();
+            pKraken->ChangeState(CKrakenStateDamage::Create());
             m_bHit = true;
             for (int nCnt = 0; nCnt <= 20; nCnt++)
             {
                 CParticleCannon::Create(pos);
             }
+            CLibrary::SetSound(CSound::SOUND_SE_HIT_CANNON);
             Uninit();
         }
     }

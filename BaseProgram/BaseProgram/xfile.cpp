@@ -39,7 +39,7 @@ CXfile::CXfile()
     m_aXfileName =
     {
         { "data/Model/Normal/block.x" },                                // テストブロック
-        { "data/Model/Normal/mapmapmap3.x" },                           // マップ
+        { "data/Model/Normal/Gimmick/amap.x" },                           // マップ
         { "data/Model/Normal/Map/checkpoint.x" },                       // チェックポイント
         { "data/Model/Normal/plane.x" },                                // 平面
         { "data/Model/Normal/sky.x" },                                  // 空
@@ -54,10 +54,10 @@ CXfile::CXfile()
         { "data/Model/Normal/Gimmick/kaihuku.x" },                      // 回復ポイント
         { "data/Model/Normal/gimmick_cannon.x" },                       // 大砲
         { "data/Model/Normal/hashiwatashi.x" },                         // 橋
-        { "data/Model/Normal/CannonBullet.x" },                         // 大砲の弾
+        { "data/Model/Normal/Bullet.x" },                         // 大砲の弾
         { "data/Model/Normal/ugokuashiba.x" },                          // 渦の足場
         { "data/Model/Normal/sky_blue5.x" },                            // お空
-        { "data/Model/Normal/Kraken_Bullet.x" },                        // クラーケンの弾
+        { "data/Model/Normal/EnemyBullet.x" },                        // クラーケンの弾
         { "data/Model/Normal/Map/06_floor_thin.x" },                    // マップ長方形
         { "data/Model/Normal/Map/01_floor_big_2f.x" },                  // マップ最初の床
         { "data/Model/Normal/Map/02_floor_checkpoint.x" },              // マップ最初の床
@@ -75,6 +75,9 @@ CXfile::CXfile()
         { "data/Model/Normal/Gimmick/kaiten_yuka_2.x" },                // 回る足場
         { "data/Model/Normal/Gimmick/04_gimmick_spinship_mast2.x" },    // 上
         { "data/Model/Normal/Gimmick/05_gimmick_spinship_ship.x" },     // 下
+        { "data/Model/Normal/Gimmick/06_gimmick_susumu.x" },            // ベース
+        { "data/Model/Normal/Gimmick/07_Rubble1.x" },                   // がれき
+        { "data/Model/Normal/Gimmick/08_Rubble2.x" },                   // がれき
 
     };
     

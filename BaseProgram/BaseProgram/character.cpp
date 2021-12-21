@@ -42,6 +42,7 @@ CCharacter::CCharacter(PRIORITY Priority) : CScene(Priority)
     m_State = STATE_NORMAL;
     m_bUseShadow = false;
     m_bGravity = true;
+    m_type = CHARACTER_TYPE_NONE;
 }
 
 //=============================================================================

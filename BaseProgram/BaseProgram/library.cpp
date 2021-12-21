@@ -14,6 +14,8 @@
 #include "renderer.h"
 #include "json.h"
 #include "keyboard.h"
+#include "sound.h"
+#include "resource_manager.h"
 
 //=============================================================================
 //静的メンバ変数の初期化
@@ -375,6 +377,43 @@ D3DXVECTOR3 CLibrary::ConvWorldToScreen(const D3DXVECTOR3& pos, const D3DXMATRIX
 float CLibrary::LookTarget(const D3DXVECTOR3& This, const D3DXVECTOR3& Target)
 {
     return atan2f(This.x - Target.x, This.z - Target.z);
+}
+
+//=============================================================================
+// サウンド再生
+//=============================================================================
+void CLibrary::SetSound(const CSound::SOUND_LABEL& nLabel)
+{
+    CSound* pSound = CManager::GetInstance()->GetResourceManager()->GetSoundClass();
+    if (pSound)
+    {
+        pSound->Play(nLabel);
+    }
+}
+
+//=============================================================================
+// サウンドストップ
+//=============================================================================
+void CLibrary::StopSound(const CSound::SOUND_LABEL &nLabel)
+{
+    CSound* pSound = CManager::GetInstance()->GetResourceManager()->GetSoundClass();
+    if (pSound)
+    {
+        pSound->Stop(nLabel);
+    }
+}
+
+//=============================================================================
+// 一定までのカウンタ
+//=============================================================================
+bool CLibrary::CounterLimit(const int &nLimit, int &nCounter)
+{
+    nCounter++;
+    if (nLimit <= nCounter)
+    {
+        return true;
+    }
+    return false;
 }
 
 //=============================================================================

@@ -25,13 +25,13 @@
 #include "animation_skinmesh.h"
 #include "collisionModel_OBB.h"
 #include "collisionModel_Capsule.h"
-#include "check_point.h"
-#include "gimmick_factory.h"
 #include "state_player.h"
 #include "state_player_avoid.h"
 #include "state_player_jump.h"
 #include "state_player_normal.h"
 #include "gauge.h"
+#include "texture.h"
+#include "state_player_respawn.h"
 
 //=============================================================================
 // マクロ定義
@@ -58,7 +58,7 @@
 #define PLAYER_MIDLLESIZE_VALUE (50)									// 中サイズモデルの値
 #define PLAYER_LARGESIZE_VALUE  (100)									// 最大サイズモデルの値
 
-#define RESPORN_POS_Y			(-3000.0f)								// リスポーンの値
+#define RESPORN_POS_Y			(-2000.0f)								// リスポーンの値
 
 //=============================================================================
 // 生成処理関数
@@ -105,7 +105,6 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	memset(m_nMaxAction, 0, sizeof(m_nMaxAction));
 	m_pCurrentState = nullptr;
 	m_pNextState = nullptr;
-
 	m_pColModelOBB = nullptr;
     m_pColModelCapsule = nullptr;
     m_bCollision = true;
@@ -135,12 +134,6 @@ HRESULT CPlayer::Init()
 	m_rotDest = GetRot();			// 向き
 
 	SetType(CHARACTER_TYPE_PLAYER);	// プレイヤー
-
-	if (!m_pCurrentState)
-	{
-		// インスタンス生成
-		m_pCurrentState = CPlayerStateNormal::Create();
-	}
 
 	LoadInfo();
 
@@ -193,11 +186,19 @@ void CPlayer::Update()
 	CCharacter::Update();
 
 	// リスポーン
-	ReSporn();
+	Respawn();
 
-	//モデル位置向き反映(いずれcharacterに移動させたい）
-	m_pSkinmeshModel[m_SlimeState]->SetPos(GetPos());
-	m_pSkinmeshModel[m_SlimeState]->SetRot(GetRot());
+    D3DXVECTOR3 pos = GetPos();
+    D3DXVECTOR3 rot = GetRot();
+    for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
+    {
+        if (m_pSkinmeshModel[nCount])
+        {
+            // 各モデルの座標と角度の設定
+            m_pSkinmeshModel[nCount]->SetPos(pos);
+            m_pSkinmeshModel[nCount]->SetRot(rot);
+        }
+    }
 
 	// 更新処理
 	UpdateRot();
@@ -205,11 +206,11 @@ void CPlayer::Update()
     // 当たり判定モデル情報の更新処理
 	if (m_pColModelOBB)
 	{
-        m_pColModelOBB->SetInfo(GetPos(), m_pColModelOBB->GetOBB().info.size, GetRot());
+        m_pColModelOBB->SetInfo(pos, m_pColModelOBB->GetOBB().info.size, rot);
 	}
     if (m_pColModelCapsule)
     {
-        m_pColModelCapsule->SetInfo(GetPos(), m_pColModelCapsule->GetInfo().radius, m_pColModelCapsule->GetInfo().length, GetRot());
+        m_pColModelCapsule->SetInfo(pos, m_pColModelCapsule->GetInfo().radius, m_pColModelCapsule->GetInfo().length, rot);
     }
 
 	ShowInfo();
@@ -245,7 +246,16 @@ CSkinmeshModel *CPlayer::GetCurrentSkinMeshPtr()
 //=============================================================================
 void CPlayer::ChangeState(CState *pPlayerState)
 {
-	m_pNextState = pPlayerState;
+    if (!m_pNextState)
+    {
+        m_pNextState = pPlayerState;
+    }
+    else
+    {
+        delete m_pNextState;
+        m_pNextState = nullptr;
+        m_pNextState = pPlayerState;
+    }
 }
 
 //=============================================================================
@@ -449,7 +459,6 @@ void CPlayer::SaveInfo()
 	CLibrary::JsonSetState(FileName, "Player", "INERTIA_NUM", m_fInertiaNum);		// 慣性
 	CLibrary::JsonSetState(FileName, "Player", "ROTATION_SPEED", m_fRotationSpeed);	// 回転の速度
 	CLibrary::JsonSetState(FileName, "Player", "ANGLE_SPEED", m_fAngleSpeed);	// 回転遅さの速度
-
 }
 
 //=============================================================================
@@ -461,7 +470,6 @@ void CPlayer::SubLife(const int &nDamage)
 	if (m_nHP > 0)
 	{
 		m_nHP -= nDamage;
-
 		if (m_nHP < 0)
 		{
 			m_nHP = 0;
@@ -481,8 +489,13 @@ void CPlayer::SubLife(const int &nDamage)
 // リスポーン
 // Author : Konishi Yuuto
 //=============================================================================
-void CPlayer::ReSporn()
+void CPlayer::Respawn()
 {
+    if (0.0f >= GetPos().y)
+    {
+        CLibrary::SetSound(CSound::SOUND_SE_WATER_FELL);
+    }
+
 	// 一定以下の座標になったら
 	if (RESPORN_POS_Y > GetPos().y)
 	{
@@ -508,6 +521,9 @@ void CPlayer::CreateModel()
 	for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
 	{
 		m_pSkinmeshModel[nCount] = CSkinmeshModel::Create(GetPos(), GetRot(), CSkinmeshModel::MODEL(nCount));
+        CTexture* pTexture = GET_TEXTURE_PTR;
+        m_pSkinmeshModel[nCount]->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_SLIME));
+
 		if (int(m_SlimeState) != nCount)
 		{
 			m_pSkinmeshModel[nCount]->IsDraw(false);
