@@ -195,6 +195,46 @@ bool CCollision::ColOBBs(const CCollisionModelOBB::OBB &obb1, const CCollisionMo
 }
 
 //=============================================================================
+// 当たり判定(球体とOBB)
+//=============================================================================
+bool CCollision::ColSphereAndOBB(const CCollisionModelSphere::SPHERE &SphereInfo, const CCollisionModelOBB::OBB &ObbInfo)
+{
+    D3DXVECTOR3 Vec = ZeroVector3;   // 最短距離
+
+    // 各軸についてはみ出た部分のベクトルを算出
+    for (int nCount = 0; nCount < AXIS_NUM_OBB; nCount++)
+    {
+        FLOAT s = 0.0f; // 定数倍値
+
+        // 半径(方向ベクトル)の長さを計算
+        FLOAT L = D3DXVec3Length(&ObbInfo.DirVect[nCount]);
+
+        if (L != 0)
+        { // 半径(方向ベクトル)が０じゃないとき
+            s = D3DXVec3Dot(&(SphereInfo.info.pos - ObbInfo.info.pos), &ObbInfo.DirVect[nCount]) / L;
+        }
+
+        // 半径を１としたときの両辺のはみ出し値を計算
+        s = fabs(s);
+
+        if (s > 1)
+        { // はみ出し値が半径(1)を超えたとき
+            Vec += (1 - s) * L * ObbInfo.DirVect[nCount];   // はみ出した部分のベクトルを加算していく
+        }
+    }
+
+    // OBBと球体の中心の最短距離ベクトルの長さを計算
+    if (D3DXVec3Length(&Vec) <= SphereInfo.radius)
+    { // 球体の半径以下のとき
+
+        return true;
+    }
+
+    // 球体の半径より遠いので当たっていない
+    return false;
+}
+
+//=============================================================================
 // 当たり判定(球体とカプセル)
 //=============================================================================
 bool CCollision::ColSphereAndCapsule(const CCollisionModelSphere::SPHERE &SphereInfo, const CCollisionModelCapsule::INFO &CapsuleInfo)
@@ -228,7 +268,7 @@ bool CCollision::ColSphereAndCapsule(const CCollisionModelSphere::SPHERE &Sphere
     ret = CapsuleInfo.P0 + D3DXVECTOR3(norV1.x * fDot, norV1.y * fDot, norV1.z * fDot);
 
     // 「線分上最近点と球体の中心との距離」が球体の半径とカプセルの半径を足した値より小さいとき
-    if (D3DXVec3Length(&(SphereInfo.info.pos - ret)) <= SphereInfo.radius + CapsuleInfo.radius)
+    if (D3DXVec3Length(&(SphereInfo.info.pos - ret)) <= (SphereInfo.info.size.x / 2) + CapsuleInfo.radius)
     {
         FLOAT ratio = 0.0f; // 線分を0～1の範囲で表したときの線分上最近点の位置
 

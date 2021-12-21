@@ -72,6 +72,9 @@ void CCollisionModelSphere::Uninit()
 //*****************************************************************************
 void CCollisionModelSphere::Update()
 {
+    // îºåaÇÃê›íË
+    m_radius = GetInfo().size.x / 2;
+
     CCollisionModel::Update();
 }
 

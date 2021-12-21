@@ -35,7 +35,7 @@ public:
     void Update();  // XVˆ—
     void Draw();    // •`‰æˆ—
 
-    inline SPHERE GetSphere()const { return{ GetInfo(), m_radius }; }  // ‹…‘Ìî•ñ‚Ìæ“¾
+    inline SPHERE GetSphere()const { return{ GetInfo(), m_radius }; }   // ‹…‘Ìî•ñ‚Ìæ“¾
 
 private:
     float m_radius;   // ”¼Œa

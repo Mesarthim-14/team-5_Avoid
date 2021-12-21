@@ -26,7 +26,7 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define COLLISION_SIZE (D3DXVECTOR3(8000.0f,11900.0f,8000.0f))
+#define COLLISION_SIZE (D3DXVECTOR3(8000.0f,11700.0f,8000.0f))
 
 //=============================================================================
 // コンストラクタ
@@ -48,7 +48,7 @@ CMapSquareFloor2::~CMapSquareFloor2()
 CMapSquareFloor2 * CMapSquareFloor2::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // メモリ確保
-    CMapSquareFloor2 *pModel = new CMapSquareFloor2(PRIORITY_TEST_MODEL);
+    CMapSquareFloor2 *pModel = new CMapSquareFloor2(PRIORITY_MAP);
 
     // !nullcheck
     if (pModel)
@@ -68,7 +68,7 @@ CMapSquareFloor2 * CMapSquareFloor2::Create(const D3DXVECTOR3& pos, const D3DXVE
 HRESULT CMapSquareFloor2::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // 初期化処理
-    CModel::Init();
+    CMap::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MAP_SQUARE_FLOOR2);
@@ -87,27 +87,19 @@ HRESULT CMapSquareFloor2::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 //=============================================================================
 void CMapSquareFloor2::Uninit()
 {
-    CModel::Uninit();
+    // 終了処理
+    CMap::Uninit();
 }
 
 //=============================================================================
-// 更新処理
+// 当たり判定
 //=============================================================================
-void CMapSquareFloor2::Update()
+void CMapSquareFloor2::Col()
 {
-    CModel::Update();
-
     // 当たり判定
     if (m_pColModelOBB)
     {
-        HitColOBBs(m_pColModelOBB);
+        HitColOBBsPlayer(m_pColModelOBB);
+        HitColOBBsBossBullet(m_pColModelOBB);
     }
-}
-
-//=============================================================================
-// 描画処理
-//=============================================================================
-void CMapSquareFloor2::Draw()
-{
-    CModel::Draw();
 }

@@ -48,7 +48,7 @@ CMapFirstFloor::~CMapFirstFloor()
 CMapFirstFloor * CMapFirstFloor::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // メモリ確保
-    CMapFirstFloor *pModel = new CMapFirstFloor(PRIORITY_TEST_MODEL);
+    CMapFirstFloor *pModel = new CMapFirstFloor(PRIORITY_MAP);
 
     // !nullcheck
     if (pModel)
@@ -68,7 +68,7 @@ CMapFirstFloor * CMapFirstFloor::Create(const D3DXVECTOR3& pos, const D3DXVECTOR
 HRESULT CMapFirstFloor::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // 初期化処理
-    CModel::Init();
+    CMap::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MAP_FIRST_FLOOR);
@@ -87,27 +87,19 @@ HRESULT CMapFirstFloor::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 //=============================================================================
 void CMapFirstFloor::Uninit()
 {
-    CModel::Uninit();
+    // 終了処理
+    CMap::Uninit();
 }
 
 //=============================================================================
-// 更新処理
+// 当たり判定
 //=============================================================================
-void CMapFirstFloor::Update()
+void CMapFirstFloor::Col()
 {
-    CModel::Update();
-
     // 当たり判定
     if (m_pColModelOBB)
     {
-        HitColOBBs(m_pColModelOBB);
+        HitColOBBsPlayer(m_pColModelOBB);
+        HitColOBBsBossBullet(m_pColModelOBB);
     }
-}
-
-//=============================================================================
-// 描画処理
-//=============================================================================
-void CMapFirstFloor::Draw()
-{
-    CModel::Draw();
 }

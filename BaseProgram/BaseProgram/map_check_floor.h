@@ -23,16 +23,16 @@ class CCollisionModelCylinder;
 class CMapCheckFloor : public CMap
 {
 public:
-    CMapCheckFloor(PRIORITY = PRIORITY_TEST_MODEL); // コンストラクタ
-    ~CMapCheckFloor();                              // デストラクタ
+    CMapCheckFloor(PRIORITY PriorityL); // コンストラクタ
+    ~CMapCheckFloor();                  // デストラクタ
 
     static CMapCheckFloor *Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot);  // インスタンス生成
     HRESULT Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot);                   // 初期化処理
     void Uninit()override;                                                          // 初期化処理
-    void Update()override;                                                          // 更新処理
-    void Draw()override;                                                            // 描画
 
 private:
+    void Col();
+
     CCollisionModelCylinder* m_pColModelCylinder;   // 当たり判定ポインタ
 };
 

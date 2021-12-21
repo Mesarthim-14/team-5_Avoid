@@ -18,19 +18,17 @@
 #include "model_info.h"
 #include "player.h"
 #include "library.h"
-#include "collision.h"
-#include "collisionModel_Sphere.h"
-#include "state_player_knockback.h"
 #include "caution_boss_bullet_ui.h"
-#include "gauge.h"
-#include "particlepop.h"
+#include "collisionModel_Sphere.h"
+#include "collisionModel_OBB.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
 #define TEST_POS            (ZeroVector3)
 #define TEST_ROT            (ZeroVector3)
-#define COLLISION_RADIUS    (1800.0f)
+#define COLLISION_RADIUS    (900.0f)
+#define COLLISION_SIZE_OBB  (D3DXVECTOR3(1800.0f, 1800.0f, 1800.0f))
 #define SPEED               (400.0f)
 #define LIFE                (300)
 
@@ -41,6 +39,7 @@ CBossBullet::CBossBullet(PRIORITY Priority) : CBullet(Priority)
 {
     m_pModel = nullptr;
     m_pCaution = nullptr;
+    m_bDeath = false;
 }
 
 //=============================================================================
@@ -56,13 +55,17 @@ CBossBullet::~CBossBullet()
 CBossBullet * CBossBullet::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
     // メモリ確保
-    CBossBullet *pBullet = new CBossBullet(PRIORITY_TEST_MODEL);
+    CBossBullet *pBullet = new CBossBullet(PRIORITY_BULLET);
 
     // !nullcheck
     if (pBullet)
     {
         // 初期化処理
-        pBullet->Init(pos, rot);
+        pBullet->SetPos(pos);
+        pBullet->SetRot(rot);
+        pBullet->SetColRadius(COLLISION_RADIUS);
+        pBullet->SetColSizeOBB(COLLISION_SIZE_OBB);
+        pBullet->Init();
         return pBullet;
     }
 
@@ -72,25 +75,21 @@ CBossBullet * CBossBullet::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CBossBullet::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
+HRESULT CBossBullet::Init()
 {
-    SetPos(pos);
-    SetRot(rot);
-    SetColRadius(COLLISION_RADIUS);
-
     // 初期化処理
     CBullet::Init();
 
-    m_pModel = CModel::Create(pos, rot);
+    m_pModel = CModel::Create(GetPos(), GetRot());
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_KRAKEN_BULLET);
-    m_pModel->GetModelInfo()->SetModelStatus(pos, rot, model);
+    m_pModel->GetModelInfo()->SetModelStatus(GetPos(), GetRot(), model);
     FollowPlayer();
     SetLife(LIFE);
     if (!m_pCaution)
     {
         m_pCaution = CCautionBossBulletUi::Create();
-        m_pCaution->SetBulletPos(pos);
+        m_pCaution->SetBulletPos(GetPos());
     }
 
     return S_OK;
@@ -120,10 +119,27 @@ void CBossBullet::Uninit()
 //=============================================================================
 void CBossBullet::Update()
 {
-    D3DXVECTOR3 pos = GetPos();
+    // 破棄判定がtrueのとき
+    if (m_bDeath)
+    {
+        // 終了処理
+        Uninit();
+        return;
+    }
+
     if (m_pModel)
     {
         m_pModel->GetModelInfo()->SetPos(GetPos());
+    }
+
+    // 当たり判定モデルの更新
+    if (GetColSpherePtr())
+    {
+        GetColSpherePtr()->SetInfo(GetPos(), D3DXVECTOR3(COLLISION_RADIUS * 2, COLLISION_RADIUS * 2, COLLISION_RADIUS * 2), GetRot());
+    }
+    if (GetColOBBPtr())
+    {
+        GetColOBBPtr()->SetInfo(GetPos(), GetColOBBPtr()->GetOBB().info.size, GetRot());
     }
 
     // 警告
@@ -145,46 +161,6 @@ void CBossBullet::Update()
 void CBossBullet::Draw()
 {
     CBullet::Draw();
-}
-
-//=============================================================================
-// 衝突判定
-//=============================================================================
-void CBossBullet::Hit()
-{
-    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
-    CGauge * pGauge = CManager::GetInstance()->GetGame()->GetGauge();
-    D3DXVECTOR3 pos = pPlayer->GetPos();
-    if (!pPlayer)
-    {
-        return;
-    }
-
-    if (pPlayer->GetCollision())
-    {
-        if (GetColSpherePtr() && pPlayer->GetColCapsulePtr())
-        {
-            if (CCollision::ColSphereAndCapsule(GetColSpherePtr()->GetSphere(), pPlayer->GetColCapsulePtr()->GetInfo()))
-            {
-                // 吹っ飛ぶ値
-                D3DXVECTOR3 move = GetMove();
-                move.x *= 0.5f;
-                move.z *= 0.5f;
-                move.y += 50.0f;
-                pPlayer->ChangeState(CPlayerStateKnockback::Create(move));  // プレイヤーをノックバック
-                pPlayer->SubLife(20);                                       // 体力を減らす
-                // 自身の終了処理
-                pGauge->SetHitDown(true);
-                pGauge->SetDown(20);
-                // パーティクルの生成
-                for (int nCntParticle = 0; nCntParticle <= 20; nCntParticle++)
-                {
-                    CParticlePop::Create(pos);
-                }
-                Uninit();
-            }
-        }
-    }
 }
 
 //=============================================================================

@@ -26,7 +26,7 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define COLLISION_SIZE (D3DXVECTOR3(9500.0f,2800.0f,10000.0f))
+#define COLLISION_SIZE (D3DXVECTOR3(9700.0f,2450.0f,9500.0f))
 
 //=============================================================================
 // コンストラクタ
@@ -48,7 +48,7 @@ CMapSquareFloor::~CMapSquareFloor()
 CMapSquareFloor * CMapSquareFloor::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // メモリ確保
-    CMapSquareFloor *pModel = new CMapSquareFloor(PRIORITY_TEST_MODEL);
+    CMapSquareFloor *pModel = new CMapSquareFloor(PRIORITY_MAP);
 
     // !nullcheck
     if (pModel)
@@ -68,7 +68,7 @@ CMapSquareFloor * CMapSquareFloor::Create(const D3DXVECTOR3& pos, const D3DXVECT
 HRESULT CMapSquareFloor::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // 初期化処理
-    CModel::Init();
+    CMap::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MAP_SQUARE_FLOOR);
@@ -87,27 +87,19 @@ HRESULT CMapSquareFloor::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 //=============================================================================
 void CMapSquareFloor::Uninit()
 {
-    CModel::Uninit();
+    // 終了処理
+    CMap::Uninit();
 }
 
 //=============================================================================
-// 更新処理
+// 当たり判定
 //=============================================================================
-void CMapSquareFloor::Update()
+void CMapSquareFloor::Col()
 {
-    CModel::Update();
-
     // 当たり判定
     if (m_pColModelOBB)
     {
-        HitColOBBs(m_pColModelOBB);
+        HitColOBBsPlayer(m_pColModelOBB);
+        HitColOBBsBossBullet(m_pColModelOBB);
     }
-}
-
-//=============================================================================
-// 描画処理
-//=============================================================================
-void CMapSquareFloor::Draw()
-{
-    CModel::Draw();
 }

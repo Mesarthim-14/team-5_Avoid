@@ -26,9 +26,11 @@ public:
         PRIORITY_0 = 0,
         PRIORITY_1,
         PRIORITY_TEST_MODEL,    // テストモデル
+        PRIORITY_MAP,           // マップ
+        PRIORITY_BULLET,        // 弾
         PRIORITY_MODEL,         // モデル
         PRIORITY_CHARACTER,     // キャラクター
-        PRIORITY_COLLISION,     //当たり判定
+        PRIORITY_COLLISION,     // 当たり判定
         PRIORITY_EFFECT,        // エフェクト
         PRIORITY_SHADOW,        // 影
         PRIORITY_UI,            // UI
