@@ -24,15 +24,18 @@ class CCautionBossBulletUi;
 class CBossBullet : public CBullet
 {
 public:
-	CBossBullet(PRIORITY = PRIORITY_TEST_MODEL);    // コンストラクタ
-	~CBossBullet();                                 // デストラクタ
+	CBossBullet(PRIORITY Priority);    // コンストラクタ
+	~CBossBullet();                    // デストラクタ
 
 	static CBossBullet *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);	// インスタンス生成
-	HRESULT Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);					// 初期化処理
+	HRESULT Init();					// 初期化処理
 	void Uninit();					// 初期化処理
 	void Update();					// 更新処理
 	void Draw();					// 描画
-	void Hit();						// 衝突判定
+
+    void SetDeath() { m_bDeath = true; }    // 次の更新で破棄するかの判定更新
+
+    bool GetDeath()const { return m_bDeath; }   // // 次の更新で破棄するかの判定取得
 
 private:
     void FollowPlayer();                    // 移動量の設定
@@ -41,6 +44,8 @@ private:
 	// メンバ変数
 	CModel * m_pModel;					// モデルポインタ
     CCautionBossBulletUi* m_pCaution;   // 警告
+
+    bool m_bDeath;  // 次の更新で破棄するかの判定
 };
 
 #endif

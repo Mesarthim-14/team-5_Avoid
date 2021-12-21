@@ -272,10 +272,10 @@
       <Filter>08_Object\Gimmick</Filter>
     </ClCompile>
     <ClCompile Include="heel_point.cpp">
-      <Filter>08_Object\HeelPoint</Filter>
+      <Filter>08_Object\Map\HeelPoint</Filter>
     </ClCompile>
     <ClCompile Include="heel.cpp">
-      <Filter>08_Object\HeelPoint</Filter>
+      <Filter>08_Object\Map\HeelPoint</Filter>
     </ClCompile>
     <ClCompile Include="ground.cpp">
       <Filter>08_Object</Filter>
@@ -796,10 +796,10 @@
       <Filter>08_Object\Gimmick</Filter>
     </ClInclude>
     <ClInclude Include="heel_point.h">
-      <Filter>08_Object\HeelPoint</Filter>
+      <Filter>08_Object\Map\HeelPoint</Filter>
     </ClInclude>
     <ClInclude Include="heel.h">
-      <Filter>08_Object\HeelPoint</Filter>
+      <Filter>08_Object\Map\HeelPoint</Filter>
     </ClInclude>
     <ClInclude Include="ground.h">
       <Filter>08_Object</Filter>
@@ -1195,9 +1195,6 @@
     <Filter Include="08_Object\Gimmick\Swirl">
       <UniqueIdentifier>{0ad228df-3856-4e3c-8a51-203ee21b88e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="08_Object\HeelPoint">
-      <UniqueIdentifier>{3838d515-f418-46d0-876b-42693665a1fa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="09_Ui">
       <UniqueIdentifier>{f2196bd6-c9ec-45fc-ac85-049ee13e37a6}</UniqueIdentifier>
     </Filter>
@@ -1263,6 +1260,9 @@
     </Filter>
     <Filter Include="06_Effect\Shader\Canvas\Fx">
       <UniqueIdentifier>{6b93a0d9-19c0-41e1-bb54-16f9686c91cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08_Object\Map\HeelPoint">
+      <UniqueIdentifier>{3838d515-f418-46d0-876b-42693665a1fa}</UniqueIdentifier>
     </Filter>
     <Filter Include="06_Effect\Plane">
       <UniqueIdentifier>{17b2aaa3-b2f2-413f-ac1e-3d48e7ef6b2e}</UniqueIdentifier>

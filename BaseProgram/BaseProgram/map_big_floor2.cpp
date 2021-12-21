@@ -24,6 +24,11 @@
 #include "library.h"
 
 //=============================================================================
+// マクロ定義
+//=============================================================================
+#define COLLISION_SIZE (D3DXVECTOR3(8800.0f, 12200.0f, 31500.0f))
+
+//=============================================================================
 // コンストラクタ
 //=============================================================================
 CMapBigFloor2::CMapBigFloor2(PRIORITY Priority) : CMap(Priority)
@@ -45,7 +50,7 @@ CMapBigFloor2::~CMapBigFloor2()
 CMapBigFloor2 * CMapBigFloor2::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // メモリ確保
-    CMapBigFloor2 *pModel = new CMapBigFloor2(PRIORITY_TEST_MODEL);
+    CMapBigFloor2 *pModel = new CMapBigFloor2(PRIORITY_MAP);
 
     // !nullcheck
     if (pModel)
@@ -64,7 +69,7 @@ CMapBigFloor2 * CMapBigFloor2::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3&
 HRESULT CMapBigFloor2::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // 初期化処理
-    CModel::Init();
+    CMap::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MAP_FIRST_FLOOR2);
@@ -72,8 +77,8 @@ HRESULT CMapBigFloor2::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
     LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
     //当たり判定モデル(OBB)の生成
-    m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE] = CCollisionModelOBB::Create(pos, D3DXVECTOR3(8800.0f, 11900.0f, 31500.0f), rot);
-    m_pColModelOBB[CCollisionModelOBB::SURFACE_UP] = CCollisionModelOBB::Create(D3DXVECTOR3(pos.x, pos.y + 6000.0f, pos.z), D3DXVECTOR3(8500.0f, 100.0f, 31400.0f), rot);
+    m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE] = CCollisionModelOBB::Create(pos, COLLISION_SIZE, rot);
+    m_pColModelOBB[CCollisionModelOBB::SURFACE_UP] = CCollisionModelOBB::Create(D3DXVECTOR3(pos.x, pos.y + (COLLISION_SIZE.y / 2) + 100.0f, pos.z), D3DXVECTOR3(8500.0f, 100.0f, 31400.0f), rot);
 
     return S_OK;
 }
@@ -83,27 +88,19 @@ HRESULT CMapBigFloor2::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 //=============================================================================
 void CMapBigFloor2::Uninit()
 {
-    CModel::Uninit();
+    // 終了処理
+    CMap::Uninit();
 }
 
 //=============================================================================
-// 更新処理
+// 当たり判定
 //=============================================================================
-void CMapBigFloor2::Update()
+void CMapBigFloor2::Col()
 {
-    CModel::Update();
-
     // 当たり判定
     if (m_pColModelOBB)
     {
-        HitColOBBs(m_pColModelOBB);
+        HitColOBBsPlayer(m_pColModelOBB);
+        HitColOBBsBossBullet(m_pColModelOBB);
     }
-}
-
-//=============================================================================
-// 描画処理
-//=============================================================================
-void CMapBigFloor2::Draw()
-{
-    CModel::Draw();
 }

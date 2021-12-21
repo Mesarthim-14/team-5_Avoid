@@ -27,7 +27,7 @@
 // マクロ定義
 //=============================================================================
 #define COLLISION_RADIUS (5000.0f)
-#define COLLISION_LENGTH (5000.0f)
+#define COLLISION_LENGTH (5300.0f)
 
 //=============================================================================
 // コンストラクタ
@@ -50,7 +50,7 @@ CMapCheckFloor::~CMapCheckFloor()
 CMapCheckFloor * CMapCheckFloor::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // メモリ確保
-    CMapCheckFloor *pModel = new CMapCheckFloor(PRIORITY_TEST_MODEL);
+    CMapCheckFloor *pModel = new CMapCheckFloor(PRIORITY_MAP);
 
     // !nullcheck
     if (pModel)
@@ -69,7 +69,7 @@ CMapCheckFloor * CMapCheckFloor::Create(const D3DXVECTOR3& pos, const D3DXVECTOR
 HRESULT CMapCheckFloor::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // 初期化処理
-    CModel::Init();
+    CMap::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MAP_CHECK_FLOOR);
@@ -87,24 +87,19 @@ HRESULT CMapCheckFloor::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 //=============================================================================
 void CMapCheckFloor::Uninit()
 {
-    CModel::Uninit();
+    // 終了処理
+    CMap::Uninit();
 }
 
 //=============================================================================
-// 更新処理
+// 当たり判定
 //=============================================================================
-void CMapCheckFloor::Update()
+void CMapCheckFloor::Col()
 {
-    CModel::Update();
-
     // 当たり判定
-    HitColSphereAndCylinder(m_pColModelCylinder);
-}
-
-//=============================================================================
-// 描画処理
-//=============================================================================
-void CMapCheckFloor::Draw()
-{
-    CModel::Draw();
+    if (m_pColModelCylinder)
+    {
+        HitColPlayer(m_pColModelCylinder);
+        HitColBossBullet(m_pColModelCylinder);
+    }
 }

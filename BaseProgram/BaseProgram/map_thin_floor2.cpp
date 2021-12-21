@@ -26,7 +26,7 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define COLLISION_SIZE (D3DXVECTOR3(12500.0f,11900.0f,6000.0f))
+#define COLLISION_SIZE (D3DXVECTOR3(12500.0f,11700.0f,6000.0f))
 
 //=============================================================================
 // コンストラクタ
@@ -48,7 +48,7 @@ CMapThinFloor2::~CMapThinFloor2()
 CMapThinFloor2 * CMapThinFloor2::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // メモリ確保
-    CMapThinFloor2 *pModel = new CMapThinFloor2(PRIORITY_TEST_MODEL);
+    CMapThinFloor2 *pModel = new CMapThinFloor2(PRIORITY_MAP);
 
     // !nullcheck
     if (pModel)
@@ -68,7 +68,7 @@ CMapThinFloor2 * CMapThinFloor2::Create(const D3DXVECTOR3& pos, const D3DXVECTOR
 HRESULT CMapThinFloor2::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // 初期化処理
-    CModel::Init();
+    CMap::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_MAP_THIN_FLOOR2);
@@ -87,27 +87,19 @@ HRESULT CMapThinFloor2::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 //=============================================================================
 void CMapThinFloor2::Uninit()
 {
-    CModel::Uninit();
+    // 終了処理
+    CMap::Uninit();
 }
 
 //=============================================================================
-// 更新処理
+// 当たり判定
 //=============================================================================
-void CMapThinFloor2::Update()
+void CMapThinFloor2::Col()
 {
-    CModel::Update();
-
     // 当たり判定
     if (m_pColModelOBB)
     {
-        HitColOBBs(m_pColModelOBB);
+        HitColOBBsPlayer(m_pColModelOBB);
+        HitColOBBsBossBullet(m_pColModelOBB);
     }
-}
-
-//=============================================================================
-// 描画処理
-//=============================================================================
-void CMapThinFloor2::Draw()
-{
-    CModel::Draw();
 }

@@ -21,20 +21,24 @@
 class CMap : public CModel
 {
 public:
-    CMap(PRIORITY = PRIORITY_TEST_MODEL); // コンストラクタ
-    ~CMap();                              // デストラクタ
+    CMap(PRIORITY Priority); // コンストラクタ
+    ~CMap();                 // デストラクタ
 
-    HRESULT Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot);   // 初期化処理
-    void Uninit()override;                                          // 初期化処理
-    void Update()override;                                          // 更新処理
-    void Draw()override;                                            // 描画
+    HRESULT Init();         // 初期化処理
+    void Uninit()override;  // 初期化処理
+    void Update()override;  // 更新処理
+    void Draw()override;    // 描画
 
     // 当たり判定
-    void HitColOBBs(CCollisionModelOBB** pMapColOBB);                         // マップの当たり判定関数(直方体同士)
-    void HitColSphereAndCylinder(CCollisionModelCylinder* pMapColCylinder);   // マップの当たり判定関数(球体と円柱)
+    void HitColOBBsPlayer(const CCollisionModelOBB* const* pMapColOBB);             // プレイヤーとの当たり判定関数(直方体同士)
+    void HitColOBBsBossBullet(const CCollisionModelOBB* const* pMapColOBB);         // ボスバレットとの当たり判定関数(直方体同士)
+    void HitColPlayer(const CCollisionModelCylinder* const pMapColCylinder);        // プレイヤーとの当たり判定関数(球体と円柱)
+    void HitColBossBullet(const CCollisionModelCylinder* const pMapColCylinder);    // ボスバレットとの当たり判定関数(球体と円柱)
 
 private:
-    bool m_bHitOld; // １つ以上マップに当たっているかの判定
+    virtual void Col() = 0;
+
+    static bool m_bHitMap; // １つ以上マップに当たっているかの判定
 };
 
 #endif

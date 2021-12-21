@@ -34,6 +34,8 @@ public:
 
     // “–‚½‚è”»’è(OBB‚ÆOBB)
     static bool ColOBBs(const CCollisionModelOBB::OBB &obb1, const CCollisionModelOBB::OBB &obb2);
+    // “–‚½‚è”»’è(‹…‘Ì‚ÆOBB)
+    static bool ColSphereAndOBB(const CCollisionModelSphere::SPHERE &SphereInfo, const CCollisionModelOBB::OBB &ObbInfo);
     // “–‚½‚è”»’è(‹…‘Ì‚ÆƒJƒvƒZƒ‹)
     static bool ColSphereAndCapsule(const CCollisionModelSphere::SPHERE &SphereInfo, const CCollisionModelCapsule::INFO &CapsuleInfo);
     // “–‚½‚è”»’è(‹…‘Ì‚Æ‰~’Œ)

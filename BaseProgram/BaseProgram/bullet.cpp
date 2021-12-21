@@ -18,6 +18,11 @@
 #include "model_info.h"
 #include "player.h"
 #include "collisionModel_Sphere.h"
+#include "collisionModel_OBB.h"
+#include "collision.h"
+#include "state_player_knockback.h"
+#include "gauge.h"
+#include "particlepop.h"
 
 //=============================================================================
 // マクロ定義
@@ -34,12 +39,14 @@ CBullet::CBullet(PRIORITY Priority) : CScene(Priority)
 	m_move = ZeroVector3;						// 移動量
 	m_rot = ZeroVector3;						// 現在の回転
     m_ColRadius = 0.0f;					        // 当たり判定サイズ
+    m_colSizeOBB = ZeroVector3;
 	m_nLife = 0;							    // 生存時間
 	m_fSpeed = 0.0f;							// スピード
-	m_nDamage = 0;							        // ダメージ量
+	m_nDamage = 0;							    // ダメージ量
 	m_pos = ZeroVector3;
 	m_rot = ZeroVector3;
     m_pCollisionModelSphere = nullptr;
+    m_pColModelOBB = nullptr;
 }
 
 //=============================================================================
@@ -50,26 +57,6 @@ CBullet::~CBullet()
 }
 
 //=============================================================================
-// インスタンス生成
-//=============================================================================
-CBullet * CBullet::Create()
-{
-	// メモリ確保
-	CBullet *pBullet = new CBullet(PRIORITY_TEST_MODEL);
-
-	// !nullcheck
-	if (pBullet)
-	{
-		// 初期化処理
-		pBullet->Init();
-
-		return pBullet;
-	}
-
-	return nullptr;
-}
-
-//=============================================================================
 // 初期化処理
 //=============================================================================
 HRESULT CBullet::Init()
@@ -77,7 +64,13 @@ HRESULT CBullet::Init()
     // 当たり判定モデル(球体)の生成
     if (!m_pCollisionModelSphere)
     {
-        m_pCollisionModelSphere = CCollisionModelSphere::Create(m_pos, m_ColRadius, m_rot);
+         m_pCollisionModelSphere = CCollisionModelSphere::Create(m_pos, m_ColRadius, m_rot);
+    }
+
+    // 当たり判定モデル(OBB)の生成
+    if (!m_pColModelOBB)
+    {
+        m_pColModelOBB = CCollisionModelOBB::Create(m_pos, m_colSizeOBB, m_rot);
     }
 
 	return S_OK;
@@ -95,6 +88,13 @@ void CBullet::Uninit()
         m_pCollisionModelSphere = nullptr;
     }
 
+    // 当たり判定モデル(OBB)の終了処理
+    if (m_pColModelOBB)
+    {
+        m_pColModelOBB->Uninit();
+        m_pColModelOBB = nullptr;
+    }
+
     Release();
 }
 
@@ -103,12 +103,6 @@ void CBullet::Uninit()
 //=============================================================================
 void CBullet::Update()
 {
-    // 当たり判定モデルの更新
-    if (m_pCollisionModelSphere)
-    {
-        m_pCollisionModelSphere->SetInfo(m_pos, D3DXVECTOR3(m_ColRadius, m_ColRadius, m_ColRadius), m_rot);
-    }
-
 	// 位置更新
 	m_pos += m_move;
 
@@ -116,12 +110,6 @@ void CBullet::Update()
 
 	if (m_nLife < 0)
 	{
-        // 当たり判定モデルの終了処理
-        if (m_pCollisionModelSphere)
-        {
-            m_pCollisionModelSphere->Uninit();
-        }
-
 		Uninit();
 	}
 }
@@ -131,5 +119,45 @@ void CBullet::Update()
 //=============================================================================
 void CBullet::Draw()
 {
+}
 
+//=============================================================================
+// 衝突判定
+//=============================================================================
+void CBullet::Hit()
+{
+    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    CGauge * pGauge = CManager::GetInstance()->GetGame()->GetGauge();
+    D3DXVECTOR3 pos = pPlayer->GetPos();
+    if (!pPlayer)
+    {
+        return;
+    }
+
+    if (m_pCollisionModelSphere)
+    {
+        if (pPlayer->GetCollision())
+        {
+            if (CCollision::ColSphereAndCapsule(m_pCollisionModelSphere->GetSphere(), pPlayer->GetColCapsulePtr()->GetInfo()))
+            {
+                // 吹っ飛ぶ値
+                D3DXVECTOR3 move = GetMove();
+                move.x *= 0.5f;
+                move.z *= 0.5f;
+                move.y += 50.0f;
+                pPlayer->ChangeState(CPlayerStateKnockback::Create(move));  // プレイヤーをノックバック
+                pPlayer->SubLife(20);                                       // 体力を減らす
+                // 自身の終了処理
+                pGauge->SetHitDown(true);
+                pGauge->SetDown(20);
+                // パーティクルの生成
+                for (int nCntParticle = 0; nCntParticle <= 20; nCntParticle++)
+                {
+                    CParticlePop::Create(pos);
+                }
+                Uninit();
+                return;
+            }
+        }
+    }
 }
