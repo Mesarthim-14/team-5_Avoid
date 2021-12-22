@@ -23,7 +23,7 @@ class CCollisionModelOBB;
 class CTestModel : public CModel
 {
 public:
-    CTestModel(PRIORITY = PRIORITY_TEST_MODEL); // コンストラクタ
+    CTestModel(PRIORITY = PRIORITY_MAP); // コンストラクタ
     ~CTestModel();                              // デストラクタ
 
     static CTestModel *Create();    // インスタンス生成

@@ -42,7 +42,7 @@
 #define Z_DISTANCE              (2286.0f)       // 最遠近距離
 
 // Reflect
-#define REFLECT_HEIGHT          (30.0f)                                 // 反射の高さ
+#define REFLECT_HEIGHT          (300.0f)                                 // 反射の高さ
 #define REFLECT_PLAYER_AMBIENT  (0.1f)                                  // 反射の色
 #define REFLECT_SKY_AMBIENT     (D3DXVECTOR4(0.3f, 0.0f, 1.0f, 1.0f))   // 反射の色
 
@@ -367,6 +367,7 @@ void CWaterFresnel::Draw()
         D3DXVECTOR3 PlayerPos = { 0.0f, -150.0f, 0.0f };
         D3DXVECTOR3 ObjSize = { 1.0f, 1.0f, 1.0f };
         CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+        list<CModelInfo*> pModelList = CModelInfo::GetInfoList();
 
         //太陽の位置ベクトル
         D3DXVECTOR4 LightPos = D3DXVECTOR4(-72.0f, -100.0f, -620.0f, 0.0f);
@@ -503,7 +504,17 @@ void CWaterFresnel::Draw()
         pDevice->SetTexture(0, pTexture->GetTexture(CTexture::TEXTURE_NUM_TEST));
         m_pReflect->SetAmbient(&m_ReflectPlayerAmbiend);
         m_pReflect->BeginPass();
-//        map.pMesh->DrawSubset(0);
+
+//        for (auto& pPtr : pModelList)
+//        {
+//            LPD3DXMESH mesh = pPtr->GetMesh();
+//            DWORD numMat = pPtr->GetNumMat();
+//            for (int nCount = 0; nCount < numMat; nCount++)
+//            {
+//                mesh->DrawSubset(0);
+//            }
+//        }
+        //        map.pMesh->DrawSubset(0);
         m_pReflect->EndPass();
 //        D3DXVECTOR3 playerPos = pPlayer->GetPos();
 //        D3DXVECTOR3 playerRot = pPlayer->GetRot();
@@ -564,6 +575,23 @@ void CWaterFresnel::Draw()
     //            m_pReflect->EndPass();
     //        }
     //    }
+
+        for (auto& pPtr : pModelList)
+        {
+            LPD3DXMESH mesh = pPtr->GetMesh();
+            DWORD numMat = pPtr->GetNumMat();
+            D3DXMATRIX mtxWorld = pPtr->GetMtxWorld();
+            matWorld = mtxWorld * matReflect;
+            m_pReflect->SetMatrix(&matWorld, &LightDir);
+
+            for (DWORD nCount = 0; nCount < numMat; nCount++)
+            {
+                pDevice->SetTexture(0, pPtr->GetTexture(nCount));
+                m_pReflect->BeginPass();
+                mesh->DrawSubset(nCount);
+                m_pReflect->EndPass();
+            }
+        }
 
         //Zバッファ書込み禁止
         pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);

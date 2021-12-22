@@ -50,7 +50,7 @@ CTestModel::~CTestModel()
 CTestModel * CTestModel::Create()
 {
     // ÉÅÉÇÉäämï€
-    CTestModel *pTestModel = new CTestModel(PRIORITY_TEST_MODEL);
+    CTestModel *pTestModel = new CTestModel(PRIORITY_MAP);
 
     // !nullcheck
     if (pTestModel)

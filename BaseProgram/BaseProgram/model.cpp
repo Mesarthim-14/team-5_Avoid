@@ -12,7 +12,6 @@
 #include "manager.h"
 #include "renderer.h"
 #include "shadow.h"
-#include "model_info.h"
 #include "player.h"
 #include "library.h"
 #include "toon_shader.h"
@@ -92,7 +91,18 @@ bool CModel::PlayerDisCollision(const float &fDistanse)
 HRESULT CModel::Init()
 {
     // 情報の生成
-    CreateInfoPtr();
+    CreateInfoPtr(CModelInfo::MODEL_TYPE_NONE);
+
+    return S_OK;
+}
+
+//=============================================================================
+// モデルクラスの初期化処理
+//=============================================================================
+HRESULT CModel::Init(CModelInfo::MODEL_TYPE type)
+{
+    // 情報の生成
+    CreateInfoPtr(type);
 
     return S_OK;
 }
@@ -154,7 +164,6 @@ void CModel::Draw()
 
         // トゥーンシェーダ
         pToonShader->Begin(CToonShader::TOON_PASS_MODEL, mtxWorld, m_pModelInfo->GetModel());
-
     }
     else
     {
@@ -210,11 +219,11 @@ void CModel::HasPtrDelete()
 //=============================================================================
 // 情報のポインタ生成
 //=============================================================================
-void CModel::CreateInfoPtr()
+void CModel::CreateInfoPtr(CModelInfo::MODEL_TYPE type)
 {
     if (!m_pModelInfo)
     {
-        m_pModelInfo = CModelInfo::Create(CModelInfo::MODEL_TYPE_NONE);
+        m_pModelInfo = CModelInfo::Create(type);
     }
 }
 

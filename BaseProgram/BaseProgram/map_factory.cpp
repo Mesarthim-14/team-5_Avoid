@@ -67,7 +67,7 @@ HRESULT CMapFactory::Init()
     CMapThinFloor::Create(D3DXVECTOR3(50158.7f, HEIGHT, 13185.8f), D3DXVECTOR3(0.0f, D3DXToRadian(90.0f), 0.0f));
     CMapSquareFloor::Create(D3DXVECTOR3(54771.6f, HEIGHT, 1259.0f), D3DXVECTOR3(0.0f, D3DXToRadian(100.0f), 0.0f));
     CMapSquareFloor::Create(D3DXVECTOR3(52679.7f, HEIGHT, -8746.0f), D3DXVECTOR3(0.0f, D3DXToRadian(105.0f), 0.0f));
-    CMapThinFloor2::Create(D3DXVECTOR3(40043.3f, HEIGHT2, -42639.8f), D3DXVECTOR3(0.0f, D3DXToRadian(-25.0f), 0.0f));
+    CMapThinFloor2::Create(D3DXVECTOR3(40043.3f, HEIGHT2, -42639.8f), D3DXVECTOR3(0.0f, D3DXToRadian(155.0f), 0.0f));
     CMapSquareFloor2::Create(D3DXVECTOR3(30960.8f, HEIGHT2, -47462.7f), D3DXVECTOR3(0.0f, D3DXToRadian(66.0f), 0.0f));
     CMapSquareFloor2::Create(D3DXVECTOR3(23527.2f, HEIGHT2, -51002.5f), D3DXVECTOR3(0.0f, D3DXToRadian(65.0f), 0.0f));
     CMapCheckFloor2::Create(D3DXVECTOR3(5185.7f, HEIGHT2, -48747.7f), D3DXVECTOR3(0.0f, D3DXToRadian(65.0f), 0.0f));
@@ -78,8 +78,8 @@ HRESULT CMapFactory::Init()
     CMapThinFloor2::Create(D3DXVECTOR3(-58031.0f, HEIGHT2, -53933.0f), D3DXVECTOR3(0.0f, D3DXToRadian(49.0f), 0.0f));
     CMapSquareFloor2::Create(D3DXVECTOR3(-65041.0f, HEIGHT2, -45465.4f), D3DXVECTOR3(0.0f, D3DXToRadian(154.0f), 0.0f));
     CMapSquareFloor2::Create(D3DXVECTOR3(-67832.1f, HEIGHT2, -36745.1f), D3DXVECTOR3(0.0f, D3DXToRadian(168.0f), 0.0f));
-    CMapSquareFloor2::Create(D3DXVECTOR3(-68313.5f, HEIGHT2, -27618.3f), D3DXVECTOR3(0.0f, D3DXToRadian(-178.0f), 0.0f));
-    CMapThinFloor2::Create(D3DXVECTOR3(-58829.5f, HEIGHT2, -19673.2f), D3DXVECTOR3(0.0f, D3DXToRadian(-53.0f), 0.0f));
+    CMapSquareFloor2::Create(D3DXVECTOR3(-68313.5f, HEIGHT2, -27618.3f), D3DXVECTOR3(0.0f, D3DXToRadian(2.0f), 0.0f));
+    CMapThinFloor2::Create(D3DXVECTOR3(-58829.5f, HEIGHT2, -19673.2f), D3DXVECTOR3(0.0f, D3DXToRadian(127.0f), 0.0f));
     CMapSquareFloor2::Create(D3DXVECTOR3(-32034.4f, HEIGHT2, -39649.5f), D3DXVECTOR3(0.0f, D3DXToRadian(128.0f), 0.0f));
     CMapThinFloor2::Create(D3DXVECTOR3(-40395.8f, HEIGHT2, -31879.8f), D3DXVECTOR3(0.0f, D3DXToRadian(39.0f), 0.0f));
     CMapThinFloor2::Create(D3DXVECTOR3(-49920.0f, HEIGHT2, -23829.7f), D3DXVECTOR3(0.0f, D3DXToRadian(39.0f), 0.0f));

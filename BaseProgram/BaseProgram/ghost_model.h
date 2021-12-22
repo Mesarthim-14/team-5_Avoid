@@ -18,7 +18,7 @@
 class CGhostModel : public CModel
 {
 public:
-    CGhostModel(PRIORITY = PRIORITY_TEST_MODEL);    // コンストラクタ
+    CGhostModel(PRIORITY = PRIORITY_MAP);    // コンストラクタ
     ~CGhostModel();                                 // デストラクタ
 
     static CGhostModel *Create(const D3DXVECTOR3 pos);  // インスタンス生成

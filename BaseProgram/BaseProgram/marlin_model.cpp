@@ -46,7 +46,7 @@ CMarlinModel::~CMarlinModel()
 CMarlinModel * CMarlinModel::Create(const D3DXVECTOR3 pos)
 {
     // ƒƒ‚ƒŠŠm•Û
-    CMarlinModel *pMarlinModel = new CMarlinModel(PRIORITY_TEST_MODEL);
+    CMarlinModel *pMarlinModel = new CMarlinModel(PRIORITY_MAP);
 
     // !nullcheck
     if (pMarlinModel)
@@ -65,7 +65,7 @@ CMarlinModel * CMarlinModel::Create(const D3DXVECTOR3 pos)
 HRESULT CMarlinModel::Init(const D3DXVECTOR3 &pos)
 {
     // ‰Šú‰»ˆ—
-    CModel::Init();
+    CModel::Init(CModelInfo::MODEL_TYPE_CHARACTER);
 
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ENEMY_MARLIN);

@@ -52,7 +52,7 @@ CSwirlScaffold::~CSwirlScaffold()
 CSwirlScaffold * CSwirlScaffold::Create(const D3DXVECTOR3 &pos)
 {
     // ÉÅÉÇÉäämï€
-    CSwirlScaffold *pRotatebody = new CSwirlScaffold(PRIORITY_TEST_MODEL);
+    CSwirlScaffold *pRotatebody = new CSwirlScaffold(PRIORITY_MAP);
 
     // !nullcheck
     if (pRotatebody)

@@ -25,7 +25,6 @@ public:
     {
         PRIORITY_0 = 0,
         PRIORITY_1,
-        PRIORITY_TEST_MODEL,    // テストモデル
         PRIORITY_MAP,           // マップ
         PRIORITY_BULLET,        // 弾
         PRIORITY_MODEL,         // モデル

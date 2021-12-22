@@ -18,7 +18,7 @@
 class CSwirlScaffoldObject : public CModel
 {
 public:
-    CSwirlScaffoldObject(PRIORITY = PRIORITY_TEST_MODEL); // コンストラクタ
+    CSwirlScaffoldObject(PRIORITY = PRIORITY_MAP); // コンストラクタ
     ~CSwirlScaffoldObject();                              // デストラクタ
 
     static CSwirlScaffoldObject *Create(const D3DXVECTOR3 &pos);    // インスタンス生成

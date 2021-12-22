@@ -56,7 +56,7 @@ CMoveScaffold::~CMoveScaffold()
 CMoveScaffold * CMoveScaffold::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // ÉÅÉÇÉäämï€
-    CMoveScaffold *pTestModel = new CMoveScaffold(PRIORITY_TEST_MODEL);
+    CMoveScaffold *pTestModel = new CMoveScaffold(PRIORITY_MAP);
 
     // !nullcheck
     if (pTestModel)
