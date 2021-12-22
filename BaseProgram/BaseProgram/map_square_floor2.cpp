@@ -87,6 +87,18 @@ HRESULT CMapSquareFloor2::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 //=============================================================================
 void CMapSquareFloor2::Uninit()
 {
+    // ìñÇΩÇËîªíËÉÇÉfÉãÇÃèIóπèàóù
+    if (m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE])
+    {
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE]->Uninit();
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE] = nullptr;
+    }
+    if (m_pColModelOBB[CCollisionModelOBB::SURFACE_UP])
+    {
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_UP]->Uninit();
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_UP] = nullptr;
+    }
+
     // èIóπèàóù
     CMap::Uninit();
 }
@@ -100,6 +112,6 @@ void CMapSquareFloor2::Col()
     if (m_pColModelOBB)
     {
         HitColOBBsPlayer(m_pColModelOBB);
-        HitColOBBsBossBullet(m_pColModelOBB);
+        HitColOBBsBossBullet(m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE]);
     }
 }

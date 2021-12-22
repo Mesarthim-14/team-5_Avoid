@@ -12,9 +12,10 @@
 #include "manager.h"
 #include "player.h"
 #include "collision.h"
-#include "game.h"
-#include "kraken.h"
-#include "state_kraken_normal.h"
+#include "collisionModel_OBB.h"
+#include "collisionModel_Sphere.h"
+#include "collisionModel_Cylinder.h"
+#include "collisionModel_Polygon.h"
 #include "boss_bullet.h"
 
 //=============================================================================
@@ -144,19 +145,117 @@ void CMap::HitColOBBsPlayer(const CCollisionModelOBB* const* pMapColOBB)
 }
 
 //=============================================================================
+// プレイヤーとの当たり判定(直方体同士)
+//=============================================================================
+void CMap::HitColOBBsPlayer(const CCollisionModelOBB* const &pMapColOBB)
+{
+    // プレイヤーポインタの取得
+    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    if (!pPlayer)
+        return;
+
+    // プレイヤーの当たり判定モデルポインタの取得
+    CCollisionModelOBB* pPlayerColModelOBB = pPlayer->GetColOBBPtr();
+
+    // プレイヤーの当たり判定ポインタの取得
+    CCollisionModelOBB::OBB playerObb;
+    if (pPlayerColModelOBB)
+    {
+        playerObb = pPlayerColModelOBB->GetOBB();
+    }
+    else
+        return;
+
+    if (pMapColOBB)
+    {
+        // 側面の当たり判定ポインタの取得
+        CCollisionModelOBB::OBB surfaceSideObb = pMapColOBB->GetOBB();
+
+        if (CCollision::ColOBBs(surfaceSideObb, playerObb))
+        {
+            // 落下の処理
+            pPlayer->Fall();
+            return;
+        }
+    }
+}
+
+//=============================================================================
+// プレイヤーとの当たり判定(直方体とポリゴン(直方体同士))
+//=============================================================================
+void CMap::HitColOBBsPlayer(const CCollisionModelPolygon* const &pMapColPolygon)
+{
+    // プレイヤーポインタの取得
+    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    if (!pPlayer)
+        return;
+
+    // プレイヤーの当たり判定モデルポインタの取得
+    CCollisionModelOBB* pPlayerColModelOBB = pPlayer->GetColOBBPtr();
+
+    // プレイヤーの当たり判定ポインタの取得
+    CCollisionModelOBB::OBB playerObb;
+    if (pPlayerColModelOBB)
+    {
+        playerObb = pPlayerColModelOBB->GetOBB();
+    }
+    else
+        return;
+
+    if (pMapColPolygon)
+    {
+        // ポリゴン情報の取得
+        CCollisionModelPolygon::POLYGON polygon = pMapColPolygon->GetPolygon();
+
+        // ポリゴン情報をOBB構造体用に設定
+        CCollisionModelOBB::OBB polygonInfo = { polygon.info, { polygon.DirVect[0], polygon.DirVect[1], polygon.DirVect[2] } };
+
+        if (CCollision::ColOBBs(polygonInfo, playerObb))
+        {
+            m_bHitMap = true;
+            pPlayer->SetLanding(true);
+
+            // プレイヤーの移動量の取得
+            D3DXVECTOR3 playerMove = pPlayer->GetMove();
+
+            /*// プレイヤーの移動量とポリゴンの法線のなす角を求める
+            float fCosTheta = D3DXVec3Dot(&playerMove, &polygon.norVec) / (D3DXVec3Length(&playerMove) * D3DXVec3Length(&polygon.norVec));
+            float fThera = acos(fCosTheta);*/
+
+            if (/*fThera > D3DXToRadian(90) &&*/ playerMove != ZeroVector3)
+            {
+                    // 壁ずりベクトルを取得してプレイヤーの移動量に設定
+                    D3DXVECTOR3 slideVec = CCollision::SlideVect(playerMove, polygon.norVec);
+                    pPlayer->SetMove(slideVec);
+            }
+
+            return;
+        }
+        else
+        {
+            if (!m_bHitMap)
+            {
+                // 着地判定の設定
+                pPlayer->SetLanding(false);
+            }
+        }
+    }
+}
+
+//=============================================================================
 // ボスバレットとの当たり判定(直方体同士)
 //=============================================================================
-void CMap::HitColOBBsBossBullet(const CCollisionModelOBB* const* pMapColOBB)
+void CMap::HitColOBBsBossBullet(const CCollisionModelOBB* const pMapColOBB)
 {
     // 弾のポインタの取得
     CBossBullet* pBossBullet = (CBossBullet*)GetTop(PRIORITY_BULLET);
     if (!pBossBullet)
         return;
 
-    if (pMapColOBB[CCollisionModelOBB::SURFACE_SIDE])
+    if (pMapColOBB)
     {
         // 側面の当たり判定ポインタの取得
-        CCollisionModelOBB::OBB surfaceSideObb = pMapColOBB[CCollisionModelOBB::SURFACE_SIDE]->GetOBB();
+        CCollisionModelOBB::OBB surfaceSideObb = pMapColOBB->GetOBB();
 
         while (pBossBullet)
         {

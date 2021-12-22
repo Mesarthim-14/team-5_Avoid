@@ -13,11 +13,6 @@
 #include "collisionModel.h"
 
 //*****************************************************************************
-// マクロ定義
-//*****************************************************************************
-#define AXIS_NUM_OBB (3) //OBBの軸数
-
-//*****************************************************************************
 // クラス定義
 //*****************************************************************************
 class CCollisionModelOBB :public CCollisionModel
@@ -39,8 +34,8 @@ public:
         SURFACE_MAX
     };
 
-    CCollisionModelOBB(PRIORITY = PRIORITY_COLLISION); // コンストラクタ
-    ~CCollisionModelOBB();                             // デストラクタ
+    CCollisionModelOBB(PRIORITY Priority); // コンストラクタ
+    ~CCollisionModelOBB();                 // デストラクタ
 
     static CCollisionModelOBB *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size, const D3DXVECTOR3 &rot);    // 生成処理
 

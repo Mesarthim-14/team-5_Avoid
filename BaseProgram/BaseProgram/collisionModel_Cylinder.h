@@ -26,8 +26,8 @@ public:
         float length;   // 長さ
     };
 
-    CCollisionModelCylinder(PRIORITY = PRIORITY_COLLISION); // コンストラクタ
-    ~CCollisionModelCylinder();                             // デストラクタ
+    CCollisionModelCylinder(PRIORITY Priority); // コンストラクタ
+    ~CCollisionModelCylinder();                 // デストラクタ
 
     static CCollisionModelCylinder *Create(const D3DXVECTOR3 &pos, const float &radius, const float &length, const D3DXVECTOR3 &rot);    // 生成処理
 

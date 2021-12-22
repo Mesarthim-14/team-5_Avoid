@@ -31,7 +31,7 @@ CCollisionModelOBB::~CCollisionModelOBB()
 //*****************************************************************************
 CCollisionModelOBB * CCollisionModelOBB::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size, const D3DXVECTOR3 &rot)
 {
-    CCollisionModelOBB *pCollisionModelOBB = new CCollisionModelOBB;
+    CCollisionModelOBB *pCollisionModelOBB = new CCollisionModelOBB(PRIORITY_COLLISION);
 
     if (pCollisionModelOBB)
     {

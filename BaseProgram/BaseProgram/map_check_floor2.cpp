@@ -87,6 +87,13 @@ HRESULT CMapCheckFloor2::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 //=============================================================================
 void CMapCheckFloor2::Uninit()
 {
+    // “–‚½‚è”»’èƒ‚ƒfƒ‹‚ÌI—¹ˆ—
+    if (m_pColModelCylinder)
+    {
+        m_pColModelCylinder->Uninit();
+        m_pColModelCylinder = nullptr;
+    }
+
     // I—¹ˆ—
     CMap::Uninit();
 }

@@ -74,7 +74,7 @@ HRESULT CSwirlScaffoldObject::Init(const D3DXVECTOR3 &pos)
 
     // “–‚½‚è”»’èƒ‚ƒfƒ‹‚Ì¶¬(OBB)
     m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE] = CCollisionModelOBB::Create(pos, COL_SIZE, TEST_ROT);
-    m_pColModelOBB[CCollisionModelOBB::SURFACE_UP] = CCollisionModelOBB::Create(D3DXVECTOR3(pos.x, pos.y + (COL_SIZE.y / 2) + 100.0f, pos.z), D3DXVECTOR3(COL_SIZE.x, 1.0f, COL_SIZE.z), TEST_ROT);
+    m_pColModelOBB[CCollisionModelOBB::SURFACE_UP] = CCollisionModelOBB::Create(D3DXVECTOR3(pos.x, pos.y + (COL_SIZE.y / 2) + 50.0f, pos.z), D3DXVECTOR3(COL_SIZE.x, 1.0f, COL_SIZE.z), TEST_ROT);
 
     return S_OK;
 }
@@ -109,7 +109,10 @@ void CSwirlScaffoldObject::Update()
     {
         if (m_pColModelOBB[nCount])
         {
-            m_pColModelOBB[nCount]->SetInfo(GetPos(), m_pColModelOBB[nCount]->GetOBB().info.size, GetRot());
+            m_pColModelOBB[nCount]->SetInfo(
+                D3DXVECTOR3(GetPos().x, m_pColModelOBB[nCount]->GetOBB().info.pos.y, GetPos().z),
+                m_pColModelOBB[nCount]->GetOBB().info.size,
+                GetRot());
         }
     }
 }

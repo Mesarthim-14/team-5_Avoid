@@ -168,6 +168,7 @@
     <ClCompile Include="check_point.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="collisionModel.cpp" />
+    <ClCompile Include="collisionModel_Polygon.cpp" />
     <ClCompile Include="collisionModel_Capsule.cpp" />
     <ClCompile Include="collisionModel_Cylinder.cpp" />
     <ClCompile Include="collisionModel_OBB.cpp" />
@@ -341,6 +342,7 @@
     <ClInclude Include="check_point.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="collisionModel.h" />
+    <ClInclude Include="collisionModel_Polygon.h" />
     <ClInclude Include="collisionModel_Capsule.h" />
     <ClInclude Include="collisionModel_Cylinder.h" />
     <ClInclude Include="collisionModel_OBB.h" />

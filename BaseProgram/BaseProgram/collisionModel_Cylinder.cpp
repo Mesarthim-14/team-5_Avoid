@@ -9,7 +9,6 @@
 // インクルードファイル
 //*****************************************************************************
 #include "collisionModel_Cylinder.h"
-#include "library.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -37,7 +36,7 @@ CCollisionModelCylinder::~CCollisionModelCylinder()
 //*****************************************************************************
 CCollisionModelCylinder * CCollisionModelCylinder::Create(const D3DXVECTOR3 &pos, const float &radius, const float &length, const D3DXVECTOR3 &rot)
 {
-    CCollisionModelCylinder *pColModelCylinder = new CCollisionModelCylinder;
+    CCollisionModelCylinder *pColModelCylinder = new CCollisionModelCylinder(PRIORITY_COLLISION);
 
     if (pColModelCylinder)
     {
@@ -87,5 +86,7 @@ void CCollisionModelCylinder::Update()
 //*****************************************************************************
 void CCollisionModelCylinder::Draw()
 {
+#ifdef _DEBUG
     CCollisionModel::Draw();
+#endif
 }

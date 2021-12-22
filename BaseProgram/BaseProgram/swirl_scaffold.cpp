@@ -127,7 +127,7 @@ void CSwirlScaffold::RotateObject()
                 m_pos.z + cosf(m_fAngle + fAngle)*OBJECT_INTER_POS));
             rot = m_pObject[nCount]->GetRot();
             rot.y = m_fAngle + fAngle;
-            m_pObject[nCount]->SetRot(rot);
+            //m_pObject[nCount]->SetRot(rot);
         }
 
         // Šp“x”½“]

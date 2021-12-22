@@ -479,3 +479,11 @@ bool CCollision::ColRectangleAndCircular(const D3DXVECTOR3 &RectanglePos, const 
 
     return true;
 }
+
+//*****************************************************************************
+// プレイヤーの壁ずりベクトル計算
+//*****************************************************************************
+D3DXVECTOR3 CCollision::SlideVect(const D3DXVECTOR3 &playerMove, const D3DXVECTOR3 &norVec)
+{
+    return playerMove - (D3DXVec3Dot(&playerMove, &norVec)) * norVec;
+}
