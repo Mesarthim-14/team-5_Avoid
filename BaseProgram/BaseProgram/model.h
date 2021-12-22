@@ -42,6 +42,7 @@ public:
 
     // Get関数
     D3DXVECTOR3 GetPos()const;
+    D3DXVECTOR3 GetPosOld()const;
     D3DXVECTOR3 GetRot()const;
     inline CModelInfo* GetModelInfo()const { return m_pModelInfo; } // モデルの情報
 
@@ -49,6 +50,7 @@ protected:
     bool PlayerDisCollision(const float &fDistanse);    // プレイヤーとの距離の当たり判定
 
     // Set関数
+
     inline void SetSize(const D3DXVECTOR3 &size)        { m_size = size; }              // サイズの設定
     inline void SetTexPattern(const int &TexPattern)    { m_nTexPattern = TexPattern; } // テクスチャのパターン
     inline void SetLife(const int &nLife)               { m_nLife = nLife; }            // ライフの設定
@@ -63,6 +65,7 @@ protected:
 
 private:
     // private関数
+
     void HasPtrDelete();                                    // 保持ポインタの開放処理
     void CreateInfoPtr(CModelInfo::MODEL_TYPE type); // 情報のポインタ生成
 
