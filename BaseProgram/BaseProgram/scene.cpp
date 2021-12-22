@@ -101,10 +101,6 @@ void CScene::UpdateAll()
                     // 更新処理
                     pScene->Update();
                 }
-                else
-                {
-     //               pPtr.push_back(pScene);
-                }
                 
                 // 次のシーンへ
                 pScene = pSceneCur;
@@ -112,11 +108,6 @@ void CScene::UpdateAll()
             } while (pScene);
         }
     }
-    
-    //for (auto pScene : pPtr)
-    //{
-    //    pScene->DeathRelease();
-    //}
 
     for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
     {

@@ -54,6 +54,7 @@ public:
 
     // Get情報
     inline D3DXVECTOR3 &GetPos()                            { return m_pos; }                // 座標情報
+    inline D3DXVECTOR3 &GetPosOld()                         { return m_posOld; }            // 座標情報
     inline D3DXVECTOR3 &GetRot()                            { return m_rot; }                // 角度の情報
     inline D3DXMATRIX GetMtxWorld()                         { return m_mtxWorld; }           // ワールドマトリクス情報
     inline D3DXMATRIX GetOldMtxWorld()                      { return m_OldMtxWorld; }        // 古いワールドマトリクスの情報
