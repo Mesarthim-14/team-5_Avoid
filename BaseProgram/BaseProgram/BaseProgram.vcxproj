@@ -217,6 +217,7 @@
     <ClCompile Include="mask.cpp" />
     <ClCompile Include="meshfield.cpp" />
     <ClCompile Include="mesh_3d.cpp" />
+    <ClCompile Include="mesh_tube.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="modelanime.cpp" />
     <ClCompile Include="model_info.cpp" />
@@ -394,6 +395,7 @@
     <ClInclude Include="mask.h" />
     <ClInclude Include="meshfield.h" />
     <ClInclude Include="mesh_3d.h" />
+    <ClInclude Include="mesh_tube.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="modelanime.h" />
     <ClInclude Include="model_info.h" />

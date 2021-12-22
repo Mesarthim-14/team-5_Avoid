@@ -89,14 +89,14 @@ void CShark::Uninit()
 //=============================================================================
 void CShark::Update()
 {
-    CWimpEnemy::Update();
-
     // ƒ‚ƒfƒ‹XVˆ—
     if (m_pSharkModel)
     {
         m_pSharkModel->SetPos(GetPos());
         m_pSharkModel->SetRot(GetRot());
     }
+
+    CWimpEnemy::Update();
 }
 
 //=============================================================================

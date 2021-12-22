@@ -18,7 +18,7 @@
 class CCheckFlag : public CModel
 {
 public:
-	CCheckFlag(PRIORITY = PRIORITY_TEST_MODEL);			// コンストラクタ
+	CCheckFlag(PRIORITY = PRIORITY_MAP);			// コンストラクタ
 	~CCheckFlag();										// デストラクタ
 
 	static CCheckFlag *Create(const D3DXVECTOR3 &pos);	// インスタンス生成

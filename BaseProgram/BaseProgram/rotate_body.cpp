@@ -47,7 +47,7 @@ CRotateBody::~CRotateBody()
 CRotateBody * CRotateBody::Create(const D3DXVECTOR3 &pos)
 {
     // ÉÅÉÇÉäämï€
-    CRotateBody *pRotatebody = new CRotateBody(PRIORITY_TEST_MODEL);
+    CRotateBody *pRotatebody = new CRotateBody(PRIORITY_MAP);
 
     // !nullcheck
     if (pRotatebody)

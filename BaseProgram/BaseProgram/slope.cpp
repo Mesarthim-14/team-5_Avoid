@@ -51,7 +51,7 @@ CSlope::~CSlope()
 CSlope * CSlope::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
     // ÉÅÉÇÉäämï€
-    CSlope *pTestModel = new CSlope(PRIORITY_TEST_MODEL);
+    CSlope *pTestModel = new CSlope(PRIORITY_MAP);
 
     // !nullcheck
     if (pTestModel)

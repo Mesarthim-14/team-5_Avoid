@@ -18,7 +18,7 @@
 class CRubble1 : public CModel
 {
 public:
-    CRubble1(PRIORITY = PRIORITY_TEST_MODEL);   // コンストラクタ
+    CRubble1(PRIORITY = PRIORITY_MAP);   // コンストラクタ
     ~CRubble1();                                // デストラクタ
 
     static CRubble1 *Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot);    // インスタンス生成

@@ -24,7 +24,7 @@ class CCollisionModelPolygon;
 class CSlope : public CMap
 {
 public:
-    CSlope(PRIORITY = PRIORITY_TEST_MODEL); // コンストラクタ
+    CSlope(PRIORITY = PRIORITY_MAP); // コンストラクタ
     ~CSlope();                              // デストラクタ
 
     static CSlope *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);  // インスタンス生成

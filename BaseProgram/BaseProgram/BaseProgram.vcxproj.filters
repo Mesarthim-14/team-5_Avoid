@@ -517,6 +517,9 @@
     <ClCompile Include="collisionModel_Polygon.cpp">
       <Filter>12_Collision</Filter>
     </ClCompile>
+    <ClCompile Include="mesh_tube.cpp">
+      <Filter>06_Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -1043,6 +1046,9 @@
     </ClInclude>
     <ClInclude Include="collisionModel_Polygon.h">
       <Filter>12_Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh_tube.h">
+      <Filter>06_Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

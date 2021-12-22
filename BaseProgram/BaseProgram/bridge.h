@@ -23,7 +23,7 @@ class CCollisionModelOBB;
 class CBridge : public CModel
 {
 public:
-    CBridge(PRIORITY = PRIORITY_TEST_MODEL);    // コンストラクタ
+    CBridge(PRIORITY = PRIORITY_MAP);    // コンストラクタ
     ~CBridge();                                 // デストラクタ
 
     static CBridge *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot); // インスタンス生成

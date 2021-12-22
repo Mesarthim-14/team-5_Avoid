@@ -53,17 +53,19 @@ public:
     D3DXMATRIX SetShadowInfo(const D3DXVECTOR3 &rot, const D3DXMATRIX &pParent);                        // 影の情報の設定
 
     // Get情報
-    inline D3DXVECTOR3 &GetPos()       { return m_pos; }                // 座標情報
-    inline D3DXVECTOR3 &GetPosOld()    { return m_posOld; }             // 過去の座標情報
-    inline D3DXVECTOR3 &GetRot()       { return m_rot; }                // 角度の情報
-    inline D3DXMATRIX GetMtxWorld()    { return m_mtxWorld; }           // ワールドマトリクス情報
-    inline D3DXMATRIX GetOldMtxWorld() { return m_OldMtxWorld; }        // 古いワールドマトリクスの情報
-    inline LPD3DXMESH GetMesh()        { return m_model.pMesh; }        // モデル情報取得
-    inline LPD3DXBUFFER GetBuffMat()   { return m_model.pBuffMat; }     // バッファ情報
-    inline DWORD GetNumMat()           { return m_model.dwNumMat; }     // マトリクスの数
-    inline CXfile::MODEL GetModel()    { return m_model; }              // モデルの情報
-    inline CShadow* GetShadow()        { return m_pShadow; }            // 影のポインタ
+    inline D3DXVECTOR3 &GetPos()                            { return m_pos; }                // 座標情報
+    inline D3DXVECTOR3 &GetPosOld()                         { return m_posOld; }            // 座標情報
+    inline D3DXVECTOR3 &GetRot()                            { return m_rot; }                // 角度の情報
+    inline D3DXMATRIX GetMtxWorld()                         { return m_mtxWorld; }           // ワールドマトリクス情報
+    inline D3DXMATRIX GetOldMtxWorld()                      { return m_OldMtxWorld; }        // 古いワールドマトリクスの情報
+    inline LPD3DXMESH GetMesh()                             { return m_model.pMesh; }        // モデル情報取得
+    inline LPD3DXBUFFER GetBuffMat()                        { return m_model.pBuffMat; }     // バッファ情報
+    inline DWORD GetNumMat()                                { return m_model.dwNumMat; }     // マトリクスの数
+    inline CXfile::MODEL GetModel()                         { return m_model; }              // モデルの情報
+    inline LPDIRECT3DTEXTURE9 GetTexture(const int& nNum)   { return m_model.apTexture.at(nNum); }
+    inline CShadow* GetShadow()                             { return m_pShadow; }            // 影のポインタ
     D3DXVECTOR3 GetMtxPos();                                            // マトリクス座標
+    static inline list<CModelInfo*>GetInfoList() { return m_ModelInfoList[0]; }
 
 private:
     // private関数

@@ -26,15 +26,21 @@ public:
     void Update();                                                  // 更新処理
     void Draw();                                                    // 描画処理
     void SetColor(const D3DXCOLOR &color);                          // 色の設定
+    void SetMove(const D3DXVECTOR3 &move);
 
     static CPolygon *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &size);   // インスタンス生成
     inline void BindTexture(const LPDIRECT3DTEXTURE9 &pTexture) { m_pTexture = pTexture; }
+
+    inline void SetPos(const D3DXVECTOR3 &pos) { m_pos = pos; }
+
+    inline D3DXVECTOR3 GetPos()const { return m_pos; }               // 座標
 
 private:
     LPDIRECT3DTEXTURE9 m_pTexture;      // テクスチャのポインタ
     LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff; // 頂点バッファへのポインタ
     D3DXVECTOR3 m_size;                 // ポリゴンのサイズ
     D3DXVECTOR3 m_pos;                  // ライフの位置
+    D3DXVECTOR3 m_move;
 
 };
 #endif 

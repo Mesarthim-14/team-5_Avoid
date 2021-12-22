@@ -23,7 +23,7 @@ class CCollisionModelOBB;
 class CMoveScaffold : public CModel
 {
 public:
-    CMoveScaffold(PRIORITY = PRIORITY_TEST_MODEL);  // コンストラクタ
+    CMoveScaffold(PRIORITY = PRIORITY_MAP);  // コンストラクタ
     ~CMoveScaffold();                               // デストラクタ
 
     static CMoveScaffold *Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot); // インスタンス生成

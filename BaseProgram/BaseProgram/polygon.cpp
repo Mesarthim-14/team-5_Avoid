@@ -20,6 +20,7 @@ CPolygon::CPolygon()
     m_pVtxBuff = nullptr;
     m_pos = ZeroVector3;
     m_size = ZeroVector3;
+    m_move = ZeroVector3;
     m_pTexture = nullptr;
 }
 
@@ -121,6 +122,7 @@ void CPolygon::Uninit(void)
 //=============================================================================
 void CPolygon::Update(void)
 {
+    GetPos() += m_move;
 }
 
 //=============================================================================
@@ -169,4 +171,9 @@ void CPolygon::SetColor(const D3DXCOLOR &color)
 
     //頂点バッファのアンロック
     m_pVtxBuff->Unlock();
+}
+
+void CPolygon::SetMove(const D3DXVECTOR3 & move)
+{
+    m_move = move;
 }

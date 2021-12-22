@@ -23,7 +23,7 @@ class CCollisionModelCylinder;
 class CRotateFloor : public CModel
 {
 public:
-    CRotateFloor(PRIORITY = PRIORITY_TEST_MODEL);   // コンストラクタ
+    CRotateFloor(PRIORITY = PRIORITY_MAP);   // コンストラクタ
     ~CRotateFloor() {}                              // デストラクタ
 
     static CRotateFloor *Create(const D3DXVECTOR3 &pos);    // インスタンス生成

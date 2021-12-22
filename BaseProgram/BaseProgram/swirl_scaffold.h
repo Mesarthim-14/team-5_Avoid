@@ -24,7 +24,7 @@ class CSwirlScaffold : public CScene
 {
 public:
 
-    CSwirlScaffold(PRIORITY = PRIORITY_TEST_MODEL); // コンストラクタ
+    CSwirlScaffold(PRIORITY = PRIORITY_MAP); // コンストラクタ
     ~CSwirlScaffold();                              // デストラクタ
 
     static CSwirlScaffold *Create(const D3DXVECTOR3 &pos);  // インスタンス生成

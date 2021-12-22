@@ -18,7 +18,7 @@
 class CBarrel : public CModel
 {
 public:
-    CBarrel(PRIORITY = PRIORITY_TEST_MODEL);    // コンストラクタ
+    CBarrel(PRIORITY = PRIORITY_MAP);    // コンストラクタ
     ~CBarrel();                                 // デストラクタ
 
     static CBarrel *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot); // インスタンス生成

@@ -46,7 +46,7 @@ CGhostModel::~CGhostModel()
 CGhostModel * CGhostModel::Create(const D3DXVECTOR3 pos)
 {
     // ƒƒ‚ƒŠŠm•Û
-    CGhostModel *pTestModel = new CGhostModel(PRIORITY_TEST_MODEL);
+    CGhostModel *pTestModel = new CGhostModel(PRIORITY_MAP);
 
     // !nullcheck
     if (pTestModel)
@@ -65,7 +65,7 @@ CGhostModel * CGhostModel::Create(const D3DXVECTOR3 pos)
 HRESULT CGhostModel::Init(const D3DXVECTOR3 &pos)
 {
     // ‰Šú‰»ˆ—
-    CModel::Init();
+    CModel::Init(CModelInfo::MODEL_TYPE_CHARACTER);
 
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ENEMY_GHOST);

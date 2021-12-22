@@ -18,7 +18,7 @@
 class CSky : public CModel
 {
 public:
-    CSky(PRIORITY = PRIORITY_TEST_MODEL); // コンストラクタ
+    CSky(PRIORITY = PRIORITY_MAP); // コンストラクタ
     ~CSky();                              // デストラクタ
 
     static CSky *Create();  // インスタンス生成

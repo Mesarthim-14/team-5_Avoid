@@ -44,7 +44,7 @@ CSharkModel::~CSharkModel()
 CSharkModel * CSharkModel::Create(const D3DXVECTOR3 pos)
 {
     // ƒƒ‚ƒŠŠm•Û
-    CSharkModel *pTestModel = new CSharkModel(PRIORITY_TEST_MODEL);
+    CSharkModel *pTestModel = new CSharkModel(PRIORITY_MAP);
 
     // !nullcheck
     if (pTestModel)
@@ -63,7 +63,7 @@ CSharkModel * CSharkModel::Create(const D3DXVECTOR3 pos)
 HRESULT CSharkModel::Init(const D3DXVECTOR3 &pos)
 {
     // ‰Šú‰»ˆ—
-    CModel::Init();
+    CModel::Init(CModelInfo::MODEL_TYPE_CHARACTER);
 
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_ENEMY_SHARK);

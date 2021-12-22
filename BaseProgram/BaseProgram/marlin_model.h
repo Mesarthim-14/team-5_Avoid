@@ -18,7 +18,7 @@
 class CMarlinModel : public CModel
 {
 public:
-    CMarlinModel(PRIORITY = PRIORITY_TEST_MODEL);   // コンストラクタ
+    CMarlinModel(PRIORITY = PRIORITY_MAP);   // コンストラクタ
     ~CMarlinModel();                                // デストラクタ
 
     static CMarlinModel *Create(const D3DXVECTOR3 pos); // インスタンス生成

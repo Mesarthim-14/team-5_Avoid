@@ -45,7 +45,7 @@ CRotateFloor::CRotateFloor(PRIORITY Priority) : CModel(Priority)
 CRotateFloor * CRotateFloor::Create(const D3DXVECTOR3 &pos)
 {
     // ÉÅÉÇÉäämï€
-    CRotateFloor *pTestModel = new CRotateFloor(PRIORITY_TEST_MODEL);
+    CRotateFloor *pTestModel = new CRotateFloor(PRIORITY_MAP);
 
     // !nullcheck
     if (pTestModel)

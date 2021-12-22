@@ -30,7 +30,6 @@ public:
         MESH_TYPE_MAX           // 最大値
     };
 
-
     CMesh3d(PRIORITY Priority = PRIORITY_0);    // コンストラクタ
     ~CMesh3d();                                 // デストラクタ
 

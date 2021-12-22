@@ -81,6 +81,7 @@ CScene::~CScene()
 //=============================================================================
 void CScene::UpdateAll()
 {
+    vector<CScene*> pPtr;
     //ポーズしているか　bool pause = m_pause   ->>  pause =true ->> if (type == OBJTYPE_PAUSE)
     for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
     {
@@ -100,7 +101,7 @@ void CScene::UpdateAll()
                     // 更新処理
                     pScene->Update();
                 }
-
+                
                 // 次のシーンへ
                 pScene = pSceneCur;
 
