@@ -17,8 +17,8 @@
 //=====================================================================
 // マクロ定義
 //=====================================================================
-#define POS     (D3DXVECTOR3(640.0f,670.0f,0.0f))
-#define SIZE    (D3DXVECTOR3(400.0f,70.0f,0.0f))
+#define POS     (D3DXVECTOR3(640.0f,360.0f,0.0f))
+#define SIZE    (D3DXVECTOR3(1280.0f,720.0f,0.0f))
 
 //=====================================================================
 // コンストラクタ
@@ -57,9 +57,9 @@ CTranslation * CTranslation::Create()
 //=====================================================================
 HRESULT CTranslation::Init()
 {
-    //// テクスチャの設定
-    //CTexture *pTexture = GET_TEXTURE_PTR;
-    //BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_GAUGEBAR));
+    // テクスチャの設定
+    CTexture *pTexture = GET_TEXTURE_PTR;
+    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_TRANSLATION));
     CScene2D::Init();
     return S_OK;
 }

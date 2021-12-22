@@ -44,6 +44,7 @@ private:
     CPolygon * m_pPolygon[MAX];
     int m_nMenu;
     bool m_bPause;
+    float m_fMove;
 };
 
 

@@ -36,6 +36,7 @@
 #include "library.h"
 #include "player_editor.h"
 #include "pause.h"
+#include "translation.h"
 
 //=============================================================================
 //静的メンバ変数宣言
@@ -257,7 +258,9 @@ void CManager::Update()
                 if (m_pPause == NULL)
                 {
                     // 生成
+                    CTranslation::Create();
                     m_pPause = CPause::Create();
+
                 }
                 // ポーズの切り替え
                 m_bPause ^= true;

@@ -75,10 +75,11 @@ HRESULT CTexture::SetTextureName()
         { "data/Texture/slime_drop.png" },
         { "data/Texture/Gauge.png" },
         { "data/Texture/Gauge_Frame.png" },
-        { "data/Texture/BACK.png" },
-        { "data/Texture/RESUME.png" },
-        { "data/Texture/RESTART.png" },
-        { "data/Texture/END.png" },
+        { "data/Texture/pose_bar.png" },
+        { "data/Texture/button_1clip.png" },
+        { "data/Texture/button_2.png" },
+        { "data/Texture/button_3.png" },
+        { "data/Texture/pose_base.png" },
         { "data/Texture/E-key.png" },
         { "data/Texture/message_back.jpeg" },
         { "data/Texture/Warning.png" },
@@ -88,7 +89,7 @@ HRESULT CTexture::SetTextureName()
         { "data/Texture/slime_50.png" },
         { "data/Texture/takohead_tex.png" },
     };
-
+    
     // 分割テクスチャ
     m_aTexFileName[TEXTURE_TYPE_NUM_SEPARATE] =
     {
