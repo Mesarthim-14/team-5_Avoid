@@ -46,7 +46,7 @@ CCheckFlag::~CCheckFlag()
 CCheckFlag * CCheckFlag::Create(const D3DXVECTOR3 &pos)
 {
 	// ÉÅÉÇÉäämï€
-	CCheckFlag *pTestModel = new CCheckFlag(PRIORITY_TEST_MODEL);
+	CCheckFlag *pTestModel = new CCheckFlag(PRIORITY_MAP);
 
 	// !nullcheck
 	if (pTestModel)

@@ -81,6 +81,7 @@ CScene::~CScene()
 //=============================================================================
 void CScene::UpdateAll()
 {
+    vector<CScene*> pPtr;
     //ポーズしているか　bool pause = m_pause   ->>  pause =true ->> if (type == OBJTYPE_PAUSE)
     for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
     {
@@ -100,13 +101,22 @@ void CScene::UpdateAll()
                     // 更新処理
                     pScene->Update();
                 }
-
+                else
+                {
+     //               pPtr.push_back(pScene);
+                }
+                
                 // 次のシーンへ
                 pScene = pSceneCur;
 
             } while (pScene);
         }
     }
+    
+    //for (auto pScene : pPtr)
+    //{
+    //    pScene->DeathRelease();
+    //}
 
     for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
     {

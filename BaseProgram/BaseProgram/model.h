@@ -12,6 +12,7 @@
 //=============================================================================
 #include "scene.h"
 #include "xfile.h"
+#include "model_info.h"
 
 //=============================================================================
 // 前方宣言
@@ -28,6 +29,7 @@ public:
     virtual ~CModel();          // デストラクタ
 
     virtual HRESULT Init();                                                 // 初期化処理
+    HRESULT Init(CModelInfo::MODEL_TYPE type);                       // 初期化処理
     virtual void Uninit();                                                  // 終了処理
     virtual void Update();                                                  // 更新処理
     virtual void Draw();                                                    // 描画処理
@@ -36,7 +38,7 @@ public:
     // Set関数
     void SetPos(const D3DXVECTOR3& pos);
     void SetRot(const D3DXVECTOR3& rot);
-    inline void SetMove(const D3DXVECTOR3 &move)        { m_move = move; }              // 移動量の設定
+    inline void SetMove(const D3DXVECTOR3 &move) { m_move = move; }              // 移動量の設定
 
     // Get関数
     D3DXVECTOR3 GetPos()const;
@@ -48,6 +50,7 @@ protected:
     bool PlayerDisCollision(const float &fDistanse);    // プレイヤーとの距離の当たり判定
 
     // Set関数
+
     inline void SetSize(const D3DXVECTOR3 &size)        { m_size = size; }              // サイズの設定
     inline void SetTexPattern(const int &TexPattern)    { m_nTexPattern = TexPattern; } // テクスチャのパターン
     inline void SetLife(const int &nLife)               { m_nLife = nLife; }            // ライフの設定
@@ -62,8 +65,9 @@ protected:
 
 private:
     // private関数
-    void HasPtrDelete();    // 保持ポインタの開放処理
-    void CreateInfoPtr();   // 情報のポインタ生成
+
+    void HasPtrDelete();                                    // 保持ポインタの開放処理
+    void CreateInfoPtr(CModelInfo::MODEL_TYPE type); // 情報のポインタ生成
 
     // メンバ変数
     CModelInfo* m_pModelInfo;   // モデルの情報
