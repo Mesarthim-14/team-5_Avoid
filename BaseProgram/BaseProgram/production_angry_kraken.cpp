@@ -70,7 +70,7 @@ void CProductionAngryKraken::Init()
     CreateState(pCamera, CCameraStateAngryKraken::Create());
     CreateState(pKraken, CKrakenStateAngry::Create());
     CLibrary::SetSound(CSound::SOUND_SE_SCREAM);
-    CManager::GetInstance()->GetRenderer()->SetShockBlur(true);
+    CManager::GetInstance()->GetRenderer()->SetShockBlur(true, 20.0f);
 }
 
 //=======================================================================================
@@ -99,7 +99,7 @@ void CProductionAngryKraken::Update()
         CKraken *pKraken = CManager::GetInstance()->GetGame()->GetKraken();
         CreateState(pKraken, CKrakenStateNormal::Create());
 
-            CManager::GetInstance()->GetRenderer()->SetShockBlur(false);
+        CManager::GetInstance()->GetRenderer()->SetShockBlur(false, 0.0f);
 
     }
 }

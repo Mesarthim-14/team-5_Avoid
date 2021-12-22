@@ -26,6 +26,8 @@
 #include "particlenormal.h"
 #include "state_kraken_damage.h"
 #include "sound.h"
+#include "renderer.h"
+#include "shock_blur.h"
 
 //=============================================================================
 // マクロ定義
@@ -37,6 +39,7 @@
 #define GRAVITY_NUM (0.65f)
 
 #define SIZE (D3DXVECTOR3(200.0f, 200.0f, 200.0f))
+#define BLUR_TIME   (20)
 
 //=============================================================================
 // コンストラクタ
@@ -106,6 +109,9 @@ HRESULT CCannonBullet::Init(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &Can
     }
 
     CLibrary::SetSound(CSound::SOUND_SE_CANNON_FIRING);
+
+    CManager::GetInstance()->GetRenderer()->SetShockBlur(true, 15.0f);
+
     return S_OK;
 }
 
@@ -118,6 +124,12 @@ void CCannonBullet::Update()
     
     // 距離計算
     CalDistance();
+
+    CShockBlur* pBlur = CManager::GetInstance()->GetRenderer()->GetShockBlurPtr();
+    if (pBlur)
+    {
+        pBlur->SubPower(0.5f);
+    }
 
     if (m_pCollision)
     {

@@ -27,12 +27,13 @@ public:
     HRESULT Load();                                 // ロード
     void TextureLoad();                             // テクスチャロード
     void SetCenterTexel(float TU, float TV);        // テクセルの中心座標を送る
-    void SetBlurPower(const float &fBlurPoswer);    // ブラーの強さ
+    void SetBlurPower(const float &fBlurPower);     // ブラーの強さ
     void BlurRender();                              // 描画処理
     void Begin();                                   // 開始
     void Draw();                                    // 描画処理
     void EndSurface();                              // サーフェス終了
 
+    void SubPower(const float& fSub);
     inline LPD3DXEFFECT GetEffect()const { return m_pEffect; };
 
 private:
@@ -44,6 +45,7 @@ private:
     LPDIRECT3DSURFACE9 m_pFullScreenSurface;
     D3DVIEWPORT9 m_OldViewport;
     LPDIRECT3DSURFACE9 m_OldSurface;
+    float m_fPower;
 };
 
 #endif

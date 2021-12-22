@@ -71,6 +71,9 @@ void CPlayerStateRespawn::Init()
     {
         return;
     }
+    D3DXVECTOR3 CheckPointPos = pGame->GetGimmickFactory()->GetCheckPoint()->GetPointPos();
+    // À•W‚ÌŽæ“¾
+    pPlayer->SetPos(D3DXVECTOR3(CheckPointPos.x, CheckPointPos.y + (600 / 2), CheckPointPos.z));
 
     // À•W‚ÌŽæ“¾
     pPlayer->SetPos(pGame->GetGimmickFactory()->GetCheckPoint()->GetPointPos());

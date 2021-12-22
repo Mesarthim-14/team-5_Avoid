@@ -35,7 +35,7 @@ public:
     inline void SetDispImGuiInfo(const bool &ImGuiInfo) { m_bDispImGuiInfo = ImGuiInfo; };          // Imgui表示非表示設定
     bool CheckShowImGuiInfo()const                      { return m_bDispImGuiInfo; };               // Imgui情報表示してるか確認
     
-    inline void SetShockBlur(const bool& bFlag) { m_bShockBlur = bFlag; }   // 爆発ブラーの設定
+    void SetShockBlur(const bool& bFlag, const float& fPower);  // ブラーの設定
 
     // Get関数
     inline LPDIRECT3DDEVICE9 GetDevice()const   { return m_pD3DDevice; }    // デバイス情報

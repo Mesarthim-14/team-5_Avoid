@@ -499,18 +499,10 @@ void CPlayer::Respawn()
     }
 
 	// 一定以下の座標になったら
-	if (RESPORN_POS_Y > GetPos().y)
-	{
-		CGame* pGame = (CGame*)CManager::GetInstance()->GetModePtr();
-		if (pGame)
-		{
-            D3DXVECTOR3 CheckPointPos = pGame->GetGimmickFactory()->GetCheckPoint()->GetPointPos();
-			// 座標の取得
-            SetPos(D3DXVECTOR3(CheckPointPos.x, CheckPointPos.y + (PLAYER_HEIGHT_100 / 2), CheckPointPos.z));
-			SetMove(ZeroVector3);
-            ChangeState(CPlayerStateNormal::Create());
-		}
-	}
+    if (RESPORN_POS_Y > GetPos().y)
+    {
+        ChangeState(CPlayerStateRespawn::Create());
+    }
 }
 
 //=============================================================================

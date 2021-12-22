@@ -24,7 +24,7 @@ public:
     static CKrakenStateNotAttack* Create(); // インスタンス生成
     void Init();                            // 初期化処理
     void Update()override;                  // 更新処理
-
 private:
+
 };
 #endif

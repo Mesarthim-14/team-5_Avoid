@@ -22,6 +22,7 @@ CShockBlur::CShockBlur(LPDIRECT3DDEVICE9 pd3dDevice, UINT Width, UINT Height) : 
     m_pEffect = nullptr;
     memset(&m_OldViewport, 0, sizeof(D3DVIEWPORT9));
     m_OldSurface = nullptr;
+    m_fPower = 0.0f;
 }
 
 //=============================================================================
@@ -141,11 +142,12 @@ void CShockBlur::SetCenterTexel(float TU, float TV)
 }
 
 //ブラー具合を設定する
-void CShockBlur::SetBlurPower(const float &fBlurPoswer)
+void CShockBlur::SetBlurPower(const float &fBlurPower)
 {
     if (m_pEffect)
     {
-        m_pEffect->SetFloat(m_pBlurPower, fBlurPoswer);
+        m_fPower = fBlurPower;
+        m_pEffect->SetFloat(m_pBlurPower, m_fPower);
     }
 }
 
@@ -208,7 +210,7 @@ void CShockBlur::Draw()
     //STEP2:ブラー処理
     //****************************************************************
     //ボケの強さを設定する。0.0f でボケなし。
-    SetBlurPower(20.0f);
+    SetBlurPower(m_fPower);
 
     //****************************************************************
     //STEP3:ブラーイメージをバックバッファにレンダリング
@@ -229,6 +231,15 @@ void CShockBlur::EndSurface()
     {
         m_OldSurface->Release();
         m_OldSurface = nullptr;
+    }
+}
+
+void CShockBlur::SubPower(const float & fSub)
+{
+    m_fPower -= fSub;
+    if (m_fPower < 0.0f)
+    {
+        m_fPower = 0.0f;
     }
 }
 

@@ -361,3 +361,12 @@ void CRenderer::Draw()
     // バックバッファとフロントバッファの入れ替え
     m_pD3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
 }
+
+//=============================================================================
+// ブラーの設定
+//=============================================================================
+void CRenderer::SetShockBlur(const bool & bFlag, const float & fPower)
+{
+    m_bShockBlur = bFlag;
+    m_pShockBlur->SetBlurPower(fPower);
+}
