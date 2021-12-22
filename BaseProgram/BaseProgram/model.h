@@ -36,9 +36,11 @@ public:
     // Set関数
     void SetPos(const D3DXVECTOR3& pos);
     void SetRot(const D3DXVECTOR3& rot);
+    inline void SetMove(const D3DXVECTOR3 &move)        { m_move = move; }              // 移動量の設定
 
     // Get関数
     D3DXVECTOR3 GetPos()const;
+    D3DXVECTOR3 GetPosOld()const;
     D3DXVECTOR3 GetRot()const;
     inline CModelInfo* GetModelInfo()const { return m_pModelInfo; } // モデルの情報
 
@@ -46,7 +48,6 @@ protected:
     bool PlayerDisCollision(const float &fDistanse);    // プレイヤーとの距離の当たり判定
 
     // Set関数
-    inline void SetMove(const D3DXVECTOR3 &move)        { m_move = move; }              // 移動量の設定
     inline void SetSize(const D3DXVECTOR3 &size)        { m_size = size; }              // サイズの設定
     inline void SetTexPattern(const int &TexPattern)    { m_nTexPattern = TexPattern; } // テクスチャのパターン
     inline void SetLife(const int &nLife)               { m_nLife = nLife; }            // ライフの設定

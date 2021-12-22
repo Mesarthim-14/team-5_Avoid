@@ -35,6 +35,10 @@ public:
     void HitColPlayer(const CCollisionModelCylinder* const pMapColCylinder);        // プレイヤーとの当たり判定関数(球体と円柱)
     void HitColBossBullet(const CCollisionModelCylinder* const pMapColCylinder);    // ボスバレットとの当たり判定関数(球体と円柱)
 
+protected:
+    void SetHitMap(const bool bHitMap) { m_bHitMap = bHitMap; } // １つ以上マップに当たっているかの判定の設定
+    bool GetHitMap()const { return m_bHitMap; }                 // １つ以上マップに当たっているかの判定の取得
+
 private:
     virtual void Col() = 0;
 

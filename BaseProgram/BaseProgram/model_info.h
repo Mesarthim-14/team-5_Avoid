@@ -45,7 +45,7 @@ public:
     void CreateShadowPtr();                     // 影の生成
 
     // Set関数
-    inline void SetPos(const D3DXVECTOR3 &pos)              { m_pos = pos; }                            // 座標
+    inline void SetPos(const D3DXVECTOR3 &pos)              { m_posOld = m_pos;  m_pos = pos; }           // 座標
     inline void SetRot(const D3DXVECTOR3 &rot)              { m_rot = rot; }                            // 向き設定
     inline void SetModel(const CXfile::MODEL &model)        { m_model = model; }                        // モデル情報の設定
     inline void SetMtxWorld(const D3DXMATRIX &mtxWorld)     { m_mtxWorld = mtxWorld; }                  // マトリクスワールド設定
@@ -54,6 +54,7 @@ public:
 
     // Get情報
     inline D3DXVECTOR3 &GetPos()       { return m_pos; }                // 座標情報
+    inline D3DXVECTOR3 &GetPosOld()    { return m_posOld; }             // 過去の座標情報
     inline D3DXVECTOR3 &GetRot()       { return m_rot; }                // 角度の情報
     inline D3DXMATRIX GetMtxWorld()    { return m_mtxWorld; }           // ワールドマトリクス情報
     inline D3DXMATRIX GetOldMtxWorld() { return m_OldMtxWorld; }        // 古いワールドマトリクスの情報
@@ -70,6 +71,7 @@ private:
 
     // メンバ変数
     D3DXVECTOR3 m_pos;          // 位置
+    D3DXVECTOR3 m_posOld;       // 過去の位置
     D3DXVECTOR3 m_rot;          // 向き
     D3DXMATRIX m_mtxWorld;      // ワールドマトリックス
     D3DXMATRIX m_OldMtxWorld;   // 古いワールド座標

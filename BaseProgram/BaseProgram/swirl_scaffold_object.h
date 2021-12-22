@@ -10,22 +10,27 @@
 //=========================================================================
 // インクルード
 //=========================================================================
-#include "model.h"
+#include "map.h"
+#include "collisionModel_OBB.h"
 
 //=========================================================================
 // クラス定義
 //=========================================================================
-class CSwirlScaffoldObject : public CModel
+class CSwirlScaffoldObject : public CMap
 {
 public:
-    CSwirlScaffoldObject(PRIORITY = PRIORITY_TEST_MODEL); // コンストラクタ
-    ~CSwirlScaffoldObject();                              // デストラクタ
+    CSwirlScaffoldObject(PRIORITY Priority); // コンストラクタ
+    ~CSwirlScaffoldObject();                 // デストラクタ
 
     static CSwirlScaffoldObject *Create(const D3DXVECTOR3 &pos);    // インスタンス生成
     HRESULT Init(const D3DXVECTOR3 &pos);                           // 初期化処理
+    void Uninit();                                                  // 終了処理
     void Update();                                                  // 更新処理
 
 private:
+    void Col(); // 当たり判定
+
+    CCollisionModelOBB* m_pColModelOBB[CCollisionModelOBB::SURFACE_MAX];    // 当たり判定ポインタ配列
 };
 
 #endif

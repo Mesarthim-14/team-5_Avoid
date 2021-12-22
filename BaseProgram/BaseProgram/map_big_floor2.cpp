@@ -88,6 +88,18 @@ HRESULT CMapBigFloor2::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 //=============================================================================
 void CMapBigFloor2::Uninit()
 {
+    // “–‚½‚è”»’èƒ‚ƒfƒ‹‚ÌI—¹ˆ—
+    if (m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE])
+    {
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE]->Uninit();
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE] = nullptr;
+    }
+    if (m_pColModelOBB[CCollisionModelOBB::SURFACE_UP])
+    {
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_UP]->Uninit();
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_UP] = nullptr;
+    }
+
     // I—¹ˆ—
     CMap::Uninit();
 }
