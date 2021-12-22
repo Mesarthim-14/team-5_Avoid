@@ -22,16 +22,16 @@
 //=====================================================================
 // マクロ定義
 //=====================================================================
-#define BACK_SIZE D3DXVECTOR3(350.0f,400.0f,0.0f)                   // 背面サイズ
-#define BACK_POS D3DXVECTOR3(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0.0f)   // 背面座標
+#define BACK_SIZE           (D3DXVECTOR3(1280.0f,70.0f,0.0f))              // 文字列
+#define BACK_POS            (D3DXVECTOR3(640.0f,30.0f,0.0f))               // 続ける
 
-#define STRING_SIZE D3DXVECTOR3(250.0f,70.0f,0.0f)                                              // 文字列
-#define RESUME_POS  D3DXVECTOR3(SCREEN_WIDTH/2, 35 + BACK_POS.y - (STRING_SIZE.y + 25),0.0f)    // 続ける
-#define RESTART_POS D3DXVECTOR3(SCREEN_WIDTH/2, 35 + BACK_POS.y,0.0f)                           // リスタート
-#define EXIT_POS       D3DXVECTOR3(SCREEN_WIDTH/2, 35 + BACK_POS.y + (STRING_SIZE.y + 25),0.0f)    // 終了
+#define STRING_SIZE         (D3DXVECTOR3(400.0f,100.0f,0.0f))              // 文字列
+#define RESUME_POS          (D3DXVECTOR3(200.0f,160.0f,0.0f))               // 続ける
+#define RESTART_POS         (D3DXVECTOR3(200.0f, 360.0f,0.0f))              // リスタート
+#define EXIT_POS            (D3DXVECTOR3(200.0f, 560.0f,0.0f))              // 終了
 
-#define MENU_ENTER_COL D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)     // 選んでるメニューの色
-#define MENU_NOT_ENTER_COL D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f) // 選んでないメニューの色
+#define MENU_ENTER_COL      (D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f))     // 選んでるメニューの色
+#define MENU_NOT_ENTER_COL  (D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f)) // 選んでないメニューの色
 
 //=====================================================================
 // コンストラクタ
@@ -71,7 +71,7 @@ CPause * CPause::Create()
 HRESULT CPause::Init()
 {
     CTexture* pTexture = GET_TEXTURE_PTR;
-    // ポーズの背景
+    // 続きから
     m_pPolygon[BACK] = CPolygon::Create(BACK_POS, BACK_SIZE);
     m_pPolygon[BACK]->BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_BACK));
     // 続きから
@@ -111,6 +111,7 @@ void CPause::Update()
 {
     CInputKeyboard* pKey = CManager::GetInstance()->GetKeyboard();
     CFade *pFade = CManager::GetInstance()->GetFade();
+
     // 選んでるメニューで色分け
     for (int nCntMenu = RESUME; nCntMenu < MAX; nCntMenu++)
     {

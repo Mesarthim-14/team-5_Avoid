@@ -50,6 +50,7 @@ public:
         TEXTURE_NUM_RESUME,                 // 続ける
         TEXTURE_NUM_RESTART,                // リスタート
         TEXTURE_NUM_EXIT,                   // 終了
+        TEXTURE_NUM_TRANSLATION,            // 操作説明
         TEXTURE_NUM_E_KEY,                  // Eキー
         TEXTURE_NUM_MESSAGE_BACK,           // メッセージ背景
         TEXTURE_NUM_WARNING,                // ボスの弾の警告
