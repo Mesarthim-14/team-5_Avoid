@@ -18,8 +18,8 @@
 class CRotateBody : public CModel
 {
 public:
-    CRotateBody(PRIORITY = PRIORITY_MAP);    // コンストラクタ
-    ~CRotateBody();                                 // デストラクタ
+    CRotateBody(PRIORITY Priority);    // コンストラクタ
+    ~CRotateBody();                    // デストラクタ
 
     static CRotateBody *Create(const D3DXVECTOR3 &pos); // インスタンス生成
     HRESULT Init(const D3DXVECTOR3 &pos);               // 初期化処理

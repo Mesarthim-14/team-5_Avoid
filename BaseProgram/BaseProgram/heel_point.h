@@ -18,8 +18,8 @@
 class CHeelPoint : public CModel
 {
 public:
-    CHeelPoint(PRIORITY = PRIORITY_MAP); // コンストラクタ
-    ~CHeelPoint();                              // デストラクタ
+    CHeelPoint(PRIORITY Priority); // コンストラクタ
+    ~CHeelPoint();                 // デストラクタ
 
     static CHeelPoint *Create(const D3DXVECTOR3 &pos);  // インスタンス生成
     HRESULT Init(const D3DXVECTOR3 &pos);               // 初期化処理

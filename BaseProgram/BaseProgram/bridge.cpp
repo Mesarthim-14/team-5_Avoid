@@ -47,7 +47,7 @@ CBridge::~CBridge()
 CBridge * CBridge::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
     // ÉÅÉÇÉäämï€
-    CBridge *pTestModel = new CBridge(PRIORITY_MAP);
+    CBridge *pTestModel = new CBridge(PRIORITY_GIMMICK);
 
     // !nullcheck
     if (pTestModel)

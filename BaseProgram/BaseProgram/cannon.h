@@ -18,8 +18,8 @@
 class CCannon : public CModel
 {
 public:
-    CCannon(PRIORITY = PRIORITY_MODEL); // コンストラクタ
-    ~CCannon();                         // デストラクタ
+    CCannon(PRIORITY Priority); // コンストラクタ
+    ~CCannon();                 // デストラクタ
 
     static CCannon *Create(const D3DXVECTOR3 &pos); // インスタンス生成
     HRESULT Init(const D3DXVECTOR3 &pos);           // 初期化処理

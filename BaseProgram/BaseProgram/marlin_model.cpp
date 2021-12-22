@@ -46,7 +46,7 @@ CMarlinModel::~CMarlinModel()
 CMarlinModel * CMarlinModel::Create(const D3DXVECTOR3 pos)
 {
     // ƒƒ‚ƒŠŠm•Û
-    CMarlinModel *pMarlinModel = new CMarlinModel(PRIORITY_MAP);
+    CMarlinModel *pMarlinModel = new CMarlinModel(PRIORITY_GIMMICK);
 
     // !nullcheck
     if (pMarlinModel)

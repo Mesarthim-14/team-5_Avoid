@@ -18,8 +18,8 @@
 class CRubble1 : public CModel
 {
 public:
-    CRubble1(PRIORITY = PRIORITY_MAP);   // コンストラクタ
-    ~CRubble1();                                // デストラクタ
+    CRubble1(PRIORITY Priority);   // コンストラクタ
+    ~CRubble1();                   // デストラクタ
 
     static CRubble1 *Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot);    // インスタンス生成
     HRESULT Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot);               // 初期化処理

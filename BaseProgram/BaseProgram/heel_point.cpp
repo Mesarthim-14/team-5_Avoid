@@ -46,7 +46,7 @@ CHeelPoint::~CHeelPoint()
 CHeelPoint * CHeelPoint::Create(const D3DXVECTOR3 &pos)
 {
     // ÉÅÉÇÉäämï€
-    CHeelPoint *pTestModel = new CHeelPoint(PRIORITY_MAP);
+    CHeelPoint *pTestModel = new CHeelPoint(PRIORITY_GIMMICK);
 
     // !nullcheck
     if (pTestModel)

@@ -44,7 +44,7 @@ CSharkModel::~CSharkModel()
 CSharkModel * CSharkModel::Create(const D3DXVECTOR3 pos)
 {
     // ÉÅÉÇÉäämï€
-    CSharkModel *pTestModel = new CSharkModel(PRIORITY_MAP);
+    CSharkModel *pTestModel = new CSharkModel(PRIORITY_GIMMICK);
 
     // !nullcheck
     if (pTestModel)

@@ -23,8 +23,8 @@ class CCollisionModelOBB;
 class CCannonBullet : public CModel
 {
 public:
-    CCannonBullet(PRIORITY = PRIORITY_MAP);  // コンストラクタ
-    ~CCannonBullet();                               // デストラクタ
+    CCannonBullet(PRIORITY Priority);  // コンストラクタ
+    ~CCannonBullet();                  // デストラクタ
 
     static CCannonBullet *Create(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &CannonRot);   // インスタンス生成
     HRESULT Init(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &CannonRot);                   // 初期化処理

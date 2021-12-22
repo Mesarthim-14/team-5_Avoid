@@ -46,7 +46,7 @@ CCannon::~CCannon()
 CCannon * CCannon::Create(const D3DXVECTOR3 &pos)
 {
     // ÉÅÉÇÉäämï€
-    CCannon *pTestModel = new CCannon(PRIORITY_MAP);
+    CCannon *pTestModel = new CCannon(PRIORITY_GIMMICK);
 
     // !nullcheck
     if (pTestModel)

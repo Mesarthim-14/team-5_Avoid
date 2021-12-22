@@ -70,7 +70,7 @@ CCannonBullet::~CCannonBullet()
 CCannonBullet * CCannonBullet::Create(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &CannonRot)
 {
     // ÉÅÉÇÉäämï€
-    CCannonBullet *pCannonBullet = new CCannonBullet(PRIORITY_MAP);
+    CCannonBullet *pCannonBullet = new CCannonBullet(PRIORITY_GIMMICK);
 
     // !nullcheck
     if (pCannonBullet)

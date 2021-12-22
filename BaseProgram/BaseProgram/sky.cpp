@@ -45,7 +45,7 @@ CSky::~CSky()
 CSky * CSky::Create()
 {
     // ÉÅÉÇÉäämï€
-    CSky *pTestModel = new CSky(PRIORITY_MAP);
+    CSky *pTestModel = new CSky(PRIORITY_GIMMICK);
 
     // !nullcheck
     if (pTestModel)

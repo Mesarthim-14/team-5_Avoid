@@ -48,7 +48,7 @@ CBarrel::~CBarrel()
 CBarrel * CBarrel::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
     // ÉÅÉÇÉäämï€
-    CBarrel *pTestModel = new CBarrel(PRIORITY_MAP);
+    CBarrel *pTestModel = new CBarrel(PRIORITY_GIMMICK);
 
     // !nullcheck
     if (pTestModel)

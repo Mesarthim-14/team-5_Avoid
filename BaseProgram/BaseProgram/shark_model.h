@@ -18,8 +18,8 @@
 class CSharkModel : public CModel
 {
 public:
-    CSharkModel(PRIORITY = PRIORITY_MAP);    // コンストラクタ
-    ~CSharkModel();                                 // デストラクタ
+    CSharkModel(PRIORITY Priority);    // コンストラクタ
+    ~CSharkModel();                    // デストラクタ
 
     static CSharkModel* Create(const D3DXVECTOR3 pos);  // インスタンス生成
     HRESULT Init(const D3DXVECTOR3 &pos);               // 初期化処理
