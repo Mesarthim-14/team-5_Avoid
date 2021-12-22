@@ -118,6 +118,12 @@ void CWimpEnemy::Update()
 
         // d—Í‚ÌØ‚è‘Ö‚¦
         GravitySwitch();
+
+        if (GetPos().y <= -2000.0f)
+        {
+            Uninit();
+            return;
+        }
     }
 }
 

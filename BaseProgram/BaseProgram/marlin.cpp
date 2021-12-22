@@ -87,14 +87,13 @@ void CMarlin::Uninit()
 //=============================================================================
 void CMarlin::Update()
 {
-    CWimpEnemy::Update();
-
     // ƒ‚ƒfƒ‹XVˆ—
     if (m_pMarlinModel)
     {
         m_pMarlinModel->SetPos(GetPos());
         m_pMarlinModel->SetRot(GetRot());
     }
+    CWimpEnemy::Update();
 }
 
 //=============================================================================
