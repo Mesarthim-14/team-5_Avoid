@@ -43,6 +43,7 @@ public:
         TEXTURE_NUM_JUMP,                   // 渦2
         TEXTURE_NUM_WATER,                  // 水に落ちた時
         TEXTURE_NUM_WATERWALL,              // 水に落ちた時
+        TEXTURE_NUM_CANNON,                 // 敵に当たった時のエフェクト
         TEXTURE_NUM_POP,                    // 吹っ飛ぶときに出るパーティクル
         TEXTURE_NUM_GAUGE,                  // ゲージ
         TEXTURE_NUM_GAUGEBAR,               // ゲージバー

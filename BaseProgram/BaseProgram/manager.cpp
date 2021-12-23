@@ -258,7 +258,6 @@ void CManager::Update()
                 if (m_pPause == NULL)
                 {
                     // ê∂ê¨
-                    CTranslation::Create();
                     m_pPause = CPause::Create();
 
                 }
