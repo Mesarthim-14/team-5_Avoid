@@ -13,6 +13,11 @@
 #include "state_player.h"
 
 //=====================================================================
+// マクロ定義
+//=====================================================================
+#define NOT_COLLISION_TIME (15.0f)  // 当たり判定を行わない時間
+
+//=====================================================================
 // 前方宣言
 //=====================================================================
 class CPlayer;
@@ -29,6 +34,9 @@ public:
     static CPlayerStateJump* Create();  // インスタンス生成
     void Init();                        // 初期化処理
     void Update()override;              // 更新処理
+
+    float GetJumpTimeCount()const { return m_fJumpTimeCount; }  // ジャンプ時間カウントの取得
+    bool GetJumpCheck()const { return m_bJumpCheck; }           // ジャンプし始めたかの判定の取得
 
 private:
     // private関数

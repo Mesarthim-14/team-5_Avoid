@@ -69,6 +69,13 @@ void CPlayerStateAvoid::Init()
     SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_JUMP), 60);
     SetMove();
     Update();
+
+    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    if (pPlayer)
+    {
+        // ó‘Ô‚ÌÝ’è
+        pPlayer->SetState(CPlayer::AVOID);
+    }
 }
 
 //=====================================================================

@@ -59,6 +59,9 @@ void CPlayerStateNotMove::Init()
     {
         pPlayer->SetMove(ZeroVector3);
         pPlayer->SetCollision(false);
+
+        // ó‘Ô‚ÌÝ’è
+        pPlayer->SetState(CPlayer::NOT_MOVE);
     }
 }
 
