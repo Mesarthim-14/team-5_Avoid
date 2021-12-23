@@ -18,8 +18,8 @@
 class CCheckFlag : public CModel
 {
 public:
-	CCheckFlag(PRIORITY = PRIORITY_MAP);			// コンストラクタ
-	~CCheckFlag();										// デストラクタ
+	CCheckFlag(PRIORITY Priority);			// コンストラクタ
+	~CCheckFlag();							// デストラクタ
 
 	static CCheckFlag *Create(const D3DXVECTOR3 &pos);	// インスタンス生成
 	HRESULT Init(const D3DXVECTOR3 &pos);				// 初期化処理

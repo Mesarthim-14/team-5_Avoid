@@ -113,6 +113,6 @@ void CMapBigFloor2::Col()
     if (m_pColModelOBB)
     {
         HitColOBBsPlayer(m_pColModelOBB);
-        HitColOBBsBossBullet(m_pColModelOBB);
+        HitColOBBsBossBullet(m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE]);
     }
 }

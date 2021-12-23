@@ -43,11 +43,22 @@ void CCollisionModel::Load(void)
     {
     case TYPE_POLYGON:
 
+#if false
         // ポリゴンの作成
         D3DXCreatePolygon(
             pDevice,        // デバイス情報
-            10.0f,          // 辺の長さ
+            1.0f,           // 辺の長さ
             4,              // 辺の数
+            &m_pMesh,       // メッシュ情報
+            &m_pBuffMat);   // バッファ情報
+#endif
+
+        // 直方体の作成(Yサイズ：0.0f)
+        D3DXCreateBox(
+            pDevice,        // デバイス情報
+            1.0f,           // 横幅
+            1.0f,           // 立幅
+            1.0f,           // 奥幅
             &m_pMesh,       // メッシュ情報
             &m_pBuffMat);   // バッファ情報
 
@@ -151,6 +162,8 @@ void CCollisionModel::Uninit()
 //*****************************************************************************
 void CCollisionModel::Update()
 {
+    // ワールドマトリックスの設定
+    SetMtx();
 }
 
 //*****************************************************************************
@@ -161,33 +174,20 @@ void CCollisionModel::Draw()
     // デバイスの取得
     LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
 
-    // 色の設定
-    D3DXMATERIAL* mat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
-    mat->MatD3D.Ambient = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-    mat->MatD3D.Diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-    mat->MatD3D.Specular = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
-    mat->MatD3D.Emissive = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+    if (m_pBuffMat)
+    {
+        // 色の設定
+        D3DXMATERIAL* mat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
+        mat->MatD3D.Ambient = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+        mat->MatD3D.Diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+        mat->MatD3D.Specular = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+        mat->MatD3D.Emissive = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+    }
 
     // ワイヤーフレームで描画
     pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-    D3DXMATRIX mtxRot, mtxTrans, mtxScale;
     D3DMATERIAL9 matDef;    // 現在のマテリアル保持用
-
-    // ワールドマトリックスの初期化
-    D3DXMatrixIdentity(&m_mtxWorld);
-
-    // 拡大率を反映
-    D3DXMatrixScaling(&mtxScale, m_info.size.x, m_info.size.y, m_info.size.z);
-    D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxScale);
-
-    // 向きを反映
-    D3DXMatrixRotationYawPitchRoll(&mtxRot, m_info.rot.y, m_info.rot.x, m_info.rot.z);
-    D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
-
-    // 位置を反映
-    D3DXMatrixTranslation(&mtxTrans, m_info.pos.x, m_info.pos.y, m_info.pos.z);
-    D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
     // ワールドマトリックスの設定
     pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
@@ -195,17 +195,20 @@ void CCollisionModel::Draw()
     // 現在のマテリアルを取得する
     pDevice->GetMaterial(&matDef);
 
-    // マテリアルデータへのポインタ
-    D3DXMATERIAL*pMat;
+    if (m_pBuffMat)
+    {
+        // マテリアルデータへのポインタ
+        D3DXMATERIAL*pMat;
 
-    // マテリアルデータへのポインタを取得
-    pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
+        // マテリアルデータへのポインタを取得
+        pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
 
-    // マテリアルのアンビエントにディフューズカラーを設定
-    pMat->MatD3D.Ambient = pMat->MatD3D.Diffuse;
+        // マテリアルのアンビエントにディフューズカラーを設定
+        pMat->MatD3D.Ambient = pMat->MatD3D.Diffuse;
 
-    // マテリアルの設定
-    pDevice->SetMaterial(&pMat->MatD3D);
+        // マテリアルの設定
+        pDevice->SetMaterial(&pMat->MatD3D);
+    }
 
     if (m_pMesh)
     {
@@ -221,4 +224,27 @@ void CCollisionModel::Draw()
 
     // ワイヤーフレームをもどす
     pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+}
+
+//*****************************************************************************
+// ワールドマトリックスの設定
+//*****************************************************************************
+void CCollisionModel::SetMtx()
+{
+    // ワールドマトリックスの初期化
+    D3DXMatrixIdentity(&m_mtxWorld);
+
+    D3DXMATRIX mtxRot, mtxTrans, mtxScale;
+
+    // 拡大率を反映
+    D3DXMatrixScaling(&mtxScale, m_info.size.x, m_info.size.y, m_info.size.z);
+    D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxScale);
+
+    // 向きを反映
+    D3DXMatrixRotationYawPitchRoll(&mtxRot, m_info.rot.y, m_info.rot.x, m_info.rot.z);
+    D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxRot);
+
+    // 位置を反映
+    D3DXMatrixTranslation(&mtxTrans, m_info.pos.x, m_info.pos.y, m_info.pos.z);
+    D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 }

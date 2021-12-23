@@ -514,6 +514,9 @@
     <ClCompile Include="shock_blur.cpp">
       <Filter>06_Effect\Shader\ShockBlur</Filter>
     </ClCompile>
+    <ClCompile Include="collisionModel_Polygon.cpp">
+      <Filter>12_Collision</Filter>
+    </ClCompile>
     <ClCompile Include="mesh_tube.cpp">
       <Filter>06_Effect</Filter>
     </ClCompile>
@@ -1040,6 +1043,9 @@
     </ClInclude>
     <ClInclude Include="shock_blur.h">
       <Filter>06_Effect\Shader\ShockBlur</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionModel_Polygon.h">
+      <Filter>12_Collision</Filter>
     </ClInclude>
     <ClInclude Include="mesh_tube.h">
       <Filter>06_Effect</Filter>

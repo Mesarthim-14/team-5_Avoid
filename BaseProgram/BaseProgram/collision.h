@@ -46,6 +46,8 @@ public:
     static bool ColCircularAndCircular(const D3DXVECTOR3 &pos1, const D3DXVECTOR3 &pos2, const float &radius1, const float &radius2);
     // 当たり判定(矩形と円形)
     static bool ColRectangleAndCircular(const D3DXVECTOR3 &RectanglePos, const D3DXVECTOR3 &CircularPos, const D3DXVECTOR3 &RectangleSize, const float &CircularRadius, const float &RectangleRadian);
+    // プレイヤーの壁ずりベクトル計算
+    static D3DXVECTOR3 SlideVect(const D3DXVECTOR3 &playerMove, const D3DXVECTOR3 &norVec);
 };
 
 #endif

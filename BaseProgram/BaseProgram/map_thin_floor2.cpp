@@ -86,6 +86,18 @@ HRESULT CMapThinFloor2::Init(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 //=============================================================================
 void CMapThinFloor2::Uninit()
 {
+    // ìñÇΩÇËîªíËÉÇÉfÉãÇÃèIóπèàóù
+    if (m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE])
+    {
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE]->Uninit();
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE] = nullptr;
+    }
+    if (m_pColModelOBB[CCollisionModelOBB::SURFACE_UP])
+    {
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_UP]->Uninit();
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_UP] = nullptr;
+    }
+
     // èIóπèàóù
     CMap::Uninit();
 }
@@ -99,6 +111,6 @@ void CMapThinFloor2::Col()
     if (m_pColModelOBB)
     {
         HitColOBBsPlayer(m_pColModelOBB);
-        HitColOBBsBossBullet(m_pColModelOBB);
+        HitColOBBsBossBullet(m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE]);
     }
 }

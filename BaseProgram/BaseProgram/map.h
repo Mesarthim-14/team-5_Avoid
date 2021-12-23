@@ -11,9 +11,13 @@
 // インクルード
 //=========================================================================
 #include "model.h"
-#include "collisionModel_OBB.h"
-#include "collisionModel_Sphere.h"
-#include "collisionModel_Cylinder.h"
+
+//=========================================================================
+// 前方宣言
+//=========================================================================
+class CCollisionModelOBB;
+class CCollisionModelCylinder;
+class CCollisionModelPolygon;
 
 //=========================================================================
 // クラス定義
@@ -31,7 +35,9 @@ public:
 
     // 当たり判定
     void HitColOBBsPlayer(const CCollisionModelOBB* const* pMapColOBB);             // プレイヤーとの当たり判定関数(直方体同士)
-    void HitColOBBsBossBullet(const CCollisionModelOBB* const* pMapColOBB);         // ボスバレットとの当たり判定関数(直方体同士)
+    void HitColOBBsPlayer(const CCollisionModelOBB* const &pMapColOBB);             // プレイヤーとの当たり判定関数(直方体同士)
+    void HitColOBBsPlayer(const CCollisionModelPolygon* const &pMapColPolygon);     // プレイヤーとの当たり判定関数(直方体同士)
+    void HitColOBBsBossBullet(const CCollisionModelOBB* const pMapColOBB);          // ボスバレットとの当たり判定関数(直方体同士)
     void HitColPlayer(const CCollisionModelCylinder* const pMapColCylinder);        // プレイヤーとの当たり判定関数(球体と円柱)
     void HitColBossBullet(const CCollisionModelCylinder* const pMapColCylinder);    // ボスバレットとの当たり判定関数(球体と円柱)
 

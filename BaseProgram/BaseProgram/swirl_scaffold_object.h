@@ -19,8 +19,8 @@
 class CSwirlScaffoldObject : public CMap
 {
 public:
-    CSwirlScaffoldObject(PRIORITY = PRIORITY_MAP); // コンストラクタ
-    ~CSwirlScaffoldObject();                              // デストラクタ
+    CSwirlScaffoldObject(PRIORITY Priority); // コンストラクタ
+    ~CSwirlScaffoldObject();                 // デストラクタ
 
     static CSwirlScaffoldObject *Create(const D3DXVECTOR3 &pos);    // インスタンス生成
     HRESULT Init(const D3DXVECTOR3 &pos);                           // 初期化処理

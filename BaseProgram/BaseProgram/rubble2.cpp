@@ -39,7 +39,7 @@ CRubble2::~CRubble2()
 CRubble2 * CRubble2::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 {
     // ÉÅÉÇÉäämï€
-    CRubble2 *pTestModel = new CRubble2(PRIORITY_MAP);
+    CRubble2 *pTestModel = new CRubble2(PRIORITY_GIMMICK);
 
     // !nullcheck
     if (pTestModel)

@@ -46,7 +46,7 @@ CGhostModel::~CGhostModel()
 CGhostModel * CGhostModel::Create(const D3DXVECTOR3 pos)
 {
     // ÉÅÉÇÉäämï€
-    CGhostModel *pTestModel = new CGhostModel(PRIORITY_MAP);
+    CGhostModel *pTestModel = new CGhostModel(PRIORITY_GIMMICK);
 
     // !nullcheck
     if (pTestModel)

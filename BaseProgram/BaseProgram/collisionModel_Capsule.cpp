@@ -96,7 +96,7 @@ void CCollisionModelCapsule::Unload()
 //*****************************************************************************
 CCollisionModelCapsule * CCollisionModelCapsule::Create(const D3DXVECTOR3 &pos, const float &radius, const float &length, const D3DXVECTOR3 &rot)
 {
-    CCollisionModelCapsule *pCollisionModelSphere = new CCollisionModelCapsule;
+    CCollisionModelCapsule *pCollisionModelSphere = new CCollisionModelCapsule(PRIORITY_COLLISION);
 
     if (pCollisionModelSphere)
     {
@@ -173,24 +173,13 @@ void CCollisionModelCapsule::Draw()
     {
         //色の設定
         D3DXMATERIAL* mat = (D3DXMATERIAL*)m_apBuffMat[nCount]->GetBufferPointer();
-        mat->MatD3D.Ambient = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
-        mat->MatD3D.Diffuse = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
-        mat->MatD3D.Specular = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
-        mat->MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 1.0f, 1.0f);
+        mat->MatD3D.Ambient = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+        mat->MatD3D.Diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+        mat->MatD3D.Specular = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
+        mat->MatD3D.Emissive = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 
         //ワイヤーフレームで描画
         pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-        //ワールドマトリックスの初期化
-        D3DXMatrixIdentity(&m_mtxWorld);
-
-        D3DXMATRIX mtxTrans, mtxScale, mtxRot;
-        memset(&mtxTrans, 0, sizeof(mtxTrans));
-        memset(&mtxScale, 0, sizeof(mtxScale));
-        memset(&mtxRot, 0, sizeof(mtxRot));
-
-        //ワールドマトリックスの初期化
-        D3DXMatrixIdentity(&m_mtxWorld);
 
         // ワールドマトリックスの設定
         SetMtx(nCount);
@@ -376,6 +365,9 @@ void CCollisionModelCapsule::SetRot(const int &nCount)
 //*****************************************************************************
 void CCollisionModelCapsule::SetMtx(const int &nCount)
 {
+    //ワールドマトリックスの初期化
+    D3DXMatrixIdentity(&m_mtxWorld);
+
     D3DXMATRIX mtxTrans, mtxScale, mtxRot;
     memset(&mtxTrans, 0, sizeof(mtxTrans));
     memset(&mtxScale, 0, sizeof(mtxScale));

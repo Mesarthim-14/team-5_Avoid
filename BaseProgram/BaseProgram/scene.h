@@ -26,6 +26,7 @@ public:
         PRIORITY_0 = 0,
         PRIORITY_1,
         PRIORITY_MAP,           // マップ
+        PRIORITY_GIMMICK,       // ギミック
         PRIORITY_BULLET,        // 弾
         PRIORITY_MODEL,         // モデル
         PRIORITY_CHARACTER,     // キャラクター

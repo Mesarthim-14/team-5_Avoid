@@ -25,8 +25,8 @@ public:
         float radius;
     };
 
-    CCollisionModelSphere(PRIORITY = PRIORITY_COLLISION); // コンストラクタ
-    ~CCollisionModelSphere();                             // デストラクタ
+    CCollisionModelSphere(PRIORITY Priority); // コンストラクタ
+    ~CCollisionModelSphere();                 // デストラクタ
 
     static CCollisionModelSphere *Create(const D3DXVECTOR3 &pos, const float &radius, const D3DXVECTOR3 &rot);    // 生成処理
 

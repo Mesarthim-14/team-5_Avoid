@@ -65,8 +65,8 @@ public:
         DETAIL detail;      // カプセルを形成する各オブジェクトの詳細情報
     };
 
-    CCollisionModelCapsule(PRIORITY = PRIORITY_COLLISION); // コンストラクタ
-    ~CCollisionModelCapsule();                             // デストラクタ
+    CCollisionModelCapsule(PRIORITY Priority); // コンストラクタ
+    ~CCollisionModelCapsule();                 // デストラクタ
 
     void Load();    // ロード処理
     void Unload();  // アンロード処理
