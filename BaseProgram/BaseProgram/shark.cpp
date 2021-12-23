@@ -10,6 +10,8 @@
 //=============================================================================
 #include "shark.h"
 #include "shark_model.h"
+#include "manager.h"
+#include "pause.h"
 
 //=============================================================================
 // マクロ定義
@@ -89,14 +91,19 @@ void CShark::Uninit()
 //=============================================================================
 void CShark::Update()
 {
-    // モデル更新処理
-    if (m_pSharkModel)
-    {
-        m_pSharkModel->SetPos(GetPos());
-        m_pSharkModel->SetRot(GetRot());
-    }
+    bool bPause = CManager::GetInstance()->GetActivePause();
 
-    CWimpEnemy::Update();
+    if (!bPause)
+    {
+        // モデル更新処理
+        if (m_pSharkModel)
+        {
+            m_pSharkModel->SetPos(GetPos());
+            m_pSharkModel->SetRot(GetRot());
+        }
+
+        CWimpEnemy::Update();
+    }
 }
 
 //=============================================================================

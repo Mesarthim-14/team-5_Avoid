@@ -41,7 +41,8 @@ public:
     inline bool SetPause(const bool &pause) { m_bPause = pause; }
 
 private:
-    CPolygon * m_pPolygon[MAX];
+    CPolygon * m_apPolygon[MAX];
+    CPolygon * m_pPolygon;
     int m_nMenu;
     bool m_bPause;
     float m_fMove;
