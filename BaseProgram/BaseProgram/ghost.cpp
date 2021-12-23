@@ -99,21 +99,25 @@ void CGhost::Uninit()
 //=============================================================================
 void CGhost::Update()
 {
-    CWimpEnemy::Update();
+    bool bPause = CManager::GetInstance()->GetActivePause();
 
-    // モデル更新処理
-    if (m_pGhostModel)
+    if (!bPause)
     {
-        m_pGhostModel->SetPos(GetPos());
-        m_pGhostModel->SetRot(GetRot());
+        CWimpEnemy::Update();
+
+        // モデル更新処理
+        if (m_pGhostModel)
+        {
+            m_pGhostModel->SetPos(GetPos());
+            m_pGhostModel->SetRot(GetRot());
+        }
+
+        // 移動処理
+        Move();
+
+        // 当たり判定
+        Collision();
     }
-
-    // 移動処理
-    Move();
-
-    // 当たり判定
-    Collision();
-
 }
 
 //=============================================================================

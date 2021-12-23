@@ -226,6 +226,7 @@ void CManager::Update()
 {
     CInputKeyboard* pKey = CManager::GetKeyboard();
     m_bPause = CManager::GetInstance()->GetActivePause();
+
     if (m_pInput)
     {
         //入力処理クラスの更新処理呼び出し
@@ -248,6 +249,7 @@ void CManager::Update()
         //フェードクラスの更新処理呼び出し
         m_pFade->Update();
     }
+
     if (m_pRenderer)
     {
         if (m_mode == MODE_TYPE_GAME)
@@ -258,9 +260,7 @@ void CManager::Update()
                 if (m_pPause == NULL)
                 {
                     // 生成
-                    CTranslation::Create();
                     m_pPause = CPause::Create();
-
                 }
                 // ポーズの切り替え
                 m_bPause ^= true;
@@ -280,7 +280,7 @@ void CManager::Update()
                 if (m_pPause != NULL)
                 {
                     // ポーズの更新処理
-                    m_pPause->Update(); 
+                    m_pPause->Update();
                 }
             }
         }

@@ -179,48 +179,53 @@ void CPlayer::Uninit()
 //=============================================================================
 void CPlayer::Update()
 {
-	{
-		// 位置取得
-		D3DXVECTOR3 pos = GetPos();
+    bool bPause = CManager::GetInstance()->GetActivePause();
 
-		// 古い位置設定
-		SetPosOld(pos);
-	}
-
-	// 状態更新
-	UpdateState();
-
-	CCharacter::Update();
-
-	// リスポーン
-	Respawn();
-
-    D3DXVECTOR3 pos = GetPos();
-    D3DXVECTOR3 rot = GetRot();
-    for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
+    if (!bPause)
     {
-        if (m_pSkinmeshModel[nCount])
         {
-            // 各モデルの座標と角度の設定
-            m_pSkinmeshModel[nCount]->SetPos(pos);
-            m_pSkinmeshModel[nCount]->SetRot(rot);
+            // 位置取得
+            D3DXVECTOR3 pos = GetPos();
+
+            // 古い位置設定
+            SetPosOld(pos);
         }
+
+        // 状態更新
+        UpdateState();
+
+        CCharacter::Update();
+
+        // リスポーン
+        Respawn();
+
+        D3DXVECTOR3 pos = GetPos();
+        D3DXVECTOR3 rot = GetRot();
+        for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
+        {
+            if (m_pSkinmeshModel[nCount])
+            {
+                // 各モデルの座標と角度の設定
+                m_pSkinmeshModel[nCount]->SetPos(pos);
+                m_pSkinmeshModel[nCount]->SetRot(rot);
+            }
+        }
+
+        // 更新処理
+        UpdateRot();
+
+        // 当たり判定モデル情報の更新処理
+        if (m_pColModelOBB)
+        {
+            m_pColModelOBB->SetInfo(pos, m_pColModelOBB->GetOBB().info.size, rot);
+        }
+        if (m_pColModelCapsule)
+        {
+            m_pColModelCapsule->SetInfo(pos, m_pColModelCapsule->GetInfo().radius, m_pColModelCapsule->GetInfo().length, rot);
+        }
+
+        ShowInfo();
     }
-
-	// 更新処理
-	UpdateRot();
-
-    // 当たり判定モデル情報の更新処理
-	if (m_pColModelOBB)
-	{
-        m_pColModelOBB->SetInfo(pos, m_pColModelOBB->GetOBB().info.size, rot);
-	}
-    if (m_pColModelCapsule)
-    {
-        m_pColModelCapsule->SetInfo(pos, m_pColModelCapsule->GetInfo().radius, m_pColModelCapsule->GetInfo().length, rot);
-    }
-
-	ShowInfo();
 }
 
 //=============================================================================
