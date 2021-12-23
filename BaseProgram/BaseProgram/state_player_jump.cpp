@@ -132,7 +132,7 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
         m_nChargeJumpCount++;
 
         // エフェクトの発生時間
-        if (m_nChargeJumpCount >= PARTICLE_STRAT && m_bJumpEffect)
+        if (m_nChargeJumpCount >= PARTICLE_STRAT && m_nChargeJumpCount <= CHARGEJUMP_MAX && m_bJumpEffect)
         {
             m_bJumpEffect = false;
             CPlaneJumpReservoir::Create(pos);

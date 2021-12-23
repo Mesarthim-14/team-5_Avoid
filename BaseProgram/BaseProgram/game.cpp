@@ -43,6 +43,7 @@
 #include "map_factory.h"
 #include "sound.h"
 #include "shock_blur.h"
+#include "mesh_tube.h"
 
 float CGame::m_fGravity = 1.5f;
 CGaussFilter* CGame::m_pGaussFilter = nullptr;
@@ -81,9 +82,7 @@ HRESULT CGame::Init()
 {
     CreateFilter();
     CreateObject();
-
     CLibrary::SetSound(CSound::SOUND_BGM_TITLE);
-
     return S_OK;
 }
 
