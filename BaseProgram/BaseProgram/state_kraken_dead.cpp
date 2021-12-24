@@ -63,5 +63,11 @@ void CKrakenStateDead::Init()
 //=====================================================================
 void CKrakenStateDead::Update()
 {
-
+    CKraken* pKraken = GetKrakenPtr();
+    if (pKraken)
+    {
+        D3DXVECTOR3 pos = pKraken->GetPos();
+        pos.y -= 50.0f;
+        pKraken->SetPos(pos);
+    }
 }

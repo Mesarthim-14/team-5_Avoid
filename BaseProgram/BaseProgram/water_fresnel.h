@@ -39,6 +39,8 @@ public:
 	void Draw();					// •`‰æ
 	void ShowInfo();				// ImgUi
 
+    inline CReflect* GetReflect()const { return m_pReflect; }
+
 private:
 	CWave *m_pWave;					// ŠC
 	CParallaxMapping2 *m_pParallax;	// ‹·ƒ}ƒbƒv

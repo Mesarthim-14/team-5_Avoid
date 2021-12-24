@@ -141,7 +141,7 @@ void CGaussFilter::Restore()
     m_pOriginalMap->GetSurfaceLevel(0, &m_pOriginalMapSurf);
 
     m_pd3dDevice->CreateTexture(
-        SCREEN_WIDTH, SCREEN_HEIGHT, 1, D3DUSAGE_RENDERTARGET,
+        SCREEN_WIDTH / 5, SCREEN_HEIGHT / 5, 1, D3DUSAGE_RENDERTARGET,
         D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &m_pXMap, NULL);
     m_pXMap->GetSurfaceLevel(0, &m_pXMapSurf);
 

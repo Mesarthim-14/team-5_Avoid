@@ -30,7 +30,7 @@ protected:
     virtual void SetAnimation(const UINT &animID, const FLOAT &time);   // アニメーション設定
     void MoveByKeyboard(CPlayer* &pPlayer);                             // 入力処理
 
-    // 終了フラグを返すラムダ式
+    // フラグを返す式
     function<bool(const int&, CPlayerState*)> CounterFunc = [](const int &nLimit, CPlayerState* pState)
     {
         if (nLimit <= pState->m_nCounter++)
@@ -41,7 +41,7 @@ protected:
     };
 
 private:
-    void SoundUpdate();                                                 // 音の
+    void SoundUpdate();     // 音の更新
 
     float m_fAngleSpeed;    // 目標向きまで向かうスピード 
     int m_nCounter;         // カウンタ

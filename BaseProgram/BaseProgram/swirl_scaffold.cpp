@@ -89,6 +89,8 @@ void CSwirlScaffold::Uninit()
             m_pObject[nCount] = nullptr;
         }
     }
+
+    Release();
 }
 
 //=============================================================================

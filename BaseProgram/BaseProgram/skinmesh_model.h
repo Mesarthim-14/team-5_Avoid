@@ -20,6 +20,7 @@
 //=============================================================================
 class CModelInfo;
 class IHighLevelAnimController;
+class CWaterFresnel;
 
 //=============================================================================
 // モデルクラス
@@ -42,10 +43,12 @@ public:
     CSkinmeshModel(PRIORITY Priority = PRIORITY_EFFECT);    // コンストラクタ
     ~CSkinmeshModel();
 
-    HRESULT Init();     // 初期化処理
-    void Uninit();      // 終了処理
-    void Update();      // 更新処理
-    void Draw();        // 描画処理
+    HRESULT Init();                     // 初期化処理
+    void Uninit();                      // 終了処理
+    void Update();                      // 更新処理
+    void Draw();                        // 描画処理
+    void Draw(CWaterFresnel* pFresnel, D3DXMATRIX mtxFresnel);   // 描画処理
+
     static CSkinmeshModel *Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, MODEL modelNum);    // インスタンス生成
     void SetModelNumber(MODEL model);
     inline void SetPos(const D3DXVECTOR3 &pos)                  { m_pModelInfo->SetPos(pos); }  // 現在の座標情報

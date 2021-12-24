@@ -87,10 +87,10 @@ void CReflect::Begin()
     }
 }
 
-void CReflect::BeginPass()
+void CReflect::BeginPass(const int& nNum)
 {
     if (m_pEffect)
-        m_pEffect->BeginPass(0);
+        m_pEffect->BeginPass(nNum);
 }
 
 //水面の高さを設定
@@ -189,4 +189,18 @@ BOOL CReflect::IsOK()
         return TRUE;
 
     return FALSE;
+}
+
+//===================================================================================================================
+// 頂点ブレンド用の情報を送る関数
+//===================================================================================================================
+void CReflect::SetVertexBlendInfo(D3DXMATRIX *pMtxWorld[4], D3DXMATRIX pMtxView, D3DXMATRIX pMtxProj, int nNum)
+{
+    if (m_pEffect)
+    {
+        m_pEffect->SetMatrixPointerArray("matWorld", (const D3DXMATRIX**)pMtxWorld, 4);
+        m_pEffect->SetMatrix("matView", &pMtxView);
+        m_pEffect->SetMatrix("matProj", &pMtxProj);
+        m_pEffect->SetInt("iBlendNum", (INT)nNum);
+    }
 }

@@ -24,7 +24,7 @@ public:
     void Invalidate();
     void Restore();
     void Begin();
-    void BeginPass();
+    void BeginPass(const int& nNum);
     void SetHeight(float Height);
     void SetAmbient(float Ambient);
     void SetAmbient(D3DXVECTOR4* pAmbient);
@@ -34,6 +34,7 @@ public:
     void CommitChanges();
     BOOL IsOK();
     LPD3DXEFFECT GetEffect() { return m_pEffect; };
+    void SetVertexBlendInfo(D3DXMATRIX *pMtxWorld[4], D3DXMATRIX pMtxView, D3DXMATRIX pMtxProj, int nNum);
 
 private:
     LPD3DXEFFECT m_pEffect;

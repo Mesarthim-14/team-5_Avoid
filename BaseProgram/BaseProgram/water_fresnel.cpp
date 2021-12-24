@@ -28,6 +28,9 @@
 #include "reflect.h"
 #include "player.h"
 #include "modelanime.h"
+#include "skinmesh_model.h"
+#include "reflect.h"
+#include "kraken.h"
 
 //=============================================================================
 // マクロ定義
@@ -503,7 +506,7 @@ void CWaterFresnel::Draw()
         // box
         pDevice->SetTexture(0, pTexture->GetTexture(CTexture::TEXTURE_NUM_TEST));
         m_pReflect->SetAmbient(&m_ReflectPlayerAmbiend);
-        m_pReflect->BeginPass();
+        m_pReflect->BeginPass(0);
 
 //        for (auto& pPtr : pModelList)
 //        {
@@ -587,12 +590,17 @@ void CWaterFresnel::Draw()
             for (DWORD nCount = 0; nCount < numMat; nCount++)
             {
                 pDevice->SetTexture(0, pPtr->GetTexture(nCount));
-                m_pReflect->BeginPass();
+                m_pReflect->BeginPass(0);
                 mesh->DrawSubset(nCount);
                 m_pReflect->EndPass();
             }
         }
 
+        CSkinmeshModel* pSkinmeshModel = pPlayer->GetCurrentSkinMeshPtr();
+        pSkinmeshModel->Draw(this, matReflect);
+        CKraken* pKraken = CManager::GetInstance()->GetGame()->GetKraken();
+        pSkinmeshModel = pKraken->GetSkinMesh();
+        pSkinmeshModel->Draw(this, matReflect);
         //Zバッファ書込み禁止
         pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
         //空レンダリング
@@ -601,7 +609,7 @@ void CWaterFresnel::Draw()
         matWorld = matWorld * matReflect;
         m_pReflect->SetMatrix(&matWorld, &LightDirReflect);
         m_pReflect->SetAmbient(&m_ReflectSkyAmbiend);
-        m_pReflect->BeginPass();
+        m_pReflect->BeginPass(0);
         sky.pMesh->DrawSubset(0);
         m_pReflect->EndPass();
         pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);

@@ -35,7 +35,7 @@ public:
         ACTION_JUMP,
         ACTION_LANDING,
         ACTION_WALK,
-    //    ACTION_AVOID,
+        ACTION_AVOID,
         ACTION_MAX
     };//çsìÆèÛë‘
 

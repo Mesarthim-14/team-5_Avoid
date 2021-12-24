@@ -334,7 +334,7 @@ BOOL CLibrary::KeyboardRelease(const int &nKey)
 //=============================================================================
 // XZ(ïΩñ )ÇÃäpìxÇãÅÇﬂÇÈ
 //=============================================================================
-float CLibrary::CalAngleXZ(const D3DXVECTOR3 & This, const D3DXVECTOR3 & Target)
+float CLibrary::CalAngleXZ(const D3DXVECTOR3& This, const D3DXVECTOR3& Target)
 {
     return atan2f((This.x - Target.x), (This.z - Target.z));
 }

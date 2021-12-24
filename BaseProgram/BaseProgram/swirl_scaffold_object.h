@@ -31,6 +31,11 @@ private:
     void Col(); // 当たり判定
 
     CCollisionModelOBB* m_pColModelOBB[CCollisionModelOBB::SURFACE_MAX];    // 当たり判定ポインタ配列
+    D3DXVECTOR3 m_OldPlayerPos;
+    D3DXVECTOR3 m_PlayerPos;
+    D3DXVECTOR3 m_Rot;
+    D3DXVECTOR3 m_OldRot;
+
 };
 
 #endif

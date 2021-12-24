@@ -14,6 +14,12 @@ float4 m_LightDir;
 float4 m_Ambient;
 float  m_Height;
 
+float4x4 matWorld[4]: WORLD;		// ワールド変換行列配列
+
+float4x4 matView : VIEW;            // ビュー変換行列
+float4x4 matProj : PROJECTION;      // 射影変換行列
+int iBlendNum;                      // ブレンドする配列の数
+
 // オブジェクトのテクスチャー
 sampler tex0 : register(s0);
 
@@ -66,6 +72,44 @@ float4 PS( VS_OUTPUT In ) : COLOR0
 }
 
 //=============================================================================
+// 頂点シェーダ(スキンメッシュ)
+//=============================================================================
+VS_OUTPUT SkinmeshVS(float4 Pos : POSITION, float4 World : BLENDWEIGHT,
+    float4 Normal : NORMAL, float2 Tex : TEXCOORD0)
+{
+    VS_OUTPUT Out;
+
+    float4 P_after;							// 出力頂点座標
+    float Weight[4] = (float[4])World;		// 重みをfloatに分割します
+    float LastBlendWeight = 0.0f;			// 最後の行列に掛けられる重み
+    float4x4 matCombWorld = 0.0f;			// 合成ワールド変換行列
+    for (int nCount = 0; nCount < iBlendNum - 1; nCount++)
+    {
+        LastBlendWeight += Weight[nCount];		// 最後の重みをここで計算しておく
+        matCombWorld += matWorld[nCount] * Weight[nCount];
+    }
+
+    // 最後の重みを足し算
+    matCombWorld += matWorld[iBlendNum - 1] * (1.0f - LastBlendWeight);
+
+    P_after = mul(Pos, matCombWorld);	// ワールド変換
+    //Z値は遠近射影行列で取得する
+    Out.WPos = mul(Pos, P_after);
+
+    P_after = mul(P_after, matView);    // ビュー変換
+    P_after = mul(P_after, matProj);    // 射影変換
+
+    Out.Pos = P_after;
+    Out.Tex = Tex;
+
+    float3 Light = -m_LightDir.xyz;                 // ライトの反転
+    float3 NorLight = normalize(Normal.xyz);        // 正規化
+    Out.Col = max(m_Ambient, dot(NorLight, Light)); // 色の設定
+
+    return Out;
+}
+
+//=============================================================================
 // テクニック
 //=============================================================================
 technique TShader
@@ -75,4 +119,10 @@ technique TShader
 		VertexShader = compile vs_1_1 VS();
 		PixelShader = compile ps_2_0 PS();
 	}
+    pass P1
+    {
+        VertexShader = compile vs_1_1 SkinmeshVS();
+        PixelShader = compile ps_2_0 PS();
+    }
+
 }

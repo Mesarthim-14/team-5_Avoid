@@ -95,6 +95,7 @@ void CSwirlScaffoldObject::Uninit()
         m_pColModelOBB[CCollisionModelOBB::SURFACE_UP]->Uninit();
         m_pColModelOBB[CCollisionModelOBB::SURFACE_UP] = nullptr;
     }
+    CMap::Uninit();
 }
 
 //=============================================================================
@@ -149,6 +150,7 @@ void CSwirlScaffoldObject::Col()
             // ’…’n‚Ìˆ—
             pPlayer->Landing(surfaceUpObb.info.pos.y + (surfaceUpObb.info.size.y / 2) + (playerObb.info.size.y / 2));
             pPlayer->SetPos(pPlayer->GetPos() + (GetPos() - GetPosOld()));
+
             SetHitMap(true);
             return;
         }

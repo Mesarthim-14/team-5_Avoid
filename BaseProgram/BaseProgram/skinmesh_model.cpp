@@ -22,6 +22,8 @@
 #include "resource_manager.h"
 #include "camera.h"
 #include "light.h"
+#include "water_fresnel.h"
+#include "reflect.h"
 
 const char * CSkinmeshModel::m_aParam[MODEL_MAX] =
 {
@@ -248,6 +250,97 @@ void CSkinmeshModel::Draw()
 
         pToonShader->DrawEdgeFilter();
     }
+}
+
+//=============================================================================
+// 反射用
+//=============================================================================
+void CSkinmeshModel::Draw(CWaterFresnel* pFresnel, D3DXMATRIX mtxFresnel)
+{
+    if (m_bIsDraw)
+    {
+        CToonShader* pToonShader = CManager::GetInstance()->GetRenderer()->GetToonShader();
+
+        CTexture *pTexture = GET_TEXTURE_PTR;
+        D3DXVECTOR4 LightDir = D3DXVECTOR4(CManager::GetInstance()->GetLight()->GetLightDir(), 0.0f);
+
+        //デバイス情報の取得
+        LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+        D3DMATERIAL9 matDef;
+        D3DXMATRIX mtxWorld;
+        D3DXVECTOR3 pos = m_pModelInfo->GetPos();
+        D3DXVECTOR3 rot = m_pModelInfo->GetRot();
+        D3DXMATRIX *worldMatAry[4] = {};
+        LightDir.x = sinf(rot.y);
+        LightDir.y = cosf(rot.y);
+        LightDir.z = 1.0f;
+
+        // マトリクスの設定
+        CLibrary::ConfigMatrix(&mtxWorld, pos, rot);
+
+        D3DXMATRIX mtxProj = CManager::GetInstance()->GetCamera()->GetMtxProj();
+        D3DXMATRIX mtxView = CManager::GetInstance()->GetCamera()->GetMtxView();
+
+        //アニメーション更新
+//        m_HLcontroller->AdvanceTime(1);
+
+        //現在フレーム(fps)のワールド変換行列
+        std::map<DWORD, D3DXMATRIX> combMatrixMap;
+        SkinMesh::updateCombMatrix(combMatrixMap, mtxWorld, m_pRootFrame);
+
+        for (DWORD BCombiId = 0; BCombiId < m_cont.size(); BCombiId++)
+        {
+            // シェーダ開始
+            pToonShader->Begin();
+
+            for (DWORD AttribId = 0; AttribId < m_cont[BCombiId]->numBoneCombinations; AttribId++)
+            {
+                SkinMesh::BlendIndex& blendIndex = m_pBlendIndex[AttribId];
+                pDevice->SetRenderState(D3DRS_VERTEXBLEND, blendIndex.boneNum - 1);
+                for (int b = 0; b < blendIndex.boneNum; b++)
+                {
+                    worldMatAry[b] = &(combMatrixMap[blendIndex.index[b]] * mtxFresnel);
+                }
+                for (int b = blendIndex.boneNum; b < 4; b++)
+                {
+                    worldMatAry[b] = &(mtxWorld * mtxFresnel);
+                }
+
+                pToonShader->SetVertexBlendInfo(
+                    worldMatAry, mtxView, mtxProj, blendIndex.boneNum);
+
+                D3DXVECTOR4 Diffuse = ZeroVector4;
+                Diffuse.x = m_cont[BCombiId]->pMaterials[AttribId].MatD3D.Diffuse.r;
+                Diffuse.y = m_cont[BCombiId]->pMaterials[AttribId].MatD3D.Diffuse.g;
+                Diffuse.z = m_cont[BCombiId]->pMaterials[AttribId].MatD3D.Diffuse.b;
+                Diffuse.w = m_cont[BCombiId]->pMaterials[AttribId].MatD3D.Diffuse.a;
+
+
+                pDevice->SetTexture(0, m_pTexture);
+                pToonShader->SetDiffuse(Diffuse);
+
+                CReflect* pReflect = pFresnel->GetReflect();
+                pReflect->BeginPass(1);
+
+                pReflect->SetVertexBlendInfo(worldMatAry, mtxView, mtxProj, blendIndex.boneNum);
+                pToonShader->Begin(CToonShader::TOON_PASS_SKINMESH_TEX, mtxWorld, &LightDir);
+
+
+                m_cont[BCombiId]->MeshData.pMesh->DrawSubset(AttribId);
+
+                pToonShader->EndPass();
+                pReflect->EndPass();
+
+            }
+
+            pToonShader->End();
+        }
+
+        //保持していたマテリアルを戻す
+        pDevice->SetMaterial(&matDef);
+        pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+    }
+
 }
 
 //=============================================================================
