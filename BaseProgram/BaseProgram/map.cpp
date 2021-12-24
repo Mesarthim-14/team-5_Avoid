@@ -17,6 +17,7 @@
 #include "collisionModel_Cylinder.h"
 #include "collisionModel_Polygon.h"
 #include "boss_bullet.h"
+#include "state_player_jump.h"
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -96,6 +97,18 @@ void CMap::HitColOBBsPlayer(const CCollisionModelOBB* const* pMapColOBB)
     if (!pPlayer)
         return;
 
+    if (pPlayer->GetState() == CPlayer::JUMP)
+    { // ジャンプ状態のとき
+        CPlayerStateJump* pStateJump = (CPlayerStateJump*)pPlayer->GetCurrentState();
+        if (pStateJump->GetJumpCheck())
+        { // ジャンプし始めているとき
+            if (pStateJump->GetJumpTimeCount() < NOT_COLLISION_TIME)
+            { // 当たり判定を行わない時間より少ないとき
+                return;
+            }
+        }
+    }
+
     // プレイヤーの当たり判定モデルポインタの取得
     CCollisionModelOBB* pPlayerColModelOBB = pPlayer->GetColOBBPtr();
 
@@ -154,6 +167,18 @@ void CMap::HitColOBBsPlayer(const CCollisionModelOBB* const &pMapColOBB)
     if (!pPlayer)
         return;
 
+    if (pPlayer->GetState() == CPlayer::JUMP)
+    { // ジャンプ状態のとき
+        CPlayerStateJump* pStateJump = (CPlayerStateJump*)pPlayer->GetCurrentState();
+        if (pStateJump->GetJumpCheck())
+        { // ジャンプし始めているとき
+            if (pStateJump->GetJumpTimeCount() < NOT_COLLISION_TIME)
+            { // 当たり判定を行わない時間より少ないとき
+                return;
+            }
+        }
+    }
+
     // プレイヤーの当たり判定モデルポインタの取得
     CCollisionModelOBB* pPlayerColModelOBB = pPlayer->GetColOBBPtr();
 
@@ -189,6 +214,18 @@ void CMap::HitColOBBsPlayer(const CCollisionModelPolygon* const &pMapColPolygon)
     CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
     if (!pPlayer)
         return;
+
+    if (pPlayer->GetState() == CPlayer::JUMP)
+    { // ジャンプ状態のとき
+        CPlayerStateJump* pStateJump = (CPlayerStateJump*)pPlayer->GetCurrentState();
+        if (pStateJump->GetJumpCheck())
+        { // ジャンプし始めているとき
+            if (pStateJump->GetJumpTimeCount() < NOT_COLLISION_TIME)
+            { // 当たり判定を行わない時間より少ないとき
+                return;
+            }
+        }
+    }
 
     // プレイヤーの当たり判定モデルポインタの取得
     CCollisionModelOBB* pPlayerColModelOBB = pPlayer->GetColOBBPtr();
@@ -277,19 +314,22 @@ void CMap::HitColOBBsBossBullet(const CCollisionModelOBB* const pMapColOBB)
 //=============================================================================
 void CMap::HitColPlayer(const CCollisionModelCylinder* const pMapColCylinder)
 {
-    // 当たり判定モデル(円柱)情報の取得
-    CCollisionModelCylinder::CYLINDER colCylinderInfo;
-    if (pMapColCylinder)
-    {
-        colCylinderInfo = pMapColCylinder->GetCylinder();
-    }
-    else
-        return;
-
     // プレイヤーポインタの取得
     CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
     if (!pPlayer)
         return;
+
+    if (pPlayer->GetState() == CPlayer::JUMP)
+    { // ジャンプ状態のとき
+        CPlayerStateJump* pStateJump = (CPlayerStateJump*)pPlayer->GetCurrentState();
+        if (pStateJump->GetJumpCheck())
+        { // ジャンプし始めているとき
+            if (pStateJump->GetJumpTimeCount() < NOT_COLLISION_TIME)
+            { // 当たり判定を行わない時間より少ないとき
+                return;
+            }
+        }
+    }
 
     // プレイヤーの当たり判定モデルポインタの取得
     CCollisionModelCapsule* pPlayerColModelCapsule = pPlayer->GetColCapsulePtr();
@@ -309,6 +349,15 @@ void CMap::HitColPlayer(const CCollisionModelCylinder* const pMapColCylinder)
         },
         PlayerColModelCapsuleInfo.radius
     };
+
+    // 当たり判定モデル(円柱)情報の取得
+    CCollisionModelCylinder::CYLINDER colCylinderInfo;
+    if (pMapColCylinder)
+    {
+        colCylinderInfo = pMapColCylinder->GetCylinder();
+    }
+    else
+        return;
 
     bool bHit = false;                                      // 当たったかの判定
     CCollision::SURFACE surface = CCollision::SURFACE_NONE; // 当たった面

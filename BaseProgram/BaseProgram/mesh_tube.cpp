@@ -40,6 +40,7 @@ CMeshTube * CMeshTube::Create(const D3DXVECTOR3 &pos, const MESH_TYPE &MeshNum)
     // 初期化処理
     if (pMeshCylinder != nullptr)
     {
+        pMeshCylinder->SetSceneInfo(pos, D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f));
         pMeshCylinder->SetMeshNum(MeshNum);         // 何角形か
         pMeshCylinder->Init();                      // 座標・サイズ
     }
@@ -63,9 +64,9 @@ HRESULT CMeshTube::Init(void)
     int nCntH = 0;          // 縦の頂点カウンタ
     int nCntV = 0;          // 横の頂点カウンタ
 
-                            // 頂点の数
-    int nWidth = GetMesh3D(GetMeshNum()).CylinderNum.nNumX;
-    int nHeight = GetMesh3D(GetMeshNum()).CylinderNum.nNumY;
+    // 頂点の数
+    int nWidth = 5;
+    int nHeight = 10;
 
     // メッシュのサイズ設定
     D3DXVECTOR2 MeshSize = D3DXVECTOR2(GetMesh3D(GetMeshNum()).size.x, GetMesh3D(GetMeshNum()).size.y);

@@ -77,6 +77,13 @@ void CPlayerStateJump::Init()
 {
     // アニメーション設定
     SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_JUMP), 60);
+
+    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    if (pPlayer)
+    {
+        // 状態の設定
+        pPlayer->SetState(CPlayer::JUMP);
+    }
 }
 
 //=====================================================================
@@ -102,6 +109,12 @@ void CPlayerStateJump::Update()
 
     // ジャンプ処理
     Avoidance(pPlayer);
+
+    if (m_bJumpCheck)
+    { // ジャンプし始めているとき
+        // ジャンプ時間をカウント
+        m_fJumpTimeCount++;
+    }
 }
 
 //=====================================================================
@@ -132,7 +145,7 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
         m_nChargeJumpCount++;
 
         // エフェクトの発生時間
-        if (m_nChargeJumpCount >= PARTICLE_STRAT && m_bJumpEffect)
+        if (m_nChargeJumpCount >= PARTICLE_STRAT && m_nChargeJumpCount <= CHARGEJUMP_MAX && m_bJumpEffect)
         {
             m_bJumpEffect = false;
             CPlaneJumpReservoir::Create(pos);

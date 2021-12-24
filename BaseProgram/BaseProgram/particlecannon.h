@@ -32,11 +32,13 @@ public:
 
 private:
     void SetParticle(void);     // パーティクルを出す処理
+    void SetEffect(void);
     //==================
     // メンバ変数
     //==================
+    static float m_fSize;
     float m_fAngle;             // 角度
-    float m_fSpeed;             // 速度
+    static float m_fSpeed;      // 速度
     int m_nLife;                // 体力
 };
 

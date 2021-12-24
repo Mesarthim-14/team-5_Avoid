@@ -43,17 +43,22 @@
 #define PLAYER_ROT_SPEED		(0.1f)									// キャラクターの回転する速度
 
 #define PLAYER_HEIGHT_100   (600.0f)  // プレイヤーの高さ(100%)
+#define PLAYER_HEIGHT_50    (400.0f)  // プレイヤーの高さ(50%)
+#define PLAYER_HEIGHT_0     (200.0f)  // プレイヤーの高さ(0%)
+#define PLAYER_WIDTH_100    (300.0f)  // プレイヤーの幅(100%)
+#define PLAYER_WIDTH_50     (200.0f)  // プレイヤーの幅(50%)
+#define PLAYER_WIDTH_0      (100.0f)  // プレイヤーの幅(0%)
 
-#define OBB_COLLISION_SIZE_100  (D3DXVECTOR3(300.0f,PLAYER_HEIGHT_100,300.0f)) // 直方体当たり判定(100%)の大きさ
-#define OBB_COLLISION_SIZE_50   (D3DXVECTOR3(150.0f,300.0f,200.0f)) // 直方体当たり判定(50%)の大きさ
-#define OBB_COLLISION_SIZE_0    (D3DXVECTOR3(50.0f,150.0f,100.0f))  // 直方体当たり判定(0%)の大きさ
+#define OBB_COLLISION_SIZE_100  (D3DXVECTOR3(PLAYER_WIDTH_100,PLAYER_HEIGHT_100,PLAYER_WIDTH_100))  // 直方体当たり判定(100%)の大きさ
+#define OBB_COLLISION_SIZE_50   (D3DXVECTOR3(PLAYER_WIDTH_50,PLAYER_HEIGHT_50,PLAYER_WIDTH_50))     // 直方体当たり判定(50%)の大きさ
+#define OBB_COLLISION_SIZE_0    (D3DXVECTOR3(PLAYER_WIDTH_0,PLAYER_HEIGHT_0,PLAYER_WIDTH_0))        // 直方体当たり判定(0%)の大きさ
 
-#define CAPSULE_COLLISION_RADIUS_100    (150.0f)  // カプセル当たり判定(100%)の円の半径
-#define CAPSULE_COLLISION_LENGTH_100    (PLAYER_HEIGHT_100)  // カプセル当たり判定(100%)の長さ
-#define CAPSULE_COLLISION_RADIUS_50     (75.0f)   // カプセル当たり判定(50%)の円の半径
-#define CAPSULE_COLLISION_LENGTH_50     (300.0f)  // カプセル当たり判定(50%)の長さ
-#define CAPSULE_COLLISION_RADIUS_0      (25.0f)   // カプセル当たり判定(0%)の円の半径
-#define CAPSULE_COLLISION_LENGTH_0      (150.0f)  // カプセル当たり判定(0%)の長さ
+#define CAPSULE_COLLISION_RADIUS_100    (PLAYER_WIDTH_100 / 2)  // カプセル当たり判定(100%)の円の半径
+#define CAPSULE_COLLISION_LENGTH_100    (PLAYER_HEIGHT_100)     // カプセル当たり判定(100%)の長さ
+#define CAPSULE_COLLISION_RADIUS_50     (PLAYER_WIDTH_50 / 2)   // カプセル当たり判定(50%)の円の半径
+#define CAPSULE_COLLISION_LENGTH_50     (PLAYER_HEIGHT_50)      // カプセル当たり判定(50%)の長さ
+#define CAPSULE_COLLISION_RADIUS_0      (PLAYER_WIDTH_0 / 2)    // カプセル当たり判定(0%)の円の半径
+#define CAPSULE_COLLISION_LENGTH_0      (PLAYER_HEIGHT_0)       // カプセル当たり判定(0%)の長さ
 
 #define PLAYER_INERTIA			(0.08f)									// 慣性の大きさ
 #define PLAYER_LITTLESIZE_VALUE (10)									// 最小サイズモデルの値
@@ -174,48 +179,53 @@ void CPlayer::Uninit()
 //=============================================================================
 void CPlayer::Update()
 {
-	{
-		// 位置取得
-		D3DXVECTOR3 pos = GetPos();
+    bool bPause = CManager::GetInstance()->GetActivePause();
 
-		// 古い位置設定
-		SetPosOld(pos);
-	}
-
-	// 状態更新
-	UpdateState();
-
-	CCharacter::Update();
-
-	// リスポーン
-	Respawn();
-
-    D3DXVECTOR3 pos = GetPos();
-    D3DXVECTOR3 rot = GetRot();
-    for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
+    if (!bPause)
     {
-        if (m_pSkinmeshModel[nCount])
         {
-            // 各モデルの座標と角度の設定
-            m_pSkinmeshModel[nCount]->SetPos(pos);
-            m_pSkinmeshModel[nCount]->SetRot(rot);
+            // 位置取得
+            D3DXVECTOR3 pos = GetPos();
+
+            // 古い位置設定
+            SetPosOld(pos);
         }
+
+        // 状態更新
+        UpdateState();
+
+        CCharacter::Update();
+
+        // リスポーン
+        Respawn();
+
+        D3DXVECTOR3 pos = GetPos();
+        D3DXVECTOR3 rot = GetRot();
+        for (int nCount = 0; nCount < SLIME_STATE_MAX; nCount++)
+        {
+            if (m_pSkinmeshModel[nCount])
+            {
+                // 各モデルの座標と角度の設定
+                m_pSkinmeshModel[nCount]->SetPos(pos);
+                m_pSkinmeshModel[nCount]->SetRot(rot);
+            }
+        }
+
+        // 更新処理
+        UpdateRot();
+
+        // 当たり判定モデル情報の更新処理
+        if (m_pColModelOBB)
+        {
+            m_pColModelOBB->SetInfo(pos, m_pColModelOBB->GetOBB().info.size, rot);
+        }
+        if (m_pColModelCapsule)
+        {
+            m_pColModelCapsule->SetInfo(pos, m_pColModelCapsule->GetInfo().radius, m_pColModelCapsule->GetInfo().length, rot);
+        }
+
+        ShowInfo();
     }
-
-	// 更新処理
-	UpdateRot();
-
-    // 当たり判定モデル情報の更新処理
-	if (m_pColModelOBB)
-	{
-        m_pColModelOBB->SetInfo(pos, m_pColModelOBB->GetOBB().info.size, rot);
-	}
-    if (m_pColModelCapsule)
-    {
-        m_pColModelCapsule->SetInfo(pos, m_pColModelCapsule->GetInfo().radius, m_pColModelCapsule->GetInfo().length, rot);
-    }
-
-	ShowInfo();
 }
 
 //=============================================================================
@@ -325,18 +335,38 @@ void CPlayer::ChangeModel()
 		//スライムの状態を最大に
 		m_SlimeState = SLIME_LARGESIZE;
 
+        //当たり判定サイズの変更
+        if (m_pColModelOBB && m_pColModelCapsule)
+        {
+            m_pColModelOBB->SetInfo(GetPos(), OBB_COLLISION_SIZE_100, GetRot());
+            m_pColModelCapsule->SetInfo(GetPos(), CAPSULE_COLLISION_RADIUS_100, CAPSULE_COLLISION_LENGTH_100, GetRot());
+        }
 	}
 	else if (m_nHP < PLAYER_LARGESIZE_VALUE && m_nHP >= PLAYER_MIDLLESIZE_VALUE)//中くらい
 	{
 		//スライムの状態を中に
 		m_SlimeState = SLIME_MIDDLESIZE;
 		//HP量で大きさ変える
+
+        //当たり判定サイズの変更
+        if (m_pColModelOBB && m_pColModelCapsule)
+        {
+            m_pColModelOBB->SetInfo(GetPos(), OBB_COLLISION_SIZE_50, GetRot());
+            m_pColModelCapsule->SetInfo(GetPos(), CAPSULE_COLLISION_RADIUS_50, CAPSULE_COLLISION_LENGTH_50, GetRot());
+        }
 	}
 	else if (m_nHP < PLAYER_MIDLLESIZE_VALUE && m_nHP >= 0)//小
 	{
 		//スライムの状態を最小に
 		m_SlimeState = SLIME_LITTLESIZE;
 		//HP量で大きさ変える
+
+        //当たり判定サイズの変更
+        if (m_pColModelOBB && m_pColModelCapsule)
+        {
+            m_pColModelOBB->SetInfo(GetPos(), OBB_COLLISION_SIZE_0, GetRot());
+            m_pColModelCapsule->SetInfo(GetPos(), CAPSULE_COLLISION_RADIUS_0, CAPSULE_COLLISION_LENGTH_0, GetRot());
+        }
 	}
 
 	if (m_SlimeState != OldState)

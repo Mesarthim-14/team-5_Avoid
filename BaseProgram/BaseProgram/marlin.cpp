@@ -10,6 +10,8 @@
 //=============================================================================
 #include "marlin.h"
 #include "marlin_model.h"
+#include "pause.h"
+#include "manager.h"
 
 //=============================================================================
 // マクロ定義
@@ -87,13 +89,18 @@ void CMarlin::Uninit()
 //=============================================================================
 void CMarlin::Update()
 {
-    // モデル更新処理
-    if (m_pMarlinModel)
+    bool bPause = CManager::GetInstance()->GetActivePause();
+
+    if (!bPause)
     {
-        m_pMarlinModel->SetPos(GetPos());
-        m_pMarlinModel->SetRot(GetRot());
+        // モデル更新処理
+        if (m_pMarlinModel)
+        {
+            m_pMarlinModel->SetPos(GetPos());
+            m_pMarlinModel->SetRot(GetRot());
+        }
+        CWimpEnemy::Update();
     }
-    CWimpEnemy::Update();
 }
 
 //=============================================================================

@@ -129,27 +129,33 @@ void CKraken::Uninit()
 //=============================================================================
 void CKraken::Update()
 {
-    CEnemy::Update();
-    Attack();
-    LookAtPlayer();
+    bool bPause = CManager::GetInstance()->GetActivePause();
 
-    D3DXVECTOR3 pos = GetPos();
-    D3DXVECTOR3 rot = GetRot();
-    if (m_pCollision)
+    if (!bPause)
     {
-        m_pCollision->SetInfo(pos, m_pCollision->GetOBB().info.size, rot);
-    }
 
-    if (m_pSkinmeshModel)
-    {
-        m_pSkinmeshModel->SetPos(pos);
-        m_pSkinmeshModel->SetRot(rot);
-    }
+        CEnemy::Update();
+        Attack();
+        LookAtPlayer();
 
-    // ‘Ì—Í‚ª–³‚­‚È‚Á‚½‚ç
-    if (m_nLife <= 0)
-    {
-        m_bDead = true;
+        D3DXVECTOR3 pos = GetPos();
+        D3DXVECTOR3 rot = GetRot();
+        if (m_pCollision)
+        {
+            m_pCollision->SetInfo(pos, m_pCollision->GetOBB().info.size, rot);
+        }
+
+        if (m_pSkinmeshModel)
+        {
+            m_pSkinmeshModel->SetPos(pos);
+            m_pSkinmeshModel->SetRot(rot);
+        }
+
+        // ‘Ì—Í‚ª–³‚­‚È‚Á‚½‚ç
+        if (m_nLife <= 0)
+        {
+            m_bDead = true;
+        }
     }
 }
 

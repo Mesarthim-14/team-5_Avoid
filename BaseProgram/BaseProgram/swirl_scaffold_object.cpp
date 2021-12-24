@@ -19,6 +19,7 @@
 #include "player.h"
 #include "library.h"
 #include "collision.h"
+#include "state_player_jump.h"
 
 //=============================================================================
 // マクロ定義
@@ -127,6 +128,18 @@ void CSwirlScaffoldObject::Col()
     CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
     if (!pPlayer)
         return;
+
+    if (pPlayer->GetState() == CPlayer::JUMP)
+    { // ジャンプ状態のとき
+        CPlayerStateJump* pStateJump = (CPlayerStateJump*)pPlayer->GetCurrentState();
+        if (pStateJump->GetJumpCheck())
+        { // ジャンプし始めているとき
+            if (pStateJump->GetJumpTimeCount() < NOT_COLLISION_TIME)
+            { // 当たり判定を行わない時間より少ないとき
+                return;
+            }
+        }
+    }
 
     // プレイヤーの当たり判定モデルポインタの取得
     CCollisionModelOBB* pPlayerColModelOBB = pPlayer->GetColOBBPtr();

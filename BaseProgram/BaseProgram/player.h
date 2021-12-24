@@ -58,6 +58,20 @@ public:
         SLIME_STATE_MAX
     };//スライムの状態（大きさ）
 
+    enum STATE
+    {
+        NONE = -1,
+        AVOID,      // 回避
+        CANNON,     // 大砲
+        JUMP,       // ジャンプ
+        KNOCKBACK,  // ノックバック
+        NORMAL,     // 通常
+        NOT_MOVE,   // 不動
+        RESPAWN,    // リスポーン
+        STUN,       // 気絶
+        MAX
+    };// 状態列挙
+
     CPlayer(PRIORITY Priority = PRIORITY_CHARACTER);    // コンストラクタ
     ~CPlayer();                                         // デストラクタ
 
@@ -80,6 +94,7 @@ public:
     inline void SetRotDest(const D3DXVECTOR3& rotDest)              { m_rotDest = rotDest; }                // 目的の角度
     inline void SetAngle(const float& fAngle)                       { m_fAngle = fAngle; }                  // アングル
     inline void SetCollision(const bool &bFlag)                     { m_bCollision = bFlag; }               // 当たり判定
+    inline void SetState(const STATE &state)                        { m_state = state; }                    // 状態の設定
 
     // Get関数
     inline int GetLife()const                               { return m_nHP; }                   // HPの情報
@@ -91,6 +106,8 @@ public:
     inline CCollisionModelOBB* GetColOBBPtr()const          { return m_pColModelOBB; }          // 当たり判定ポインタ(OBB)
     inline CCollisionModelCapsule* GetColCapsulePtr()const  { return m_pColModelCapsule; }      // 当たり判定ポインタ(カプセル)
     inline bool GetCollision()const                         { return m_bCollision; }            // 当たり判定の使用
+    inline CState* GetCurrentState()const                   { return m_pCurrentState; }         // 現在の状態ポインタの取得
+    inline STATE GetState()const                            { return m_state; }                 // 状態列挙の取得
 
 private:
     // private関数
@@ -118,5 +135,6 @@ private:
     CCollisionModelOBB* m_pColModelOBB;                 // 当たり判定モデル(直方体)のポインタ
     CCollisionModelCapsule* m_pColModelCapsule;         // 当たり判定モデル(カプセル)のポインタ
     bool m_bCollision;                                  // 当たり判定の使用
+    STATE m_state;                                      // 状態
 };
 #endif

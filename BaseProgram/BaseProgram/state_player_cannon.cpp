@@ -75,6 +75,9 @@ void CPlayerStateCannon::Init()
     // アニメーション設定
     SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_IDOL), 60);
     TrackingCannon(pPlayer);
+
+    // 状態の設定
+    pPlayer->SetState(CPlayer::CANNON);
 }
 
 //=====================================================================

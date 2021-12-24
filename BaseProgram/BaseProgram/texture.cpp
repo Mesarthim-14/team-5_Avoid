@@ -72,6 +72,7 @@ HRESULT CTexture::SetTextureName()
         { "data/Texture/tame.png" },
         { "data/Texture/water.png" },
         { "data/Texture/water_effect_tex.png" },
+        { "data/Texture/cannon_attack_tex.png" },
         { "data/Texture/slime_drop.png" },
         { "data/Texture/Gauge.png" },
         { "data/Texture/Gauge_Frame.png" },

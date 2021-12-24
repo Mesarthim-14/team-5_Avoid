@@ -15,18 +15,20 @@
 #include "library.h"
 #include "texture.h"
 #include "resource_manager.h"
+#include "texture_animation.h"
 
 //=====================================================================
 // マクロ定義
 // Author : toshiki
 //=====================================================================
 #define POS         (ZeroVector3)
-#define SIZE        (D3DXVECTOR3(200.0f, 200.0f, 200.0f))
-#define SPEED       (30.0f)
+#define SIZE        (D3DXVECTOR3(m_fSize, m_fSize, m_fSize))
 #define RANDOM      (3.14f)
-#define LIFE        (40)
+#define LIFE        (70)
 #define COLOR       (D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
 
+float CParticleCannon::m_fSize = 0.0f;
+float CParticleCannon::m_fSpeed = 0.0f;
 //=====================================================================
 // コンストラクタ
 // Author : toshiki
@@ -34,7 +36,6 @@
 CParticleCannon::CParticleCannon()
 {
     m_fAngle = 0.0f;
-    m_fSpeed = 0.0f;
 }
 
 //=====================================================================
@@ -56,8 +57,9 @@ CParticleCannon * CParticleCannon::Create(const D3DXVECTOR3 &pos)
 
     if (pParticle != nullptr)
     {
+        m_fSize = CLibrary::Random(1000.0f, 3000.0f);
+        m_fSpeed = CLibrary::Random(10.0f, 40.0f);
         pParticle->SetSceneInfo(pos, SIZE);
-
         pParticle->Init();
         return pParticle;
     }
@@ -82,6 +84,7 @@ HRESULT CParticleCannon::Init(void)
 void CParticleCannon::Update(void)
 {
     CParticleInfo::Update();
+    SetEffect();
 }
 
 //=====================================================================
@@ -110,19 +113,26 @@ void CParticleCannon::SetParticle(void)
 {
     // テクスチャの設定
     CTexture *pTexture = GET_TEXTURE_PTR;
-    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_PARTICLE));
-    // スピードの値を設定
-    m_fSpeed = SPEED;
+    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_CANNON));
+    CScene3D::InitAnimation(1, 8, -1);
     // パーティクルの出る角度の設定
     m_fAngle = CLibrary::Random(RANDOM);
-    // 重力をつける
-    SetGravity(true);
     // 移動させるための処理
-    D3DXVECTOR3 move = D3DXVECTOR3(sinf(m_fAngle)*m_fSpeed, CLibrary::Random(4.0f, m_fSpeed), cosf(m_fAngle)*m_fSpeed);
+    D3DXVECTOR3 move = D3DXVECTOR3(sinf(m_fAngle)*m_fSpeed, CLibrary::Random(m_fSpeed), cosf(m_fAngle)*m_fSpeed);
     // 移動情報を設定
     SetMove(move);
     // 色の設定
     SetColor(COLOR);
     // パーティクルが消える時間の設定
     SetLife(LIFE);
+}
+
+//=====================================================================
+// エフェクト更新
+// Author : toshiki
+//=====================================================================
+void CParticleCannon::SetEffect(void)
+{
+    CTextureAnimation *pAnimation = GetTextureAnimationPtr();
+    pAnimation->Update();
 }
