@@ -48,6 +48,7 @@ public:
     inline void SetGaussFilter(const bool& bUse)        { m_bGaussFilter = bUse; }      // ガウスフィルタ―を設定
     inline CGauge * GetGauge()const                     { return m_pGauge; }            // ゲージ情報取得
     inline CPause * GetPause()const                     { return m_pPause; }            // ポーズ情報取得
+    inline int GetGameTimer()const                      { return m_nGameTimer; }        // ゲームのタイマー
 
 private:
     // private関数
@@ -73,5 +74,6 @@ private:
     CPause *m_pPause;                       // ポーズポインタ
     CMapFactory* m_pMapFactory;             // マップの生成クラス
     bool m_bTitle;                          // タイトルのフラグ
+    int m_nGameTimer;                       // ゲームのタイマー
 };
 #endif

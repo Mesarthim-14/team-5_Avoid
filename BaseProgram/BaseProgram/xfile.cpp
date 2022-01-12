@@ -18,7 +18,7 @@
 //=============================================================================
 CXfile::CXfile()
 {
-    memset(m_aXfile, 0, sizeof(m_aXfile));
+//    memset(m_aXfile, 0, sizeof(m_aXfile));
     memset(m_pFileName, 0, sizeof(m_pFileName));
     memset(m_nMaxParts, 0, sizeof(m_nMaxParts));
 

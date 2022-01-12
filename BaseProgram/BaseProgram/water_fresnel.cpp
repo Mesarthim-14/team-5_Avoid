@@ -579,6 +579,7 @@ void CWaterFresnel::Draw()
     //        }
     //    }
 
+        // 全てのモデル
         for (auto& pPtr : pModelList)
         {
             LPD3DXMESH mesh = pPtr->GetMesh();
@@ -596,11 +597,13 @@ void CWaterFresnel::Draw()
             }
         }
 
+        // スキンメッシュ
         CSkinmeshModel* pSkinmeshModel = pPlayer->GetCurrentSkinMeshPtr();
-        pSkinmeshModel->Draw(this, matReflect);
+//        pSkinmeshModel->Draw(this, matReflect);
         CKraken* pKraken = CManager::GetInstance()->GetGame()->GetKraken();
         pSkinmeshModel = pKraken->GetSkinMesh();
         pSkinmeshModel->Draw(this, matReflect);
+
         //Zバッファ書込み禁止
         pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
         //空レンダリング
@@ -613,9 +616,7 @@ void CWaterFresnel::Draw()
         sky.pMesh->DrawSubset(0);
         m_pReflect->EndPass();
         pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-    
         pDevice->SetTexture(0, nullptr);
-
         m_pReflect->End();
 
         pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);

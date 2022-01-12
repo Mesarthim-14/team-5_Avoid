@@ -39,15 +39,15 @@
 // マクロ定義
 // Author : Konishi Yuuto
 //=============================================================================
-#define PLAYER_SPEED			(10.0f)									// プレイヤーの移動量
-#define PLAYER_ROT_SPEED		(0.1f)									// キャラクターの回転する速度
-
-#define PLAYER_HEIGHT_100   (600.0f)  // プレイヤーの高さ(100%)
-#define PLAYER_HEIGHT_50    (400.0f)  // プレイヤーの高さ(50%)
-#define PLAYER_HEIGHT_0     (200.0f)  // プレイヤーの高さ(0%)
-#define PLAYER_WIDTH_100    (300.0f)  // プレイヤーの幅(100%)
-#define PLAYER_WIDTH_50     (200.0f)  // プレイヤーの幅(50%)
-#define PLAYER_WIDTH_0      (100.0f)  // プレイヤーの幅(0%)
+#define PLAYER_SPEED        (10.0f)	    // プレイヤーの移動量
+#define PLAYER_ROT_SPEED    (0.1f)	    // キャラクターの回転する速度
+#define PLAYER_LIFE         (100)       // プレイヤーの体力
+#define PLAYER_HEIGHT_100   (600.0f)    // プレイヤーの高さ(100%)
+#define PLAYER_HEIGHT_50    (400.0f)    // プレイヤーの高さ(50%)
+#define PLAYER_HEIGHT_0     (200.0f)    // プレイヤーの高さ(0%)
+#define PLAYER_WIDTH_100    (300.0f)    // プレイヤーの幅(100%)
+#define PLAYER_WIDTH_50     (200.0f)    // プレイヤーの幅(50%)
+#define PLAYER_WIDTH_0      (100.0f)    // プレイヤーの幅(0%)
 
 #define OBB_COLLISION_SIZE_100  (D3DXVECTOR3(PLAYER_WIDTH_100,PLAYER_HEIGHT_100,PLAYER_WIDTH_100))  // 直方体当たり判定(100%)の大きさ
 #define OBB_COLLISION_SIZE_50   (D3DXVECTOR3(PLAYER_WIDTH_50,PLAYER_HEIGHT_50,PLAYER_WIDTH_50))     // 直方体当たり判定(50%)の大きさ
@@ -115,6 +115,8 @@ CPlayer::CPlayer(PRIORITY Priority) : CCharacter(Priority)
 	m_pColModelOBB = nullptr;
     m_pColModelCapsule = nullptr;
     m_bCollision = true;
+    m_nDeathCount = 0;
+    m_nTotalDamegeNum = 0;
 }
 
 //=============================================================================
@@ -501,20 +503,39 @@ void CPlayer::SubLife(const int &nDamage)
 {
 	if (m_nHP > 0)
 	{
-		m_nHP -= nDamage;
+		m_nHP -= nDamage;               // 体力を下げる
+        m_nTotalDamegeNum += nDamage;   // 総ダメージ量を上げる
+
 		if (m_nHP < 0)
 		{
+            m_nTotalDamegeNum += m_nHP; // 上回ったダメージを戻す
 			m_nHP = 0;
 		}
-		else
-		{
-            if (m_nHP > 100)
-            {
-                m_nHP = 100;
-            }
-		}
+
+        // モデルの変更
         ChangeModel();
 	}
+}
+
+//=============================================================================
+// ライフ加算
+// Author : Konishi Yuuto
+//=============================================================================
+void CPlayer::AddLife(const int & nNum)
+{
+    // ライフの上限以下だったら
+    if (m_nHP < PLAYER_LIFE)
+    {
+        m_nHP += nNum;
+        
+        if (m_nHP < PLAYER_LIFE)
+        {
+            m_nHP = PLAYER_LIFE;
+        }
+
+        // モデル変更
+        ChangeModel();
+    }
 }
 
 //=============================================================================

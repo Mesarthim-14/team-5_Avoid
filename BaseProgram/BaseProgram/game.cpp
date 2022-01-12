@@ -64,6 +64,7 @@ CGame::CGame()
     m_pMapFactory = nullptr;
     m_pGauge = nullptr;
     m_bTitle = true;
+    m_nGameTimer = 0;
 }
 
 //=======================================================================================
@@ -177,6 +178,11 @@ void CGame::Update()
             pSound->Stop(CSound::SOUND_BGM_TITLE);
             m_bTitle = false;
         }
+    }
+
+    if (!m_bTitle && !m_bGameEnd)
+    {
+        m_nGameTimer++;
     }
 
 #ifdef _DEBUG

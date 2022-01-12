@@ -80,8 +80,8 @@ void CPlayerStateRespawn::Init()
     pPlayer->SetMove(ZeroVector3);
     pPlayer->SetCollision(false);
 
-    // ó‘Ô‚ÌÝ’è
-    pPlayer->SetState(CPlayer::RESPAWN);
+    pPlayer->SetState(CPlayer::RESPAWN);    // ó‘Ô‚ÌÝ’è
+    pPlayer->AddDeathCount();               // Ž€–S‰ñ”‚ÌƒJƒEƒ“ƒg
 
     CMoveScaffold* pScaffold = pGame->GetGimmickFactory()->GetMoveScaffold();
     if (pScaffold)

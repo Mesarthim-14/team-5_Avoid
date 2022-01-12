@@ -85,6 +85,7 @@ public:
     HRESULT LoadInfo();                             // データロード
     void SaveInfo();                                // データセーブ
     void SubLife(const int &nDamage);               // ダメージ
+    void AddLife(const int &nNum);                  // ライフの加算
     CSkinmeshModel* GetCurrentSkinMeshPtr();        // 現在のスキンメッシュポインタ
     void ChangeState(CState* pPlayerState);         // 状態チェンジ
 
@@ -95,19 +96,22 @@ public:
     inline void SetAngle(const float& fAngle)                       { m_fAngle = fAngle; }                  // アングル
     inline void SetCollision(const bool &bFlag)                     { m_bCollision = bFlag; }               // 当たり判定
     inline void SetState(const STATE &state)                        { m_state = state; }                    // 状態の設定
+    inline void AddDeathCount()                                     { m_nDeathCount++; }                    // 死亡回数のカウント
 
     // Get関数
-    inline int GetLife()const                               { return m_nHP; }                   // HPの情報
-    inline float GetAngle()const                            { return m_fAngle; }                // アングル
-    inline D3DXVECTOR3 GetRotDest()const                    { return m_rotDest; }               // 目的
-    inline D3DXVECTOR3 GetInertia()const                    { return m_Inertia; }               // 慣性の情報
-    inline float GetInertiaNum()const                       { return m_fInertiaNum; }           // 慣性の値
-    inline SLIME_STATE GetSlimeState()const                 { return m_SlimeState; }            // スライムの状態
-    inline CCollisionModelOBB* GetColOBBPtr()const          { return m_pColModelOBB; }          // 当たり判定ポインタ(OBB)
-    inline CCollisionModelCapsule* GetColCapsulePtr()const  { return m_pColModelCapsule; }      // 当たり判定ポインタ(カプセル)
-    inline bool GetCollision()const                         { return m_bCollision; }            // 当たり判定の使用
-    inline CState* GetCurrentState()const                   { return m_pCurrentState; }         // 現在の状態ポインタの取得
-    inline STATE GetState()const                            { return m_state; }                 // 状態列挙の取得
+    inline int GetLife()const                               { return m_nHP; }               // HPの情報
+    inline float GetAngle()const                            { return m_fAngle; }            // アングル
+    inline D3DXVECTOR3 GetRotDest()const                    { return m_rotDest; }           // 目的
+    inline D3DXVECTOR3 GetInertia()const                    { return m_Inertia; }           // 慣性の情報
+    inline float GetInertiaNum()const                       { return m_fInertiaNum; }       // 慣性の値
+    inline SLIME_STATE GetSlimeState()const                 { return m_SlimeState; }        // スライムの状態
+    inline CCollisionModelOBB* GetColOBBPtr()const          { return m_pColModelOBB; }      // 当たり判定ポインタ(OBB)
+    inline CCollisionModelCapsule* GetColCapsulePtr()const  { return m_pColModelCapsule; }  // 当たり判定ポインタ(カプセル)
+    inline bool GetCollision()const                         { return m_bCollision; }        // 当たり判定の使用
+    inline CState* GetCurrentState()const                   { return m_pCurrentState; }     // 現在の状態ポインタの取得
+    inline STATE GetState()const                            { return m_state; }             // 状態列挙の取得
+    inline int GetDeathCount()const                         { return m_nDeathCount; }       // 死亡回数の情報
+    inline int GetTotalDamegeNum()const                     { return m_nTotalDamegeNum; }   // ダメージの総量
 
 private:
     // private関数
@@ -136,5 +140,7 @@ private:
     CCollisionModelCapsule* m_pColModelCapsule;         // 当たり判定モデル(カプセル)のポインタ
     bool m_bCollision;                                  // 当たり判定の使用
     STATE m_state;                                      // 状態
+    int m_nDeathCount;                                  // 死亡回数
+    int m_nTotalDamegeNum;                              // ダメージの総量
 };
 #endif

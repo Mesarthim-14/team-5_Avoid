@@ -111,7 +111,7 @@ void CHeel::Update()
         {
             m_nCount++;
             // ‰ñ•œ
-            CManager::GetInstance()->GetPlayer()->SubLife(-HEEL_NUM);
+            CManager::GetInstance()->GetPlayer()->AddLife(HEEL_NUM);
             pGauge->SetDown((float)HEEL_NUM);
             pGauge->SetHitUp(true);
             if (m_nCount >= 10)
