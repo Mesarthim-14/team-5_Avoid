@@ -101,7 +101,7 @@ HRESULT CCannonBullet::Init(const D3DXVECTOR3 &CannonPos, const D3DXVECTOR3 &Can
     GetModelInfo()->SetModelStatus(pos, ZeroVector3, model);
 
     // エフェクト表示
-    CParticleNormal::Create(pos, CannonRot);
+    CParticleNormal::Create(pos);
     
     if (!m_pCollision)
     {

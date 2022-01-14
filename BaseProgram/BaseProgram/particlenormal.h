@@ -24,7 +24,7 @@ public:
     CParticleNormal();
     ~CParticleNormal();
 
-    static CParticleNormal * Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);
+    static CParticleNormal * Create(const D3DXVECTOR3 &pos);
     HRESULT Init(void);
     void Update(void);
     void Uninit(void);
@@ -33,6 +33,7 @@ public:
 private:
     void SetParticle(void);     // パーティクルを出す処理
     void SetParticleColor(void);        // パーティクルを徐々に消す処理
+    void SetEffect(void);
     //==================
     // メンバ変数
     //==================

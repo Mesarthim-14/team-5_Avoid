@@ -62,13 +62,13 @@ CParticleAura::~CParticleAura()
 // 生成処理
 // Author : toshiki
 //=====================================================================
-CParticleAura * CParticleAura::Create(const D3DXVECTOR3 &pos)
+CParticleAura * CParticleAura::Create()
 {
     CParticleAura * pParticle = new CParticleAura;
 
     if (pParticle)
     {
-        pParticle->SetSceneInfo(pos, SIZE);
+        pParticle->SetSceneInfo(D3DXVECTOR3(0.0f, 5000.0f, 0.0f), SIZE);
         pParticle->Init();
         return pParticle;
     }
@@ -93,10 +93,10 @@ HRESULT CParticleAura::Init()
 void CParticleAura::Update()
 {
     CParticleInfo::Update();
-    // プレイヤーを探す処理
-    Tracking();
-    // 移動処理
-    Move();
+    //// プレイヤーを探す処理
+    //Tracking();
+    //// 移動処理
+    //Move();
 }
 
 //=====================================================================
