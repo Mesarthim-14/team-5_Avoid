@@ -19,24 +19,24 @@
 #include "player.h"
 #include "library.h"
 #include "collision.h"
-#include "collisionModel_Cylinder.h"
+#include "collisionModel_OBB.h"
+#include "collisionModel_Polygon.h"
 
 //=============================================================================
 // マクロ定義
 //=============================================================================
 #define TEST_POS    (D3DXVECTOR3(-34328.4f, 0.0f, -6081.8f))
 #define TEST_ROT    (D3DXVECTOR3(0.0f, D3DXToRadian(0.0f), 0.0f))
-#define ROTATE_NUM  (D3DXToRadian(2.0f))                                    // 回転の値
-#define COLLISION_RADIUS    (1500.0f)                                       // 当たり判定モデル(円柱)の半径の大きさ
-#define COLLISION_LENGTH    (400.0f)                                        // 当たり判定モデル(円柱)の縦の大きさ
-#define COLLISION_ROT       (D3DXVECTOR3(D3DXToRadian(90.0f), 0.0f, 0.0f))  // 当たり判定モデル(円柱)の角度
+#define ROTATE_NUM  (D3DXToRadian(2.0f))                                // 回転の値
+#define COL_SIZE_OBB        (D3DXVECTOR3(19000.0f, 6000.0f, 9000.0f))       // 当たり判定モデル(OBB)の大きさ
+#define COL_SIZE_POLYGON    (D3DXVECTOR2(COL_SIZE_OBB.x, COL_SIZE_OBB.z))   // 当たり判定モデル(ポリゴン)の大きさ
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CRotateFloor::CRotateFloor(PRIORITY Priority) : CModel(Priority)
+CRotateFloor::CRotateFloor(PRIORITY Priority) : CMap(Priority)
 {
-    m_pColModelCylinder = nullptr;
+    memset(m_pColModelOBB, 0, sizeof(m_pColModelOBB));
 }
 
 //=============================================================================
@@ -65,19 +65,43 @@ CRotateFloor * CRotateFloor::Create(const D3DXVECTOR3 &pos)
 HRESULT CRotateFloor::Init(const D3DXVECTOR3 &pos)
 {
     // 初期化処理
-    CModel::Init();
+    CMap::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_GIMMICK_SPINSHIP_SHIP);
     GetModelInfo()->SetModelStatus(pos, TEST_ROT, model);
 
-    // 当たり判定モデル(円柱)の生成
-    if (!m_pColModelCylinder)
-    {
-        m_pColModelCylinder = CCollisionModelCylinder::Create(pos, COLLISION_RADIUS, COLLISION_LENGTH, COLLISION_ROT);
-    }
+    // 当たり判定モデルの生成
+    D3DXVECTOR3 rot = GetRot();
+    m_pColModelOBB[0][CCollisionModelOBB::SURFACE_UP] = CCollisionModelOBB::Create(D3DXVECTOR3(pos.x + 1700.0f, pos.y + (COL_SIZE_OBB.y / 2.0f), pos.z), D3DXVECTOR3(COL_SIZE_OBB.x, 0.0f, COL_SIZE_OBB.z), rot);
+    m_pColModelOBB[0][CCollisionModelOBB::SURFACE_SIDE] = CCollisionModelOBB::Create(D3DXVECTOR3(pos.x + 1700.0f, pos.y - 150.0f, pos.z), COL_SIZE_OBB, rot);
+    m_pColModelOBB[1][CCollisionModelOBB::SURFACE_UP] = CCollisionModelOBB::Create(D3DXVECTOR3(pos.x - 8500.0f, pos.y + (COL_SIZE_OBB.y / 2.0f), pos.z - 1000.0f), D3DXVECTOR3(6000.0f, 0.0f, 4000.0f), D3DXVECTOR3(rot.x, rot.y + D3DXToRadian(48), rot.z));
+    m_pColModelOBB[1][CCollisionModelOBB::SURFACE_SIDE] = CCollisionModelOBB::Create(D3DXVECTOR3(pos.x - 8500.0f, pos.y - 150.0f, pos.z - 1000.0f), D3DXVECTOR3(6000.0f, COL_SIZE_OBB.y, 4000.0f), D3DXVECTOR3(rot.x, rot.y + D3DXToRadian(48), rot.z));
+    m_pColModelOBB[2][CCollisionModelOBB::SURFACE_UP] = CCollisionModelOBB::Create(D3DXVECTOR3(pos.x - 8500.0f, pos.y + (COL_SIZE_OBB.y / 2.0f), pos.z + 1000.0f), D3DXVECTOR3(6000.0f, 0.0f, 4000.0f), D3DXVECTOR3(rot.x, rot.y + D3DXToRadian(-48), rot.z));
+    m_pColModelOBB[2][CCollisionModelOBB::SURFACE_SIDE] = CCollisionModelOBB::Create(D3DXVECTOR3(pos.x - 8500.0f, pos.y - 150.0f, pos.z + 1000.0f), D3DXVECTOR3(6000.0f, COL_SIZE_OBB.y, 4000.0f), D3DXVECTOR3(rot.x, rot.y + D3DXToRadian(-48), rot.z));
 
     return S_OK;
+}
+
+//=============================================================================
+// 終了処理
+//=============================================================================
+void CRotateFloor::Uninit()
+{
+    for (int nCount = 0; nCount < COL_NUM; nCount++)
+    {
+        for (int nCnt = 0; nCnt < CCollisionModelOBB::SURFACE_MAX; nCnt++)
+        {
+            // 当たり判定モデルの終了処理
+            if (m_pColModelOBB[nCount][nCnt])
+            {
+                m_pColModelOBB[nCount][nCnt]->Uninit();
+                m_pColModelOBB[nCount][nCnt] = nullptr;
+            }
+        }
+    }
+
+    CMap::Uninit();
 }
 
 //=============================================================================
@@ -86,74 +110,20 @@ HRESULT CRotateFloor::Init(const D3DXVECTOR3 &pos)
 void CRotateFloor::Update()
 {
     // 更新処理
-    CModel::Update();
-
-    if (m_pColModelCylinder)
-    {
-        // 当たり判定モデル(円柱)の情報取得
-        CCollisionModelCylinder::CYLINDER ColModelCylinderInfo = m_pColModelCylinder->GetCylinder();
-
-        // 当たり判定モデル(円柱)の設定
-        m_pColModelCylinder->SetInfo(GetPos(),
-            ColModelCylinderInfo.info.size,
-            D3DXVECTOR3(ColModelCylinderInfo.info.rot.x, GetRot().y, ColModelCylinderInfo.info.rot.z));
-    }
-
-    // 円柱と球体の当たり判定
-    HitCylinderAndSphere();
+    CMap::Update();
 }
 
 //=============================================================================
-// 円柱と球体の当たり判定
+// 当たり判定
 //=============================================================================
-void CRotateFloor::HitCylinderAndSphere()
+void CRotateFloor::Col()
 {
-    // プレイヤーポインタの取得
-    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
-    if (!pPlayer)
-        return;
-
-    // プレイヤーの当たり判定モデルポインタの取得
-    CCollisionModelCapsule* pPlayerColModelCapsule = pPlayer->GetColCapsulePtr();
-
-    // プレイヤーの当たり判定モデル(カプセル)の情報取得
-    CCollisionModelCapsule::INFO PlayerColModelCapsuleInfo = pPlayerColModelCapsule->GetInfo();
-
-    if (m_pColModelCylinder && pPlayerColModelCapsule)
+    for (int nCount = 0; nCount < COL_NUM; nCount++)
     {
-        CCollisionModelSphere::SPHERE PlayerColModelSphereInfo =
+        if (m_pColModelOBB[nCount])
         {
-            {
-                PlayerColModelCapsuleInfo.P1,
-                D3DXVECTOR3(PlayerColModelCapsuleInfo.radius * 2, PlayerColModelCapsuleInfo.radius * 2, PlayerColModelCapsuleInfo.radius * 2),
-                PlayerColModelCapsuleInfo.rot
-            },
-            PlayerColModelCapsuleInfo.radius
-        };
-
-        // 当たり判定モデル(円柱)の情報取得
-        CCollisionModelCylinder::CYLINDER ColModelCylinderInfo = m_pColModelCylinder->GetCylinder();
-
-        // 当たり判定用変数
-        bool bHit = false;                                      // 衝突判定
-        CCollision::SURFACE surface = CCollision::SURFACE_NONE; // 衝突面
-
-        // 円柱と球体の当たり判定
-        CCollision::ColSphereAndCylinder(bHit, surface, PlayerColModelSphereInfo, ColModelCylinderInfo);
-
-        if (bHit)
-        { // 当たっているとき
-
-            if (surface == CCollision::SURFACE_UP)
-            {
-                // 着地の処理
-                pPlayer->Landing(ColModelCylinderInfo.info.pos.y + (ColModelCylinderInfo.length / 2) + (PlayerColModelCapsuleInfo.length / 2));
-            }
-            else
-            {
-                D3DXVECTOR3 playerOldPos = pPlayer->GetOldPos();
-                pPlayer->SetPos(D3DXVECTOR3(playerOldPos.x, pPlayer->GetPos().y, playerOldPos.z));
-            }
+            HitColOBBsPlayer(m_pColModelOBB[nCount]);
+            HitColOBBsBossBullet(m_pColModelOBB[nCount][CCollisionModelOBB::SURFACE_SIDE]);
         }
     }
 }

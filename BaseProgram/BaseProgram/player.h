@@ -97,6 +97,7 @@ public:
     inline void SetCollision(const bool &bFlag)                     { m_bCollision = bFlag; }               // 当たり判定
     inline void SetState(const STATE &state)                        { m_state = state; }                    // 状態の設定
     inline void AddDeathCount()                                     { m_nDeathCount++; }                    // 死亡回数のカウント
+    inline void SetBoolJump(const bool &bJump)                      { m_bJump = bJump; }                    // ジャンプできるかの判定
 
     // Get関数
     inline int GetLife()const                               { return m_nHP; }               // HPの情報
@@ -112,6 +113,7 @@ public:
     inline STATE GetState()const                            { return m_state; }             // 状態列挙の取得
     inline int GetDeathCount()const                         { return m_nDeathCount; }       // 死亡回数の情報
     inline int GetTotalDamegeNum()const                     { return m_nTotalDamegeNum; }   // ダメージの総量
+    inline bool GetBoolJump()const                          { return m_bJump; }             // ジャンプできるかの判定の取得
 
 private:
     // private関数
@@ -142,5 +144,6 @@ private:
     STATE m_state;                                      // 状態
     int m_nDeathCount;                                  // 死亡回数
     int m_nTotalDamegeNum;                              // ダメージの総量
+    bool m_bJump;                                       // ジャンプできるかのフラグ
 };
 #endif

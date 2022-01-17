@@ -18,11 +18,20 @@
 class CCollisionModelOBB :public CCollisionModel
 {
 public:
+    // 軸の列挙型
+    enum AXIS
+    {
+        AXIS_X = 0,
+        AXIS_Y,
+        AXIS_Z,
+        AXIS_MAX
+    };
+
     //OBB情報の構造体
     struct OBB
     {
         INFO info;
-        D3DXVECTOR3 DirVect[AXIS_NUM_OBB];  // 方向ベクトル
+        D3DXVECTOR3 DirVect[AXIS_MAX];  // 方向ベクトル
     };
 
     // 当たった面の列挙型
@@ -44,9 +53,11 @@ public:
     void Update();  // 更新処理
     void Draw();    // 描画処理
 
+    void SetDirVect();  // 法線ベクトルの設定
+
     inline OBB GetOBB()const { return{ GetInfo(), {m_DirVect[0], m_DirVect[1], m_DirVect[2] } }; }    // OBBの取得
 
 private:
-    D3DXVECTOR3 m_DirVect[AXIS_NUM_OBB];  // 方向ベクトル
+    D3DXVECTOR3 m_DirVect[AXIS_MAX];  // 方向ベクトル
 };
 #endif

@@ -10,17 +10,13 @@
 //=========================================================================
 // インクルード
 //=========================================================================
-#include "model.h"
-
-//=========================================================================
-// 前方宣言
-//=========================================================================
-class CCollisionModelOBB;
+#include "map.h"
+#include "collisionModel_OBB.h"
 
 //=========================================================================
 // クラス定義
 //=========================================================================
-class CMoveScaffold : public CModel
+class CMoveScaffold : public CMap
 {
 public:
     CMoveScaffold(PRIORITY Priority);  // コンストラクタ
@@ -32,21 +28,22 @@ public:
     void Update()override;                                                        // 更新処理
     void Draw()override;                                                          // 描画
 
-    void HitOBBs(); // OBB同士の当たり判定
     void Respawn(); // リスポーン時の処理
 
 private:
     // private関数
     void Move();        // 移動量
     void CarryPlayer(); // プレイヤーを運ぶ
+    void OnOBBs();      // 乗っているかの判定
+    void Col();         // 当たり判定
 
     // メンバ変数
-    CCollisionModelOBB* m_pColModelOBB; // 当たり判定モデルポインタ(OBB)
-    D3DXVECTOR3 m_StartPos;             // 始まりの位置
-    D3DXVECTOR3 m_GoalPos;              // ゴールの位置
-    int m_nTime;                        // 時間
-    float m_fSpeed;                     // 速度
-    bool m_bMove;                       // 移動のフラグ
+    CCollisionModelOBB* m_pColModelOBB[CCollisionModelOBB::SURFACE_MAX];    // 当たり判定モデルポインタ(OBB)
+    D3DXVECTOR3 m_StartPos;                                                 // 始まりの位置
+    D3DXVECTOR3 m_GoalPos;                                                  // ゴールの位置
+    int m_nTime;                                                            // 時間
+    float m_fSpeed;                                                         // 速度
+    bool m_bMove;                                                           // 移動のフラグ
 };
 
 #endif

@@ -26,8 +26,8 @@
 #define TEST_POS            (D3DXVECTOR3(-10040.0f, 514.8f, -15282.6f))
 #define TEST_ROT            (D3DXVECTOR3(D3DXToRadian(-17.0f), 0.0f, 0.0f))
 #define COL_SIZE_OBB        (D3DXVECTOR3(8000.0f, 200.0f, 18000.0f))
-#define COL_SIZE_POLYGON    (D3DXVECTOR2(7500.0f, 18000.0f))
-#define COL_ROT             (D3DXVECTOR3(D3DXToRadian(-17.0f), 0.0f, 0.0f))
+#define COL_SIZE_POLYGON    (D3DXVECTOR2(8000.0f, 18000.0f))
+#define COL_INIT_ROT        (D3DXVECTOR3(D3DXToRadian(-13.0f), 0.0f, 0.0f))
 
 //=============================================================================
 // コンストラクタ
@@ -77,8 +77,8 @@ HRESULT CSlope::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
     GetModelInfo()->SetModelStatus(pos, rot, model);
 
     // 当たり判定モデルの生成
-    m_pColModelPolygon = CCollisionModelPolygon::Create(D3DXVECTOR3(pos.x, pos.y + 180.0f, pos.z), COL_SIZE_POLYGON, D3DXVECTOR3(COL_ROT.x, rot.y, COL_ROT.z));
-    m_pColModelOBB = CCollisionModelOBB::Create(D3DXVECTOR3(pos.x, pos.y - 150.0f, pos.z), COL_SIZE_OBB, D3DXVECTOR3(COL_ROT.x, rot.y, COL_ROT.z));
+    m_pColModelPolygon = CCollisionModelPolygon::Create(D3DXVECTOR3(pos.x, pos.y + 180.0f, pos.z), COL_SIZE_POLYGON, COL_INIT_ROT + rot);
+    m_pColModelOBB = CCollisionModelOBB::Create(D3DXVECTOR3(pos.x, pos.y - 150.0f, pos.z), COL_SIZE_OBB, COL_INIT_ROT + rot);
 
     return S_OK;
 }
@@ -111,7 +111,7 @@ void CSlope::Col()
 {
     if (m_pColModelPolygon)
     {
-        HitColOBBsPlayer(m_pColModelPolygon);
+        HitColPolygonOnPlayer(m_pColModelPolygon);
     }
     if (m_pColModelOBB)
     {

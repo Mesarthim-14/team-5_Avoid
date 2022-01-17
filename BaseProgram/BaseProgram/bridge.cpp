@@ -23,14 +23,14 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define COLLISION_SIZE (D3DXVECTOR3(6000.0f, 80.0f, 500.0f))   // 当たり判定の大きさ
+#define COLLISION_SIZE (D3DXVECTOR3(12000.0f, 500.0f, 800.0f))   // 当たり判定の大きさ
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CBridge::CBridge(PRIORITY Priority) : CModel(Priority)
+CBridge::CBridge(PRIORITY Priority) : CMap(Priority)
 {
-    m_pColModelOBB = nullptr;
+    memset(m_pColModelOBB, 0, sizeof(m_pColModelOBB));
 }
 
 //=============================================================================
@@ -47,7 +47,7 @@ CBridge::~CBridge()
 CBridge * CBridge::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
     // メモリ確保
-    CBridge *pTestModel = new CBridge(PRIORITY_GIMMICK);
+    CBridge *pTestModel = new CBridge(PRIORITY_MAP);
 
     // !nullcheck
     if (pTestModel)
@@ -66,19 +66,38 @@ CBridge * CBridge::Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 HRESULT CBridge::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 {
     // 初期化処理
-    CModel::Init();
+    CMap::Init();
 
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_GIMMICK_BRIDGE);
     GetModelInfo()->SetModelStatus(pos, rot, model);
 
     // 当たり判定(OBB)の生成
-    if (!m_pColModelOBB)
-    {
-        m_pColModelOBB = CCollisionModelOBB::Create(pos, COLLISION_SIZE, rot);
-    }
+    m_pColModelOBB[CCollisionModelOBB::SURFACE_UP] = CCollisionModelOBB::Create(D3DXVECTOR3(pos.x, pos.y + (COLLISION_SIZE.y / 2) + 670.0f, pos.z), D3DXVECTOR3(COLLISION_SIZE.x, 1.0f, COLLISION_SIZE.z), rot);
+    m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE] = CCollisionModelOBB::Create(D3DXVECTOR3(pos.x, pos.y - 50.0f + 670.0f, pos.z), COLLISION_SIZE, rot);
 
     return S_OK;
+}
+
+//=============================================================================
+// 終了処理
+//=============================================================================
+void CBridge::Uninit()
+{
+    // 当たり判定モデルの終了処理
+    if (m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE])
+    {
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE]->Uninit();
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE] = nullptr;
+    }
+    if (m_pColModelOBB[CCollisionModelOBB::SURFACE_UP])
+    {
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_UP]->Uninit();
+        m_pColModelOBB[CCollisionModelOBB::SURFACE_UP] = nullptr;
+    }
+
+    // 終了処理
+    CMap::Uninit();
 }
 
 //=============================================================================
@@ -87,31 +106,18 @@ HRESULT CBridge::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
 void CBridge::Update()
 {
     // 更新処理
-    CModel::Update();
-
-    // OBB同士の当たり判定
-    HitOBBs();
+    CMap::Update();
 }
 
 //=============================================================================
 // OBB同士の当たり判定
 //=============================================================================
-void CBridge::HitOBBs()
+void CBridge::Col()
 {
-    // プレイヤーポインタの取得
-    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
-    if (!pPlayer)
-        return;
-
-    // プレイヤーの当たり判定モデルポインタの取得
-    CCollisionModelOBB* pPlayerColModelOBB = pPlayer->GetColOBBPtr();
-
-    if (m_pColModelOBB && pPlayerColModelOBB)
+    // 当たり判定
+    if (m_pColModelOBB)
     {
-        if (CCollision::ColOBBs(m_pColModelOBB->GetOBB(), pPlayerColModelOBB->GetOBB()))
-        {
-            // 着地の処理
-            pPlayer->Landing(m_pColModelOBB->GetOBB().info.pos.y + (m_pColModelOBB->GetOBB().info.size.y / 2) + (pPlayerColModelOBB->GetOBB().info.size.y / 2));
-        }
+        HitColOBBsPlayer(m_pColModelOBB);
+        HitColOBBsBossBullet(m_pColModelOBB[CCollisionModelOBB::SURFACE_SIDE]);
     }
 }

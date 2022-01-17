@@ -10,17 +10,13 @@
 //=========================================================================
 // インクルード
 //=========================================================================
-#include "model.h"
-
-//=========================================================================
-// 前方宣言
-//=========================================================================
-class CCollisionModelOBB;
+#include "map.h"
+#include "collisionModel_OBB.h"
 
 //=========================================================================
 // クラス定義
 //=========================================================================
-class CBridge : public CModel
+class CBridge : public CMap
 {
 public:
     CBridge(PRIORITY Priority);    // コンストラクタ
@@ -28,12 +24,13 @@ public:
 
     static CBridge *Create(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot); // インスタンス生成
     HRESULT Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot);           // 初期化処理
+    void Uninit();                                                          // 終了処理
     void Update();                                                          // 更新処理
 
-    void HitOBBs(); // OBB同士の当たり判定
-
 private:
-    CCollisionModelOBB* m_pColModelOBB; // 当たり判定ポインタ
+    void Col(); // 当たり判定
+
+    CCollisionModelOBB* m_pColModelOBB[CCollisionModelOBB::SURFACE_MAX];    // 当たり判定ポインタ配列
 };
 
 #endif

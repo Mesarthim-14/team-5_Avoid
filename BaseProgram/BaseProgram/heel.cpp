@@ -137,5 +137,5 @@ void CHeel::CreateHeelPoint()
     m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(7223.2f, 5140.0f, -50789.8f)));
     m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-28757.1f, 5310.0f, -55027.8f)));
     m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(-58786.7f, 5050.0f, -23108.5f)));
-    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(1908.0f, 1750.0f, 67083.5f)));
+    m_apHeelPoint.push_back(CHeelPoint::Create(D3DXVECTOR3(1908.0f, 950.0f, 67083.5f)));
 }

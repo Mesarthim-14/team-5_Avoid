@@ -20,6 +20,7 @@
 #include "check_point.h"
 #include "state_player_normal.h"
 #include "move_scaffold.h"
+#include "collisionModel_OBB.h"
 
 //=====================================================================
 // マクロ定義
@@ -72,11 +73,9 @@ void CPlayerStateRespawn::Init()
         return;
     }
     D3DXVECTOR3 CheckPointPos = pGame->GetGimmickFactory()->GetCheckPoint()->GetPointPos();
-    // 座標の取得
-    pPlayer->SetPos(D3DXVECTOR3(CheckPointPos.x, CheckPointPos.y + (600 / 2), CheckPointPos.z));
 
     // 座標の取得
-    pPlayer->SetPos(pGame->GetGimmickFactory()->GetCheckPoint()->GetPointPos());
+    pPlayer->SetPos(D3DXVECTOR3(CheckPointPos.x, CheckPointPos.y + 800.0f, CheckPointPos.z));
     pPlayer->SetMove(ZeroVector3);
     pPlayer->SetCollision(false);
 

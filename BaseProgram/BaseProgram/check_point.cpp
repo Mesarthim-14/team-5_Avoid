@@ -121,5 +121,5 @@ void CCheckPoint::CreateFlag()
 	m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(2572.5f, 4950.0f, -50047.8f)));
 	m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(-30587.8f, 5200.0f, -53817.8f)));
 	m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(-54192.9f, 4950.0f, -16407.5f)));
-    m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(734.8f, 1650.0f, 60978.5f)));
+    m_apChackFlag.push_back(CCheckFlag::Create(D3DXVECTOR3(734.8f, 850.0f, 60978.5f)));
 }
