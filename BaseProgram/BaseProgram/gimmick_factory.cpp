@@ -184,22 +184,22 @@ void CGimmickFactory::CreateMoveScaffold()
     {
         m_pMoveScaffold = CMoveScaffold::Create(D3DXVECTOR3(-54035.3f, 0.0f, -13141.0f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
     }
-    CRubble1::Create(D3DXVECTOR3(-30141.4f, 500.0f, 11044.3f), D3DXVECTOR3(0.0f, D3DXToRadian(-53.0f), 0.0f));
-    CRubble1::Create(D3DXVECTOR3(-23208.7f, 500.0f, 30815.4f), D3DXVECTOR3(0.0f, D3DXToRadian(-53.0f), 0.0f));
-    CRubble1::Create(D3DXVECTOR3(-9112.1f, 500.0f, 43736.2f), D3DXVECTOR3(0.0f, D3DXToRadian(-53.0f), 0.0f));
-    CRubble1::Create(D3DXVECTOR3(-8504.7f, 500.0f, 54964.4f), D3DXVECTOR3(0.0f, D3DXToRadian(-53.0f), 0.0f));
+    CRubble1::Create(D3DXVECTOR3(-34141.4f, 500.0f, 16044.3f), D3DXVECTOR3(0.0f, D3DXToRadian(-53.0f), 0.0f));
+    CRubble1::Create(D3DXVECTOR3(-20208.7f, 500.0f, 26815.4f), D3DXVECTOR3(0.0f, D3DXToRadian(-53.0f), 0.0f));
+    CRubble1::Create(D3DXVECTOR3(-15112.1f, 500.0f, 43736.2f), D3DXVECTOR3(0.0f, D3DXToRadian(-53.0f), 0.0f));
+    CRubble1::Create(D3DXVECTOR3(-8504.7f, 500.0f, 46064.4f), D3DXVECTOR3(0.0f, D3DXToRadian(-53.0f), 0.0f));
 
+    CRubble2::Create(D3DXVECTOR3(-39836.8f, 1200.0f, 1539.6f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
     CRubble2::Create(D3DXVECTOR3(-40179.2f, 1200.0f, 2725.8f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
     CRubble2::Create(D3DXVECTOR3(-43521.4f, 1200.0f, 4912.3f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
-    CRubble2::Create(D3DXVECTOR3(-36836.8f, 1200.0f, 539.6f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
     
+    CRubble2::Create(D3DXVECTOR3(-24102.8f, 1200.0f, 19687.9f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
     CRubble2::Create(D3DXVECTOR3(-27445.0f, 1200.0f, 21874.1f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
     CRubble2::Create(D3DXVECTOR3(-30787.2f, 1200.0f, 24060.3f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
-    CRubble2::Create(D3DXVECTOR3(-24102.8f, 1200.0f, 19687.9f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
 
-    CRubble2::Create(D3DXVECTOR3(-15391.1f, 1200.0f, 36226.8f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
-    CRubble2::Create(D3DXVECTOR3(-18733.2f, 1200.0f, 38413.0f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
-    CRubble2::Create(D3DXVECTOR3(-12048.9f, 1200.0f, 34040.4f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
+    CRubble2::Create(D3DXVECTOR3(-14048.9f, 1200.0f, 34040.4f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
+    CRubble2::Create(D3DXVECTOR3(-17391.1f, 1200.0f, 36226.8f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
+    CRubble2::Create(D3DXVECTOR3(-20733.2f, 1200.0f, 38413.0f), D3DXVECTOR3(0.0f, D3DXToRadian(-143.0f), 0.0f));
 
     //x = 3342.2, z = 2186.2
 }

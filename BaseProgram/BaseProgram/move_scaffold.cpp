@@ -27,7 +27,7 @@
 // マクロ定義
 //=============================================================================
 #define TURN_TIME       (800.0f)    // 反転までのカウント
-#define SPEED           (20.0f)
+#define SPEED           (100.0f)
 #define COLLISION_SIZE  (D3DXVECTOR3(6600.0f, 700.0f, 4100.0f)) // 当たり判定モデルの大きさ
 #define STOP_DISTANCE   (2000.0f)                               // 止まる距離
 
