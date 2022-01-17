@@ -66,7 +66,7 @@ HRESULT CTexture::SetTextureName()
         { "data/Texture/star.png" },
         { "data/Texture/effect_kaihuku.png" },
         { "data/Texture/.png" },
-        { "data/Texture/smoke.png" },
+        { "data/Texture/cannon_smoke_tex.png" },
         { "data/Texture/uzusio_1.png" },
         { "data/Texture/uzusio_2.png" },
         { "data/Texture/tame.png" },

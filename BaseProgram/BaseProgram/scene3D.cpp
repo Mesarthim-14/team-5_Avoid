@@ -58,6 +58,7 @@ void CScene3D::Uninit()
 //=============================================================================
 void CScene3D::Update()
 {
+    CSceneBase::Update();
     // ˆÚ“®—Ê‰ÁŽZ
     GetPos() += m_move;
 }

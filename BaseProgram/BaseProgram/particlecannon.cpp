@@ -114,7 +114,7 @@ void CParticleCannon::SetParticle(void)
     // テクスチャの設定
     CTexture *pTexture = GET_TEXTURE_PTR;
     BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_CANNON));
-    CScene3D::InitAnimation(1, 8, -1);
+    CScene3D::InitAnimation(8, 10, -1);
     // パーティクルの出る角度の設定
     m_fAngle = CLibrary::Random(RANDOM);
     // 移動させるための処理

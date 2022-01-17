@@ -65,7 +65,7 @@ void CParticleInfo::Update()
     {
         Gravity();
     }
-
+    CBillboard::Update();
     if (m_LifeSet)
     {
         //    ƒ‰ƒCƒt‚ª‚O‚É‚È‚Á‚½‚çÁ‚·

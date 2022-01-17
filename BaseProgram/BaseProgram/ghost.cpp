@@ -75,7 +75,7 @@ HRESULT CGhost::Init(const D3DXVECTOR3 &pos, const D3DXVECTOR3 &rot)
     SetAttackInfo(ATTACK_INTER, ATTACK_STR, ATTACK_POWER);
     SetCharacterInfo(pos, rot);
     SetSpeed(SPEED);
-    CParticleAura::Create(pos);
+    CParticleAura::Create();
     CreateModel();
 
     return S_OK;
