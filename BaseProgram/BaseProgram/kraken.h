@@ -20,6 +20,7 @@ class CSkinmeshModel;
 class CCollisionModelOBB;
 class CState;
 class CKrakenTentacles;
+class CBossHp;
 
 //=============================================================================
 // クラス定義
@@ -46,11 +47,12 @@ public:
     void Uninit();                      // 終了処理
     void Update();                      // 更新処理
     void ChangeState(CState* pState);   // 状態の変更
+    void SubLife();                     // 体力の減算
 
-    inline void SubLife()                           { m_nLife--; }                  // 体力の減算
     inline CCollisionModelOBB* GetCollosion()const  { return m_pCollision; }        // 当たり判定の情報
     inline bool GetDead()const                      { return m_bDead; }             // 死んだ判定
     inline CSkinmeshModel* GetSkinMesh()const       { return m_pSkinmeshModel; }    // スキンメッシュの情報
+    inline CBossHp* GetHpUi()const                  { return m_pHpUi; }
 
 private:
     // private関数
@@ -68,5 +70,6 @@ private:
     int m_nBulletCount;                         // 発射カウント
     int m_nLife;                                // ライフ
     bool m_bDead;                               // 死んだフラグ
+    CBossHp* m_pHpUi;                           // HPのUi
 };
 #endif

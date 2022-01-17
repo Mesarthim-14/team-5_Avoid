@@ -89,6 +89,8 @@ HRESULT CTexture::SetTextureName()
         { "data/Texture/white.png" },
         { "data/Texture/slime_50.png" },
         { "data/Texture/takohead_tex.png" },
+        { "data/Texture/boss_hp_back.png" },
+        { "data/Texture/boss_hp_bar.png" },
     };
     
     // 分割テクスチャ

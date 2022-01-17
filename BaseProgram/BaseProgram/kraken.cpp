@@ -21,6 +21,7 @@
 #include "kraken_tentacles.h"
 #include "texture.h"
 #include "resource_manager.h"
+#include "boss_hp.h"
 
 //=============================================================================
 // マクロ定義
@@ -45,6 +46,7 @@ CKraken::CKraken(PRIORITY Priority) : CEnemy(Priority)
     m_pCurrentState = nullptr;
     m_pNextState = nullptr;
     m_apTentacles.clear();
+    m_pHpUi = nullptr;
 }
 
 //=============================================================================
@@ -93,6 +95,11 @@ HRESULT CKraken::Init()
         m_pCurrentState = CKrakenStateNormal::Create();
     }
 
+    if (!m_pHpUi)
+    {
+        m_pHpUi = CBossHp::Create(m_nLife);
+    }
+
     // 触手の生成
     CreateTentacles();
 
@@ -119,6 +126,10 @@ void CKraken::Uninit()
         pTantacles->Uninit();
         pTantacles = nullptr;
     }
+
+    // 体力バー
+    UNINIT_SAFE(m_pHpUi);
+
     m_apTentacles.clear();
 
     CEnemy::Uninit();
@@ -173,6 +184,18 @@ void CKraken::ChangeState(CState* pState)
         delete m_pNextState;
         m_pNextState = nullptr;
         m_pNextState = pState;
+    }
+}
+
+//=============================================================================
+// ライフの減少
+//=============================================================================
+void CKraken::SubLife()
+{
+    m_nLife--;
+    if (m_pHpUi)
+    {
+        m_pHpUi->SubHp();
     }
 }
 

@@ -520,6 +520,15 @@
     <ClCompile Include="mesh_tube.cpp">
       <Filter>06_Effect</Filter>
     </ClCompile>
+    <ClCompile Include="boss_hp_bar.cpp">
+      <Filter>09_Ui\BossHp</Filter>
+    </ClCompile>
+    <ClCompile Include="boss_hp_back.cpp">
+      <Filter>09_Ui\BossHp</Filter>
+    </ClCompile>
+    <ClCompile Include="boss_hp.cpp">
+      <Filter>09_Ui\BossHp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -1050,6 +1059,15 @@
     <ClInclude Include="mesh_tube.h">
       <Filter>06_Effect</Filter>
     </ClInclude>
+    <ClInclude Include="boss_hp_bar.h">
+      <Filter>09_Ui\BossHp</Filter>
+    </ClInclude>
+    <ClInclude Include="boss_hp_back.h">
+      <Filter>09_Ui\BossHp</Filter>
+    </ClInclude>
+    <ClInclude Include="boss_hp.h">
+      <Filter>09_Ui\BossHp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\Text\Shader\BlurFilter.fx">
@@ -1284,6 +1302,9 @@
     </Filter>
     <Filter Include="06_Effect\Shader\ShockBlur\fx">
       <UniqueIdentifier>{3bb0443b-5865-4143-8d38-0d1c19a92b16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="09_Ui\BossHp">
+      <UniqueIdentifier>{3bb53311-1372-4180-ac36-db078596011c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

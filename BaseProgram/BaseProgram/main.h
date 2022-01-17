@@ -82,6 +82,9 @@
 #define DIVIDE_2            (2)                                                         // “ñ‚Â‚É•ª‚¯‚é
 #define MODEL_DEFAULT_SIZE  (D3DXVECTOR3(1.0f, 1.0f, 1.0f))                             // ƒ‚ƒfƒ‹‚Ì’Êí‚Ì‘å‚«‚³
 
+#define RELEASE_SAFE(pPtr) if (pPtr) {pPtr->Release(); pPtr = nullptr;}
+#define UNINIT_SAFE(pPtr) if (pPtr) {pPtr->Uninit(); pPtr = nullptr;}
+
 // –¼‘O‚ÌÈ—ª
 using namespace std;
 
