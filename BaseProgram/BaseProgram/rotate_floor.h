@@ -10,17 +10,18 @@
 //=========================================================================
 // インクルード
 //=========================================================================
-#include "model.h"
+#include "map.h"
+#include "collisionModel_OBB.h"
 
 //=========================================================================
-// 前方宣言
+// マクロ定義
 //=========================================================================
-class CCollisionModelCylinder;
+#define COL_NUM (3)
 
 //=========================================================================
 // クラス定義
 //=========================================================================
-class CRotateFloor : public CModel
+class CRotateFloor : public CMap
 {
 public:
     CRotateFloor(PRIORITY Priority);   // コンストラクタ
@@ -28,12 +29,13 @@ public:
 
     static CRotateFloor *Create(const D3DXVECTOR3 &pos);    // インスタンス生成
     HRESULT Init(const D3DXVECTOR3 &pos);                   // 初期化処理
+    void Uninit();                                          // 終了処理
     void Update();                                          // 更新処理
 
-    void HitCylinderAndSphere(); // 円柱と球体の当たり判定
-
 private:
-    CCollisionModelCylinder* m_pColModelCylinder;   // 当たり判定ポインタ(円柱)
+    void Col(); // 当たり判定
+
+    CCollisionModelOBB* m_pColModelOBB[COL_NUM][CCollisionModelOBB::SURFACE_MAX];    // 当たり判定ポインタ配列
 };
 
 #endif

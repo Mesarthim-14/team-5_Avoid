@@ -181,19 +181,15 @@ void CMap::HitColOBBsPlayer(const CCollisionModelOBB* const &pMapColOBB)
 
     // プレイヤーの当たり判定モデルポインタの取得
     CCollisionModelOBB* pPlayerColModelOBB = pPlayer->GetColOBBPtr();
-
-    // プレイヤーの当たり判定ポインタの取得
-    CCollisionModelOBB::OBB playerObb;
-    if (pPlayerColModelOBB)
-    {
-        playerObb = pPlayerColModelOBB->GetOBB();
-    }
-    else
+    if (!pPlayerColModelOBB)
         return;
+
+    // プレイヤーの当たり判定情報の取得
+    CCollisionModelOBB::OBB playerObb = pPlayerColModelOBB->GetOBB();
 
     if (pMapColOBB)
     {
-        // 側面の当たり判定ポインタの取得
+        // 側面の当たり判定情報の取得
         CCollisionModelOBB::OBB surfaceSideObb = pMapColOBB->GetOBB();
 
         if (CCollision::ColOBBs(surfaceSideObb, playerObb))
@@ -208,7 +204,7 @@ void CMap::HitColOBBsPlayer(const CCollisionModelOBB* const &pMapColOBB)
 //=============================================================================
 // プレイヤーとの当たり判定(直方体とポリゴン(直方体同士))
 //=============================================================================
-void CMap::HitColOBBsPlayer(const CCollisionModelPolygon* const &pMapColPolygon)
+void CMap::HitColPolygonPlayer(const CCollisionModelPolygon* const &pMapColPolygon)
 {
     // プレイヤーポインタの取得
     CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
@@ -229,15 +225,11 @@ void CMap::HitColOBBsPlayer(const CCollisionModelPolygon* const &pMapColPolygon)
 
     // プレイヤーの当たり判定モデルポインタの取得
     CCollisionModelOBB* pPlayerColModelOBB = pPlayer->GetColOBBPtr();
+    if (!pPlayerColModelOBB)
+        return;
 
     // プレイヤーの当たり判定ポインタの取得
-    CCollisionModelOBB::OBB playerObb;
-    if (pPlayerColModelOBB)
-    {
-        playerObb = pPlayerColModelOBB->GetOBB();
-    }
-    else
-        return;
+    CCollisionModelOBB::OBB playerObb = pPlayerColModelOBB->GetOBB();
 
     if (pMapColPolygon)
     {
@@ -249,21 +241,70 @@ void CMap::HitColOBBsPlayer(const CCollisionModelPolygon* const &pMapColPolygon)
 
         if (CCollision::ColOBBs(polygonInfo, playerObb))
         {
+            // プレイヤーの移動量の取得
+            D3DXVECTOR3 playerMove = pPlayer->GetPos() - pPlayer->GetOldPos();
+
+            if (playerMove != ZeroVector3)
+            {
+                // 壁ずりベクトルを取得してプレイヤーの座標を設定
+                pPlayer->SetPos(pPlayer->GetOldPos() + CCollision::SlideVect(playerMove, polygon.norVec));
+            }
+
+            return;
+        }
+    }
+}
+
+//=============================================================================
+// プレイヤーとの当たり判定(直方体とポリゴン(直方体同士))
+//=============================================================================
+void CMap::HitColPolygonOnPlayer(const CCollisionModelPolygon* const &pMapColPolygon)
+{
+    // プレイヤーポインタの取得
+    CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+    if (!pPlayer)
+        return;
+
+    if (pPlayer->GetState() == CPlayer::JUMP)
+    { // ジャンプ状態のとき
+        CPlayerStateJump* pStateJump = (CPlayerStateJump*)pPlayer->GetCurrentState();
+        if (pStateJump->GetJumpCheck())
+        { // ジャンプし始めているとき
+            if (pStateJump->GetJumpTimeCount() < NOT_COLLISION_TIME)
+            { // 当たり判定を行わない時間より少ないとき
+                return;
+            }
+        }
+    }
+
+    // プレイヤーの当たり判定モデルポインタの取得
+    CCollisionModelOBB* pPlayerColModelOBB = pPlayer->GetColOBBPtr();
+    if (!pPlayerColModelOBB)
+        return;
+
+    // プレイヤーの当たり判定ポインタの取得
+    CCollisionModelOBB::OBB playerObb = pPlayerColModelOBB->GetOBB();
+
+    if (pMapColPolygon)
+    {
+        // ポリゴン情報の取得
+        CCollisionModelPolygon::POLYGON polygon = pMapColPolygon->GetPolygon();
+
+        // ポリゴン情報をOBB構造体用に設定
+        CCollisionModelOBB::OBB polygonInfo = { polygon.info,{ polygon.DirVect[0], polygon.DirVect[1], polygon.DirVect[2] } };
+
+        if (CCollision::ColOBBs(polygonInfo, playerObb))
+        {
             m_bHitMap = true;
             pPlayer->SetLanding(true);
 
             // プレイヤーの移動量の取得
             D3DXVECTOR3 playerMove = pPlayer->GetMove();
 
-            /*// プレイヤーの移動量とポリゴンの法線のなす角を求める
-            float fCosTheta = D3DXVec3Dot(&playerMove, &polygon.norVec) / (D3DXVec3Length(&playerMove) * D3DXVec3Length(&polygon.norVec));
-            float fThera = acos(fCosTheta);*/
-
-            if (/*fThera > D3DXToRadian(90) &&*/ playerMove != ZeroVector3)
+            if (playerMove != ZeroVector3)
             {
-                    // 壁ずりベクトルを取得してプレイヤーの移動量に設定
-                    D3DXVECTOR3 slideVec = CCollision::SlideVect(playerMove, polygon.norVec);
-                    pPlayer->SetMove(slideVec);
+                // 壁ずりベクトルを取得してプレイヤーの座標を設定
+                pPlayer->SetMove(CCollision::SlideVect(playerMove, polygon.norVec));
             }
 
             return;
@@ -376,10 +417,13 @@ void CMap::HitColPlayer(const CCollisionModelCylinder* const pMapColCylinder)
         }
         else if (surface == CCollision::SURFACE_SIDE)
         {
-            // 落下の処理
-            pPlayer->Fall();
+            if (!m_bHitMap)
+            {
+                // 落下の処理
+                pPlayer->Fall();
+            }
+
             m_bHitMap = true;
-            return;
         }
     }
     else

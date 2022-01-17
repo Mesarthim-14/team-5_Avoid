@@ -240,7 +240,7 @@ void CLibrary::Rotate3D(D3DXVECTOR3 &PointPos, const D3DXVECTOR3 &rot)
         PointPos.x,
         PointPos.y * cosf(rot.x) + PointPos.z * -sinf(rot.x),
         PointPos.y * sinf(rot.x) + PointPos.z * cosf(rot.x));
-    float a = cosf(rot.x);
+
     //YŽ²‰ñ“]
     PointPos = D3DXVECTOR3(
         PointPos.x * cosf(rot.y) + PointPos.z * sinf(rot.y),

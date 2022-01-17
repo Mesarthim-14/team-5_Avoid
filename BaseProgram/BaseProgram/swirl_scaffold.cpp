@@ -123,13 +123,14 @@ void CSwirlScaffold::RotateObject()
     {
         if (m_pObject[nCount])
         {
-            m_pObject[nCount]->SetPos(D3DXVECTOR3(
+            D3DXVECTOR3 newPos = D3DXVECTOR3(
                 m_pos.x + sinf(m_fAngle + fAngle)*OBJECT_INTER_POS,
                 m_pos.y,
-                m_pos.z + cosf(m_fAngle + fAngle)*OBJECT_INTER_POS));
+                m_pos.z + cosf(m_fAngle + fAngle)*OBJECT_INTER_POS);
             rot = m_pObject[nCount]->GetRot();
             rot.y = m_fAngle + fAngle;
             //m_pObject[nCount]->SetRot(rot);
+            m_pObject[nCount]->SetMove(newPos - m_pObject[nCount]->GetPos());
         }
 
         // Šp“x”½“]

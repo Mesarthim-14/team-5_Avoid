@@ -51,8 +51,7 @@ void CCollisionModel::Load(void)
             4,              // 辺の数
             &m_pMesh,       // メッシュ情報
             &m_pBuffMat);   // バッファ情報
-#endif
-
+#else
         // 直方体の作成(Yサイズ：0.0f)
         D3DXCreateBox(
             pDevice,        // デバイス情報
@@ -61,7 +60,7 @@ void CCollisionModel::Load(void)
             1.0f,           // 奥幅
             &m_pMesh,       // メッシュ情報
             &m_pBuffMat);   // バッファ情報
-
+#endif
         break;
 
     case TYPE_OBB:

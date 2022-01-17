@@ -55,16 +55,8 @@ HRESULT CCollisionModelOBB::Init()
 {
     CCollisionModel::Init();
 
-    //各軸の回転前座標の設定(回転していないXYZ軸に大きさだけを適応)
-    m_DirVect[0] = D3DXVECTOR3(GetInfo().size.x / 2, 0.0f, 0.0f);
-    m_DirVect[1] = D3DXVECTOR3(0.0f, GetInfo().size.y / 2, 0.0f);
-    m_DirVect[2] = D3DXVECTOR3(0.0f, 0.0f, GetInfo().size.z / 2);
-
-    //各軸の方向ベクトルの計算
-    for (int nCount = 0; nCount < AXIS_NUM_OBB; nCount++)
-    {
-        CLibrary::Rotate3D(m_DirVect[nCount], GetInfo().rot);
-    }
+    // 法線ベクトルの設定
+    SetDirVect();
 
     return E_NOTIMPL;
 }
@@ -83,6 +75,9 @@ void CCollisionModelOBB::Uninit()
 void CCollisionModelOBB::Update()
 {
     CCollisionModel::Update();
+
+    // 法線ベクトルの設定
+    SetDirVect();
 }
 
 //*****************************************************************************
@@ -93,4 +88,25 @@ void CCollisionModelOBB::Draw()
 #ifdef _DEBUG
     CCollisionModel::Draw();
 #endif
+}
+
+//*****************************************************************************
+// 法線ベクトルの設定
+//*****************************************************************************
+void CCollisionModelOBB::SetDirVect()
+{
+    D3DXVECTOR3 InitDirVect[AXIS_MAX];  // 初期方向ベクトル
+    D3DXVECTOR3 size = GetInfo().size;  // 大きさ
+
+    //各軸の回転前座標の設定(回転していないXYZ軸に大きさだけを適応)
+    InitDirVect[AXIS_X] = D3DXVECTOR3(size.x / 2, 0.0f, 0.0f);
+    InitDirVect[AXIS_Y] = D3DXVECTOR3(0.0f, size.y / 2, 0.0f);
+    InitDirVect[AXIS_Z] = D3DXVECTOR3(0.0f, 0.0f, size.z / 2);
+
+    //各軸の方向ベクトルの計算
+    for (int nCount = 0; nCount < AXIS_MAX; nCount++)
+    {
+        CLibrary::Rotate3D(InitDirVect[nCount], GetInfo().rot);
+        m_DirVect[nCount] = InitDirVect[nCount];
+    }
 }

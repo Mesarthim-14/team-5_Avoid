@@ -28,14 +28,16 @@ public:
     void Update();                                                  // 更新処理
 
 private:
-    void Col(); // 当たり判定
+    void Col();             // 当たり判定
+    void OnOBBs();          // 乗っているかの判定
+    void CarryPlayer();     // プレイヤーを運ぶ
 
     CCollisionModelOBB* m_pColModelOBB[CCollisionModelOBB::SURFACE_MAX];    // 当たり判定ポインタ配列
     D3DXVECTOR3 m_OldPlayerPos;
     D3DXVECTOR3 m_PlayerPos;
     D3DXVECTOR3 m_Rot;
     D3DXVECTOR3 m_OldRot;
-
+    bool m_bMove;                                                           // 移動のフラグ
 };
 
 #endif

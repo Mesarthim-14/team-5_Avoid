@@ -33,6 +33,5 @@ public:
 private:
     void Jump(CPlayer* &pPlayer);       // ƒWƒƒƒ“ƒvˆ—
     void Avoidance(CPlayer* &pPlayer);  // ‰ñ”ğ
-    
 };
 #endif

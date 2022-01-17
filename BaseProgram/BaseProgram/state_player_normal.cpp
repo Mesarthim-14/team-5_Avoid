@@ -23,7 +23,6 @@
 //=====================================================================
 CPlayerStateNormal::CPlayerStateNormal()
 {
-
 }
 
 //=====================================================================
@@ -90,11 +89,17 @@ void CPlayerStateNormal::Update()
 //=====================================================================
 void CPlayerStateNormal::Jump(CPlayer* &pPlayer)
 {
-    // ためジャンプ
-    if (CLibrary::KeyboardTrigger(DIK_SPACE))
+    if (pPlayer)
     {
-        // 状態の設定
-        pPlayer->ChangeState(CPlayerStateJump::Create());
+        if (pPlayer->GetBoolJump())
+        {
+            // ためジャンプ
+            if (CLibrary::KeyboardTrigger(DIK_SPACE))
+            {
+                // 状態の設定
+                pPlayer->ChangeState(CPlayerStateJump::Create());
+            }
+        }
     }
 }
 
