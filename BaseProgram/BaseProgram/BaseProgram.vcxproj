@@ -152,6 +152,9 @@
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="blur_filter.cpp" />
     <ClCompile Include="boss_bullet.cpp" />
+    <ClCompile Include="boss_hp.cpp" />
+    <ClCompile Include="boss_hp_back.cpp" />
+    <ClCompile Include="boss_hp_bar.cpp" />
     <ClCompile Include="bridge.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
@@ -327,6 +330,9 @@
     <ClInclude Include="billboard.h" />
     <ClInclude Include="blur_filter.h" />
     <ClInclude Include="boss_bullet.h" />
+    <ClInclude Include="boss_hp.h" />
+    <ClInclude Include="boss_hp_back.h" />
+    <ClInclude Include="boss_hp_bar.h" />
     <ClInclude Include="bridge.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="camera.h" />

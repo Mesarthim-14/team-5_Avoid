@@ -20,6 +20,7 @@
 #include "state_camera_normal.h"
 #include "state_player_normal.h"
 #include "camera_game.h"
+#include "boss_hp.h"
 
 //=====================================================================
 // ƒ}ƒNƒ’è‹`
@@ -121,6 +122,11 @@ void CCameraStateDescent::Update()
         if (pGame)
         {
             pGame->CreateUi();
+            CBossHp* pUi = pKraken->GetHpUi();
+            if (pUi)
+            {
+                pUi->SetDraw(true);
+            }
         }
     }
 }
