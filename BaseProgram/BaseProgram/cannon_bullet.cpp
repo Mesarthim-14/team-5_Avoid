@@ -24,6 +24,7 @@
 #include "particlecannon.h"
 #include "collision.h"
 #include "particlenormal.h"
+#include "particle_explosion.h"
 #include "state_kraken_damage.h"
 #include "sound.h"
 #include "renderer.h"
@@ -135,6 +136,8 @@ void CCannonBullet::Update()
     {
         m_pCollision->SetInfo(GetPos(), m_pCollision->GetOBB().info.size, GetRot());
     }
+
+    CParticleExplosion::Create(GetPos());
 
     Collision();
 }

@@ -9,43 +9,43 @@
 // インクルードファイル
 // Author : toshiki
 //=====================================================================
-#include "particleshrink_heel.h"
+#include "particle_explosion.h"
 #include "manager.h"
 #include "renderer.h"
 #include "library.h"
 #include "texture.h"
 #include "resource_manager.h"
+#include "texture_animation.h"
 
-float CParticleHeel::m_fAngleX = 0.0f;
-float CParticleHeel::m_fAngleZ = 0.0f;
-float CParticleHeel::m_fSize = 0.0f;
+D3DXVECTOR3 CParticleExplosion::m_Rot = ZeroVector3;
 //=====================================================================
 // マクロ定義
 // Author : toshiki
 //=====================================================================
-#define PARTICLE_POS    ((D3DXVECTOR3(m_fAngleX, 5.0f, m_fAngleZ)))
-#define SIZE            (D3DXVECTOR3(m_fSize, m_fSize, m_fSize))
-#define SPEED           (5.0f)
-#define RANDOM          (3.14f)
-#define LIFE            (40)
-#define COLOR           (D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))
-#define TANGENT         (7.0f)
+#define POS         (ZeroVector3)
+#define SIZE        (D3DXVECTOR3(1600.0f, 1600.0f, 0.0f))
+#define SPEED       (7.0f)
+#define RANDOM      (3.14f)
+#define LIFE        (200)
+#define COLOR       (D3DXCOLOR(1.0f,1.0f,1.0f,m_fColor))
 
 //=====================================================================
 // コンストラクタ
 // Author : toshiki
 //=====================================================================
-CParticleHeel::CParticleHeel()
+CParticleExplosion::CParticleExplosion()
 {
+    m_fAngle = 0.0f;
     m_fSpeed = 0.0f;
-    ShrinkPos = ZeroVector3;
+    m_fColor = 1.0f;
+    m_nCnt = 0;
 }
 
 //=====================================================================
 // デストラクタ
 // Author : toshiki
 //=====================================================================
-CParticleHeel::~CParticleHeel()
+CParticleExplosion::~CParticleExplosion()
 {
 
 }
@@ -54,17 +54,13 @@ CParticleHeel::~CParticleHeel()
 // 生成処理
 // Author : toshiki
 //=====================================================================
-CParticleHeel * CParticleHeel::Create(const D3DXVECTOR3 &pos)
+CParticleExplosion * CParticleExplosion::Create(const D3DXVECTOR3 &pos)
 {
-    CParticleHeel * pParticle = new CParticleHeel;
+    CParticleExplosion * pParticle = new CParticleExplosion;
 
     if (pParticle != nullptr)
     {
-        m_fAngleX = CLibrary::Random(600.0f);
-        m_fAngleZ = CLibrary::Random(600.0f);
-        m_fSize = CLibrary::Random(30.0f, 100.0f);
-        pParticle->SetSceneInfo(D3DXVECTOR3(pos.x + m_fAngleX, pos.y, pos.z + m_fAngleZ), SIZE);
-
+        pParticle->SetSceneInfo(pos, SIZE);
         pParticle->Init();
         return pParticle;
     }
@@ -75,7 +71,7 @@ CParticleHeel * CParticleHeel::Create(const D3DXVECTOR3 &pos)
 // 初期化処理
 // Author : toshiki
 //=====================================================================
-HRESULT CParticleHeel::Init(void)
+HRESULT CParticleExplosion::Init(void)
 {
     CParticleInfo::Init();
     SetParticle();
@@ -86,16 +82,18 @@ HRESULT CParticleHeel::Init(void)
 // 更新処理
 // Author : toshiki
 //=====================================================================
-void CParticleHeel::Update(void)
+void CParticleExplosion::Update(void)
 {
     CParticleInfo::Update();
+    SetParticleColor();
+    SetEffect();
 }
 
 //=====================================================================
 // 終了処理
 // Author : toshiki
 //=====================================================================
-void CParticleHeel::Uninit(void)
+void CParticleExplosion::Uninit(void)
 {
     CParticleInfo::Uninit();
 }
@@ -104,7 +102,7 @@ void CParticleHeel::Uninit(void)
 // 描画処理
 // Author : toshiki
 //=====================================================================
-void CParticleHeel::Draw(void)
+void CParticleExplosion::Draw(void)
 {
     CParticleInfo::Draw();
 }
@@ -113,19 +111,38 @@ void CParticleHeel::Draw(void)
 // パーティクルを出す処理
 // Author : toshiki
 //=====================================================================
-void CParticleHeel::SetParticle(void)
+void CParticleExplosion::SetParticle(void)
 {
     // テクスチャの設定
     CTexture *pTexture = GET_TEXTURE_PTR;
-    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_HEEL));
-    // スピードの値を設定
-    m_fSpeed = SPEED;
-    // 移動させるための処理
-    D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 12.0f, 0.0f);
-    // 移動情報を設定
-    SetMove(move);
-    // 色の設定
-    SetColor(COLOR);
+    BindTexture(pTexture->GetTexture(CTexture::TEXTURE_NUM_SMOKE));
+    CScene3D::InitAnimation(8, 10, 0);
     // パーティクルが消える時間の設定
     SetLife(LIFE);
+}
+
+//=====================================================================
+// パーティクルを徐々に消す処理
+// Author : toshiki
+//=====================================================================
+void CParticleExplosion::SetParticleColor(void)
+{
+    m_nCnt++;
+    // 徐々に消えていく処理
+    if (m_nCnt >= 10)
+    {
+        m_fColor -= 0.1f;
+        m_nCnt = 0;
+    }
+    SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_fColor));
+}
+
+//=====================================================================
+// エフェクト更新
+// Author : toshiki
+//=====================================================================
+void CParticleExplosion::SetEffect(void)
+{
+    CTextureAnimation *pAnimation = GetTextureAnimationPtr();
+    pAnimation->Update();
 }
