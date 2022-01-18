@@ -44,6 +44,7 @@
 #include "sound.h"
 #include "shock_blur.h"
 #include "mesh_tube.h"
+#include "control_ui.h"
 
 float CGame::m_fGravity = 1.5f;
 CGaussFilter* CGame::m_pGaussFilter = nullptr;
@@ -65,6 +66,7 @@ CGame::CGame()
     m_pGauge = nullptr;
     m_bTitle = true;
     m_nGameTimer = 0;
+    m_pControlUi = nullptr;
 }
 
 //=======================================================================================
@@ -136,6 +138,7 @@ void CGame::Uninit()
         m_pMapFactory->Uninit();
         m_pMapFactory = nullptr;
     }
+    UNINIT_SAFE(m_pControlUi);
 }
 
 //=======================================================================================
@@ -337,6 +340,11 @@ void CGame::CreateObject()
     CreateEnemy();
     CreateMap();
     CreateNPC();
+
+    if (!m_pControlUi)
+    {
+        m_pControlUi = CControlUi::Create();
+    }
 }
 
 //=======================================================================================

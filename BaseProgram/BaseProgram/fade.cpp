@@ -26,7 +26,7 @@ CFade::CFade()
 	m_pPolygon = nullptr;
 	m_FadeMode = FADE_MODE_NONE;
 	m_colorFade = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
-	m_modeNext = CManager::MODE_TYPE_TITLE;
+	m_modeNext = CManager::MODE_TYPE_GAME;
 }
 
 //=============================================================================

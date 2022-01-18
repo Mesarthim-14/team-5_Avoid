@@ -176,6 +176,7 @@
     <ClCompile Include="collisionModel_Cylinder.cpp" />
     <ClCompile Include="collisionModel_OBB.cpp" />
     <ClCompile Include="collisionModel_Sphere.cpp" />
+    <ClCompile Include="control_ui.cpp" />
     <ClCompile Include="edge_filter.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="fade.cpp" />
@@ -354,6 +355,7 @@
     <ClInclude Include="collisionModel_Cylinder.h" />
     <ClInclude Include="collisionModel_OBB.h" />
     <ClInclude Include="collisionModel_Sphere.h" />
+    <ClInclude Include="control_ui.h" />
     <ClInclude Include="edge_filter.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="fade.h" />

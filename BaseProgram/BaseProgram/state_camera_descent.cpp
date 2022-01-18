@@ -21,6 +21,7 @@
 #include "state_player_normal.h"
 #include "camera_game.h"
 #include "boss_hp.h"
+#include "control_ui.h"
 
 //=====================================================================
 // ƒ}ƒNƒ’è‹`
@@ -126,6 +127,13 @@ void CCameraStateDescent::Update()
             if (pUi)
             {
                 pUi->SetDraw(true);
+            }
+
+            // ‘€ìUI
+            CControlUi* pControlUi = pGame->GetControlUi();
+            if (pControlUi)
+            {
+                pControlUi->SetDraw(true);
             }
         }
     }
