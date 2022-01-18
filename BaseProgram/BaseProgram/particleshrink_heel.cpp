@@ -121,7 +121,7 @@ void CParticleHeel::SetParticle(void)
     // スピードの値を設定
     m_fSpeed = SPEED;
     // 移動させるための処理
-    D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 8.0f, 0.0f);
+    D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 12.0f, 0.0f);
     // 移動情報を設定
     SetMove(move);
     // 色の設定

@@ -66,7 +66,7 @@ CPlayerStateAvoid * CPlayerStateAvoid::Create()
 void CPlayerStateAvoid::Init()
 {
     // アニメーション設定
-    SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_JUMP), 60);
+    SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_AVOID), 60);
     SetMove();
     Update();
 

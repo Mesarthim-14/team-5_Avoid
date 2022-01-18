@@ -58,7 +58,7 @@ CPlayerStateKnockback * CPlayerStateKnockback::Create(const D3DXVECTOR3& move)
 void CPlayerStateKnockback::Init()
 {
     // アニメーション設定
-    SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_IDOL), 60);
+    SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_AVOID), 60);
     CLibrary::SetSound(CSound::SOUND_SE_DAMAGE);
 
     CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();

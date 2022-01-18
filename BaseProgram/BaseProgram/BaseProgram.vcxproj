@@ -242,6 +242,7 @@
     <ClCompile Include="particlepop.cpp" />
     <ClCompile Include="particleshrink.cpp" />
     <ClCompile Include="particleshrink_heel.cpp" />
+    <ClCompile Include="particle_explosion.cpp" />
     <ClCompile Include="particle_info.cpp" />
     <ClCompile Include="move_scaffold.cpp" />
     <ClCompile Include="parallax_mapping2.cpp" />
@@ -424,6 +425,7 @@
     <ClInclude Include="particlepop.h" />
     <ClInclude Include="particleshrink.h" />
     <ClInclude Include="particleshrink_heel.h" />
+    <ClInclude Include="particle_explosion.h" />
     <ClInclude Include="particle_info.h" />
     <ClInclude Include="move_scaffold.h" />
     <ClInclude Include="parallax_mapping2.h" />

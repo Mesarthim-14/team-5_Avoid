@@ -532,6 +532,9 @@
     <ClCompile Include="control_ui.cpp">
       <Filter>09_Ui</Filter>
     </ClCompile>
+    <ClCompile Include="particle_explosion.cpp">
+      <Filter>06_Effect\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -1073,6 +1076,9 @@
     </ClInclude>
     <ClInclude Include="control_ui.h">
       <Filter>09_Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="particle_explosion.h">
+      <Filter>06_Effect\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

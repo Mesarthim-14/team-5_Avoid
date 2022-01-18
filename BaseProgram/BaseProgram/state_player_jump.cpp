@@ -144,6 +144,9 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
     {
         m_nChargeJumpCount++;
 
+		// アニメーション設定
+		SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_TAME), 60);
+
         // エフェクトの発生時間
         if (m_nChargeJumpCount >= PARTICLE_STRAT && m_nChargeJumpCount <= CHARGEJUMP_MAX && m_bJumpEffect)
         {
