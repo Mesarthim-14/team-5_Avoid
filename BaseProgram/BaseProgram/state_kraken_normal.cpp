@@ -16,11 +16,16 @@
 #include "camera.h"
 #include "kraken.h"
 #include "boss_bullet.h"
+#include "shark.h"
+#include "marlin.h"
 
 //=====================================================================
 // マクロ定義
 //=====================================================================
 #define BULLET_INTERVAL (500)   // たま発射間隔
+constexpr int MAX_ENEMY = 5;
+constexpr float ANGLE = 5;
+constexpr float ROT_ANGLE = ANGLE*2;
 
 //=====================================================================
 // コンストラクタ
@@ -74,8 +79,21 @@ void CKrakenStateNormal::Update()
         return;
     }
 
-    // 弾発射
-    ShotBullet(pKraken);
+    // バレットカウント
+    m_nBulletCount++;
+    if (m_nBulletCount == BULLET_INTERVAL)
+    {
+        int nNum = CLibrary::Random(0, 10);
+        if (nNum < 7)
+        {
+            // 弾発射
+            ShotBullet(pKraken);
+        }
+        else
+        {
+            ShotEnemy(pKraken);
+        }
+    }
 }
 
 //=====================================================================
@@ -83,12 +101,22 @@ void CKrakenStateNormal::Update()
 //=====================================================================
 void CKrakenStateNormal::ShotBullet(CKraken* &pKraken)
 {
-    // バレットカウント
-    m_nBulletCount++;
-    if (m_nBulletCount == BULLET_INTERVAL)
-    {
         CBossBullet::Create(pKraken->GetPos(), ZeroVector3);
         m_nBulletCount = 0;
         CLibrary::SetSound(CSound::SOUND_SE_KRAKEN_BULLET_MITING);
+}
+
+//=====================================================================
+// 敵発射
+//=====================================================================
+void CKrakenStateNormal::ShotEnemy(CKraken *& pKraken)
+{
+    for (int nCount = 0; nCount < MAX_ENEMY; nCount++)
+    {
+        CShark::Create(pKraken->GetPos(),
+            pKraken->GetRot() + D3DXVECTOR3(0.0f,
+                D3DXToRadian(ROT_ANGLE) - D3DXToRadian(nCount*ANGLE),
+                0.0f));
     }
+    m_nBulletCount = 0;
 }

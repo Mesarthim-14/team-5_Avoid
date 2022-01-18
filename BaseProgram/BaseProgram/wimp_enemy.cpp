@@ -25,7 +25,7 @@
 // マクロ定義
 //=============================================================================
 #define PERCEPTION_DISTANCE (23000.0f)  // 感知できる距離
-#define FOLLOW_TIME         (100)       // 重力がかからない時間
+#define FOLLOW_TIME         (200)       // 重力がかからない時間
 #define PLAYER_ADD_HEIGHT   (500.0f)    // プレイヤーを適当に量増し
 #define HIT_TIME_INTER      (300)       // 当たった後の間隔
 #define CAUTION_TIME        (60)        // 警告のタイム
@@ -42,7 +42,7 @@ CWimpEnemy::CWimpEnemy(PRIORITY Priority) : CEnemy(Priority)
     m_bHit = false;
     m_pCaution = nullptr;
     m_nCautionCounter = 0;
-    m_bLook = false;
+    m_bLook = true;
 }
 
 //=============================================================================
@@ -87,7 +87,7 @@ void CWimpEnemy::Update()
         {
             m_pCaution = CCautionWimpAttack::Create(GetPos());
             m_nCautionCounter = 0;
-            m_bLook = true;
+            m_bLook = false;
             CLibrary::SetSound(CSound::SOUND_SE_ENEMY_NOTICED);
         }
     }
@@ -186,6 +186,7 @@ bool CWimpEnemy::Follow()
         Vector = *D3DXVec3Normalize(&Vector, &Vector);
         Vector *= fSpeed;
 
+        Vector = D3DXVECTOR3(sinf(GetRot().y)*-fSpeed, Vector.y, cosf(-GetRot().y)*-fSpeed);
         // 移動量の設定
         SetMove(Vector);
         return true;  

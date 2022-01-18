@@ -95,10 +95,10 @@ void CBillboard::Draw()
     }
 
     // アルファテスト無効化
-    pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+//    pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
     // ライト有効
-    pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+//    pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
     // テクスチャの設定
     pDevice->SetTexture(0, nullptr);
