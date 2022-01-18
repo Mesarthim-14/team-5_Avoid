@@ -28,16 +28,21 @@ class CGauge;
 class CPlayer : public CCharacter, public CStateObject
 {
 public:
-    enum ACTION_STATE
-    {
-        ACTION_NONE = -1,
-        ACTION_IDOL,
-        ACTION_JUMP,
-        ACTION_LANDING,
-        ACTION_WALK,
-        ACTION_AVOID,
-        ACTION_MAX
-    };//çsìÆèÛë‘
+	enum ACTION_STATE
+	{
+		ACTION_NONE = -1,
+		ACTION_IDOL,
+		ACTION_WALK,
+		ACTION_JUMP,
+		ACTION_AVOID,
+		ACTION_STAN,
+		ACTION_STAN_END,
+		ACTION_TAIHOU,
+		ACTION_TAME,
+		ACTION_TAME_END,
+		ACTION_TAME_VIC,
+		ACTION_MAX
+	};//çsìÆèÛë‘
 
     enum STATE_PLAYER
     {

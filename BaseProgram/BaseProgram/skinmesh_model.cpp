@@ -28,10 +28,10 @@
 const char * CSkinmeshModel::m_aParam[MODEL_MAX] =
 {
     "data/Model/Hierarchy/player/slime_10.x",
-    "data/Model/Hierarchy/player/slime_50_7.x",
-    "data/Model/Hierarchy/player/slime_100_tex.x",
-    "data/Model/Hierarchy/enemy/boss/takohead_3.x",
-    "data/Model/Hierarchy/enemy/boss/takoasi.x",
+    "data/Model/Hierarchy/player/slime50_beta2.x",
+    "data/Model/Hierarchy/player/slime50_beta2.x",
+    "data/Model/Hierarchy/enemy/boss/takohead10.x",
+    "data/Model/Hierarchy/enemy/boss/takoasi_22.x",
 };
 
 
@@ -198,7 +198,7 @@ void CSkinmeshModel::Draw()
         D3DXMATRIX mtxView = CManager::GetInstance()->GetCamera()->GetMtxView();
 
         //アニメーション更新
-        m_HLcontroller->AdvanceTime(1);
+        m_HLcontroller->AdvanceTime(0.5);
 
         pToonShader->BeginSurface();
 

@@ -60,6 +60,8 @@ void CPlayerState::SetAnimation(const UINT &animID, const FLOAT &time)
 
     pSkinMeshModel->GetHLcontroller()->ChangeAnimation(animID);
     pSkinMeshModel->GetHLcontroller()->SetLoopTime(animID, time);
+
+	pSkinMeshModel->GetHLcontroller()->SetLoopTime(animID, time);
 }
 
 //=====================================================================
