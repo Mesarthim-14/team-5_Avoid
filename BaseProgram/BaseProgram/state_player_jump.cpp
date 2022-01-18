@@ -40,7 +40,7 @@ CPlayerStateJump::CPlayerStateJump()
     m_bJumpCheck = false;
     m_nChargeJumpCount = 0;
     m_bIsReadyChargeJump = false;
-    m_fJumpValue = 40.0f;
+    m_fJumpValue = 30.0f;
     m_fDushJumpValue = 1.0f;
     m_bJumpEffect = true;
     m_nCntEffect = 0;
