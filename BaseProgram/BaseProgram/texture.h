@@ -62,6 +62,8 @@ public:
         TEXTURE_NUM_KRAKEN,                 // テストテクスチャ
         TEXTURE_NUM_BOSS_HP_BACK,           // ボスHPバー
         TEXTURE_NUM_BOSS_HP_BAR,            // ボスHP背景
+        TEXTURE_NUM_CONTROL_UI,             // 操作方法UI
+        TEXTURE_NUM_CONTROL_UI_2,           // 操作方法UI
         TEXTURE_NUM_MAX
     };
 

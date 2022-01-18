@@ -529,6 +529,9 @@
     <ClCompile Include="boss_hp.cpp">
       <Filter>09_Ui\BossHp</Filter>
     </ClCompile>
+    <ClCompile Include="control_ui.cpp">
+      <Filter>09_Ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera_title.h">
@@ -1067,6 +1070,9 @@
     </ClInclude>
     <ClInclude Include="boss_hp.h">
       <Filter>09_Ui\BossHp</Filter>
+    </ClInclude>
+    <ClInclude Include="control_ui.h">
+      <Filter>09_Ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

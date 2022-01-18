@@ -23,6 +23,7 @@ class CGaussFilter;
 class CPause;
 class CMapFactory;
 class CGauge;
+class CControlUi;
 
 //=======================================================================================
 // ゲームクラス
@@ -49,6 +50,7 @@ public:
     inline CGauge * GetGauge()const                     { return m_pGauge; }            // ゲージ情報取得
     inline CPause * GetPause()const                     { return m_pPause; }            // ポーズ情報取得
     inline int GetGameTimer()const                      { return m_nGameTimer; }        // ゲームのタイマー
+    inline CControlUi * GetControlUi()const             { return m_pControlUi; }        // ポーズ情報取得
 
 private:
     // private関数
@@ -75,5 +77,6 @@ private:
     CMapFactory* m_pMapFactory;             // マップの生成クラス
     bool m_bTitle;                          // タイトルのフラグ
     int m_nGameTimer;                       // ゲームのタイマー
+    CControlUi* m_pControlUi;               // UiControl
 };
 #endif

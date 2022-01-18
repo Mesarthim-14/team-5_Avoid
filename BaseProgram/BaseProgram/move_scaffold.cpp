@@ -22,6 +22,7 @@
 #include "library.h"
 #include "player.h"
 #include "state_player_jump.h"
+#include "control_ui.h"
 
 //=============================================================================
 // ƒ}ƒNƒ’è‹`
@@ -152,6 +153,7 @@ void CMoveScaffold::Respawn()
     if (pPlayer)
     {
         pPlayer->SetBoolJump(true);
+        CManager::GetInstance()->GetGame()->GetControlUi()->SwitchTexture(true);
     }
 
     for (int nCount = 0; nCount < CCollisionModelOBB::SURFACE_MAX; nCount++)
@@ -180,6 +182,7 @@ void CMoveScaffold::Move()
         if (pPlayer)
         {
             pPlayer->SetBoolJump(true);
+            CManager::GetInstance()->GetGame()->GetControlUi()->SwitchTexture(true);
         }
     }
 
@@ -243,6 +246,7 @@ void CMoveScaffold::OnOBBs()
             SetHitMap(true);
             m_bMove = true;
             pPlayer->SetBoolJump(false);
+            CManager::GetInstance()->GetGame()->GetControlUi()->SwitchTexture(false);
         }
         else
         {
