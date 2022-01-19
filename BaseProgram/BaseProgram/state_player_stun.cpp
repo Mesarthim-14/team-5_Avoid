@@ -59,7 +59,7 @@ CPlayerStateStun * CPlayerStateStun::Create()
 void CPlayerStateStun::Init()
 {
     // アニメーション設定
-    SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_IDOL), 60);
+    SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_AVOID), 60);
 
     CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
     if (pPlayer)

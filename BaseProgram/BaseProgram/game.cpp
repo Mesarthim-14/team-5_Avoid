@@ -206,6 +206,7 @@ void CGame::Update()
 //=======================================================================================
 void CGame::Draw()
 {
+
 }
 
 //=======================================================================================
@@ -254,18 +255,18 @@ void CGame::CreatePlayer()
 //=======================================================================================
 void CGame::CreateEnemy()
 {
-    CShark::Create(D3DXVECTOR3(-61089.5f, 0.0f, -80828.8f), ZeroVector3);
-    CShark::Create(D3DXVECTOR3(-85253.0f, 0.0f, -20055.2f), ZeroVector3);
-    CShark::Create(D3DXVECTOR3(-51384.1f, 0.0f, -41619.3f), ZeroVector3);
-    CShark::Create(D3DXVECTOR3(-29624.6f, 0.0f, -89824.0f), ZeroVector3);
-    CShark::Create(D3DXVECTOR3(-26419.4f, 0.0f, -19081.0f), ZeroVector3);
-
-    CMarlin::Create(D3DXVECTOR3(-82303.4f, 0.0f, -56239.8f), ZeroVector3);
-    CMarlin::Create(D3DXVECTOR3(-39297.0f, 0.0f, -12532.5f), ZeroVector3);
-    CMarlin::Create(D3DXVECTOR3(34013.9f, 0.0f, 3090.2f), ZeroVector3);
-
-    CGhost::Create(D3DXVECTOR3(-1343.6f, 470.8f, -89167.2f), ZeroVector3);
-    CGhost::Create(D3DXVECTOR3(-66418.1f, 10247.0f, -52938.6f), ZeroVector3);
+//    CShark::Create(D3DXVECTOR3(-61089.5f, 0.0f, -80828.8f), ZeroVector3);
+//    CShark::Create(D3DXVECTOR3(-85253.0f, 0.0f, -20055.2f), ZeroVector3);
+//    CShark::Create(D3DXVECTOR3(-51384.1f, 0.0f, -41619.3f), ZeroVector3);
+//    CShark::Create(D3DXVECTOR3(-29624.6f, 0.0f, -89824.0f), ZeroVector3);
+//    CShark::Create(D3DXVECTOR3(-26419.4f, 0.0f, -19081.0f), ZeroVector3);
+//
+//    CMarlin::Create(D3DXVECTOR3(-82303.4f, 0.0f, -56239.8f), ZeroVector3);
+//    CMarlin::Create(D3DXVECTOR3(-39297.0f, 0.0f, -12532.5f), ZeroVector3);
+//    CMarlin::Create(D3DXVECTOR3(34013.9f, 0.0f, 3090.2f), ZeroVector3);
+//
+    CGhost::Create(D3DXVECTOR3(-1343.6f, 1000000.0f, -89167.2f), ZeroVector3);
+//    CGhost::Create(D3DXVECTOR3(-66418.1f, 10247.0f, -52938.6f), ZeroVector3);
 
     // ÉNÉâÅ[ÉPÉì
     if (!m_pKraken)

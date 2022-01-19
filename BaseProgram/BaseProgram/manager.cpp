@@ -49,7 +49,7 @@ bool CManager::m_bPause = false;
 //=============================================================================
 CManager::CManager()
 {
-    m_mode = CManager::MODE_TYPE_GAME;
+    m_mode = CManager::MODE_TYPE_TITLE;
     m_pRenderer = nullptr;
     m_pInput = nullptr;
     m_pInputMouse = nullptr;

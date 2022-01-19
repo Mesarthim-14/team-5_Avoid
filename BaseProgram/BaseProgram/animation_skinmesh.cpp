@@ -17,8 +17,9 @@ bool IHighLevelAnimController::SetAnimationController(ID3DXAnimationController *
         for (unsigned int size = 0; size < m_Anim.size(); size++)
         {
             pAnimCont->GetAnimationSet(size, &m_Anim[size].pAnimSet);
-
+			m_Anim[size].bLoop = true;
         }
+
         m_CurAnimID = 0;
         m_PreAnimID = 0;
         return true;
@@ -93,6 +94,8 @@ bool IHighLevelAnimController::SetShiftTime(UINT animID, FLOAT interval)
 //アニメーション変更
 bool IHighLevelAnimController::ChangeAnimation(UINT animID)
 {
+	int n = m_Anim.size();
+
     // 指定のアニメーションIDの存在をチェック
     if (m_Anim.size() <= animID)
     {
@@ -161,7 +164,7 @@ bool IHighLevelAnimController::AdvanceTime(FLOAT time)
 		}
 		else
 		{
-			ChangeAnimation(0);
+			ChangeAnimation(m_Anim.size() -1);
 		}
     }
 

@@ -57,7 +57,7 @@ CXfile::CXfile()
         { "data/Model/Normal/Bullet.x" },                         // 大砲の弾
         { "data/Model/Normal/ugokuashiba.x" },                          // 渦の足場
         { "data/Model/Normal/sky_blue5.x" },                            // お空
-        { "data/Model/Normal/EnemyBullet.x" },                        // クラーケンの弾
+        { "data/Model/Normal/Kraken_Bullet.x" },                        // クラーケンの弾
         { "data/Model/Normal/Map/06_floor_thin.x" },                    // マップ長方形
         { "data/Model/Normal/Map/01_floor_big_2f.x" },                  // マップ最初の床
         { "data/Model/Normal/Map/02_floor_checkpoint.x" },              // マップ最初の床

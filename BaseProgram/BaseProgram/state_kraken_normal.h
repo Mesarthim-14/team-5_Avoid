@@ -32,7 +32,8 @@ public:
 
 private:
     // privateŠÖ”
-    void ShotBullet(CKraken* &pKraken);  // ’e”­Ë
+    void ShotBullet(CKraken* &pKraken); // ’e”­Ë
+    void ShotEnemy(CKraken* &pKraken);  // “G”­Ë
 
     // ƒƒ“ƒo•Ï”
     int m_nBulletCount;
