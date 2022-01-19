@@ -32,10 +32,10 @@ public:
     {
         MOTION_NONE = -1,   // 初期値
         MOTION_IDOL,        // 通常
+		MOTION_ATTACK,      // 攻撃
+		MOTION_ANGRY,       // 怒ったとき
+		MOTION_DAMAGE,      // ダメージ
         MOTION_DEATH,       // 死んだとき
-        MOTION_DAMAGE,      // ダメージ
-        MOTION_ATTACK,      // 攻撃
-        MOTION_ANGRY,       // 怒ったとき
         MOTION_MAX
     };
 

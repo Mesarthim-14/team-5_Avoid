@@ -54,7 +54,7 @@ CXfile::CXfile()
         { "data/Model/Normal/Gimmick/kaihuku.x" },                      // ‰ñ•œƒ|ƒCƒ“ƒg
         { "data/Model/Normal/gimmick_cannon.x" },                       // ‘å–C
         { "data/Model/Normal/hashiwatashi.x" },                         // ‹´
-        { "data/Model/Normal/Bullet.x" },                         // ‘å–C‚Ì’e
+        { "data/Model/Normal/CannonBullet.x" },                         // ‘å–C‚Ì’e
         { "data/Model/Normal/ugokuashiba.x" },                          // ‰Q‚Ì‘«ê
         { "data/Model/Normal/sky_blue5.x" },                            // ‚¨‹ó
         { "data/Model/Normal/Kraken_Bullet.x" },                        // ƒNƒ‰[ƒPƒ“‚Ì’e
