@@ -144,7 +144,7 @@ void CBullet::Hit()
                 D3DXVECTOR3 move = GetMove();
                 move.x *= 0.5f;
                 move.z *= 0.5f;
-                move.y += 50.0f;
+                move.y = 10.0f;
                 pPlayer->ChangeState(CPlayerStateKnockback::Create(move));  // プレイヤーをノックバック
                 pPlayer->SubLife(20);                                       // 体力を減らす
                 // 自身の終了処理

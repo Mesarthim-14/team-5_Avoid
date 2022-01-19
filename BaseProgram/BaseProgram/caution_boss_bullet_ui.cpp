@@ -168,7 +168,7 @@ void CCautionBossBulletUi::JudgeAngle(const float& fCamera, const float& fAngle)
     if (-fCamera <= fAngle + VIEWING_ANGLE
         && -fCamera >= fAngle - VIEWING_ANGLE)
     {
-        m_bDraw = false;
+        m_bDraw = true;
     }
     else
     {

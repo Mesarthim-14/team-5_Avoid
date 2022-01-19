@@ -33,6 +33,8 @@ public:
 	void Update();					// 更新処理
 	void Draw();					// 描画
 
+    void Delete();  // ステージ外処理
+
     void SetDeath() { m_bDeath = true; }    // 次の更新で破棄するかの判定更新
 
     bool GetDeath()const { return m_bDeath; }   // // 次の更新で破棄するかの判定取得
@@ -46,6 +48,11 @@ private:
     CCautionBossBulletUi* m_pCaution;   // 警告
 
     bool m_bDeath;  // 次の更新で破棄するかの判定
+
+    D3DXVECTOR3 m_InitPlayerPos;    // 生成時のプレイヤーの座標
+    float m_fInitDistance;          // 生成時のプレイヤーとの距離
+    D3DXVECTOR3 m_MoveXZ;           // XZ移動量
+    float m_fMoveY;                 // 1ごとのY座標移動量
 };
 
 #endif

@@ -33,6 +33,7 @@
 #define SPEED               (400.0f)
 #define LIFE                (300)
 #define FIX_POS             (-15000.0f)
+#define PLAYER_DISTANCE_Y   (15000.0f)
 
 //=============================================================================
 // コンストラクタ
@@ -42,6 +43,10 @@ CBossBullet::CBossBullet(PRIORITY Priority) : CBullet(Priority)
     m_pModel = nullptr;
     m_pCaution = nullptr;
     m_bDeath = false;
+    m_InitPlayerPos = ZeroVector3;
+    m_fInitDistance = 0.0f;
+    m_MoveXZ = ZeroVector3;
+    m_fMoveY = 0.0f;
 }
 
 //=============================================================================
@@ -87,7 +92,22 @@ HRESULT CBossBullet::Init()
     CXfile *pXfile = GET_XFILE_PTR;
     CXfile::MODEL model = pXfile->GetXfile(CXfile::XFILE_NUM_KRAKEN_BULLET);
     m_pModel->GetModelInfo()->SetModelStatus(GetPos(), GetRot(), model);
-    FollowPlayer();
+
+    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    if (pPlayer)
+    {
+        // １進むごとのY移動量の計算
+        m_InitPlayerPos = pPlayer->GetPos();  D3DXVECTOR3 playerPosXZ = D3DXVECTOR3(m_InitPlayerPos.x, 0.0f, m_InitPlayerPos.z);
+        D3DXVECTOR3 bulletPos = GetPos();           D3DXVECTOR3 bulletPosXZ = D3DXVECTOR3(bulletPos.x, 0.0f, bulletPos.z);
+        m_fInitDistance = D3DXVec3Length(&(playerPosXZ - bulletPosXZ));
+        m_fMoveY = (m_InitPlayerPos.y + PLAYER_DISTANCE_Y) / (m_fInitDistance / 2.0f);
+
+        // XZ移動量を求める（終点[目標地点] - 始点[自身の位置]）
+        m_MoveXZ = playerPosXZ - bulletPosXZ;
+        D3DXVec3Normalize(&m_MoveXZ, &m_MoveXZ);
+        m_MoveXZ *= SPEED;
+    }
+
     SetLife(LIFE);
     if (!m_pCaution)
     {
@@ -122,6 +142,9 @@ void CBossBullet::Uninit()
 //=============================================================================
 void CBossBullet::Update()
 {
+    // ステージ外処理
+    Delete();
+
     // 破棄判定がtrueのとき
     if (m_bDeath)
     {
@@ -129,6 +152,9 @@ void CBossBullet::Update()
         Uninit();
         return;
     }
+
+    // 移動量設定
+    FollowPlayer();
 
     if (m_pModel)
     {
@@ -167,22 +193,38 @@ void CBossBullet::Draw()
 }
 
 //=============================================================================
+// ステージ外処理
+//=============================================================================
+void CBossBullet::Delete()
+{
+    // ステージより下のとき
+    if (GetPos().y < -COLLISION_RADIUS)
+    {
+        // 破棄判定をtrueにする
+        m_bDeath = true;
+    }
+}
+
+//=============================================================================
 // 移動量設定
 //=============================================================================
 void CBossBullet::FollowPlayer()
 {
-    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
-    if (pPlayer)
-    {
-        D3DXVECTOR3 This = GetPos();
-        D3DXVECTOR3 Target = pPlayer->GetPos();
-        // 2点間のベクトルを求める（終点[目標地点] - 始点[自身の位置]）
-        D3DXVECTOR3 Vector = Target - This;
-        Vector = *D3DXVec3Normalize(&Vector, &Vector);
-        Vector *= SPEED;
+    D3DXVECTOR3 bulletMove = GetMove();
+    float fMove = D3DXVec3Length(&D3DXVECTOR3(bulletMove.x, 0.0f, bulletMove.z));
 
+    D3DXVECTOR3 bulletPosXZ = GetPos(); bulletPosXZ = D3DXVECTOR3(bulletPosXZ.x, 0.0f, bulletPosXZ.z);
+    D3DXVECTOR3 plaeyrPosXZ = D3DXVECTOR3(m_InitPlayerPos.x, 0.0f, m_InitPlayerPos.z);
+    float distance = D3DXVec3Length(&(plaeyrPosXZ - bulletPosXZ));
+    if (D3DXVec3Length(&(plaeyrPosXZ - bulletPosXZ)) > m_fInitDistance / 2.0f)
+    {
         // 移動量設定
-        SetMove(Vector);
+        SetMove(D3DXVECTOR3(m_MoveXZ.x, m_fMoveY * fMove, m_MoveXZ.z));
+    }
+    else
+    {
+        // 移動量設定
+        SetMove(D3DXVECTOR3(m_MoveXZ.x, -(m_fMoveY * 0.8f) * fMove, m_MoveXZ.z));
     }
 }
 

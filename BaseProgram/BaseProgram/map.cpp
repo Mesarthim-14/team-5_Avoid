@@ -325,29 +325,29 @@ void CMap::HitColPolygonOnPlayer(const CCollisionModelPolygon* const &pMapColPol
 //=============================================================================
 void CMap::HitColOBBsBossBullet(const CCollisionModelOBB* const pMapColOBB)
 {
-    // ’e‚Ìƒ|ƒCƒ“ƒ^‚ÌŽæ“¾
-    CBossBullet* pBossBullet = (CBossBullet*)GetTop(PRIORITY_BULLET);
-    if (!pBossBullet)
-        return;
+    //// ’e‚Ìƒ|ƒCƒ“ƒ^‚ÌŽæ“¾
+    //CBossBullet* pBossBullet = (CBossBullet*)GetTop(PRIORITY_BULLET);
+    //if (!pBossBullet)
+    //    return;
 
-    if (pMapColOBB)
-    {
-        // ‘¤–Ê‚Ì“–‚½‚è”»’èƒ|ƒCƒ“ƒ^‚ÌŽæ“¾
-        CCollisionModelOBB::OBB surfaceSideObb = pMapColOBB->GetOBB();
+    //if (pMapColOBB)
+    //{
+    //    // ‘¤–Ê‚Ì“–‚½‚è”»’èƒ|ƒCƒ“ƒ^‚ÌŽæ“¾
+    //    CCollisionModelOBB::OBB surfaceSideObb = pMapColOBB->GetOBB();
 
-        while (pBossBullet)
-        {
-            // “–‚½‚è”»’è(‹…‘Ì‚ÆOBB)‚ªtrue ‚©‚Â ’e‚Ì”jŠü”»’è‚ªfalse‚Ì‚Æ‚«
-            if (CCollision::ColOBBs(pBossBullet->GetColOBBPtr()->GetOBB(), surfaceSideObb) && !pBossBullet->GetDeath())
-            {
-                // ’e‚Ì”jŠü”»’è‚ðtrue‚É‚·‚é
-                pBossBullet->SetDeath();
-                return;
-            }
+    //    while (pBossBullet)
+    //    {
+    //        // “–‚½‚è”»’è(‹…‘Ì‚ÆOBB)‚ªtrue ‚©‚Â ’e‚Ì”jŠü”»’è‚ªfalse‚Ì‚Æ‚«
+    //        if (CCollision::ColOBBs(pBossBullet->GetColOBBPtr()->GetOBB(), surfaceSideObb) && !pBossBullet->GetDeath())
+    //        {
+    //            // ’e‚Ì”jŠü”»’è‚ðtrue‚É‚·‚é
+    //            pBossBullet->SetDeath();
+    //            return;
+    //        }
 
-            pBossBullet = (CBossBullet*)pBossBullet->GetNext();
-        }
-    }
+    //        pBossBullet = (CBossBullet*)pBossBullet->GetNext();
+    //    }
+    //}
 }
 
 //=============================================================================
@@ -441,39 +441,39 @@ void CMap::HitColPlayer(const CCollisionModelCylinder* const pMapColCylinder)
 //=============================================================================
 void CMap::HitColBossBullet(const CCollisionModelCylinder* const pMapColCylinder)
 {
-    // “–‚½‚è”»’èƒ‚ƒfƒ‹(‰~’Œ)î•ñ‚ÌŽæ“¾
-    CCollisionModelCylinder::CYLINDER colCylinderInfo;
-    if (pMapColCylinder)
-    {
-        colCylinderInfo = pMapColCylinder->GetCylinder();
-    }
-    else
-        return;
+    //// “–‚½‚è”»’èƒ‚ƒfƒ‹(‰~’Œ)î•ñ‚ÌŽæ“¾
+    //CCollisionModelCylinder::CYLINDER colCylinderInfo;
+    //if (pMapColCylinder)
+    //{
+    //    colCylinderInfo = pMapColCylinder->GetCylinder();
+    //}
+    //else
+    //    return;
 
-    // ’e‚Ìƒ|ƒCƒ“ƒ^‚ÌŽæ“¾
-    CBossBullet* pBossBullet = (CBossBullet*)GetTop(PRIORITY_BULLET);
-    if (!pBossBullet)
-        return;
+    //// ’e‚Ìƒ|ƒCƒ“ƒ^‚ÌŽæ“¾
+    //CBossBullet* pBossBullet = (CBossBullet*)GetTop(PRIORITY_BULLET);
+    //if (!pBossBullet)
+    //    return;
 
-    bool bHit = false;                                      // “–‚½‚Á‚½‚©‚Ì”»’è
-    CCollision::SURFACE surface = CCollision::SURFACE_NONE; // “–‚½‚Á‚½–Ê
+    //bool bHit = false;                                      // “–‚½‚Á‚½‚©‚Ì”»’è
+    //CCollision::SURFACE surface = CCollision::SURFACE_NONE; // “–‚½‚Á‚½–Ê
 
-    while (pBossBullet)
-    {
-        // “–‚½‚è”»’è—p•Ï”‚Ì‰Šú‰»
-        bHit = false;
-        surface = CCollision::SURFACE_NONE;
+    //while (pBossBullet)
+    //{
+    //    // “–‚½‚è”»’è—p•Ï”‚Ì‰Šú‰»
+    //    bHit = false;
+    //    surface = CCollision::SURFACE_NONE;
 
-        // “–‚½‚è”»’è(‹…‘Ì‚Æ‰~’Œ)
-        CCollision::ColSphereAndCylinder(bHit, surface, pBossBullet->GetColSpherePtr()->GetSphere(), colCylinderInfo);
+    //    // “–‚½‚è”»’è(‹…‘Ì‚Æ‰~’Œ)
+    //    CCollision::ColSphereAndCylinder(bHit, surface, pBossBullet->GetColSpherePtr()->GetSphere(), colCylinderInfo);
 
-        if (bHit && !pBossBullet->GetDeath())
-        {
-            // ’e‚Ì”jŠü”»’è‚ðtrue‚É‚·‚é
-            pBossBullet->SetDeath();
-            return;
-        }
+    //    if (bHit && !pBossBullet->GetDeath())
+    //    {
+    //        // ’e‚Ì”jŠü”»’è‚ðtrue‚É‚·‚é
+    //        pBossBullet->SetDeath();
+    //        return;
+    //    }
 
-        pBossBullet = (CBossBullet*)pBossBullet->GetNext();
-    }
+    //    pBossBullet = (CBossBullet*)pBossBullet->GetNext();
+    //}
 }
