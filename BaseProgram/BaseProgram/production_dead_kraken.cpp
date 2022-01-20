@@ -82,7 +82,7 @@ void CProductionDeadKraken::Uninit()
 //=======================================================================================
 void CProductionDeadKraken::Update()
 {
-    TimeCounter(200);
+    TimeCounter(150);
 
     if (GetEnd())
     {

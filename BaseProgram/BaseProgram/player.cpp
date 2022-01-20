@@ -516,6 +516,14 @@ void CPlayer::SubLife(const int &nDamage)
         // モデルの変更
         ChangeModel();
 	}
+    else
+    {
+        CFade *pFade = CManager::GetInstance()->GetFade();
+        if (pFade->GetFade() == CFade::FADE_MODE_NONE)
+        {
+            pFade->SetFade(CManager::MODE_TYPE_GAME);
+        }
+    }
 }
 
 //=============================================================================

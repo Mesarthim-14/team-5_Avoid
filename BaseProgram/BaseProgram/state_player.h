@@ -27,8 +27,9 @@ public:
     ~CPlayerState();    // デストラクタ
 
 protected:
-    virtual void SetAnimation(const UINT &animID, const FLOAT &time);   // アニメーション設定
-    void MoveByKeyboard(CPlayer* &pPlayer);                             // 入力処理
+    virtual void SetAnimation(const UINT &animID, const FLOAT &time);               // アニメーション設定
+    virtual void SetAnimation(const UINT &animID, const FLOAT &time, bool bLoop);   // アニメーション設定
+    void MoveByKeyboard(CPlayer* &pPlayer);                                         // 入力処理
 
     // フラグを返す式
     function<bool(const int&, CPlayerState*)> CounterFunc = [](const int &nLimit, CPlayerState* pState)

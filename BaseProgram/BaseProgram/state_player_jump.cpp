@@ -28,7 +28,7 @@
 //=====================================================================
 #define CHARGEJUMP_MAX      (100)   // タメカウント最大
 #define PARTICLE_STRAT      (30)    // 溜めエフェクト発生開始までの時間
-#define HIGHJUMP_CONSUME    (1)     // ためジャンプした時のライフ減少量
+#define HIGHJUMP_CONSUME    (20)    // ためジャンプした時のライフ減少量
 #define SOUND_INTER         (60)    // 音の間隔
 
 //=====================================================================
@@ -75,8 +75,8 @@ CPlayerStateJump * CPlayerStateJump::Create()
 //=====================================================================
 void CPlayerStateJump::Init()
 {
-    // アニメーション設定
-    SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_JUMP), 60);
+    //// アニメーション設定
+    //SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_JUMP), 60);
 
     CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
     if (pPlayer)
@@ -145,7 +145,7 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
         m_nChargeJumpCount++;
 
 		// アニメーション設定
-		SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_TAME), 60);
+		SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_TAME), CHARGEJUMP_MAX, false);
 
         // エフェクトの発生時間
         if (m_nChargeJumpCount >= PARTICLE_STRAT && m_nChargeJumpCount <= CHARGEJUMP_MAX && m_bJumpEffect)
@@ -158,6 +158,12 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
             JumpEffect();
         }
 
+        if (m_nChargeJumpCount > CHARGEJUMP_MAX)
+        {
+            // アニメーション設定
+            SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_TAME_END), 60);
+        }
+
         // 音の再生
         if (m_nChargeJumpCount % SOUND_INTER == 0)
         {
@@ -165,7 +171,7 @@ void CPlayerStateJump::JumpProcess(CPlayer* &pPlayer)
         }
     }
 
-    if (CLibrary::KeyboardRelease(DIK_SPACE) /*&& !m_bJumpCheck*/)//通常ジャンプ
+    if (CLibrary::KeyboardRelease(DIK_SPACE) && !m_bJumpCheck)//通常ジャンプ
     {
         //エフェクト発生
         if (m_nChargeJumpCount >= CHARGEJUMP_MAX)

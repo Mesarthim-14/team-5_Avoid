@@ -93,6 +93,7 @@ HRESULT CTexture::SetTextureName()
         { "data/Texture/boss_hp_bar.png" },
         { "data/Texture/sousa.png" },
         { "data/Texture/sousa_02.png" },
+        { "data/Texture/title.png" },
     };
     
     // 分割テクスチャ

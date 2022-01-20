@@ -129,7 +129,10 @@ bool IHighLevelAnimController::ChangeAnimation(UINT animID)
     m_AnimCont->SetTrackEnable(1, true);
 
     // ウェイト時間を初期化
+    m_Anim[m_CurAnimID].fCurWeightTime = 0.0f;
+    m_Anim[m_PreAnimID].fCurWeightTime = 0.0f;
     m_Anim[animID].fCurWeightTime = 0.0f;
+    m_AnimCont->AdvanceTime(0, NULL);
 
     // 現在のアニメーション番号を切り替え
     m_PreAnimID = m_CurAnimID;
@@ -151,6 +154,9 @@ bool IHighLevelAnimController::AdvanceTime(FLOAT time)
         // ウェイトを登録
         m_AnimCont->SetTrackWeight(0, Weight);       // 現在のアニメーション
         m_AnimCont->SetTrackWeight(1, 1 - Weight);   // 前のアニメーション
+
+        // 時間を更新
+        m_AnimCont->AdvanceTime(time, NULL);
     }
     else
     {
@@ -160,16 +166,23 @@ bool IHighLevelAnimController::AdvanceTime(FLOAT time)
 
 		if (m_Anim[m_CurAnimID].bLoop)
 		{
-
+            // 時間を更新
+            m_AnimCont->AdvanceTime(time, NULL);
 		}
 		else
 		{
-			ChangeAnimation(m_Anim.size() -1);
+            if (m_Anim[m_CurAnimID].fCurWeightTime < m_Anim[m_CurAnimID].fLoopTime)
+            {
+                // 時間を更新
+                m_AnimCont->AdvanceTime(time, NULL);
+            }
+            else
+            {
+                m_Anim[m_CurAnimID].fCurWeightTime = m_Anim[m_CurAnimID].fLoopTime;
+            }
+			//ChangeAnimation(m_Anim.size() -1);
 		}
     }
-
-    // 時間を更新
-    m_AnimCont->AdvanceTime(time, NULL);
 
     return true;
 }

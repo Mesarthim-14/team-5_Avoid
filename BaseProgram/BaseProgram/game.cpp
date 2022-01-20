@@ -45,6 +45,7 @@
 #include "shock_blur.h"
 #include "mesh_tube.h"
 #include "control_ui.h"
+#include "title_logo.h"
 
 float CGame::m_fGravity = 1.5f;
 CGaussFilter* CGame::m_pGaussFilter = nullptr;
@@ -67,6 +68,7 @@ CGame::CGame()
     m_bTitle = true;
     m_nGameTimer = 0;
     m_pControlUi = nullptr;
+    m_pTitleLogo = nullptr;
 }
 
 //=======================================================================================
@@ -83,6 +85,9 @@ CGame::~CGame()
 //=======================================================================================
 HRESULT CGame::Init()
 {
+    // タイトルUIの生成
+    m_pTitleLogo = CTitleLogo::Create();
+
     CreateFilter();
     CreateObject();
     CLibrary::SetSound(CSound::SOUND_BGM_TITLE);
@@ -114,6 +119,11 @@ void CGame::Uninit()
     {
         m_pGauge->Uninit();
         m_pGauge = nullptr;
+    }
+    if (m_pTitleLogo)
+    {
+        m_pTitleLogo->Uninit();
+        m_pTitleLogo = nullptr;
     }
 
     // デバッグ情報表示用フォントの破棄
@@ -157,7 +167,7 @@ void CGame::Update()
         if (mode == CFade::FADE_MODE_NONE)
         {
             CFade *pFade = CManager::GetInstance()->GetFade();
-            pFade->SetFade(CManager::MODE_TYPE_TITLE);
+            pFade->SetFade(CManager::MODE_TYPE_GAME);
         }
     }
 
@@ -166,6 +176,11 @@ void CGame::Update()
     // タイトルに戻る
     if (pKey->GetTrigger(DIK_RETURN) && m_bTitle)
     {
+        if (m_pTitleLogo)
+        {
+            m_pTitleLogo->Uninit();
+            m_pTitleLogo = nullptr;
+        }
 
         if (m_pGaussFilter)
         {
@@ -340,7 +355,7 @@ void CGame::CreateObject()
     CreatePlayer();
     CreateEnemy();
     CreateMap();
-    CreateNPC();
+    //CreateNPC();
 
     if (!m_pControlUi)
     {

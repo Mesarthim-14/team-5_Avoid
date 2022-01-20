@@ -24,6 +24,7 @@ class CPause;
 class CMapFactory;
 class CGauge;
 class CControlUi;
+class CTitleLogo;
 
 //=======================================================================================
 // ゲームクラス
@@ -78,5 +79,6 @@ private:
     bool m_bTitle;                          // タイトルのフラグ
     int m_nGameTimer;                       // ゲームのタイマー
     CControlUi* m_pControlUi;               // UiControl
+    CTitleLogo* m_pTitleLogo;               // タイトルロゴ
 };
 #endif

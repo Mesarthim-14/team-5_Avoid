@@ -60,8 +60,27 @@ void CPlayerState::SetAnimation(const UINT &animID, const FLOAT &time)
 
     pSkinMeshModel->GetHLcontroller()->ChangeAnimation(animID);
     pSkinMeshModel->GetHLcontroller()->SetLoopTime(animID, time);
+}
 
-	pSkinMeshModel->GetHLcontroller()->SetLoopTime(animID, time);
+//=====================================================================
+// アニメーション設定
+//=====================================================================
+void CPlayerState::SetAnimation(const UINT &animID, const FLOAT &time, bool bLoop)
+{
+    CPlayer *pPlayer = CManager::GetInstance()->GetPlayer();
+    if (!pPlayer)
+    {
+        return;
+    }
+    CSkinmeshModel* pSkinMeshModel = pPlayer->GetCurrentSkinMeshPtr();
+    if (!pSkinMeshModel)
+    {
+        return;
+    }
+
+    pSkinMeshModel->GetHLcontroller()->ChangeAnimation(animID);
+    pSkinMeshModel->GetHLcontroller()->SetAnimationLoop(animID, bLoop);
+    pSkinMeshModel->GetHLcontroller()->SetLoopTime(animID, time);
 }
 
 //=====================================================================
@@ -194,7 +213,7 @@ void CPlayerState::MoveByKeyboard(CPlayer* &pPlayer)
         if (!m_bMove[1])
         {
             // アニメーション設定
-            SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_WALK), 60);
+            SetAnimation(UINT((CPlayer::ACTION_MAX - 1) - CPlayer::ACTION_WALK), 10);
         }
     }
 

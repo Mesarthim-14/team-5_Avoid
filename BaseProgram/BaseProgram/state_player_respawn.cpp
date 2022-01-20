@@ -21,6 +21,7 @@
 #include "state_player_normal.h"
 #include "move_scaffold.h"
 #include "collisionModel_OBB.h"
+#include "gauge.h"
 
 //=====================================================================
 // マクロ定義
@@ -101,6 +102,18 @@ void CPlayerStateRespawn::Update()
         // 終了フラグを立てる
         if (CounterFunc(END_LIMIT, this))
         {
+            CGauge * pGauge = CManager::GetInstance()->GetGame()->GetGauge();
+            CPlayer* pPlayer = CManager::GetInstance()->GetPlayer();
+            // Hp消費
+            if (pPlayer)
+            {
+                pPlayer->SubLife(20);
+            }
+            if (pGauge)
+            {
+                pGauge->SetDown(20.0f);
+            }
+
             pPlayer->ChangeState(CPlayerStateNormal::Create());
         }
     }
